@@ -13,9 +13,8 @@ public enum ECurrencyType
 public class CurrencyManager : MonoBehaviour
 {
     public static CurrencyManager instance;
-    
-    private List<int> _currencies = new List<int>((int)ECurrencyType.Count);
-    
+
+    private Dictionary<ECurrencyType, int> _currencies = new Dictionary<ECurrencyType, int>(); 
     //싱글톤 시작시 
     private void Awake()
     {
@@ -39,31 +38,49 @@ public class CurrencyManager : MonoBehaviour
     {
         for (int i = 0; i < (int)ECurrencyType.Count; i++)
         {
-            _currencies.Add(0);
+            _currencies[(ECurrencyType)i] = 0;
         }
     }
     // 재화가 있음을 확인
     private bool Have(ECurrencyType currency, int amount)
     {
-        return _currencies[(int)currency] >= amount;
+        return _currencies[currency] >= amount;
     }
-    // 
     // 재화 추가
     public void Add(ECurrencyType currency, int amount)
     {
-        _currencies[(int)currency] += amount;
-        UIManager.instance.RefreshCurrnecy(currency,_currencies[(int)currency]);
+        _currencies[currency] += amount;
+        UIManager.instance.RefreshCurrnecy(currency,_currencies[currency]);
     }
+    
     // 재화 사용 (제거)
-    public void Spend(ECurrencyType currency, int amount)
+    public bool Spend(ECurrencyType currency, int amount)
     {
         if (!Have(currency, amount))
         {
-            return;    
+            return false;    
         }
-        _currencies[(int)currency] -= amount;
-        UIManager.instance.RefreshCurrnecy(currency,_currencies[(int)currency]);
+        _currencies[currency] -= amount;
+        UIManager.instance.RefreshCurrnecy(currency,_currencies[currency]);
+        return true;
     }
-     
-    
+    // 여러 재화를 한번에 사용한다. => new dictionary 선언해서 사용해야함
+    public bool MultiSpend(Dictionary<ECurrencyType, int> currencies)
+    {
+        foreach (var cost in currencies)
+        {
+            if (!Have(cost.Key, cost.Value))
+            {
+                return false;
+            }
+        }
+
+        foreach (var cost in currencies)
+        {
+            _currencies[cost.Key] -= cost.Value;
+            UIManager.instance.RefreshCurrnecy(cost.Key,_currencies[cost.Key]);
+        }
+        
+        return true;
+    }
 }

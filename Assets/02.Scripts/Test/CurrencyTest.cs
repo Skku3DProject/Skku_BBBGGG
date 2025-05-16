@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CurrencyTest : MonoBehaviour
@@ -20,5 +21,14 @@ public class CurrencyTest : MonoBehaviour
     public void GoldSpend()
     {
         CurrencyManager.instance.Spend(ECurrencyType.Gold, 20);
+    }
+
+    public void MulSpend()
+    {
+        Dictionary<ECurrencyType,int> cost = new Dictionary<ECurrencyType,int>();
+        cost.Add(ECurrencyType.Gold,20);
+        cost.Add(ECurrencyType.Wood,20);
+        
+        CurrencyManager.instance.MultiSpend(cost);
     }
 }
