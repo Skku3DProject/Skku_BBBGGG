@@ -21,7 +21,7 @@ public class Chunk : MonoBehaviour
         int gridX = Mathf.FloorToInt(transform.position.x / CHUNK_WIDTH);
         int gridZ = Mathf.FloorToInt(transform.position.z / CHUNK_WIDTH);
         var coord = new Vector2Int(gridX, gridZ);
-        BlockController.RegisterChunk(coord, this);
+        BlockSystem.RegisterChunk(coord, this);
     }
 
     public void BuildMesh()
