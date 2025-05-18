@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1ea95a291fad12847ae9c242ab1de3c5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 191793
+  packageName: Tower Defense PBR Assets
+  packageVersion: 1.0
+  assetPath: Assets/Tower Defence Assets/Materials/LightningTower/LightningTowerPropsGold.mat
+  uploadId: 423584

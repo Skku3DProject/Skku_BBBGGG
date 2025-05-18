@@ -3,15 +3,17 @@ using UnityEngine;
 
 public class TilePos
 {
-    int xPos, yPos;
 
-    Vector2[] uvs;
+    private int _xPos;
+    private int _yPos;
+
+    private Vector2[] _uvs;
 
     public TilePos(int xPos, int yPos)
     {
-        this.xPos = xPos;
-        this.yPos = yPos;
-        uvs = new Vector2[]
+        _xPos = xPos;
+        _yPos = yPos;
+        _uvs = new Vector2[]
         {
             new Vector2(xPos/16f + .001f, yPos/16f + .001f),
             new Vector2(xPos/16f+ .001f, (yPos+1)/16f - .001f),
@@ -22,7 +24,7 @@ public class TilePos
 
     public Vector2[] GetUVs()
     {
-        return uvs;
+        return _uvs;
     }
 
 

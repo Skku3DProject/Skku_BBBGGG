@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2f1e383f9faaf2147a985eceebdd6c35
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 191793
+  packageName: Tower Defense PBR Assets
+  packageVersion: 1.0
+  assetPath: Assets/Tower Defence Assets/Materials/Firetower/Firetowerlvl01.mat
+  uploadId: 423584

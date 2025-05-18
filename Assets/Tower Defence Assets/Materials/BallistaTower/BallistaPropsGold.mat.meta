@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2ce34b31f95dda24187f80274f1ef4a4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 191793
+  packageName: Tower Defense PBR Assets
+  packageVersion: 1.0
+  assetPath: Assets/Tower Defence Assets/Materials/BallistaTower/BallistaPropsGold.mat
+  uploadId: 423584

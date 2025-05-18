@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 53ad4fef145ec304b9142ef810097c02
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 191793
+  packageName: Tower Defense PBR Assets
+  packageVersion: 1.0
+  assetPath: Assets/Tower Defence Assets/Prefab/IceTower/IceTowerProps.prefab
+  uploadId: 423584

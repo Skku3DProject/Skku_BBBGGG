@@ -4,6 +4,4 @@ public enum VoxelType
     Dirt, 
     Grass, 
     Stone, 
-    Trunk, 
-    Leaves 
 }

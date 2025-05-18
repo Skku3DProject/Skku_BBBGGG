@@ -3,37 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 public class Voxel
 {
-    public Tile top, side, bottom;
+    private readonly Tile _top;
+    private readonly Tile _side;
+    private readonly Tile _bottom;
 
-    public TilePos topPos, sidePos, bottomPos;
+    public TilePos TopPos;
+    public TilePos SidePos;
+    public TilePos BottomPos;
 
     public Voxel(Tile tile)
     {
-        top = side = bottom = tile;
-        GetPositions();
+        _top = _side = _bottom = tile;
+        UpdateTilePositions();
     }
 
     public Voxel(Tile top, Tile side, Tile bottom)
     {
-        this.top = top;
-        this.side = side;
-        this.bottom = bottom;
-        GetPositions();
+        _top = top;
+        _side = side;
+        _bottom = bottom;
+        UpdateTilePositions();
     }
 
-    void GetPositions()
+    void UpdateTilePositions()
     {
-        topPos = TilePos.tiles[top];
-        sidePos = TilePos.tiles[side];
-        bottomPos = TilePos.tiles[bottom];
+        TopPos = TilePos.tiles[_top];
+        SidePos = TilePos.tiles[_side];
+        BottomPos = TilePos.tiles[_bottom];
     }
 
 
-    public static Dictionary<VoxelType, Voxel> blocks = new Dictionary<VoxelType, Voxel>(){
+    public static Dictionary<VoxelType, Voxel> blocks = new Dictionary<VoxelType, Voxel>()
+    {
         {VoxelType.Grass, new Voxel(Tile.Grass, Tile.GrassSide, Tile.Dirt)},
         {VoxelType.Dirt, new Voxel(Tile.Dirt)},
         {VoxelType.Stone, new Voxel(Tile.Stone)},
-        {VoxelType.Trunk, new Voxel(Tile.TreeCX, Tile.TreeSide, Tile.TreeCX)},
-        {VoxelType.Leaves, new Voxel(Tile.Leaves)},
     };
 }

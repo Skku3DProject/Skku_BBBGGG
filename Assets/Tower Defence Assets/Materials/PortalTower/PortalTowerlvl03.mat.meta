@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4b549d03604494548b37d84429899e48
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 191793
+  packageName: Tower Defense PBR Assets
+  packageVersion: 1.0
+  assetPath: Assets/Tower Defence Assets/Materials/PortalTower/PortalTowerlvl03.mat
+  uploadId: 423584

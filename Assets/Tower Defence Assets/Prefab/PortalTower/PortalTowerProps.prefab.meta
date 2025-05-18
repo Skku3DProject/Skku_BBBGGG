@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3855f700586fd8d4bafd9e5dca5b9cc8
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 191793
+  packageName: Tower Defense PBR Assets
+  packageVersion: 1.0
+  assetPath: Assets/Tower Defence Assets/Prefab/PortalTower/PortalTowerProps.prefab
+  uploadId: 423584

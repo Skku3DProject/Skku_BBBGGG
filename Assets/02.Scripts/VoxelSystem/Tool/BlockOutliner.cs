@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class BlockOutliner : MonoBehaviour
 {
-    [Header("References")]
+    [Header("참조")]
     public Camera playerCamera;
 
-    [Header("LineRenderer Settings")]
+    [Header("라인렌더러 세팅")]
     public Material lineMaterial;
     public float lineWidth = 0.05f;
 

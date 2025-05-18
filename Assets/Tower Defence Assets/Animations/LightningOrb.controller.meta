@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2cff841f82582344889467c7650ae4c6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 191793
+  packageName: Tower Defense PBR Assets
+  packageVersion: 1.0
+  assetPath: Assets/Tower Defence Assets/Animations/LightningOrb.controller
+  uploadId: 423584

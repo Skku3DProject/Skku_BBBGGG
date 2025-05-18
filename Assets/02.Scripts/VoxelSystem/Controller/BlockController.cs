@@ -3,77 +3,92 @@ using UnityEngine;
 
 public class BlockController : MonoBehaviour
 {
-    [Header("References")]
-    public Camera playerCamera;            // 클릭에 사용할 카메라. 없으면 Transform.forward 사용
-    public LayerMask chunkLayer;           // 청크 Collider 만 포함된 레이어
-    public float maxDistance = 4f;         // Raycast 최대 거리
+    [Header("참조")]
+    public Camera PlayerCamera;            // 클릭에 사용할 카메라. 없으면 Transform.forward 사용
+    public LayerMask ChunkLayer;           // 청크 Collider 만 포함된 레이어
+    public float MaxDistance = 4f;         // Raycast 최대 거리
 
-    [Header("Voxel Settings")]
-    public VoxelType placeType = VoxelType.Grass;  // 설치할 블럭 타입
+    [Header("복셀 세팅")]
+    public VoxelType PlaceType = VoxelType.Grass;  // 설치할 블럭 타입
 
     // 청크 좌표 → Chunk 인스턴스 맵
-    private static Dictionary<Vector2Int, Chunk> registeredChunks
-        = new Dictionary<Vector2Int, Chunk>();
+    private static Dictionary<Vector2Int, Chunk> _registeredChunks = new Dictionary<Vector2Int, Chunk>();
 
     void Update()
     {
-        // 좌클릭(설치) 또는 우클릭(파괴) 체크
+        if (BuildModeManager.Instance != null && BuildModeManager.Instance.IsBuildMode)
+            return;
+
+        HandleBlockPlacement();
+    }
+    private bool HandleBlockPlacement()
+    {
         bool leftClick = Input.GetMouseButtonDown(0);
         bool rightClick = Input.GetMouseButtonDown(1);
-        if (!leftClick && !rightClick) return;
+        if (!leftClick && !rightClick) return false;
 
-        // Ray 생성 (카메라가 지정돼 있으면 스크린 레이, 아니면 앞 방향)
-        Ray ray = playerCamera != null
-            ? playerCamera.ScreenPointToRay(Input.mousePosition)
-            : new Ray(transform.position, transform.forward);
+        Ray ray = PlayerCamera != null ? PlayerCamera.ScreenPointToRay(Input.mousePosition) : new Ray(transform.position, transform.forward);
 
-        if (!Physics.Raycast(ray, out RaycastHit hit, maxDistance, chunkLayer))
-            return;
+        if (!Physics.Raycast(ray, out RaycastHit hit, MaxDistance, ChunkLayer))
+            return false;
 
-        // 클릭한 면의 법선 기준으로 아주 약간 오프셋
         bool placing = leftClick;
-        Vector3 offset = hit.normal * (placing ? 0.5f : -0.5f);
-        Vector3 adjustedPoint = hit.point + offset;
+        Vector3Int blockPos = GetAdjustedBlockPosition(hit, placing);
 
-        // 월드 → 블록 좌표 (정수)
-        Vector3Int blockPos = Vector3Int.FloorToInt(adjustedPoint);
+        if (TryGetLocalPosition(blockPos, out Chunk chunk, out Vector3Int localPos))
+        {
+            chunk.Blocks[localPos.x, localPos.y, localPos.z] = placing ? PlaceType : VoxelType.Air;
+            chunk.BuildMesh();
+            return true;
+        }
 
-        // 청크 그리드 인덱스 계산
-        int cx = Mathf.FloorToInt(blockPos.x / (float)Chunk.chunkWidth);
-        int cz = Mathf.FloorToInt(blockPos.z / (float)Chunk.chunkWidth);
-        Vector2Int chunkCoord = new Vector2Int(cx, cz);
-
-        if (!registeredChunks.TryGetValue(chunkCoord, out Chunk chunk))
-            return;
-
-        // 패딩(+1) 처리된 블록 배열 내 로컬 좌표
-        int localX = blockPos.x - cx * Chunk.chunkWidth + 1;
-        int localY = blockPos.y;
-        int localZ = blockPos.z - cz * Chunk.chunkWidth + 1;
-
-        // 범위 검사
-        if (localX < 0 || localX >= Chunk.chunkWidth + 2 ||
-            localY < 0 || localY >= Chunk.chunkHeight ||
-            localZ < 0 || localZ >= Chunk.chunkWidth + 2)
-            return;
-
-        // 설치 / 제거
-        chunk.blocks[localX, localY, localZ] = placing
-            ? placeType
-            : VoxelType.Air;
-
-        // 메쉬 갱신
-        chunk.BuildMesh();
+        return false;
     }
 
+    private Vector3Int GetAdjustedBlockPosition(RaycastHit hit, bool placing)
+    {
+        float offset = placing ? 0.5f : -0.5f;
+        Vector3 adjusted = hit.point + hit.normal * offset;
+        return Vector3Int.FloorToInt(adjusted);
+    }
+
+    private bool TryGetLocalPosition(Vector3Int blockPos, out Chunk chunk, out Vector3Int localPos)
+    {
+        int chunkX = Mathf.FloorToInt(blockPos.x / (float)Chunk.CHUNK_WIDTH);
+        int chunkZ = Mathf.FloorToInt(blockPos.z / (float)Chunk.CHUNK_WIDTH);
+        var coord = new Vector2Int(chunkX, chunkZ);
+
+        if (!_registeredChunks.TryGetValue(coord, out chunk))
+        {
+            localPos = default;
+            return false;
+        }
+
+        int localX = blockPos.x - chunkX * Chunk.CHUNK_WIDTH + 1;
+        int localY = blockPos.y;
+        int localZ = blockPos.z - chunkZ * Chunk.CHUNK_WIDTH + 1;
+
+        bool valid = localX >= 0 && localX < Chunk.CHUNK_WIDTH + 2
+                  && localY >= 0 && localY < Chunk.CHUNK_HEIGHT
+                  && localZ >= 0 && localZ < Chunk.CHUNK_WIDTH + 2;
+
+        if (!valid)
+        {
+            localPos = default;
+            return false;
+        }
+
+        localPos = new Vector3Int(localX, localY, localZ);
+        return true;
+    }
     // WorldManager.CreateChunk 에서 호출해서 맵에 등록
     public static void RegisterChunk(Vector2Int coord, Chunk chunk)
     {
-        registeredChunks[coord] = chunk;
+        _registeredChunks[coord] = chunk;
     }
 
     public static void ClearRegistry()
     {
-        registeredChunks.Clear();
+        _registeredChunks.Clear();
     }
 }
