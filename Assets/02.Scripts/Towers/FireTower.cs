@@ -2,15 +2,37 @@ using UnityEngine;
 
 public class FireTower : TowerBase
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void Attack()
     {
-        
+        base.Attack();
+        Vector3 startPos = _topTowerTransform.position;
+        GameObject arrow = Instantiate(_bulletPrefab, startPos, Quaternion.identity);
+
+        arrow.GetComponent<ProjectileBase>().Init(
+            startPos,
+            _attackRange.NearEnemy.position,
+            flightDuration: 1.5f,
+            damageAmount: _data.Damage
+        );
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Awake()
     {
-        
+        base.Awake();
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
     }
 }
