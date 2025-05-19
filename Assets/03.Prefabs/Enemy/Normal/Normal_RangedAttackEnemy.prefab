@@ -562,6 +562,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: 9731ed1adb9e75045a2bace310d24ac2, type: 2}
+  CharacterController: {fileID: 0}
+  Animator: {fileID: 0}
 --- !u!143 &5941470335209132552
 CharacterController:
   m_ObjectHideFlags: 0
@@ -586,7 +588,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7641909615770404320
 GameObject:
   m_ObjectHideFlags: 0

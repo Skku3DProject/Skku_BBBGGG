@@ -21,4 +21,9 @@ public class EnemySo : ScriptableObject
     [Header("기본 스텟")]
     public float Health = 100;
     public float Speed = 5;
+
+    [Header("비교 거리")]
+    public float FindDistance = 7;
+    public float AttackDistance = 3;
+    public float MovePointDistance = 0.1f;
 }

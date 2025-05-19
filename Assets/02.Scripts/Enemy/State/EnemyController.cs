@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public enum EEnemyState
 {
@@ -10,16 +12,17 @@ public enum EEnemyState
     Die,
 }
 
-public class EnemyController : MonoBehaviour, ITickable
+public class EnemyController : MonoBehaviour//, ITickable
 {
     private EEnemyState _currentState = EEnemyState.Idle;
     public EEnemyState CurrentState => _currentState;
 
     private Dictionary<EEnemyState, IFSM> _stateMap;
     public Dictionary<EEnemyState, IFSM> StateMap;
-    
 
     private Enemy _enemy;
+    private Vector3 _gravityVelocity;
+    private const float GRAVITY = -9.8f; // 중력
 
     public void Awake()
     {
@@ -61,17 +64,15 @@ public class EnemyController : MonoBehaviour, ITickable
         _stateMap[_currentState].Start();
 
     }
-    public void Tick()
+
+
+    public void Update()
     {
+        Gravity();
         EEnemyState nextState = _stateMap[_currentState].Update();
         if (nextState != _currentState)
         {
             ChangeState(nextState);
-        }
-
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            OnDisable();
         }
     }
 
@@ -83,18 +84,6 @@ public class EnemyController : MonoBehaviour, ITickable
         // 새 상태 진입
         _currentState = nextState;
         _stateMap[_currentState].Start();
-    }
-
-    
-
-    private void OnEnable()
-    {
-        TickManager.Register(this);
-    }
-
-    private void OnDisable()
-    {
-        TickManager.Unregister(this);
     }
 
 
@@ -125,4 +114,72 @@ public class EnemyController : MonoBehaviour, ITickable
         }
         return null;
     }
+
+    private void Gravity()
+    {
+        if (!_enemy.CharacterController.isGrounded)
+        {
+            _gravityVelocity.y += GRAVITY * Time.deltaTime;
+        }
+        else if (_gravityVelocity.y < 0)
+        {
+            _gravityVelocity.y = -2f;
+        }
+        
+        _enemy.CharacterController.Move(_gravityVelocity * Time.deltaTime);         // 중력 이동 반영
+    }
+
+    /*
+ // LOD 설정: Near/Mid/Far 거리
+ [SerializeField] float nearDistance = 10f;
+ [SerializeField] float midDistance = 20f;
+ [SerializeField] float farDistance = 40f;
+
+ private CharacterController _cc;
+
+ public int LodLevel
+ {
+     get
+     {
+         float dist = Vector3.Distance(transform.position, _enemy.Target.transform.position);
+         if (dist <= nearDistance) return 0;
+         if (dist <= midDistance) return 1;
+         return 2;
+     }
+ }
+
+ public float LodDistance
+ {
+     get
+     {
+         // 각 레벨의 최대 거리 기준 반환
+         return LodLevel == 0 ? nearDistance
+              : LodLevel == 1 ? midDistance
+                               : farDistance;
+     }
+ }
+
+ public Vector3 position => transform.position;
+
+public void Tick()
+{
+ EEnemyState nextState = _stateMap[_currentState].Update();
+ if (nextState != _currentState)
+ {
+     ChangeState(nextState);
+ }
+}
+
+private void OnEnable()
+{
+ TickManager.Register(this);
+ Debug.Log("OnEnable");
+}
+
+private void OnDisable()
+{
+ TickManager.Unregister(this);
+ Debug.Log("OnDisable");
+}
+    */
 }

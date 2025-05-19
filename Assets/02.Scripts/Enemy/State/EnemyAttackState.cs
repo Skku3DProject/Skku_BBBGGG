@@ -14,7 +14,7 @@ public class EnemyAttackState : IFSM
 
     public EEnemyState Update()
     {
-        return EEnemyState.Idle;
+        return EEnemyState.Attack;
     }
 
     public void End()

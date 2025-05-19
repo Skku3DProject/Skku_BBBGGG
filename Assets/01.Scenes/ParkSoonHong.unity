@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424456dbe26bb9149977c633e702a8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TickInterval: 0.1
+  TickInterval: 0.07
 --- !u!4 &1188756462
 Transform:
   m_ObjectHideFlags: 0
@@ -526,6 +526,37 @@ MonoBehaviour:
     m_Bits: 8
   MaxDistance: 4
   PlaceType: 2
+--- !u!1 &1362902834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1362902835}
+  m_Layer: 0
+  m_Name: DummyPlayer
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1362902835
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362902834}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1443959126
 GameObject:
   m_ObjectHideFlags: 0
@@ -935,6 +966,26 @@ PrefabInstance:
       propertyPath: SpawnerSo
       value: 
       objectReference: {fileID: 11400000, guid: 29838d33611a9d043a484316821b7919, type: 2}
+    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: SpawnCount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: PreSetList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: 'PreSetList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1919701108089533735, guid: 31f70267f6d6411458186a29d3e3b1a8, type: 3}
+    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: 'PreSetList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1076009246899063190, guid: baf092343476758418ec25c05676b5e1, type: 3}
+    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: 'PreSetList.Array.data[2]'
+      value: 
+      objectReference: {fileID: 7429422838566746885, guid: 1868b18290bd0934d8c5589f962c407d, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -949,3 +1000,4 @@ SceneRoots:
   - {fileID: 2133663400}
   - {fileID: 844468833394376882}
   - {fileID: 1188756462}
+  - {fileID: 1362902835}

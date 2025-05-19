@@ -24,9 +24,33 @@ public class EnemySpawner : MonoBehaviour
         {
             for (int j = 0; j < SpawnCount; j++) 
             {
-               // Instantiate()
+                GameObject Enemy = Instantiate(PreSetList[i], transform);
+                Enemy.SetActive(false);
+                Enemy.GetComponent<Enemy>().Initialize();
+             
+                _spawnList.Add(Enemy);
+            }
+        }
+
+        Invoke("TestSpawn", 5);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            foreach (GameObject enemy in _spawnList)
+            {
+                enemy.SetActive(false);
             }
         }
     }
 
+    public void TestSpawn()
+    {
+        foreach(GameObject enemy in _spawnList)
+        {
+            enemy.SetActive(true);
+        }
+    }
 }
