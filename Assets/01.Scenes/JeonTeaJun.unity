@@ -415,6 +415,68 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &398035816
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3636315025172022803, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3636315025172022803, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3636315025172022803, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3636315025172022803, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3636315025172022803, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3636315025172022803, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3636315025172022803, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3636315025172022803, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3636315025172022803, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3636315025172022803, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6003218979403531905, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+      propertyPath: m_Name
+      value: Enemy_Spawner
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+--- !u!4 &398035817 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3636315025172022803, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
+  m_PrefabInstance: {fileID: 398035816}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &986108931
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +684,7 @@ GameObject:
   - component: {fileID: 1487040163}
   - component: {fileID: 1487040165}
   - component: {fileID: 1487040164}
+  - component: {fileID: 1487040166}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -671,9 +734,41 @@ MonoBehaviour:
   PlayerCamera: {fileID: 252556622}
   ChunkLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8
   MaxDistance: 4
   PlaceType: 2
+--- !u!114 &1487040166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487040162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c59324e7b2dd30246b565875969aaca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingTypes:
+  - DisplayName: ArrowTower
+    Prefab: {fileID: 634377025880031044, guid: 764b9e4879abdb143872fe11a3900d14, type: 3}
+    PreviewPrefab: {fileID: 634377025880031044, guid: b41b359f5e0cee5428377c5c12694996, type: 3}
+    PreviewMaterial: {fileID: 2100000, guid: 42686453fd10be94596308afe274de6d, type: 2}
+    Size: 2
+    YOffset: 0.5
+  - DisplayName: FireTower
+    Prefab: {fileID: 9166186074018161065, guid: 78dc8f41cee61a141a2f556bff02ef4b, type: 3}
+    PreviewPrefab: {fileID: 9166186074018161065, guid: 001773a9c6266f746ba65b4c72691138, type: 3}
+    PreviewMaterial: {fileID: 2100000, guid: 42686453fd10be94596308afe274de6d, type: 2}
+    Size: 2
+    YOffset: -1.2
+  SelectedTypeIndex: 0
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 9
+  ObstacleMask:
+    serializedVersion: 2
+    m_Bits: 16
 --- !u!1 &1548886111
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,8 +816,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChunkPrefab: {fileID: 2690487909747216947, guid: c102dc976872fa94694d915da439e587, type: 3}
   PlayerTransform: {fileID: 370242817}
+  SpawenrTransform: {fileID: 398035817}
   GridWidth: 50
   GridHeight: 50
+  ChunkLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  Distance: 50
   GrassPrefab: {fileID: 4569295655211456005, guid: 403a5055922ec0e4eb2f6ed427208efc, type: 3}
   TreePrefab: {fileID: 3299460309311030865, guid: ba6a3796f5464cf468d3459b2b74b1b6, type: 3}
   GrassDensity: 0.01
@@ -972,7 +1072,7 @@ MonoBehaviour:
   SelectedTypeIndex: 0
   GroundMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8
   ObstacleMask:
     serializedVersion: 2
     m_Bits: 16
@@ -984,3 +1084,4 @@ SceneRoots:
   - {fileID: 1548886112}
   - {fileID: 370242817}
   - {fileID: 1111111878}
+  - {fileID: 398035816}
