@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using UnityEditor;
 using UnityEngine;
 
 public class WorldManager : MonoBehaviour
@@ -35,7 +36,12 @@ public class WorldManager : MonoBehaviour
         PositionPlayerAtCenter();
         PositionSpawner();
     }
-
+    public void GenerateInEditor()
+    {
+        GenerateGrid();
+        PositionPlayerAtCenter();
+        PositionSpawner();
+    }
     void GenerateGrid()
     {
         for (int x = 0; x < GridWidth; x++)
@@ -228,4 +234,6 @@ public class WorldManager : MonoBehaviour
             }
         }
     }
+
+
 }
