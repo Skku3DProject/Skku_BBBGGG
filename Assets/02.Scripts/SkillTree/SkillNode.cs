@@ -16,6 +16,7 @@ public class SkillNode
     public bool IsUnlocked => Parent == null || Parent.SkillLevel > 0; // 부모 스킬이 찍혔는가
     public bool IsActive => SkillLevel > 0;   // 현재 사용하려는 스킬이 찍혔는가
     public bool IsMaxLevel => SkillLevel == MaxLevel;
+    
     public SkillNode(SkillNodeSO data)
     {
         _data = data;

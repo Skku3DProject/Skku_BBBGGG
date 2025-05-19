@@ -21,11 +21,12 @@ public class UIManager : MonoBehaviour
     }
 
     // 재화 변경
-    public void RefreshCurrnecy(ECurrencyType currency , int value)
+    public void RefreshCurrency()
     {
-        Currencies[(int)currency].text = $"{value}";
+        Currencies[0].text = $"{CurrencyManager.instance.CurrentCurrency().Gold}";
+        Currencies[1].text = $"{CurrencyManager.instance.CurrentCurrency().Wood}";
+        Currencies[2].text = $"{CurrencyManager.instance.CurrentCurrency().Stone}";
     }
-
     public void UI_GameOver()
     {
         GameOverPanel.SetActive(true);

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2340320ba958bd468ed81c9c0cd91af, type: 3}
   m_Name: SkillNodeSO_1
   m_EditorClassIdentifier: 
-  Name: skill4
-  MaxLevel: 4
+  Type: 0
+  Name: Sword4
+  MaxLevel: 3

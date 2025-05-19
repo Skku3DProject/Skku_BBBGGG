@@ -36,21 +36,29 @@ public class SkillManager : MonoBehaviour
     private void OnEnable()
     {
         SkillPoint = 10;
-    }
-
-    private void Start()
-    {
         _swordSkillTree = SkillTreeMakers[0].Skill;
-        // _bowSkillTree = SkillTreeMakers[1].Skill;
-        // _magicSkillTree = SkillTreeMakers[2].Skill;
-        
+        _bowSkillTree = SkillTreeMakers[1].Skill;
+        _magicSkillTree = SkillTreeMakers[2].Skill;
     }
     // 스킬 포인트 생성
     public void GainSkillPoint(int amount)
     {
         SkillPoint += amount;
     }
-    
+
+    public bool CanLevelUp(SkillType type, string skillName)
+    {
+        SkillNode node = TreeCheck(type).FindSkill(skillName);
+        Debug.Log(node.Name);
+        if (node.IsUnlocked)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     // 스킬 찾아서 맥스레벨 체크하기
     public bool MaxLevelCheck(SkillTree tree, string skillName)
     {
@@ -59,6 +67,37 @@ public class SkillManager : MonoBehaviour
     }
     // 스킬 레벨업 하기
     public bool OnClickLevelUp(SkillType type, string skillName)
+    {
+        
+        if (TreeCheck(type) == null)
+        {
+            Debug.LogError("SkillTree is null.");
+            return false;
+        }
+        
+        Debug.Log(skillName);
+        // 스킬 포인트 체크
+        if (SkillPoint <= 0)
+        {
+            Debug.Log("Skill Point is 0");
+            return false;   
+        }
+        // 스킬 레벨업 요소가 충족 되었는가?
+        if (TreeCheck(type).LevelUpSkill(skillName))
+        {
+            SkillPoint--;
+            Debug.Log(SkillPoint);
+        }
+        else
+        {
+            Debug.Log("Skill Not Found");
+            return false;
+        }
+        // 맥스레벨에 달성하였는가?
+        return MaxLevelCheck(TreeCheck(type), skillName);
+    }
+
+    private SkillTree TreeCheck(SkillType type)
     {
         SkillTree tree = null;
         
@@ -75,31 +114,6 @@ public class SkillManager : MonoBehaviour
                 break;
         };
         
-        if (tree == null)
-        {
-            Debug.LogError("SkillTree is null.");
-            return false;
-        }
-        
-        Debug.Log(skillName);
-        // 스킬 포인트 체크
-        if (SkillPoint <= 0)
-        {
-            Debug.Log("Skill Point is 0");
-            return false;   
-        }
-        // 스킬 레벨업 요소가 충족 되었는가?
-        if (tree.LevelUpSkill(skillName))
-        {
-            SkillPoint--;
-            Debug.Log(SkillPoint);
-        }
-        else
-        {
-            Debug.Log("Skill Not Found");
-            return false;
-        }
-        
-        return MaxLevelCheck(tree, skillName);
+        return tree;
     }
 }

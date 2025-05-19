@@ -5,30 +5,36 @@ public class CurrencyTest : MonoBehaviour
 {
     public void GoldAdd()
     {
-        CurrencyManager.instance.Add(ECurrencyType.Gold, 20);
+        Currency currency = new Currency() {Gold = 20};
+        CurrencyManager.instance.Add(currency);
     }
     
     public void WoodAdd()
     {
-        CurrencyManager.instance.Add(ECurrencyType.Wood, 20);
+        Currency currency = new Currency() {Wood = 20};
+        CurrencyManager.instance.Add(currency);
+        
     }
     
     public void StoneAdd()
     {
-        CurrencyManager.instance.Add(ECurrencyType.Stone, 20);
+        Currency currency = new Currency() {Stone = 20};
+        CurrencyManager.instance.Add(currency);
     }
 
     public void GoldSpend()
     {
-        CurrencyManager.instance.Spend(ECurrencyType.Gold, 20);
+        Currency currency = new Currency(){Wood = 20, Stone = 10};
+        CurrencyManager.instance.Spend(currency);
     }
 
-    public void MulSpend()
-    {
-        Dictionary<ECurrencyType,int> cost = new Dictionary<ECurrencyType,int>();
-        cost.Add(ECurrencyType.Gold,20);
-        cost.Add(ECurrencyType.Wood,20);
-        
-        CurrencyManager.instance.MultiSpend(cost);
-    }
+
+    // public void MulSpend()
+    // {
+    //     Dictionary<ECurrencyType,int> cost = new Dictionary<ECurrencyType,int>();
+    //     cost.Add(ECurrencyType.Gold,20);
+    //     cost.Add(ECurrencyType.Wood,20);
+    //     
+    //     CurrencyManager.instance.MultiSpend(cost);
+    // }
 }
