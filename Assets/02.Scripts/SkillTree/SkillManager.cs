@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 public enum SkillType
 {
@@ -13,11 +15,13 @@ public class SkillManager : MonoBehaviour
     public SkillTreeMaker[] SkillTreeMakers;
 
     public SkillType TreeType;
+    
     // 스킬 트리 생성
-    private SkillTree _swordSkillTree;
-    private SkillTree _bowSkillTree;
-    private SkillTree _magicSkillTree;
-
+    public  SkillTree _swordSkillTree;
+    public SkillTree _bowSkillTree;
+    public SkillTree _magicSkillTree;
+    
+    private Dictionary<string, SkillSet> _skillSetDict = new Dictionary<string, SkillSet>();
     public int SkillPoint { get; private set; }
 
     private void Awake()
@@ -30,34 +34,55 @@ public class SkillManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        
     }
 
     private void OnEnable()
     {
         SkillPoint = 10;
+
+    }
+
+    private void Start()
+    {
         _swordSkillTree = SkillTreeMakers[0].Skill;
         _bowSkillTree = SkillTreeMakers[1].Skill;
         _magicSkillTree = SkillTreeMakers[2].Skill;
+    }
+    // skillset children을 찾기 위한 skillset구하기
+    public void RegisterSkill(SkillSet skillSet)
+    {
+        if (!_skillSetDict.ContainsKey(skillSet.skillNode.Name))
+        {
+            _skillSetDict.Add(skillSet.skillNode.Name, skillSet);
+        }
+    }
+    // 이름을 가지고 skill 
+    public void SetChildrenInteractable(string skillName, bool interactable)
+    {
+        SkillTree tree = TreeCheck(_skillSetDict[skillName].skillNode.Type);
+        SkillNode parentNode = tree.FindSkill(skillName);
+
+        if (parentNode == null) return;
+
+        foreach(var childNode in parentNode.Children)
+        {
+            if(_skillSetDict.TryGetValue(childNode.Name, out SkillSet childSkillSet))
+            {
+                childSkillSet.skillButton.interactable = interactable;
+            }
+        }
     }
     // 스킬 포인트 생성
     public void GainSkillPoint(int amount)
     {
         SkillPoint += amount;
     }
-
+    // 
     public bool CanLevelUp(SkillType type, string skillName)
     {
-        SkillNode node = TreeCheck(type).FindSkill(skillName);
-        Debug.Log(node.Name);
-        if (node.IsUnlocked)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        SkillTree tree = TreeCheck(type);
+        SkillNode node = tree.FindSkill(skillName);
+        return node.IsUnlocked;
     }
     // 스킬 찾아서 맥스레벨 체크하기
     public bool MaxLevelCheck(SkillTree tree, string skillName)
@@ -68,8 +93,8 @@ public class SkillManager : MonoBehaviour
     // 스킬 레벨업 하기
     public bool OnClickLevelUp(SkillType type, string skillName)
     {
-        
-        if (TreeCheck(type) == null)
+        SkillTree tree = TreeCheck(type);
+        if (tree == null)
         {
             Debug.LogError("SkillTree is null.");
             return false;
@@ -83,9 +108,10 @@ public class SkillManager : MonoBehaviour
             return false;   
         }
         // 스킬 레벨업 요소가 충족 되었는가?
-        if (TreeCheck(type).LevelUpSkill(skillName))
+        if (tree.LevelUpSkill(skillName))
         {
             SkillPoint--;
+            SetChildrenInteractable(skillName, true);
             Debug.Log(SkillPoint);
         }
         else
@@ -94,7 +120,7 @@ public class SkillManager : MonoBehaviour
             return false;
         }
         // 맥스레벨에 달성하였는가?
-        return MaxLevelCheck(TreeCheck(type), skillName);
+        return MaxLevelCheck(tree, skillName);
     }
 
     private SkillTree TreeCheck(SkillType type)
@@ -116,4 +142,5 @@ public class SkillManager : MonoBehaviour
         
         return tree;
     }
+
 }

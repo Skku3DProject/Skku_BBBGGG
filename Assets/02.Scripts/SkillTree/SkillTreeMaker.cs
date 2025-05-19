@@ -17,14 +17,12 @@ public class SkillTreeMaker : MonoBehaviour
     private void TreeSetting()
     {
         SkillNode set = Skill.StartNode;
-        Debug.Log(set.Name);
         // 반복문 진행하면서 노드 세팅하기   
         for(int i = 1; i < SkillPrefab.Length; i++)
         {
             SkillNode node = new SkillNode(SkillPrefab[i].skillNode);
             set.AddChild(node);
             set = node;
-            Debug.Log(set.Name);
         }
     }
 }
