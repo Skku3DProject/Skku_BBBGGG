@@ -8,12 +8,12 @@ public interface IFSM
         
     }
 
-    public void Update()
+    public EEnemyState Update()
     {
-        
+        return EEnemyState.Idle;
     }
     
-    public void end()
+    public void End()
     {
 
     }

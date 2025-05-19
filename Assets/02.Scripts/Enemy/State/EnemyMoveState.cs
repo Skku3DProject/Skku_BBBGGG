@@ -2,17 +2,24 @@ using UnityEngine;
 
 public class EnemyMoveState : IFSM
 {
+
+    private Enemy _enemy;
+    public EnemyMoveState (Enemy enemy)
+    {
+        _enemy = enemy;
+    }
+
     public void Start()
     {
 
     }
 
-    public void Update()
+    public EEnemyState Update()
     {
-
+        return EEnemyState.Idle;
     }
 
-    public void end()
+    public void End()
     {
 
     }

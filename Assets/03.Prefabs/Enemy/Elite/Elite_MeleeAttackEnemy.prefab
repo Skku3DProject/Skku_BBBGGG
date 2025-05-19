@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 7326836371724971513}
   m_Layer: 0
   m_Name: Elite_MeleeAttackEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d578928b80e172428dbbe59eeeea2b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemySo: {fileID: 11400000, guid: badccae760a693a4b8aaea957d87f9d2, type: 2}
+  EnemyData: {fileID: 11400000, guid: badccae760a693a4b8aaea957d87f9d2, type: 2}
 --- !u!114 &669514577915571294
 MonoBehaviour:
   m_ObjectHideFlags: 0

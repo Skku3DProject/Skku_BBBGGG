@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b4b138f47becd348a8721ae974d12b6, type: 3}
   m_Name: Normal_MeleeAttackEnemySo
   m_EditorClassIdentifier: 
+  AvailableStates: 0000000001000000020000000300000004000000
   EnemyType: 0
   Health: 100
   Speed: 5

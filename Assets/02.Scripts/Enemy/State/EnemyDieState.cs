@@ -2,17 +2,22 @@ using UnityEngine;
 
 public class EnemyDieState : IFSM
 {
+    private Enemy _enemy;
+    public EnemyDieState(Enemy enemy)
+    {
+        _enemy = enemy;
+    }
     public void Start()
     {
 
     }
 
-    public void Update()
+    public EEnemyState Update()
     {
-
+        return EEnemyState.Idle;
     }
 
-    public void end()
+    public void End()
     {
 
     }
