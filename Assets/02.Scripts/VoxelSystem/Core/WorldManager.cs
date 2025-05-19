@@ -53,7 +53,9 @@ public class WorldManager : MonoBehaviour
         GameObject chunkObj = Instantiate(ChunkPrefab, worldPos, Quaternion.identity, transform);
         Chunk chunk = chunkObj.GetComponent<Chunk>();
 
-        PopulateBlocks(chunk, coord);
+        //PopulateBlocksPerilnNoise(chunk, coord);
+        PopulateBlocksCustomNoise(chunk, coord);
+
         chunk.BuildMesh();
         SpawnVegetation(chunk);
 
@@ -131,7 +133,7 @@ public class WorldManager : MonoBehaviour
         return 0;
     }
 
-    private void PopulateBlocks(Chunk chunk, Vector2Int coord)
+    private void PopulateBlocksPerilnNoise(Chunk chunk, Vector2Int coord)
     {
         for (int x = 1; x <= Chunk.CHUNK_WIDTH; x++)
         {
@@ -142,6 +144,56 @@ public class WorldManager : MonoBehaviour
                 float noiseValue = Mathf.PerlinNoise(globalX * NoiseScale, globalZ * NoiseScale);
                 int maxHeight = Mathf.FloorToInt(noiseValue * (Chunk.CHUNK_HEIGHT - 1));
 
+                for (int y = 0; y < Chunk.CHUNK_HEIGHT; y++)
+                {
+                    chunk.Blocks[x, y, z] = y <= maxHeight
+                        ? (y == maxHeight
+                            ? VoxelType.Grass
+                            : (y >= maxHeight - 3
+                                ? VoxelType.Dirt
+                                : VoxelType.Stone))
+                        : VoxelType.Air;
+                }
+            }
+        }
+    }
+    private void PopulateBlocksCustomNoise(Chunk chunk, Vector2Int coord)
+    {
+        for (int x = 1; x <= Chunk.CHUNK_WIDTH; x++)
+        {
+            for (int z = 1; z <= Chunk.CHUNK_WIDTH; z++)
+            {
+                int globalX = coord.x * Chunk.CHUNK_WIDTH + (x - 1);
+                int globalZ = coord.y * Chunk.CHUNK_WIDTH + (z - 1);
+
+                // 노이즈 기반 지형
+                float baseNoise = Mathf.PerlinNoise(globalX * NoiseScale, globalZ * NoiseScale);
+                float baseHeight = baseNoise * 5f + 3f;
+
+                float mountainMask = Mathf.PerlinNoise(globalX * 0.01f + 1000f, globalZ * 0.01f + 1000f);
+                mountainMask = Mathf.SmoothStep(0.6f, 0.8f, mountainMask);
+
+                float mountainNoise = Mathf.PerlinNoise(globalX * 0.02f, globalZ * 0.02f);
+                float mountainHeight = mountainNoise * 20f * mountainMask;
+
+                // 중심 평탄화
+                float mapCenterX = GridWidth * Chunk.CHUNK_WIDTH / 2f;
+                float mapCenterZ = GridHeight * Chunk.CHUNK_WIDTH / 2f;
+                float distToCenter = Vector2.Distance(new Vector2(globalX, globalZ), new Vector2(mapCenterX, mapCenterZ));
+
+                float flatRadius = 20f;
+                float fadeRadius = 10f;
+                float flatness = 0f;
+
+                if (distToCenter < flatRadius)
+                    flatness = 1f;
+                else if (distToCenter < flatRadius + fadeRadius)
+                    flatness = Mathf.SmoothStep(1f, 0f, (distToCenter - flatRadius) / fadeRadius);
+
+                float finalHeight = Mathf.Lerp(baseHeight + mountainHeight, 4f, flatness);
+                int maxHeight = Mathf.Clamp(Mathf.FloorToInt(finalHeight), 0, Chunk.CHUNK_HEIGHT - 1);
+
+                // 블록 생성
                 for (int y = 0; y < Chunk.CHUNK_HEIGHT; y++)
                 {
                     chunk.Blocks[x, y, z] = y <= maxHeight
