@@ -1,12 +1,28 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class SkillSet : MonoBehaviour
 {
     public SkillNodeSO skillNode;
+    public Button skillButton;
 
+    private void Start()
+    {
+        skillButton = this.GetComponent<Button>();
+    }
+
+    // 버튼 클릭으로 스킬 레벨 올리기.
     public void OnClickLevelUp()
     {
-        Debug.Log("OnClickLevelUp");
-        SkillManager.instance.OnClickLevelUp(skillNode.Name);
+        if (SkillManager.instance.OnClickLevelUp(skillNode.Type, skillNode.Name))
+        {
+            skillButton.interactable = false;
+        }
+        else
+        {
+            skillButton.interactable = true;
+        }
     }
 }

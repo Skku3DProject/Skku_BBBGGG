@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     public TextMeshProUGUI[] Currencies;
+    public GameObject GameOverPanel;
     // 싱글톤
     public void Awake()
     {
@@ -24,6 +25,10 @@ public class UIManager : MonoBehaviour
     {
         Currencies[(int)currency].text = $"{value}";
     }
-    
+
+    public void UI_GameOver()
+    {
+        GameOverPanel.SetActive(true);
+    }
     
 }

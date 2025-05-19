@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SkillNodeSO_1 2
   m_EditorClassIdentifier: 
   Name: skill2
-  MaxLevel: 0
+  MaxLevel: 4
