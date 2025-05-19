@@ -16,7 +16,7 @@ public class SceneLoad : MonoBehaviour
     }
     
     // 씬 로드
-    public IEnumerator SceneLoading_Coroutine()
+    private IEnumerator SceneLoading_Coroutine()
     {
         AsyncOperation ao = SceneManager.LoadSceneAsync(NextSceneIndex);
         while (ao.isDone == false)
