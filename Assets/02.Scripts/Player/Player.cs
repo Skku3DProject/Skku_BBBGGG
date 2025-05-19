@@ -1,20 +1,19 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.Android.Gradle.Manifest;
 
 public class Player : MonoBehaviour
 {
     [Header("Player Stats")]
-    public PlayerStatsSO PlayerStats;//Ã¼·Â, ÀÌµ¿ ¼Óµµ
+    public PlayerStatsSO PlayerStats;//Ã¼ï¿½ï¿½, ï¿½Ìµï¿½ ï¿½Óµï¿½
 
     [Header("Weapon")]
     public List<WeaponAttackSO> Weapons = new List<WeaponAttackSO>();
     [SerializeField]
-    private int _currentWeaponIndex = 0;//ÇöÀç ¹«±â ÀÎµ¦½º 0ÀÌ °Ë
+    private int _currentWeaponIndex = 0;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ 0ï¿½ï¿½ ï¿½ï¿½
 
     [SerializeField]
-    private WeaponAttackSO _currnetWeapon;//ÇöÀç ¹«±â
+    private WeaponAttackSO _currnetWeapon;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 
     private float _currentHealth;
@@ -34,14 +33,14 @@ public class Player : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
 
         _currnetWeapon = Weapons[_currentWeaponIndex];
-        Debug.Log($"ÇöÀç ¹«±â : {_currnetWeapon.WeaponName}");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : {_currnetWeapon.WeaponName}");
 
     }
 
 
     private void Update()
     {
-        //¹Ù´Ú È®ÀÎ
+        //ï¿½Ù´ï¿½ È®ï¿½ï¿½
         _isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
 
         if(_isGrounded && _velocity.y < 0)
@@ -49,19 +48,19 @@ public class Player : MonoBehaviour
             _velocity.y = -2f;
         }
 
-        //ÀÔ·Â
-        float x = Input.GetAxis("Horizontal");//ÁÂ/¿ì
-        float z = Input.GetAxis("Vertical");//À§/¾Æ·¡
+        //ï¿½Ô·ï¿½
+        float x = Input.GetAxis("Horizontal");//ï¿½ï¿½/ï¿½ï¿½
+        float z = Input.GetAxis("Vertical");//ï¿½ï¿½/ï¿½Æ·ï¿½
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        //ÀÌµ¿
+        //ï¿½Ìµï¿½
         _characterController.Move(move * PlayerStats.MoveSpeed * Time.deltaTime);
 
-        //Á¡ÇÁ
+        //ï¿½ï¿½ï¿½ï¿½
         if(Input.GetButtonDown("Jump") && _isGrounded)
         {
-            Debug.Log("¶¥¿¡ ´ê¾ÒÀ¸´Ï Á¡ÇÁ°¡´É");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             _velocity.y = Mathf.Sqrt(PlayerStats.JumpPower * -2f * _gravity);
         }
 
@@ -71,10 +70,10 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("QÅ° ´­¸²");
+            Debug.Log("QÅ° ï¿½ï¿½ï¿½ï¿½");
             _currentWeaponIndex = (_currentWeaponIndex + 1) % Weapons.Count;
             _currnetWeapon = Weapons[_currentWeaponIndex];
-            Debug.Log($"¹«±â º¯°æ: {_currnetWeapon.WeaponName}");
+            Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: {_currnetWeapon.WeaponName}");
         }
     }
 }

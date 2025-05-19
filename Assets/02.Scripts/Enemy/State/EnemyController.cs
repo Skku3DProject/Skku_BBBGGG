@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -22,7 +21,7 @@ public class EnemyController : MonoBehaviour//, ITickable
 
     private Enemy _enemy;
     private Vector3 _gravityVelocity;
-    private const float GRAVITY = -9.8f; // Áß·Â
+    private const float GRAVITY = -9.8f; // ï¿½ß·ï¿½
 
     public void Awake()
     {
@@ -34,7 +33,7 @@ public class EnemyController : MonoBehaviour//, ITickable
     private void Initialize()
     {
         _stateMap = new Dictionary<EEnemyState, IFSM>();
-        // µñ¼Å³Ê¸®¿¡ »óÅÂ °´Ã¼ µî·Ï
+        // ï¿½ï¿½Å³Ê¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½
         foreach (EEnemyState state in _enemy.EnemyData.AvailableStates)
         {
             _stateMap[state] = CreateStateInstance(state);
@@ -79,9 +78,9 @@ public class EnemyController : MonoBehaviour//, ITickable
 
     private void ChangeState(EEnemyState nextState)
     {
-        // ÇöÀç »óÅÂ Á¾·á
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         _stateMap[_currentState].End();
-        // »õ »óÅÂ ÁøÀÔ
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         _currentState = nextState;
         _stateMap[_currentState].Start();
     }
@@ -126,11 +125,11 @@ public class EnemyController : MonoBehaviour//, ITickable
             _gravityVelocity.y = -2f;
         }
         
-        _enemy.CharacterController.Move(_gravityVelocity * Time.deltaTime);         // Áß·Â ÀÌµ¿ ¹Ý¿µ
+        _enemy.CharacterController.Move(_gravityVelocity * Time.deltaTime);         // ï¿½ß·ï¿½ ï¿½Ìµï¿½ ï¿½Ý¿ï¿½
     }
 
     /*
- // LOD ¼³Á¤: Near/Mid/Far °Å¸®
+ // LOD ï¿½ï¿½ï¿½ï¿½: Near/Mid/Far ï¿½Å¸ï¿½
  [SerializeField] float nearDistance = 10f;
  [SerializeField] float midDistance = 20f;
  [SerializeField] float farDistance = 40f;
@@ -152,7 +151,7 @@ public class EnemyController : MonoBehaviour//, ITickable
  {
      get
      {
-         // °¢ ·¹º§ÀÇ ÃÖ´ë °Å¸® ±âÁØ ¹ÝÈ¯
+         // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
          return LodLevel == 0 ? nearDistance
               : LodLevel == 1 ? midDistance
                                : farDistance;
