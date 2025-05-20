@@ -4,23 +4,28 @@ public class ProjectileBase : MonoBehaviour
 {
     [Header("참조")]
     [SerializeField] protected GameObject HitVfxPrefab;
-
+    [SerializeField] private LayerMask _groundMask;
 
     [Header("설정")]
     public float gravity = -9.81f;
     public float flightTime = 1.5f; // 화살이 목표지점까지 날아가는 시간
-    public float damage = 30f;
 
-    private Vector3 _velocity;
+    protected TowerData _data;
     private Vector3 _target;
+    private Vector3 _velocity;
     private float _timer;
     private Vector3 _gravityVector;
 
-    public void Init(Vector3 startPos, Vector3 targetPos, float flightDuration, float damageAmount)
+    private void OnEnable()
+    {
+        _timer = 0f;
+    }
+
+    public void Init(Vector3 startPos, Vector3 targetPos, float flightDuration, TowerData data)
     {
         _target = targetPos;
         flightTime = flightDuration;
-        damage = damageAmount;
+        _data = data;
 
         transform.position = startPos;
 
@@ -31,25 +36,37 @@ public class ProjectileBase : MonoBehaviour
 
     void Update()
     {
-        // 위치 이동
         _velocity += _gravityVector * Time.deltaTime;
         transform.position += _velocity * Time.deltaTime;
 
-        // 회전 방향 조정
         if (_velocity != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(_velocity);
 
         _timer += Time.deltaTime;
-        if (_timer > flightTime + 0.5f) // 여유시간 지나면 제거
+
+        // flightTime 이후부터 일정 시간 동안 계속 충돌 검사 시도
+        if (_timer > flightTime && _timer <= flightTime + 5f && !_checkedGroundHit)
         {
-            Destroy(gameObject);
+            if (CheckGroundHit()) // true면 충돌 성공
+            {
+                _checkedGroundHit = true;
+                ObjectPool.Instance.ReturnToPool(gameObject);
+                //Destroy(gameObject);
+            }
+        }
+
+        // 검사 실패한 채로 너무 오래되면 삭제
+        if (_timer > flightTime + 10f)
+        {
+            ObjectPool.Instance.ReturnToPool(gameObject);
+            //Destroy(gameObject);
         }
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
         Debug.Log("Hit");
+        //상속받은 클래스에서 구현
     }
-
 
     private Vector3 CalculateLaunchVelocity(Vector3 start, Vector3 end, float time)
     {
@@ -66,5 +83,33 @@ public class ProjectileBase : MonoBehaviour
         result.y = vY;
 
         return result;
+    }
+
+    private bool _checkedGroundHit = false;
+
+    protected virtual bool CheckGroundHit()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 2f, _groundMask))
+        {
+            Debug.Log("Raycast Hit Ground: " + hit.collider.name);
+
+            OnGroundHit(hit);
+            //if (HitVfxPrefab)
+            //{
+            //    Instantiate(HitVfxPrefab, hit.point, Quaternion.identity);
+            //}
+
+            return true; // 충돌 성공
+        }
+
+        return false; // 충돌 못 함
+    }
+    protected virtual void OnGroundHit(RaycastHit hit)
+    {
+        if (HitVfxPrefab)
+        {
+            ObjectPool.Instance.GetObject(HitVfxPrefab,hit.point, Quaternion.identity);
+            //Instantiate(HitVfxPrefab, hit.point, Quaternion.identity);
+        }
     }
 }

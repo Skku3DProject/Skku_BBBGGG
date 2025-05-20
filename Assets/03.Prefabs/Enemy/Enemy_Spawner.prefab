@@ -44,3 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63e9f608e69d014082922df76966485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PreSetList:
+  - {fileID: 2793227069020429809, guid: 582b4b30dfb5c2640b20c015e032f8c8, type: 3}
+  - {fileID: 7429422838566746885, guid: 1868b18290bd0934d8c5589f962c407d, type: 3}
+  - {fileID: 1919701108089533735, guid: 31f70267f6d6411458186a29d3e3b1a8, type: 3}
+  SpawnerSo: {fileID: 11400000, guid: 29838d33611a9d043a484316821b7919, type: 2}
+  MaxSpawnCount: 10

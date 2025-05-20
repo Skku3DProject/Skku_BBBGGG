@@ -9,7 +9,7 @@ public class EnemyAttackState : IFSM
     }
     public void Start()
     {
-
+        _enemy.Animator.SetTrigger("Attack");
     }
 
     public EEnemyState Update()

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Data;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -11,7 +13,7 @@ public enum EEnemyState
     Die,
 }
 
-public class EnemyController : MonoBehaviour//, ITickable
+public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
 {
     private EEnemyState _currentState = EEnemyState.Idle;
     public EEnemyState CurrentState => _currentState;
@@ -20,8 +22,7 @@ public class EnemyController : MonoBehaviour//, ITickable
     public Dictionary<EEnemyState, IFSM> StateMap;
 
     private Enemy _enemy;
-    private Vector3 _gravityVelocity;
-    private const float GRAVITY = -9.8f; // ï¿½ß·ï¿½
+
 
     public void Awake()
     {
@@ -30,10 +31,10 @@ public class EnemyController : MonoBehaviour//, ITickable
     }
 
 
-    private void Initialize()
+    public void Initialize()
     {
         _stateMap = new Dictionary<EEnemyState, IFSM>();
-        // ï¿½ï¿½Å³Ê¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½
+        // µñ¼Å³Ê¸®¿¡ »óÅÂ °´Ã¼ µî·Ï
         foreach (EEnemyState state in _enemy.EnemyData.AvailableStates)
         {
             _stateMap[state] = CreateStateInstance(state);
@@ -62,12 +63,12 @@ public class EnemyController : MonoBehaviour//, ITickable
         _currentState = EEnemyState.Idle;
         _stateMap[_currentState].Start();
 
+        _enemy.Initialize();
     }
 
 
     public void Update()
     {
-        Gravity();
         EEnemyState nextState = _stateMap[_currentState].Update();
         if (nextState != _currentState)
         {
@@ -78,9 +79,9 @@ public class EnemyController : MonoBehaviour//, ITickable
 
     private void ChangeState(EEnemyState nextState)
     {
-        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ÇöÀç »óÅÂ Á¾·á
         _stateMap[_currentState].End();
-        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // »õ »óÅÂ ÁøÀÔ
         _currentState = nextState;
         _stateMap[_currentState].Start();
     }
@@ -114,22 +115,39 @@ public class EnemyController : MonoBehaviour//, ITickable
         return null;
     }
 
-    private void Gravity()
+
+    public void TakeDamage(Damage damage)
     {
-        if (!_enemy.CharacterController.isGrounded)
+        if (_currentState == EEnemyState.Damaged || _currentState == EEnemyState.Die)
         {
-            _gravityVelocity.y += GRAVITY * Time.deltaTime;
+            return;
         }
-        else if (_gravityVelocity.y < 0)
+
+        // ³Ë¹é
+        Vector3 dir = (damage.from.transform.position - transform.position) * -1;
+        dir.Normalize();
+        _enemy.CharacterController.Move(dir * damage.KnockbackPower * Time.deltaTime);
+
+        _enemy.TakeDamage(damage);
+
+        if (_enemy.Health <= 0)
         {
-            _gravityVelocity.y = -2f;
+            ChangeState(EEnemyState.Die);
+          //  _enemy.Animator.SetTrigger("Die");
+            return;
         }
-        
-        _enemy.CharacterController.Move(_gravityVelocity * Time.deltaTime);         // ï¿½ß·ï¿½ ï¿½Ìµï¿½ ï¿½Ý¿ï¿½
+
+        ChangeState(EEnemyState.Damaged);
+
+    }
+    
+    public void EndAnimEvent()
+    {
+        ChangeState(_currentState);
     }
 
     /*
- // LOD ï¿½ï¿½ï¿½ï¿½: Near/Mid/Far ï¿½Å¸ï¿½
+ // LOD ¼³Á¤: Near/Mid/Far °Å¸®
  [SerializeField] float nearDistance = 10f;
  [SerializeField] float midDistance = 20f;
  [SerializeField] float farDistance = 40f;
@@ -151,7 +169,7 @@ public class EnemyController : MonoBehaviour//, ITickable
  {
      get
      {
-         // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
+         // °¢ ·¹º§ÀÇ ÃÖ´ë °Å¸® ±âÁØ ¹ÝÈ¯
          return LodLevel == 0 ? nearDistance
               : LodLevel == 1 ? midDistance
                                : farDistance;

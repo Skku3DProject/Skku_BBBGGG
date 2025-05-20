@@ -14,5 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AvailableStates: 0000000001000000020000000300000004000000
   EnemyType: 0
+  EnemyAttackType: 0
   Health: 100
+  KnockbackPower: 100
+  Power: 10
+  FindDistance: 7
+  AttackDistance: 3
+  MovePointDistance: 0.1
+  SeparationDistance: 5
   Speed: 5
+  Gravity: -9.8
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  SeparationWeight: 1
+  GoalWeight: 1

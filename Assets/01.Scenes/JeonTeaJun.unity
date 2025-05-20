@@ -267,7 +267,6 @@ GameObject:
   - component: {fileID: 370242817}
   - component: {fileID: 370242816}
   - component: {fileID: 370242815}
-  - component: {fileID: 370242814}
   - component: {fileID: 370242820}
   - component: {fileID: 370242819}
   m_Layer: 8
@@ -277,29 +276,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!136 &370242814
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370242813}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &370242815
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -695,13 +671,25 @@ MonoBehaviour:
     PreviewMaterial: {fileID: 2100000, guid: 42686453fd10be94596308afe274de6d, type: 2}
     Size: 2
     YOffset: -1.2
+  - DisplayName: IceTower
+    Prefab: {fileID: 6274716828977566885, guid: b77a326378c568b4a850380441811ce2, type: 3}
+    PreviewPrefab: {fileID: 6274716828977566885, guid: d01033e58b9c9494e8459fe3b6332c80, type: 3}
+    PreviewMaterial: {fileID: 2100000, guid: 42686453fd10be94596308afe274de6d, type: 2}
+    Size: 2
+    YOffset: -1.2
+  - DisplayName: MeleeUnit
+    Prefab: {fileID: 9088597168546649585, guid: fe76534508f9a014fb18391afdc57912, type: 3}
+    PreviewPrefab: {fileID: 9088597168546649585, guid: dd711091053cd1342b7ed51b220d50bc, type: 3}
+    PreviewMaterial: {fileID: 2100000, guid: 42686453fd10be94596308afe274de6d, type: 2}
+    Size: 2
+    YOffset: -1.8
   SelectedTypeIndex: 0
   GroundMask:
     serializedVersion: 2
     m_Bits: 9
   ObstacleMask:
     serializedVersion: 2
-    m_Bits: 16
+    m_Bits: 64
 --- !u!1 &1548886111
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,12 +743,16 @@ MonoBehaviour:
   ChunkLayer:
     serializedVersion: 2
     m_Bits: 8
-  Distance: 50
-  GrassPrefab: {fileID: 4569295655211456005, guid: 403a5055922ec0e4eb2f6ed427208efc, type: 3}
-  TreePrefab: {fileID: 3299460309311030865, guid: ba6a3796f5464cf468d3459b2b74b1b6, type: 3}
-  GrassDensity: 0.01
-  TreeDensity: 0.005
-  NoiseScale: 0.005
+  Distance: 100
+  GrassPrefab: {fileID: 4375382654496483180, guid: fe4ddc300bb879c4f860a9a1954689fb, type: 3}
+  MushroomPrefab: {fileID: 4569295655211456005, guid: 403a5055922ec0e4eb2f6ed427208efc, type: 3}
+  TreePrefab: {fileID: 3086538645063425187, guid: 17a7eacbeefbb2443868f4ebe1bfb9f6, type: 3}
+  IronstonePrefab: {fileID: 3277944643622535537, guid: 8580aac6a440f3d4d8f5eb5b24dcf094, type: 3}
+  GrassDensity: 0.05
+  MusroomDensity: 0.0025
+  TreeDensity: 0.0025
+  IronstoneDensity: 0.0001
+  NoiseScale: 0.0025
 --- !u!114 &1548886114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,6 +767,78 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageEffectPrefab: {fileID: 705482296758908922, guid: 53dcd343c6d8abb4fb5bfd87ec3ccd62, type: 3}
   BreakEffectPrefab: {fileID: 6345542107821751849, guid: f6bb8ea7102744a4496710ef687b9e38, type: 3}
+--- !u!1 &1841954487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1841954488}
+  - component: {fileID: 1841954489}
+  m_Layer: 0
+  m_Name: TowerObjectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1841954488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841954487}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1841954489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841954487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7285fffecec555c4baba7336c45e5259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolEntries:
+  - key: Arrow
+    prefab: {fileID: 201242786739422658, guid: 3e04495c1e2e00c40bbed2572f137ae5, type: 3}
+    size: 50
+  - key: Fireball
+    prefab: {fileID: 3607720602487732084, guid: c5a96a3518351d04b8312ae163491fc0, type: 3}
+    size: 50
+  - key: Iceball
+    prefab: {fileID: 8762545296013883577, guid: 48abb01ae3edc5f4eb1fe4a84e7646b2, type: 3}
+    size: 50
+  - key: ArrowTower
+    prefab: {fileID: 634377025880031044, guid: 764b9e4879abdb143872fe11a3900d14, type: 3}
+    size: 10
+  - key: FireballTower
+    prefab: {fileID: 9166186074018161065, guid: 78dc8f41cee61a141a2f556bff02ef4b, type: 3}
+    size: 10
+  - key: FireballHitVfx
+    prefab: {fileID: 753054468046317402, guid: 8694715191a75d54a99a8ce36938677b, type: 3}
+    size: 50
+  - key: ArrowHitVfx
+    prefab: {fileID: 413363037028580369, guid: 0b16f2a754c93a3489d2710cb137fdab, type: 3}
+    size: 50
+  - key: FireballHitVfx
+    prefab: {fileID: 753054468046317402, guid: 8694715191a75d54a99a8ce36938677b, type: 3}
+    size: 50
+  - key: IceballHitVfx
+    prefab: {fileID: 3892346015597751503, guid: 45ba2a0f5fe3ce34d8465de6dc8c2fd2, type: 3}
+    size: 50
 --- !u!1 &1926255565
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,3 +971,4 @@ SceneRoots:
   - {fileID: 1548886112}
   - {fileID: 370242817}
   - {fileID: 398035816}
+  - {fileID: 1841954488}

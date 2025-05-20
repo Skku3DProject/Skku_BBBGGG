@@ -7,6 +7,10 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI[] Currencies;
     public GameObject GameOverPanel;
+    
+    public TextMeshProUGUI Timer;
+    public TextMeshProUGUI Stage;
+    public TextMeshProUGUI Phase;
     // 싱글톤
     public void Awake()
     {
@@ -31,5 +35,19 @@ public class UIManager : MonoBehaviour
     {
         GameOverPanel.SetActive(true);
     }
-    
+
+    public void UI_TimerRefresh(float time)
+    {
+        Timer.text = $"{(int)time}";
+    }
+
+    public void UI_Stage(EStageType stage)
+    {
+        Stage.text = stage.ToString();
+    }
+
+    public void UI_Phase(EPhaseType phase)
+    {
+        Phase.text = phase.ToString();
+    }
 }

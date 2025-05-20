@@ -1,79 +1,61 @@
-using NUnit.Framework;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
     [Header("Player Stats")]
-    public PlayerStatsSO PlayerStats;//Ã¼ï¿½ï¿½, ï¿½Ìµï¿½ ï¿½Óµï¿½
+    public PlayerStatsSO PlayerStats;
 
-    [Header("Weapon")]
-    public List<WeaponAttackSO> Weapons = new List<WeaponAttackSO>();
-    [SerializeField]
-    private int _currentWeaponIndex = 0;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ 0ï¿½ï¿½ ï¿½ï¿½
-
-    [SerializeField]
-    private WeaponAttackSO _currnetWeapon;//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-
-
-    private float _currentHealth;
-    
-    private CharacterController _characterController;
+    private float _gravity = -9.81f;
     private Vector3 _velocity;
     private bool _isGrounded;
-    private float _gravity = -9.81f;
+    private CharacterController _characterController;
+    private Animator _playerAnimator;
 
+    [Header("Ground Check")]
     public Transform GroundCheck;
     public float GroundDistance = 0.4f;
     public LayerMask GroundMask;
 
+
+
     private void Start()
     {
-
         _characterController = GetComponent<CharacterController>();
-
-        _currnetWeapon = Weapons[_currentWeaponIndex];
-        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : {_currnetWeapon.WeaponName}");
-
+        _playerAnimator = GetComponent<Animator>();
     }
-
 
     private void Update()
     {
-        //ï¿½Ù´ï¿½ È®ï¿½ï¿½
+        // ¹Ù´Ú Ã¼Å©
         _isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
 
-        if(_isGrounded && _velocity.y < 0)
+  
+        if (_isGrounded && _velocity.y < 0)
         {
             _velocity.y = -2f;
         }
 
-        //ï¿½Ô·ï¿½
-        float x = Input.GetAxis("Horizontal");//ï¿½ï¿½/ï¿½ï¿½
-        float z = Input.GetAxis("Vertical");//ï¿½ï¿½/ï¿½Æ·ï¿½
+        // ÀÌµ¿ ÀÔ·Â
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
-
-        //ï¿½Ìµï¿½
         _characterController.Move(move * PlayerStats.MoveSpeed * Time.deltaTime);
 
-        //ï¿½ï¿½ï¿½ï¿½
-        if(Input.GetButtonDown("Jump") && _isGrounded)
+        // ¾Ö´Ï¸ÞÀÌ¼Ç Ã³¸®
+        float moveSpeed = new Vector2(x, z).magnitude;
+        _playerAnimator.SetFloat("MoveSpeed", moveSpeed, 0.1f, Time.deltaTime); // ºÎµå·¯¿î ÀüÈ¯
+
+        // Á¡ÇÁ
+        if (Input.GetButtonDown("Jump") && _isGrounded)
         {
-            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+
             _velocity.y = Mathf.Sqrt(PlayerStats.JumpPower * -2f * _gravity);
         }
 
-
+        // Áß·Â
         _velocity.y += _gravity * Time.deltaTime;
         _characterController.Move(_velocity * Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Debug.Log("QÅ° ï¿½ï¿½ï¿½ï¿½");
-            _currentWeaponIndex = (_currentWeaponIndex + 1) % Weapons.Count;
-            _currnetWeapon = Weapons[_currentWeaponIndex];
-            Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: {_currnetWeapon.WeaponName}");
-        }
     }
 }

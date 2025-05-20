@@ -1,18 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum GameState
+{
+    Ready,
+    Run,
+    Pause,
+    GameOver
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
-    public enum GameState
-    {
-        Ready,
-        Run,
-        Pause,
-        GameOver
-    }
-    
     public GameState CurrentState = GameState.Ready;
     
     // 싱글톤
@@ -32,6 +31,22 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (CurrentState == GameState.Run)
+        {
+            StartGame();
+        }
+    }
+    
+    //현재 게임 상태 변경하기
+    public void ChangeState(GameState newState)
+    {
+        if (CurrentState == newState)
+        {
+            return;
+        }
+        
+        CurrentState = newState;
+        
         switch (CurrentState)
         {
             case GameState.Run:
@@ -51,26 +66,30 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void ChangeState(GameState newState)
-    {
-        CurrentState = newState;
-    }
     // 게임 시작 => 설치하는 순간 게임 시작? 
     private void StartGame()
     {
+        Time.timeScale = 1;
         _timer += Time.deltaTime;
     }
     // 거점이 파괴되면 게임오버
     private void GameOver()
     {
-        CurrentState = GameState.GameOver;
         UIManager.instance.UI_GameOver();
     }
     // 게임 pause 
     private void PauseGame()
-    {
-        CurrentState = GameState.Pause;
+    {   
+        PopUpManager.Instance.Open(EPopupType.UI_OptionPopup, ContinueGame);
+        Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
+    }
+    // 게임 계속하기
+    private void ContinueGame()
+    {
+        CurrentState = GameState.Run;
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1;
     }
     // 게임 재시작 = 로딩 씬으로 이동 -> 버튼으로 구현 예정
     public void RestartGame()
