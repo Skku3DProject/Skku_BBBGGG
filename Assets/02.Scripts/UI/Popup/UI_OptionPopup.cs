@@ -9,6 +9,7 @@ public class UI_OptionPopup : UI_Popup
 
     public void OnClickContinue()
     {
+        gameObject.SetActive(false);
         GameManager.instance.ChangeState(GameManager.GameState.Run);
     }
 

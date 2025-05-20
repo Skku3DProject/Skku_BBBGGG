@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
     // 게임 계속하기
     private void ContinueGame()
     {
+        CurrentState = GameState.Run;
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;
     }
