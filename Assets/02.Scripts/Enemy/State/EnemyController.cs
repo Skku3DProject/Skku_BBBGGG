@@ -21,8 +21,7 @@ public class EnemyController : MonoBehaviour//, ITickable
     public Dictionary<EEnemyState, IFSM> StateMap;
 
     private Enemy _enemy;
-    private Vector3 _gravityVelocity;
-    private const float GRAVITY = -9.8f; // 중력
+
 
     public void Awake()
     {
@@ -31,7 +30,7 @@ public class EnemyController : MonoBehaviour//, ITickable
     }
 
 
-    private void Initialize()
+    public void Initialize()
     {
         _stateMap = new Dictionary<EEnemyState, IFSM>();
         // 딕셔너리에 상태 객체 등록
@@ -63,12 +62,12 @@ public class EnemyController : MonoBehaviour//, ITickable
         _currentState = EEnemyState.Idle;
         _stateMap[_currentState].Start();
 
+        _enemy.Initialize();
     }
 
 
     public void Update()
     {
-        Gravity();
         EEnemyState nextState = _stateMap[_currentState].Update();
         if (nextState != _currentState)
         {
@@ -115,18 +114,35 @@ public class EnemyController : MonoBehaviour//, ITickable
         return null;
     }
 
-    private void Gravity()
+
+    public void TakeDamage(Damage damage)
     {
-        if (!_enemy.CharacterController.isGrounded)
+        if (_currentState == EEnemyState.Damaged || _currentState == EEnemyState.Die)
         {
-            _gravityVelocity.y += GRAVITY * Time.deltaTime;
+            return;
         }
-        else if (_gravityVelocity.y < 0)
+
+        // 넉백
+        Vector3 dir = (damage.from.transform.position - transform.position) * -1;
+        dir.Normalize();
+        _enemy.CharacterController.Move(dir * damage.KnockbackPower * Time.deltaTime);
+
+        _enemy.TakeDamage(damage);
+
+        if (_enemy.Health <= 0)
         {
-            _gravityVelocity.y = -2f;
+            ChangeState(EEnemyState.Die);
+          //  _enemy.Animator.SetTrigger("Die");
+            return;
         }
-        
-        _enemy.CharacterController.Move(_gravityVelocity * Time.deltaTime);         // 중력 이동 반영
+
+        ChangeState(EEnemyState.Damaged);
+
+    }
+    
+    public void EndAnimEvent()
+    {
+        ChangeState(_currentState);
     }
 
     /*

@@ -478,6 +478,37 @@ Transform:
   - {fileID: 8676736451579141653}
   m_Father: {fileID: 2964123932955317038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6132498972628905622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8551100245870876881}
+  m_Layer: 0
+  m_Name: HPBarPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8551100245870876881
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6132498972628905622}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3652210565809594555}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7429422838566746885
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,6 +522,7 @@ GameObject:
   - component: {fileID: 1789035704521965049}
   - component: {fileID: 5579543091692692224}
   - component: {fileID: 5941470335209132552}
+  - component: {fileID: 882713787657196194}
   m_Layer: 0
   m_Name: Normal_RangedAttackEnemy
   m_TagString: Enemy
@@ -511,6 +543,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8551100245870876881}
   - {fileID: 1724166025837749322}
   - {fileID: 7350642928653968686}
   m_Father: {fileID: 0}
@@ -525,7 +558,7 @@ Animator:
   m_GameObject: {fileID: 7429422838566746885}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 3dc717adf98c7b043a3e77ed0130d470, type: 3}
-  m_Controller: {fileID: 9100000, guid: 0a15c11dbbde189499421a0ca9e248fa, type: 2}
+  m_Controller: {fileID: 9100000, guid: e58bf4525b7cc80459d6f7ff033ea067, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -562,8 +595,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: 9731ed1adb9e75045a2bace310d24ac2, type: 2}
+  GravityVelocity: {x: 0, y: 0, z: 0}
+  others: []
   CharacterController: {fileID: 0}
   Animator: {fileID: 0}
+  UI_EnemyHpbar: {fileID: 0}
+  UI_offset: {fileID: 8551100245870876881}
 --- !u!143 &5941470335209132552
 CharacterController:
   m_ObjectHideFlags: 0
@@ -585,10 +622,24 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 1
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &882713787657196194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7429422838566746885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ea8d8499f77fc45a482d30e854d027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Collider: {fileID: 0}
+  Prefab: {fileID: 5567141573365586511, guid: 3ac66729e1b79d54ead15483d62c4379, type: 3}
 --- !u!1 &7641909615770404320
 GameObject:
   m_ObjectHideFlags: 0
