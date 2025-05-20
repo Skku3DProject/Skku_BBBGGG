@@ -149,5 +149,9 @@ public class StageManager : MonoBehaviour
     {
         _allEnemiesDead = true;
     }
-    
+
+    public EStageType GetCurrentStage()
+    {
+        return _currentStage;
+    }
 }

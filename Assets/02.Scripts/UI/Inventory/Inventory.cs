@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < _slots.Length; i++)
         {
-            if (_slots[i].TempItem == null)
+            if (_slots[i].ItemTemp == null)
             {
                 _slots[i].AddItem(item);
                 return;
