@@ -66,8 +66,10 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(Damage damage)
     {
+       
         _health -= damage.Value;
         UI_EnemyHpbar.UpdateHealth(_health / _maxHealth);
+        Debug.Log($"TakeDamageEnemy HP: {_health}");
     }
 
   

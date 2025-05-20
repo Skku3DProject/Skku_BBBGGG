@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class TowerBase : MonoBehaviour, DamageAble
+public abstract class TowerBase : MonoBehaviour, IDamageAble
 {
 
     [Header("µ•¿Ã≈∏")]

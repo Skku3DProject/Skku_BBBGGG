@@ -13,10 +13,11 @@ public class Arrow : ProjectileBase
     {
         base.OnTriggerEnter(other);
 
-        if (other.TryGetComponent<DamageAble>(out var d))
+        if (other.TryGetComponent<IDamageAble>(out var d))
         {
+            Debug.Log("HitEnemy");
             //d.TakeDamage(damage);
-
+            d.TakeDamage(new Damage(_data.Damage, gameObject));
         }
         if (HitVfxPrefab)
         {

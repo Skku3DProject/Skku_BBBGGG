@@ -35,6 +35,9 @@ public class EnemySpawner : MonoBehaviour
                 _enemys.Add(enemy);
             }
         }
+
+        StageManager.instance.OnCombatStart += Spawn;
+
     }
 
     private void Awake()
@@ -42,26 +45,29 @@ public class EnemySpawner : MonoBehaviour
        
     }
 
+
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Spawn();
-        }
+        
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    Spawn();
+        //}
 
         if(Input.GetKeyDown(KeyCode.L))
         {
                 Initialize();
         }
 
-        if(Input.GetMouseButtonDown(0))
-        {
-            foreach(Enemy enemy in _enemys)
-            {
-                Damage damage = new Damage(10, gameObject, 100);
-                enemy.GetComponent<EnemyController>().TakeDamage(damage);
-            }
-        }
+        //if(Input.GetMouseButtonDown(0))
+        //{
+        //    foreach(Enemy enemy in _enemys)
+        //    {
+        //        Damage damage = new Damage(10, gameObject, 100);
+        //        enemy.GetComponent<EnemyController>().TakeDamage(damage);
+        //    }
+        //}
     }
 
     public void Spawn()

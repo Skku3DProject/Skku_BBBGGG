@@ -60,6 +60,7 @@ public class BlockSystem : MonoBehaviour
             PlaceBlock(worldPos, VoxelType.Air);
         }
     }
+
     public static void DamageBlocksInRadius(Vector3 center, float radius, int damage)
     {
         int minX = Mathf.FloorToInt(center.x - radius);

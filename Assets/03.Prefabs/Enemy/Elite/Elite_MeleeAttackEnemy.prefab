@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 669514577915571294}
   - component: {fileID: 3506382804730177720}
   - component: {fileID: 7326836371724971513}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Elite_MeleeAttackEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}

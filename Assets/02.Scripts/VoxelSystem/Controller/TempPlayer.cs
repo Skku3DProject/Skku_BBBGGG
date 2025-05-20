@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class TempPlayer : MonoBehaviour, DamageAble
+public class TempPlayer : MonoBehaviour, IDamageAble
 {
     [Header("Movement Settings")]
     public float walkSpeed = 5f;
@@ -19,7 +19,6 @@ public class TempPlayer : MonoBehaviour, DamageAble
 
     public void TakeDamage(Damage damage)
     {
-        throw new System.NotImplementedException();
     }
 
     void Start()

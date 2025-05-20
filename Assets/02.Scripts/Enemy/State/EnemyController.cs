@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data;
 using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
@@ -12,7 +13,7 @@ public enum EEnemyState
     Die,
 }
 
-public class EnemyController : MonoBehaviour//, ITickable
+public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
 {
     private EEnemyState _currentState = EEnemyState.Idle;
     public EEnemyState CurrentState => _currentState;

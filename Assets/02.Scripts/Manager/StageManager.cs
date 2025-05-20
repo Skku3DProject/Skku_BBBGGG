@@ -55,15 +55,16 @@ public class StageManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        _currentPhase = EPhaseType.None;
-        _currentStage = EStageType.Tutorial;
+        _currentPhase = EPhaseType.Ready;
+        _currentStage = EStageType.Stage1;
     }
 
     private void Start()
     {
-        UIManager.instance.UI_TimerRefresh(_timer);
-        UIManager.instance.UI_Phase(_currentPhase);
-        UIManager.instance.UI_Stage(_currentStage);
+        _timer = _readyTime;
+        //UIManager.instance.UI_TimerRefresh(_timer);
+        //UIManager.instance.UI_Phase(_currentPhase);
+        //UIManager.instance.UI_Stage(_currentStage);
     }
 
     private void Update()
@@ -72,23 +73,23 @@ public class StageManager : MonoBehaviour
         {
             case EPhaseType.Ready:
                 _timer -= Time.deltaTime;
-                UIManager.instance.UI_TimerRefresh(_timer);
+                //UIManager.instance.UI_TimerRefresh(_timer);
                 if (_timer <= 0)
                 {
                     CombatStart();
-                    UIManager.instance.UI_Phase(_currentPhase);
+                    //UIManager.instance.UI_Phase(_currentPhase);
                 }
 
                 break;
             
             case EPhaseType.Combat:
                 _timer -= Time.deltaTime;
-                UIManager.instance.UI_TimerRefresh(_timer);
+                //UIManager.instance.UI_TimerRefresh(_timer);
                 
                 if (_timer <= 0 || _allEnemiesDead)
                 {
                     CombatEnd();
-                    UIManager.instance.UI_Phase(_currentPhase);
+                    //UIManager.instance.UI_Phase(_currentPhase);
                 }
                 break;
             
@@ -100,9 +101,9 @@ public class StageManager : MonoBehaviour
         _currentStage = EStageType.Stage1;
         _currentPhase = EPhaseType.Ready;
         _timer = _readyTime;
-        UIManager.instance.UI_Stage(_currentStage);
-        UIManager.instance.UI_Phase(_currentPhase);
-        UIManager.instance.UI_TimerRefresh(_timer);
+        //UIManager.instance.UI_Stage(_currentStage);
+        //UIManager.instance.UI_Phase(_currentPhase);
+        //UIManager.instance.UI_TimerRefresh(_timer);
     }
 
     private void StartReadyPhase()
@@ -139,9 +140,9 @@ public class StageManager : MonoBehaviour
         {
             Debug.Log("스테이지 끝");
         }
-        UIManager.instance.UI_TimerRefresh(_timer);
-        UIManager.instance.UI_Phase(_currentPhase);
-        UIManager.instance.UI_Stage(_currentStage);
+        //UIManager.instance.UI_TimerRefresh(_timer);
+        //UIManager.instance.UI_Phase(_currentPhase);
+        //UIManager.instance.UI_Stage(_currentStage);
     }
 
     public void OnAllEnemiesDefeated()

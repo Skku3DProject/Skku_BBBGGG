@@ -14,12 +14,13 @@ public class FireBall : ProjectileBase
         Collider[] targets = Physics.OverlapSphere(hit.point, _data.SplashRadius, targetMask);
         foreach (var col in targets)
         {
-            if (col.TryGetComponent<DamageAble>(out var target))
+            Debug.Log("aaa");
+            if (col.TryGetComponent<IDamageAble>(out var target))
             {
-                //target.TakeDamage(damage);
+                target.TakeDamage(new Damage(_data.Damage, gameObject));
             }
         }
-        BlockSystem.DamageBlocksInRadius(hit.point, 3, 10);
+        //BlockSystem.DamageBlocksInRadius(hit.point, 3, 10);
 
         //Vector3Int blockPos = Vector3Int.FloorToInt(hit.point);
         //BlockSystem.DamageBlock(blockPos, 10);
@@ -29,16 +30,17 @@ public class FireBall : ProjectileBase
     {
         base.OnTriggerEnter(other);
 
-        if (other.CompareTag("Player")) // 트리거 시작점 확인용
+        if (other.CompareTag("Enemy")) // 트리거 시작점 확인용
         {
 
             // 주변 범위 내 대상 탐색
             Collider[] hits = Physics.OverlapSphere(transform.position, _data.SplashRadius, targetMask);
             foreach (var hit in hits)
             {
-                if (hit.TryGetComponent<DamageAble>(out var d))
+                Debug.Log("aaa");
+                if (hit.TryGetComponent<IDamageAble>(out var d))
                 {
-                    //d.TakeDamage(damage);
+                    d.TakeDamage(new Damage(_data.Damage,gameObject));
                 }
             }
         }

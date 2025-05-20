@@ -523,7 +523,7 @@ GameObject:
   - component: {fileID: 5579543091692692224}
   - component: {fileID: 5941470335209132552}
   - component: {fileID: 882713787657196194}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Normal_RangedAttackEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}

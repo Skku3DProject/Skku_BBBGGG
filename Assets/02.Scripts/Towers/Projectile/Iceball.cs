@@ -14,7 +14,7 @@ public class Iceball : ProjectileBase
         Collider[] targets = Physics.OverlapSphere(hit.point, _data.SplashRadius, targetMask);
         foreach (var col in targets)
         {
-            if (col.TryGetComponent<DamageAble>(out var target))
+            if (col.TryGetComponent<IDamageAble>(out var target))
             {
                 //target.TakeDamage(damage);
                 // 데미지말고 빙결처리
@@ -34,7 +34,7 @@ public class Iceball : ProjectileBase
             Collider[] hits = Physics.OverlapSphere(transform.position, _data.SplashRadius, targetMask);
             foreach (var hit in hits)
             {
-                if (hit.TryGetComponent<DamageAble>(out var d))
+                if (hit.TryGetComponent<IDamageAble>(out var d))
                 {
                     //d.TakeDamage(damage);
                 }
