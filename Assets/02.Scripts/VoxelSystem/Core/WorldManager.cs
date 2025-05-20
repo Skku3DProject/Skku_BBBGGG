@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Drawing;
-using UnityEditor;
 using UnityEngine;
 
 public class WorldManager : MonoBehaviour
@@ -21,9 +19,13 @@ public class WorldManager : MonoBehaviour
 
     [Header("식물 프리팹, 배치 설정")]
     public GameObject GrassPrefab;
+    public GameObject MushroomPrefab;
     public GameObject TreePrefab;
+    public GameObject IronstonePrefab;
     [Range(0f, 1f)] public float GrassDensity = 0.2f;
+    [Range(0f, 1f)] public float MusroomDensity = 0.2f;
     [Range(0f, 1f)] public float TreeDensity = 0.05f;
+    [Range(0f, 1f)] public float IronstoneDensity = 0.05f;
 
     [Header("지형 노이즈")]
     public float NoiseScale = 0.1f;
@@ -63,7 +65,7 @@ public class WorldManager : MonoBehaviour
         PopulateBlocksCustomNoise(chunk, coord);
 
         chunk.BuildMesh();
-        SpawnVegetation(chunk);
+        SpawnEnvironmentObjects(chunk);
 
         BlockController.RegisterChunk(coord, chunk);
         _chunks.Add(coord, chunk);
@@ -213,7 +215,7 @@ public class WorldManager : MonoBehaviour
             }
         }
     }
-    private void SpawnVegetation(Chunk chunk)
+    private void SpawnEnvironmentObjects(Chunk chunk)
     {
         for (int x = 1; x <= Chunk.CHUNK_WIDTH; x++)
         {
@@ -230,6 +232,14 @@ public class WorldManager : MonoBehaviour
                 else if (r < GrassDensity + TreeDensity)
                 {
                     Instantiate(TreePrefab, basePos, Quaternion.identity, chunk.transform);
+                }
+                else if (r < GrassDensity + TreeDensity + MusroomDensity)
+                {
+                    Instantiate(MushroomPrefab, basePos, Quaternion.identity, chunk.transform);
+                }
+                else if (r < GrassDensity + TreeDensity + MusroomDensity + IronstoneDensity)
+                {
+                    Instantiate(IronstonePrefab, basePos, Quaternion.identity, chunk.transform);
                 }
             }
         }

@@ -60,7 +60,32 @@ public class BlockSystem : MonoBehaviour
             PlaceBlock(worldPos, VoxelType.Air);
         }
     }
+    public static void DamageBlocksInRadius(Vector3 center, float radius, int damage)
+    {
+        int minX = Mathf.FloorToInt(center.x - radius);
+        int maxX = Mathf.CeilToInt(center.x + radius);
+        int minY = Mathf.FloorToInt(center.y - radius);
+        int maxY = Mathf.CeilToInt(center.y + radius);
+        int minZ = Mathf.FloorToInt(center.z - radius);
+        int maxZ = Mathf.CeilToInt(center.z + radius);
 
+        for (int x = minX; x <= maxX; x++)
+        {
+            for (int y = minY; y <= maxY; y++)
+            {
+                for (int z = minZ; z <= maxZ; z++)
+                {
+                    Vector3Int blockPos = new Vector3Int(x, y, z);
+                    float distance = Vector3.Distance(center, blockPos + Vector3.one * 0.5f); // 블럭 중심 기준
+
+                    if (distance <= radius)
+                    {
+                        BlockSystem.DamageBlock(blockPos, damage);
+                    }
+                }
+            }
+        }
+    }
     // 블럭 타입 조회
     public static bool GetBlockType(Vector3Int worldPos, out VoxelType type)
     {

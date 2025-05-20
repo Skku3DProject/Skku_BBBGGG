@@ -2,22 +2,27 @@ using UnityEngine;
 
 public class Arrow : ProjectileBase
 {
+    protected override void OnGroundHit(RaycastHit hit)
+    {
+        base.OnGroundHit(hit);
 
+        Vector3Int blockPos = Vector3Int.FloorToInt(hit.point+hit.normal*-0.5f);
+        BlockSystem.DamageBlock(blockPos, 10);
+    }
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
 
-        Debug.Log("Hit Player");
         if (other.TryGetComponent<DamageAble>(out var d))
         {
-            Debug.Log("Hit Player");
             //d.TakeDamage(damage);
 
         }
         if (HitVfxPrefab)
         {
-            Instantiate(HitVfxPrefab, other.transform);
+            ObjectPool.Instance.GetObject(HitVfxPrefab, other.transform.position, other.transform.rotation);
+            //Instantiate(HitVfxPrefab, other.transform);
         }
-        Destroy(gameObject);
+        ObjectPool.Instance.ReturnToPool(gameObject);//Destroy(gameObject);
     }
 }
