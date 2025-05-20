@@ -11,6 +11,9 @@ public enum EquipmentType
 }
 public class PlayerEquipmentController : MonoBehaviour
 {
+    public static PlayerEquipmentController Instance;
+
+
     [Header("장비 오브젝트")]
     public GameObject Sword;
     public GameObject Shield;
@@ -29,6 +32,8 @@ public class PlayerEquipmentController : MonoBehaviour
 
     void Start()
     {
+        Instance = this;
+
         _playerAnimation = GetComponent<Animator>();
         SetEquipment(_currentEquipType);
     }
@@ -92,5 +97,12 @@ public class PlayerEquipmentController : MonoBehaviour
             string currentLayerName = _playerAnimation.GetLayerName(i);
             _playerAnimation.SetLayerWeight(i, currentLayerName == layerName ? 1f : 0f);
         }
+    }
+
+    public EquipmentType GetCurrentEquipType()
+    {
+        Debug.Log("현재 무기 타입은" + _currentEquipType + "입니다.");
+        return _currentEquipType;
+        
     }
 }
