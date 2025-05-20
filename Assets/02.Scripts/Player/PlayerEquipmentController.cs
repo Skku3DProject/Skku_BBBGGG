@@ -18,8 +18,7 @@ public class PlayerEquipmentController : MonoBehaviour
     public GameObject Bow;
     public GameObject Magic;
 
-    [Header("애니메이터")]
-    public Animator animator;
+    private Animator _playerAnimation;
 
     // 현재 장비 타입
     private EquipmentType _currentEquipType = EquipmentType.Sword;
@@ -30,6 +29,7 @@ public class PlayerEquipmentController : MonoBehaviour
 
     void Start()
     {
+        _playerAnimation = GetComponent<Animator>();
         SetEquipment(_currentEquipType);
     }
 
@@ -87,10 +87,10 @@ public class PlayerEquipmentController : MonoBehaviour
 
     private void ActivateAnimationLayer(string layerName)
     {
-        for (int i = 0; i < animator.layerCount; i++)
+        for (int i = 0; i < _playerAnimation.layerCount; i++)
         {
-            string currentLayerName = animator.GetLayerName(i);
-            animator.SetLayerWeight(i, currentLayerName == layerName ? 1f : 0f);
+            string currentLayerName = _playerAnimation.GetLayerName(i);
+            _playerAnimation.SetLayerWeight(i, currentLayerName == layerName ? 1f : 0f);
         }
     }
 }
