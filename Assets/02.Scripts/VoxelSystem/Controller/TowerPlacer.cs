@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class VoxelBuildingPlacer : MonoBehaviour
+public class TowerPlacer : MonoBehaviour
 {
     [Header("건물 타입 목록")]
     public List<BuildingType> BuildingTypes;
@@ -153,7 +153,8 @@ public class VoxelBuildingPlacer : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && _canPlace)
         {
-            Instantiate(CurrentType.Prefab, _previewInstance.transform.position, _previewInstance.transform.rotation);
+            //Instantiate(CurrentType.Prefab, _previewInstance.transform.position, _previewInstance.transform.rotation);
+            ObjectPool.Instance.GetObject(CurrentType.Prefab, _previewInstance.transform.position, _previewInstance.transform.rotation);
             BuildModeManager.Instance.SetBuildMode(false);
             DestroyPreview();
         }

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3166923966814029748}
   - component: {fileID: 4654151712415159084}
   - component: {fileID: 8947343031961797218}
-  - component: {fileID: 5661417267993569027}
   m_Layer: 7
   m_Name: Arrow
   m_TagString: Untagged
@@ -129,27 +128,6 @@ MonoBehaviour:
     m_Bits: 8
   gravity: -9.81
   flightTime: 1
---- !u!65 &5661417267993569027
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201242786739422658}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.35211062, y: 0.19481605, z: 2.0386677}
-  m_Center: {x: 0, y: 0.0070905983, z: 0.0025105476}
 --- !u!1 &7167320434398291595
 GameObject:
   m_ObjectHideFlags: 0

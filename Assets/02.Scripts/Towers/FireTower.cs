@@ -7,8 +7,7 @@ public class FireTower : TowerBase
         base.Attack();
         Vector3 startPos = _topTowerTransform.position;
         GameObject arrow = ObjectPool.Instance.GetObject(_bulletPrefab,startPos,Quaternion.identity);//Instantiate(_bulletPrefab, startPos, Quaternion.identity);
-
-        arrow.GetComponent<ProjectileBase>().Init(
+        arrow.GetComponent<ProjectileBase>()?.Init(
             startPos,
             _attackRange.NearEnemy.position,
             flightDuration: 1.5f,

@@ -27,7 +27,6 @@ public abstract class TowerBase : MonoBehaviour, DamageAble
     protected virtual void OnEnable()
     {
         _currentHealth = _data.Health;
-
         _attackTimer = _data.AttackRate;
     }
 
@@ -75,6 +74,11 @@ public abstract class TowerBase : MonoBehaviour, DamageAble
     public void TakeDamage(Damage damage)
     {
         _currentHealth -= damage.Value;
+
+        if(_currentHealth<=0)
+        {
+            ObjectPool.Instance.ReturnToPool(gameObject);
+        }
     }
 
 

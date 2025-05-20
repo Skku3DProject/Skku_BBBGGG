@@ -671,13 +671,25 @@ MonoBehaviour:
     PreviewMaterial: {fileID: 2100000, guid: 42686453fd10be94596308afe274de6d, type: 2}
     Size: 2
     YOffset: -1.2
+  - DisplayName: IceTower
+    Prefab: {fileID: 6274716828977566885, guid: b77a326378c568b4a850380441811ce2, type: 3}
+    PreviewPrefab: {fileID: 6274716828977566885, guid: d01033e58b9c9494e8459fe3b6332c80, type: 3}
+    PreviewMaterial: {fileID: 2100000, guid: 42686453fd10be94596308afe274de6d, type: 2}
+    Size: 2
+    YOffset: -1.2
+  - DisplayName: MeleeUnit
+    Prefab: {fileID: 9088597168546649585, guid: fe76534508f9a014fb18391afdc57912, type: 3}
+    PreviewPrefab: {fileID: 9088597168546649585, guid: dd711091053cd1342b7ed51b220d50bc, type: 3}
+    PreviewMaterial: {fileID: 2100000, guid: 42686453fd10be94596308afe274de6d, type: 2}
+    Size: 2
+    YOffset: -1.8
   SelectedTypeIndex: 0
   GroundMask:
     serializedVersion: 2
     m_Bits: 9
   ObstacleMask:
     serializedVersion: 2
-    m_Bits: 16
+    m_Bits: 64
 --- !u!1 &1548886111
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,17 +818,26 @@ MonoBehaviour:
   - key: Fireball
     prefab: {fileID: 3607720602487732084, guid: c5a96a3518351d04b8312ae163491fc0, type: 3}
     size: 50
+  - key: Iceball
+    prefab: {fileID: 8762545296013883577, guid: 48abb01ae3edc5f4eb1fe4a84e7646b2, type: 3}
+    size: 50
   - key: ArrowTower
     prefab: {fileID: 634377025880031044, guid: 764b9e4879abdb143872fe11a3900d14, type: 3}
     size: 10
   - key: FireballTower
     prefab: {fileID: 9166186074018161065, guid: 78dc8f41cee61a141a2f556bff02ef4b, type: 3}
     size: 10
+  - key: FireballHitVfx
+    prefab: {fileID: 753054468046317402, guid: 8694715191a75d54a99a8ce36938677b, type: 3}
+    size: 50
   - key: ArrowHitVfx
     prefab: {fileID: 413363037028580369, guid: 0b16f2a754c93a3489d2710cb137fdab, type: 3}
     size: 50
   - key: FireballHitVfx
     prefab: {fileID: 753054468046317402, guid: 8694715191a75d54a99a8ce36938677b, type: 3}
+    size: 50
+  - key: IceballHitVfx
+    prefab: {fileID: 3892346015597751503, guid: 45ba2a0f5fe3ce34d8465de6dc8c2fd2, type: 3}
     size: 50
 --- !u!1 &1926255565
 GameObject:
