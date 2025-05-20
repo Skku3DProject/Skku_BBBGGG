@@ -1,18 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum GameState
+{
+    Ready,
+    Run,
+    Pause,
+    GameOver
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
-    public enum GameState
-    {
-        Ready,
-        Run,
-        Pause,
-        GameOver
-    }
-    
     public GameState CurrentState = GameState.Ready;
     
     // 싱글톤
@@ -37,6 +36,8 @@ public class GameManager : MonoBehaviour
             StartGame();
         }
     }
+    
+    //현재 게임 상태 변경하기
     public void ChangeState(GameState newState)
     {
         if (CurrentState == newState)

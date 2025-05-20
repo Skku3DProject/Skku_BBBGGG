@@ -45,7 +45,7 @@ public class PopUpManager : MonoBehaviour
             }
             else
             {
-                GameManager.instance.ChangeState(GameManager.GameState.Pause);
+                GameManager.instance.ChangeState(GameState.Pause);
             }
         }
     }
