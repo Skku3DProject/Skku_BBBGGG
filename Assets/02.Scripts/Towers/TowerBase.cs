@@ -72,9 +72,9 @@ public abstract class TowerBase : MonoBehaviour, DamageAble
     {
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(Damage damage)
     {
-        _currentHealth -= damage;
+        _currentHealth -= damage.Value;
     }
 
 

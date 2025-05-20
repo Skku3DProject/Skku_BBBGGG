@@ -17,7 +17,7 @@ public class TempPlayer : MonoBehaviour, DamageAble
     private float xRotation = 0f;
     private Vector3 velocity;
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(Damage damage)
     {
         throw new System.NotImplementedException();
     }
