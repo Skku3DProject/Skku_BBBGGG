@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerStatsSO
   m_EditorClassIdentifier: 
   MaxHealth: 100
-  MoveSpeed: 2
+  MoveSpeed: 3
   JumpPower: 1
