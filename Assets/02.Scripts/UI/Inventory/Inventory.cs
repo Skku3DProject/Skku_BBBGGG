@@ -18,6 +18,8 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         _slots = _inventoryBase.GetComponentsInChildren<Slot>();
+        TestAcquire();
+        TestAcquire2();
     }
 
     private void Update()
