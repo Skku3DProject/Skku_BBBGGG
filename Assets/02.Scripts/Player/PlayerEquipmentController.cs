@@ -30,6 +30,10 @@ public class PlayerEquipmentController : MonoBehaviour
     private EquipmentType[] weapons = { EquipmentType.Sword, EquipmentType.Bow, EquipmentType.Magic };
     private EquipmentType tool = EquipmentType.Pickaxe;
 
+    //무기 이름과 공격력
+    public List<WeaponAttackSO> WeaponAttackSO;
+
+
     void Start()
     {
         Instance = this;
@@ -105,4 +109,43 @@ public class PlayerEquipmentController : MonoBehaviour
         return _currentEquipType;
         
     }
+
+
+    //현재 장비에 맞는 공격력 변환
+    public float GetCurrentWeaponAttackPower()
+    {
+        /*foreach (var weaponSO in WeaponAttackSO)
+        {
+            Debug.Log($"무기 이름 확인: {weaponSO.WeaponName}, 공격력: {weaponSO.AttackPower}");
+            if (weaponSO.WeaponName==_currentEquipType.ToString())
+            {
+                Debug.Log($"매칭된 무기 공격력 반환: {weaponSO.AttackPower}");
+                return weaponSO.AttackPower;
+            }
+        }
+
+        return 0f;*/
+
+        Debug.Log($"공격력 요청: 현재 장착 장비 타입은 {_currentEquipType}");
+
+        if (WeaponAttackSO == null || WeaponAttackSO.Count == 0)
+        {
+            Debug.LogWarning("WeaponAttackSO 리스트가 비어 있음!");
+            return 0f;
+        }
+
+        foreach (var weaponSO in WeaponAttackSO)
+        {
+            Debug.Log($"WeaponSO: 이름={weaponSO.WeaponName}, 공격력={weaponSO.AttackPower}");
+
+            if (weaponSO.WeaponName.Trim().ToLower() == _currentEquipType.ToString().ToLower())
+            {
+                Debug.Log($"매칭 성공: {weaponSO.WeaponName}의 공격력은 {weaponSO.AttackPower}");
+                return weaponSO.AttackPower;
+            }
+        }
+
+        Debug.LogWarning("공격력 매칭 실패: 해당 무기 이름이 없음");
+        return 0f;
+    }//-> PlayerAttact에서 사용중
 }

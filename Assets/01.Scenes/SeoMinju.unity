@@ -282,6 +282,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3951229398020017800, guid: 45288819fde2143449a96207b14db0bb, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -304,6 +308,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2066896392038628118, guid: 45288819fde2143449a96207b14db0bb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1206173872}
+    - targetCorrespondingSourceObject: {fileID: 3951229398020017800, guid: 45288819fde2143449a96207b14db0bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1264207100}
+    - targetCorrespondingSourceObject: {fileID: 3951229398020017800, guid: 45288819fde2143449a96207b14db0bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1264207101}
+    - targetCorrespondingSourceObject: {fileID: 3951229398020017800, guid: 45288819fde2143449a96207b14db0bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1264207106}
+    - targetCorrespondingSourceObject: {fileID: 3951229398020017800, guid: 45288819fde2143449a96207b14db0bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1264207105}
   m_SourcePrefab: {fileID: 100100000, guid: 45288819fde2143449a96207b14db0bb, type: 3}
 --- !u!1 &638317671 stripped
 GameObject:
@@ -525,6 +541,11 @@ MonoBehaviour:
   Pickaxe: {fileID: 1264207096}
   Bow: {fileID: 1264207096}
   Magic: {fileID: 1264207096}
+  WeaponAttackSO:
+  - {fileID: 11400000, guid: 19f39c83094aaeb4db1995952e4bb78a, type: 2}
+  - {fileID: 11400000, guid: 45e149caad63cbf49be3ab7e9df997bb, type: 2}
+  - {fileID: 11400000, guid: 6449af456c45c9c4790c829b81b882df, type: 2}
+  - {fileID: 11400000, guid: d2e7cc813d79aaf45b2fc6df50f1a1f2, type: 2}
 --- !u!114 &1206173870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68532376ab5ed96469c69804c9a2590d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsAttacking: 0
   SwordSlash1Effect: {fileID: 982834492}
   SwordSlash2Effect: {fileID: 982834492}
 --- !u!143 &1206173872
@@ -569,6 +591,90 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3951229398020017800, guid: 45288819fde2143449a96207b14db0bb, type: 3}
   m_PrefabInstance: {fileID: 609214345}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &1264207100
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264207096}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.00000013475967, y: -0.75, z: 0.00000029825392}
+--- !u!54 &1264207101
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264207096}
+  serializedVersion: 4
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &1264207105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264207096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d18b0ce8a9ac858469189edade66eb90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerAttack: {fileID: 1206173870}
+--- !u!65 &1264207106
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264207096}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.38924336, y: 1.3304198, z: 0.09}
+  m_Center: {x: 0.00000013475967, y: -0.49534142, z: 0.00000029825392}
 --- !u!4 &1288012915 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2325732570684588299, guid: 894285b31f621f44087dc11942be0772, type: 3}
@@ -739,6 +845,7 @@ MonoBehaviour:
   Pickaxe: {fileID: 167915030}
   Bow: {fileID: 638317671}
   Magic: {fileID: 638317671}
+  WeaponAttackSO: []
 --- !u!114 &1450241834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -751,6 +858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68532376ab5ed96469c69804c9a2590d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsAttacking: 0
   SwordSlash1Effect: {fileID: 2030406846}
   SwordSlash2Effect: {fileID: 2030406846}
 --- !u!1001 &1453309837
@@ -1289,7 +1397,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.11815226, y: -0.51202774, z: 0.19330683}
-  m_LocalScale: {x: 16, y: 1, z: 8}
+  m_LocalScale: {x: 48, y: 1, z: 40}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
