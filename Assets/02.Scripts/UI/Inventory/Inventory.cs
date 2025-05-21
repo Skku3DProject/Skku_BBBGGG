@@ -5,7 +5,7 @@ public class Inventory : MonoBehaviour
 {
     public TempItemSO test;
     public TempItemSO test2;
-
+    private int _keyOffSet = -1;
     public bool InventoryOpen = false;
     // 슬롯들 받아오기
     [SerializeField] private GameObject _inventoryBase;
@@ -13,7 +13,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject _gridSystem;
     // 슬롯들 묶음
     [SerializeField] private Slot[] _slots;
-
+    
     // 슬롯 자식들 가져오기
     private void Start()
     {
@@ -22,7 +22,37 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        OpenInventory();   
+        OpenInventory();
+        if(Input.anyKeyDown)
+        {
+            TempItemSO selectedItem = SelectSlot();
+            if (selectedItem != null)
+            {
+                Debug.Log($"{selectedItem.ItemName}");
+            }
+        }
+    }
+
+    private TempItemSO SelectSlot()
+    {
+        for (int i = 0; i < Mathf.Min(9, _slots.Length); i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            {
+                if (_keyOffSet != -1)
+                {
+                    _slots[_keyOffSet].HighlightSlot(false);
+                }
+
+                _keyOffSet = i;
+                _slots[_keyOffSet].HighlightSlot(true);
+                return _slots[_keyOffSet].ItemTemp;      
+               
+            } 
+            
+        }
+
+        return null;
     }
     // 인벤토리 온 오프
     private void OpenInventory()

@@ -11,6 +11,7 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public TempItemSO ItemTemp;
     public int ItemCount;
     public Image ItemImage;
+    public GameObject SlotHighlight;
     
     public TextMeshProUGUI ItemCountText;
     public GameObject CountText; // 숫자를 끄고 키는 용도
@@ -45,6 +46,7 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         ItemTemp = null;
         ItemCount = 0;
+        ItemCountText.text = "";
         ItemImage.sprite = null;
         SetColor(0);
     }
@@ -105,5 +107,10 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             DragSlot.instance.SlotDrag.ClearSlot();
         }
+    }
+
+    public void HighlightSlot(bool isHighlight)
+    {
+        SlotHighlight.SetActive(isHighlight);
     }
 }
