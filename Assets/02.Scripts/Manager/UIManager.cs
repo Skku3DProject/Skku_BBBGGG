@@ -27,9 +27,9 @@ public class UIManager : MonoBehaviour
     // 재화 변경
     public void RefreshCurrency()
     {
-        Currencies[0].text = $"{CurrencyManager.instance.CurrentCurrency().Gold}";
-        Currencies[1].text = $"{CurrencyManager.instance.CurrentCurrency().Wood}";
-        Currencies[2].text = $"{CurrencyManager.instance.CurrentCurrency().Stone}";
+        Currencies[0].text = $"Gold :{CurrencyManager.instance.CurrentCurrency().Gold}";
+        Currencies[1].text = $"Wood :{CurrencyManager.instance.CurrentCurrency().Wood}";
+        Currencies[2].text = $"Stone :{CurrencyManager.instance.CurrentCurrency().Stone}";
     }
     public void UI_GameOver()
     {
