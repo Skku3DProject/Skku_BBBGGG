@@ -12,10 +12,10 @@ public class UnitState
 
     public virtual void AnimFinishTrigger() => _triggerCalled = true;
 
-    public UnitState(UnitStateMachine stateMachine, Unit enemy, string animBoolName)
+    public UnitState(UnitStateMachine stateMachine, Unit unit, string animBoolName)
     {
         _stateMachine = stateMachine;
-        _unit = enemy;
+        _unit = unit;
         _animBoolName = animBoolName;
 
     }
@@ -23,8 +23,8 @@ public class UnitState
     //나중에 애니메이션 생기면 string이랑 맞춰서 쓰셈
     protected virtual void SetAnimation(bool value)
     {
-        if (!string.IsNullOrEmpty(_animBoolName))
-            _unit.Animator.SetBool(_animBoolName, value);
+        //if (!string.IsNullOrEmpty(_animBoolName))
+        //    _unit.Animator.SetBool(_animBoolName, value);
     }
 
     public virtual void Enter()

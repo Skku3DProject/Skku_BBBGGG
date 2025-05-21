@@ -2966,6 +2966,9 @@ MonoBehaviour:
   ChunkLayer:
     serializedVersion: 2
     m_Bits: 8
+  EnvirLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   MaxDistance: 4
   PlaceType: 2
 --- !u!114 &1487040166

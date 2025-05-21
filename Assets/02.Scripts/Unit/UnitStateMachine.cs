@@ -11,6 +11,7 @@ public class UnitStateMachine
 
     public void InitStateMachine(UnitState currentState, Unit enemy, Dictionary<EUnitState, UnitState> stateMap)
     {
+        Debug.Log("InitMachine");
         _currentState = currentState;
         _stateMap = stateMap;
         _enemy = enemy;

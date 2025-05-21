@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 473486661427827112}
   - component: {fileID: 2915243463548538127}
   - component: {fileID: 1287495718674177738}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 000_static_Rock_Pile_2_combined_static
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669210834781181227}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Level00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,9 +127,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 853817141630415500}
-  - component: {fileID: 7454373089583844034}
-  - component: {fileID: 7104174790939006720}
-  m_Layer: 0
+  - component: {fileID: 8835029041302085247}
+  - component: {fileID: 5283876322214081142}
+  m_Layer: 10
   m_Name: Ironstone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,8 +152,8 @@ Transform:
   - {fileID: 5232941508781461784}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &7454373089583844034
-MeshCollider:
+--- !u!65 &8835029041302085247
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -170,37 +170,26 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
---- !u!205 &7104174790939006720
-LODGroup:
+  serializedVersion: 3
+  m_Size: {x: 3.8343422, y: 2.7982295, z: 3.7412372}
+  m_Center: {x: -0.24119437, y: 0.8991147, z: -0.2418642}
+--- !u!114 &5283876322214081142
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3277944643622535537}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.2661581, y: 0.6011319, z: -0.052981377}
-  m_Size: 6.1734123
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.5
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 0}
-  - screenRelativeHeight: 0.17
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 0}
-  - screenRelativeHeight: 0.02
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 0}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca9fd31892917e42b6b9e28599eccfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currency:
+    Gold: 0
+    Wood: 0
+    Stone: 10
+  _health: 30
 --- !u!1 &3724414321715275242
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,7 +201,7 @@ GameObject:
   - component: {fileID: 515101621921550128}
   - component: {fileID: 6919326605024641852}
   - component: {fileID: 3379922591179037267}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 000_static_Rock_Pile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +285,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 490693462596501586}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Level01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +322,7 @@ GameObject:
   - component: {fileID: 1187233760996090709}
   - component: {fileID: 8424322275318109942}
   - component: {fileID: 8812398684981127218}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rock_Pile_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +518,7 @@ GameObject:
   - component: {fileID: 759036073015003930}
   - component: {fileID: 1861110078322709742}
   - component: {fileID: 4399562767449682726}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 000_static_Rock_Pile_2_combined_static
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -613,7 +602,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2366895241570300031}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: _UMS_LODs_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -647,7 +636,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5954442145563632292}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Level02
   m_TagString: Untagged
   m_Icon: {fileID: 0}

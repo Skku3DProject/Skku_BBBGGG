@@ -10,7 +10,7 @@ public class ProjectileBase : MonoBehaviour
     public float gravity = -9.81f;
     public float flightTime = 1.5f; // 화살이 목표지점까지 날아가는 시간
 
-    protected TowerData _data;
+    protected SO_TowerData _data;
     private Vector3 _target;
     private Vector3 _velocity;
     private float _timer;
@@ -21,7 +21,7 @@ public class ProjectileBase : MonoBehaviour
         _timer = 0f;
     }
 
-    public void Init(Vector3 startPos, Vector3 targetPos, float flightDuration, TowerData data)
+    public void Init(Vector3 startPos, Vector3 targetPos, float flightDuration, SO_TowerData data)
     {
         _target = targetPos;
         flightTime = flightDuration;

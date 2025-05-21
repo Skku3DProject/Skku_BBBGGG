@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TowerData", menuName = "Scriptable Objects/TowerData")]
-public class TowerData : ScriptableObject
+public class SO_TowerData : ScriptableObject
 {
     public float Health = 0f;
     public float Range = 0f;

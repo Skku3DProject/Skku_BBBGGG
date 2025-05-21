@@ -4,8 +4,8 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
 {
 
     [Header("데이타")]
-    [SerializeField] protected TowerData _data;
-    public TowerData Data => _data;
+    [SerializeField] protected SO_TowerData _data;
+    public SO_TowerData Data => _data;
 
 
     [Header("참조")]

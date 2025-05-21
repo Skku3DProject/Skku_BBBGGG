@@ -26,7 +26,7 @@ public class FireBall : ProjectileBase
                 target.TakeDamage(new Damage(_data.Damage, gameObject,5));
             }
         }
-        //BlockSystem.DamageBlocksInRadius(hit.point, 3, 10);
+        BlockSystem.DamageBlocksInRadius(hit.point, 2, 10);
 
         //Vector3Int blockPos = Vector3Int.FloorToInt(hit.point);
         //BlockSystem.DamageBlock(blockPos, 10);

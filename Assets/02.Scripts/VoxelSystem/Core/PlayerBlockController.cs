@@ -5,6 +5,7 @@ public class PlayerBlockController : MonoBehaviour
     [Header("참조")]
     public Camera PlayerCamera;
     public LayerMask ChunkLayer;
+    public LayerMask EnvirLayer;
     public float MaxDistance = 4f;
 
     [Header("복셀 세팅")]
@@ -25,6 +26,9 @@ public class PlayerBlockController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0)) // 좌클릭 → 블럭 파괴
             {
+                if (TryMineEnvironmentObject())
+                    return;
+
                 Vector3Int pos = GetTargetBlockPosition(false);
                 BlockSystem.DamageBlock(pos, 1);
             }
@@ -51,5 +55,23 @@ public class PlayerBlockController : MonoBehaviour
         float offset = placing ? 0.5f : -0.5f;
         Vector3 adjusted = hit.point + hit.normal * offset;
         return Vector3Int.FloorToInt(adjusted);
+    }
+
+    private bool TryMineEnvironmentObject()
+    {
+        Ray ray = PlayerCamera != null
+            ? PlayerCamera.ScreenPointToRay(Input.mousePosition)
+            : new Ray(transform.position, transform.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, MaxDistance, EnvirLayer))
+        {
+            if (hit.collider.TryGetComponent<WorldEnvironment>(out var mineable))
+            {
+                mineable.TakeDamage(10); // 나중에 도구별 데미지 조정 가능
+                return true;
+            }
+        }
+
+        return false;
     }
 }
