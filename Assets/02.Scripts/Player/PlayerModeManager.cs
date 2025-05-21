@@ -4,7 +4,8 @@ public enum EPlayerMode
 {
     Weapon,
     Pickaxe,
-    Build
+    Build,
+    Block
 }
 public class PlayerModeManager : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class PlayerModeManager : MonoBehaviour
             SetMode(EPlayerMode.Weapon);
         else if (Input.GetKeyDown(KeyCode.Alpha4))
             SetMode(EPlayerMode.Pickaxe);
+        else if(Input.GetKeyDown(KeyCode.Alpha5))
+            SetMode(EPlayerMode.Block);
     }
 
     public void SetMode(EPlayerMode mode)

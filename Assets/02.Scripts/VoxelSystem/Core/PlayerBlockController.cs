@@ -12,7 +12,8 @@ public class PlayerBlockController : MonoBehaviour
 
     void Update()
     {
-        if (BuildModeManager.Instance?.IsBuildMode == true)
+        // 건설 모드에서는 동작하지 않음
+        if (PlayerModeManager.Instance.CurrentMode == EPlayerMode.Build || PlayerModeManager.Instance.CurrentMode == EPlayerMode.Weapon)
             return;
 
         HandleBlockInput();
@@ -20,15 +21,21 @@ public class PlayerBlockController : MonoBehaviour
 
     private void HandleBlockInput()
     {
-        if (Input.GetMouseButtonDown(0)) // 좌클릭 → 데미지
+        if (PlayerModeManager.Instance.CurrentMode == EPlayerMode.Pickaxe)
         {
-            Vector3Int pos = GetTargetBlockPosition(false);
-            BlockSystem.DamageBlock(pos, 1);
+            if (Input.GetMouseButtonDown(0)) // 좌클릭 → 블럭 파괴
+            {
+                Vector3Int pos = GetTargetBlockPosition(false);
+                BlockSystem.DamageBlock(pos, 1);
+            }
         }
-        else if (Input.GetMouseButtonDown(1)) // 우클릭 → 설치
+        else if (PlayerModeManager.Instance.CurrentMode == EPlayerMode.Block)
         {
-            Vector3Int pos = GetTargetBlockPosition(true);
-            BlockSystem.PlaceBlock(pos, PlaceType);
+            if (Input.GetMouseButtonDown(0)) // 우클릭 → 블럭 설치
+            {
+                Vector3Int pos = GetTargetBlockPosition(true);
+                BlockSystem.PlaceBlock(pos, PlaceType);
+            }
         }
     }
 
