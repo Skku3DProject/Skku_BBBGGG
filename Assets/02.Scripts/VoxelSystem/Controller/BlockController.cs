@@ -24,9 +24,6 @@ public class BlockController : MonoBehaviour
 };
     void Update()
     {
-        if (BuildModeManager.Instance != null && BuildModeManager.Instance.IsBuildMode)
-            return;
-
         HandleBlockPlacement();
     }
     private bool HandleBlockPlacement()

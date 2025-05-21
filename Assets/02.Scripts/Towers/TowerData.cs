@@ -8,6 +8,4 @@ public class TowerData : ScriptableObject
     public float Damage = 0f;
     public float AttackRate = 0f;
     public float SplashRadius = 0f;
-
-    public int Cost;
 }

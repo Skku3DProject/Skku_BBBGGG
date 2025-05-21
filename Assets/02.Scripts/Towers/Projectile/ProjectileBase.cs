@@ -64,8 +64,7 @@ public class ProjectileBase : MonoBehaviour
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit");
-        //상속받은 클래스에서 구현
+
     }
 
     private Vector3 CalculateLaunchVelocity(Vector3 start, Vector3 end, float time)

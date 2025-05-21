@@ -10,7 +10,7 @@ public class TowerAttackRange : MonoBehaviour
     public bool CanAttakc = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Enemy"))
         {
             _targets.Add(other.transform);
             UpdateNearEnemy();
@@ -19,7 +19,7 @@ public class TowerAttackRange : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Enemy"))
         {
             _targets.Remove(other.transform);
             UpdateNearEnemy();

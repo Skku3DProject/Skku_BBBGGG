@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   Range: 20
-  Damage: 10
+  Damage: 30
   AttackRate: 1
   SplashRadius: 0
   Cost: 1

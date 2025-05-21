@@ -32,17 +32,27 @@ public class PopUpManager : MonoBehaviour
         {
             if (_openPopups.Count > 0)
             {
-                while (true)
+                while (_openPopups.Count > 0)
                 {
                     UI_Popup popup = _openPopups.Pop();
                     bool opened = popup.isActiveAndEnabled;
                     popup.Close();
 
-                    if (opened || _openPopups.Peek() == null)
-                    {
+                    // Peek() 대신 그냥 break
+                    if (opened)
                         break;
-                    }
-                } 
+                }
+                //while (true)
+                //{
+                //    UI_Popup popup = _openPopups.Pop();
+                //    bool opened = popup.isActiveAndEnabled;
+                //    popup.Close();
+
+                //    if (opened || _openPopups.Peek() == null)
+                //    {
+                //        break;
+                //    }
+                //} 
             }
             else
             {

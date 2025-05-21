@@ -162,6 +162,12 @@ public class TowerPlacer : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && _canPlace)
         {
+            if (!CurrencyManager.instance.Spend(_selectedBuilding.cost))
+            {
+                PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon); // 건설 후 무기 모드 복귀
+                return;
+            }
+
             ObjectPool.Instance.GetObject(_selectedBuilding.Prefab, _previewInstance.transform.position, _previewInstance.transform.rotation);
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon); // 건설 후 무기 모드 복귀
             DestroyPreview();

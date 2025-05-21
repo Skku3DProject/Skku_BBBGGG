@@ -10,4 +10,6 @@ public class BuildingType
     public Material PreviewMaterial;
     public int Size = 1;
     public float YOffset = 0f;
+
+    public Currency cost;
 }
