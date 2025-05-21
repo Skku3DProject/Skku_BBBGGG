@@ -26,6 +26,16 @@ public class CurrencyManager : MonoBehaviour
         Initialize();
     }
 
+    private void Start()
+    {
+        Currency currency = new Currency()
+        {
+            Gold = 1000000, Stone = 1000000, Wood = 1000000
+
+        };
+        Add(currency);
+    }
+
     private void Initialize()
     {
         _currentCurrency = new Currency()
