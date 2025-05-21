@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -7,15 +8,13 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
-    public TempItem ItemTemp;
+    public TempItemSO ItemTemp;
+    public int ItemCount;
     public Image ItemImage;
-
-    private void Start()
-    {
-        ItemTemp= GetComponentInChildren<TempItem>();
-        AddItem(ItemTemp);
-    }
-
+    
+    public TextMeshProUGUI ItemCountText;
+    public GameObject CountText; // 숫자를 끄고 키는 용도
+    
     // 아이템 먹었을 때 투명도 조절하기
     private void SetColor(float alpha)
     {
@@ -24,17 +23,28 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         ItemImage.color = color;
     }
     // 아이템 추가하기
-    public void AddItem(TempItem item)
+    public void AddItem(TempItemSO item, int count = 1)
     {
         ItemTemp = item;
         ItemImage.sprite = item.ItemImage;
-        
+        ItemCount = count;
+        if (item.ItemType != TempItemSO.ETempItemType.Equipment)
+        {
+            CountText.SetActive(true);
+            ItemCountText.text = ItemCount.ToString();
+        }
+        else
+        {
+            ItemCountText.text = "0";
+            CountText.SetActive(false);
+        }
         SetColor(1);
     }
     // 아이템이 없는 경우 초기화한다.
     public void ClearSlot()
     {
         ItemTemp = null;
+        ItemCount = 0;
         ItemImage.sprite = null;
         SetColor(0);
     }
@@ -45,7 +55,7 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             DragSlot.instance.SlotDrag = this;
             DragSlot.instance.DragSetImage(ItemImage);
-            DragSlot.instance.SetDraggedPosition(eventData);
+            DragSlot.instance.transform.position = eventData.position;
         }
     }
     // 드래그중이면
@@ -53,7 +63,7 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         if (ItemTemp != null)
         {
-            DragSlot.instance.SetDraggedPosition(eventData);
+            DragSlot.instance.transform.position = eventData.position;
         }
     }
 
@@ -66,19 +76,30 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void OnDrop(PointerEventData eventData)
     {
         if (DragSlot.instance.SlotDrag != null)
-        {
+        { 
             ChangeSlot();
         }
     }
 
+    public void SetSlotCount(int count)
+    {
+        ItemCount += count;
+        ItemCountText.text = ItemCount.ToString();
+        if (ItemCount <= 0)
+        {
+            ClearSlot();
+        }
+    }
     public void ChangeSlot()
     {
-        TempItem temp = ItemTemp;
+        TempItemSO temp = ItemTemp;
+        int tempCount = ItemCount;
         
-        AddItem(DragSlot.instance.SlotDrag.ItemTemp);
+        AddItem(DragSlot.instance.SlotDrag.ItemTemp, DragSlot.instance.SlotDrag.ItemCount);
+        
         if (temp != null)
         {
-            DragSlot.instance.SlotDrag.AddItem(temp);
+            DragSlot.instance.SlotDrag.AddItem(temp,tempCount);
         }
         else
         {

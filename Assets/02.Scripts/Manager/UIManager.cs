@@ -6,7 +6,7 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     public TextMeshProUGUI[] Currencies;
-    public GameObject GameOverPanel;
+    //public GameObject GameOverPanel;
     
     public TextMeshProUGUI Timer;
     public TextMeshProUGUI Stage;
@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour
     }
     public void UI_GameOver()
     {
-        GameOverPanel.SetActive(true);
+      //  GameOverPanel.SetActive(true);
     }
 
     public void UI_TimerRefresh(float time)

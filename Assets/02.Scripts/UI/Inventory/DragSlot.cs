@@ -8,20 +8,15 @@ public class DragSlot : MonoBehaviour
     
     public Slot SlotDrag;
 
-    [SerializeField] private Image _imageItem;
-    private RectTransform _rectTransform;
-    private Canvas _canvas;
-
+    public Image _imageItem;
     private void Start()
     {
-        instance = this;   
-        _rectTransform = GetComponent<RectTransform>();
-        _canvas = GetComponentInParent<Canvas>();
+        instance = this; 
     }
 
     public void DragSetImage(Image image)
     {
-        _imageItem = image;
+        _imageItem.sprite = image.sprite;
         SetColor(0.7f);
     }
 
@@ -30,18 +25,5 @@ public class DragSlot : MonoBehaviour
         Color color = _imageItem.color;
         color.a = alpha;
         _imageItem.color = color;
-    }
-
-    public void SetDraggedPosition(PointerEventData eventData)
-    {
-        Vector2 localPoint;
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                _canvas.transform as RectTransform,
-                eventData.position,
-                eventData.pressEventCamera, // null이면 Overlay 모드
-                out localPoint))
-        {
-            _rectTransform.localPosition = localPoint;
-        }
     }
 }
