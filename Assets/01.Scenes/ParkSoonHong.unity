@@ -739,9 +739,13 @@ MonoBehaviour:
     m_Bits: 8
   Distance: 50
   GrassPrefab: {fileID: 4569295655211456005, guid: 403a5055922ec0e4eb2f6ed427208efc, type: 3}
+  MushroomPrefab: {fileID: 0}
   TreePrefab: {fileID: 3299460309311030865, guid: ba6a3796f5464cf468d3459b2b74b1b6, type: 3}
+  IronstonePrefab: {fileID: 0}
   GrassDensity: 0.01
+  MusroomDensity: 0.2
   TreeDensity: 0.005
+  IronstoneDensity: 0.05
   NoiseScale: 0.005
 --- !u!4 &1443959129
 Transform:
