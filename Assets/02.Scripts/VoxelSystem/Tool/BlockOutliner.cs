@@ -1,11 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class BlockOutliner : MonoBehaviour
 {
-    [Header("ÂüÁ¶")]
+    [Header("ì°¸ì¡°")]
     public Camera playerCamera;
 
-    [Header("¶óÀÎ·»´õ·¯ ¼¼ÆÃ")]
+    [Header("ë¼ì¸ë Œë”ëŸ¬ ì„¸íŒ…")]
     public Material lineMaterial;
     public float lineWidth = 0.05f;
 
@@ -24,6 +24,13 @@ public class BlockOutliner : MonoBehaviour
 
     void Update()
     {
+        var mode = PlayerModeManager.Instance.CurrentMode;
+        if (mode != EPlayerMode.Pickaxe && mode != EPlayerMode.Block)
+        {
+            lr.enabled = false;
+            return;
+        }
+
         var ray = playerCamera.ScreenPointToRay(Input.mousePosition);
         if (!Physics.Raycast(ray, out var hit, 100f))
         {
@@ -31,12 +38,12 @@ public class BlockOutliner : MonoBehaviour
             return;
         }
 
-        // ºí·Ï ³»ºÎ/¿ÜºÎ ÆÇ´ÜÇÏ´Â ±âÁ¸ ¿ÀÇÁ¼Â
+        // ë¸”ë¡ ë‚´ë¶€/ì™¸ë¶€ íŒë‹¨í•˜ëŠ” ê¸°ì¡´ ì˜¤í”„ì…‹
         Vector3Int block = Vector3Int.FloorToInt(hit.point + hit.normal * -0.5f);
         Vector3 n = hit.normal;
         Vector3[] c = new Vector3[4];
 
-        // À­¸é
+        // ìœ—ë©´
         if (n == Vector3.up)
         {
             float y = block.y + 1f;
@@ -45,7 +52,7 @@ public class BlockOutliner : MonoBehaviour
             c[2] = new Vector3(block.x + 1, y, block.z + 1);
             c[3] = new Vector3(block.x, y, block.z + 1);
         }
-        // ¾Æ·§¸é
+        // ì•„ë«ë©´
         else if (n == Vector3.down)
         {
             float y = block.y;
@@ -54,7 +61,7 @@ public class BlockOutliner : MonoBehaviour
             c[2] = new Vector3(block.x + 1, y, block.z);
             c[3] = new Vector3(block.x, y, block.z);
         }
-        // ¾Õ¸é(+Z)
+        // ì•ë©´(+Z)
         else if (n == Vector3.forward)
         {
             float z = block.z + 1f;
@@ -63,7 +70,7 @@ public class BlockOutliner : MonoBehaviour
             c[2] = new Vector3(block.x + 1, block.y + 1, z);
             c[3] = new Vector3(block.x, block.y + 1, z);
         }
-        // µŞ¸é(-Z)
+        // ë’·ë©´(-Z)
         else if (n == Vector3.back)
         {
             float z = block.z;
@@ -72,7 +79,7 @@ public class BlockOutliner : MonoBehaviour
             c[2] = new Vector3(block.x, block.y + 1, z);
             c[3] = new Vector3(block.x + 1, block.y + 1, z);
         }
-        // ¿ŞÂÊ(-X)
+        // ì™¼ìª½(-X)
         else if (n == Vector3.left)
         {
             float x = block.x;
@@ -81,7 +88,7 @@ public class BlockOutliner : MonoBehaviour
             c[2] = new Vector3(x, block.y + 1, block.z + 1);
             c[3] = new Vector3(x, block.y + 1, block.z);
         }
-        // ¿À¸¥ÂÊ(+X)
+        // ì˜¤ë¥¸ìª½(+X)
         else if (n == Vector3.right)
         {
             float x = block.x + 1f;
@@ -91,7 +98,7 @@ public class BlockOutliner : MonoBehaviour
             c[3] = new Vector3(x, block.y + 1, block.z + 1);
         }
 
-        // LineRenderer¿¡ Âï±â
+        // LineRendererì— ì°ê¸°
         for (int i = 0; i < 4; i++)
             lr.SetPosition(i, c[i]);
         lr.SetPosition(4, c[0]);
