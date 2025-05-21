@@ -6,6 +6,7 @@ using UnityEngine;
 public enum EPopupType
 {
     UI_OptionPopup,
+    UI_BuildMenu,
 }
 public class PopUpManager : MonoBehaviour
 {

@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class TowerPlacer : MonoBehaviour
 {
-    [Header("건물 타입 목록")]
-    public List<BuildingType> BuildingTypes;
-    public int SelectedTypeIndex = 0;
+    public static TowerPlacer Instance { get; private set; }
 
-    [Header("설치 관련")]
+    //[Header("건물 목록")]
+    //public List<BuildingType> BuildingTypes;
+
+    [Header("레이어 설정")]
     public LayerMask GroundMask;
     public LayerMask ObstacleMask;
 
@@ -15,78 +16,86 @@ public class TowerPlacer : MonoBehaviour
     private readonly Color _cannotPlaceColor = new Color(1f, 0f, 0f, 0.4f);
 
     private GameObject _previewInstance;
+    private BuildingType _selectedBuilding;
     private bool _canPlace = false;
     private Quaternion _currentRotation = Quaternion.identity;
 
-    public BuildingType CurrentType => BuildingTypes[SelectedTypeIndex];
-
-    void Update()
+    private void Awake()
     {
-        TrySetSelectedBuildingType();
-        TryToggleBuildMode();
-        TryRotatePreview();
+        Instance = this;
+    }
 
-        if (!BuildModeManager.Instance.IsBuildMode || _previewInstance == null)
+    private void OnEnable()
+    {
+        PlayerModeManager.OnModeChanged += OnModeChanged;
+    }
+
+    private void OnDisable()
+    {
+        PlayerModeManager.OnModeChanged -= OnModeChanged;
+    }
+
+    private void OnModeChanged(EPlayerMode mode)
+    {
+        if (mode != EPlayerMode.Build)
+        {
+            DestroyPreview();
+            _selectedBuilding = null;
+        }
+    }
+
+    public void SetSelectedBuilding(BuildingType building)
+    {
+        _selectedBuilding = building;
+        RefreshPreviewInstance();
+    }
+
+    private void Update()
+    {
+        if (PlayerModeManager.Instance.CurrentMode != EPlayerMode.Build || _selectedBuilding == null)
+        {
+            DestroyPreview();
             return;
+        }
+
+        TryRotatePreview();
+        if (_previewInstance == null)
+            RefreshPreviewInstance();
 
         UpdatePreviewPosition();
         HandleBuildInput();
     }
 
-    void TrySetSelectedBuildingType()
+    private void TryRotatePreview()
     {
-        for (int i = 0; i < BuildingTypes.Count; i++)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
-            {
-                SelectedTypeIndex = i;
-                RefreshPreviewInstance();
-            }
-        }
-    }
-
-    void TryToggleBuildMode()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            BuildModeManager.Instance.ToggleBuildMode();
-            if (BuildModeManager.Instance.IsBuildMode)
-                RefreshPreviewInstance();
-            else
-                DestroyPreview();
-        }
-    }
-
-    void TryRotatePreview()
-    {
-        if (BuildModeManager.Instance.IsBuildMode && _previewInstance != null && Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && _previewInstance != null)
         {
             _currentRotation *= Quaternion.Euler(0f, 90f, 0f);
             _previewInstance.transform.rotation = _currentRotation;
         }
     }
 
-    void RefreshPreviewInstance()
+    private void RefreshPreviewInstance()
     {
         DestroyPreview();
-        _previewInstance = Instantiate(CurrentType.PreviewPrefab);
+        _previewInstance = Instantiate(_selectedBuilding.PreviewPrefab);
         _currentRotation = Quaternion.identity;
         _previewInstance.transform.rotation = _currentRotation;
     }
 
-    void DestroyPreview()
+    private void DestroyPreview()
     {
         if (_previewInstance != null)
             Destroy(_previewInstance);
         _previewInstance = null;
     }
 
-    void UpdatePreviewPosition()
+    private void UpdatePreviewPosition()
     {
         if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 100f, GroundMask))
             return;
 
-        int size = CurrentType.Size;
+        int size = _selectedBuilding.Size;
         int gx = Mathf.FloorToInt(hit.point.x);
         int gz = Mathf.FloorToInt(hit.point.z);
         int startX = gx - size / 2;
@@ -95,7 +104,7 @@ public class TowerPlacer : MonoBehaviour
         if (!HasFlatGround(startX, startZ, size, hit.point.y, out float referenceY))
         {
             _canPlace = false;
-            SetPreviewColor(_previewInstance, _cannotPlaceColor, CurrentType.PreviewMaterial);
+            SetPreviewColor(_previewInstance, _cannotPlaceColor, _selectedBuilding.PreviewMaterial);
             return;
         }
 
@@ -110,23 +119,23 @@ public class TowerPlacer : MonoBehaviour
         );
 
         _canPlace = cols.Length == 0;
-        SetPreviewColor(_previewInstance, _canPlace ? _canPlaceColor : _cannotPlaceColor, CurrentType.PreviewMaterial);
+        SetPreviewColor(_previewInstance, _canPlace ? _canPlaceColor : _cannotPlaceColor, _selectedBuilding.PreviewMaterial);
     }
 
-    Vector3 CalculateFinalPosition(int startX, int startZ, int size, float baseY)
+    private Vector3 CalculateFinalPosition(int startX, int startZ, int size, float baseY)
     {
         float x = startX + size / 2f;
         float z = startZ + size / 2f;
         float yOffset = GetPreviewHeightOffset();
-        return new Vector3(x, baseY + yOffset + CurrentType.YOffset, z);
+        return new Vector3(x, baseY + yOffset + _selectedBuilding.YOffset, z);
     }
 
-    float GetPreviewHeightOffset()
+    private float GetPreviewHeightOffset()
     {
-        return CurrentType.PreviewPrefab.GetComponentInChildren<Renderer>().bounds.extents.y;
+        return _selectedBuilding.PreviewPrefab.GetComponentInChildren<Renderer>().bounds.extents.y;
     }
 
-    bool HasFlatGround(int startX, int startZ, int size, float rayY, out float referenceY)
+    private bool HasFlatGround(int startX, int startZ, int size, float rayY, out float referenceY)
     {
         referenceY = float.NaN;
 
@@ -149,18 +158,18 @@ public class TowerPlacer : MonoBehaviour
         return true;
     }
 
-    void HandleBuildInput()
+    private void HandleBuildInput()
     {
         if (Input.GetMouseButtonDown(0) && _canPlace)
         {
-            //Instantiate(CurrentType.Prefab, _previewInstance.transform.position, _previewInstance.transform.rotation);
-            ObjectPool.Instance.GetObject(CurrentType.Prefab, _previewInstance.transform.position, _previewInstance.transform.rotation);
-            BuildModeManager.Instance.SetBuildMode(false);
+            ObjectPool.Instance.GetObject(_selectedBuilding.Prefab, _previewInstance.transform.position, _previewInstance.transform.rotation);
+            PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon); // 건설 후 무기 모드 복귀
             DestroyPreview();
+            _selectedBuilding = null;
         }
     }
 
-    void SetPreviewColor(GameObject obj, Color color, Material template)
+    private void SetPreviewColor(GameObject obj, Color color, Material template)
     {
         foreach (var r in obj.GetComponentsInChildren<Renderer>())
         {
