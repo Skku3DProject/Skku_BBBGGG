@@ -72,7 +72,7 @@ MonoBehaviour:
   _data: {fileID: 11400000, guid: 2bc2a6125b19035468b4d7a3fc602f31, type: 2}
   _topTowerTransform: {fileID: 7523798364306782894}
   _bulletPrefab: {fileID: 201242786739422658, guid: 3e04495c1e2e00c40bbed2572f137ae5, type: 3}
-  sphereCollider: {fileID: 6779985095557835187}
+  _sphereCollider: {fileID: 6779985095557835187}
   _attackRange: {fileID: 1009841721324894834}
 --- !u!1 &1234248339470141580
 GameObject:

@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerBlockController : MonoBehaviour
 {
@@ -41,29 +42,37 @@ public class PlayerBlockController : MonoBehaviour
             {
                 //_player.Animator.SetTrigger("BlockPlace"); -- 나중에 블럭설치모션
 
-                //TryPlaceBlock();
+                TryPlaceBlock();
             }
         }
     }
 
+    //애님 이벤트용
     private void TryPlaceBlock()
     {
         Vector3Int pos = GetTargetBlockPosition(true);
+        if (!IsWithinReach(pos))
+            return;
         BlockSystem.PlaceBlock(pos, PlaceType);
     }
-
+    //애님 이벤트용
     private void TryDestroyBlockOrMineObject()
     {
         if (TryMineEnvironmentObject())
             return;
 
         Vector3Int pos = GetTargetBlockPosition(false);
+
+        if (!IsWithinReach(pos))
+            return;
+
         BlockSystem.DamageBlock(pos, 1);
     }
 
     private Vector3Int GetTargetBlockPosition(bool placing)
     {
-        //화면 중심 좌표를 기준으로 Ray 생성
+        Vector3 playerPos = _player.transform.position;
+
         Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f);
         Ray ray = PlayerCamera != null
             ? PlayerCamera.ScreenPointToRay(screenCenter)
@@ -87,7 +96,12 @@ public class PlayerBlockController : MonoBehaviour
         //Vector3 adjusted = hit.point + hit.normal * offset;
         //return Vector3Int.FloorToInt(adjusted);
     }
-
+    private bool IsWithinReach(Vector3Int targetPos)
+    {
+        Vector3 playerPos = _player.transform.position;
+        float distance = Vector3.Distance(playerPos, targetPos + new Vector3(0.5f, 0.5f, 0.5f)); // 블럭 중심점 기준
+        return distance <= MaxDistance;
+    }
     private bool TryMineEnvironmentObject()
     {
         Ray ray = PlayerCamera != null

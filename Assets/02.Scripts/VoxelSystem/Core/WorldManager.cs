@@ -35,6 +35,8 @@ public class WorldManager : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         GenerateGrid();
         PositionPlayerAtCenter();
         PositionSpawner();
@@ -68,7 +70,7 @@ public class WorldManager : MonoBehaviour
         chunk.BuildMesh();
         SpawnEnvironmentObjects(chunk);
 
-        BlockController.RegisterChunk(coord, chunk);
+       // BlockController.RegisterChunk(coord, chunk);
         _chunks.Add(coord, chunk);
     }
 
