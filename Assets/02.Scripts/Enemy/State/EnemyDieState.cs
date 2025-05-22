@@ -10,6 +10,10 @@ public class EnemyDieState : IFSM
     public void Start()
     {
         _enemy.Animator.SetBool("IsDie",true);
+        if (_enemy.UI_EnemyHpbar != null)
+        {
+            _enemy.UI_EnemyHpbar.OnEnemyDestroyed();
+        }
     }
 
     public EEnemyState Update()

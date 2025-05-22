@@ -4,14 +4,10 @@ using UnityEngine.UI;
 public class UI_EnemyHpbar : MonoBehaviour
 {
     public Slider Slider;
-
     private Camera _mainCamera;
-
     private Enemy _enemy;
-
     private RectTransform _rt;
     private Canvas _canvas;
-
    
     private void Awake()
     {
@@ -22,7 +18,10 @@ public class UI_EnemyHpbar : MonoBehaviour
 
     private void LateUpdate()
     {
-        BillBoarding();
+        if (gameObject.activeSelf && _enemy != null)
+        {
+            BillBoarding();
+        }
     }
 
     private void BillBoarding()
@@ -43,12 +42,17 @@ public class UI_EnemyHpbar : MonoBehaviour
 
         // 3) UI 위치 반영
         _rt.anchoredPosition = localPoint;
-        
+
     }
     public void SetHpBarToEnemy(Enemy enemy)
     {
         _enemy = enemy;
         enemy.UI_EnemyHpbar = this;
+    }
+
+    public Enemy GetEnemy()
+    {
+        return _enemy;
     }
 
     public void UpdateHealth(float health)
@@ -59,6 +63,14 @@ public class UI_EnemyHpbar : MonoBehaviour
     public void Initialized()
     {
         Slider.value = 1;
-        //gameObject.SetActive(true);
+    }
+
+    // Enemy가 파괴될 때 호출
+    public void OnEnemyDestroyed()
+    {
+        if (UI_Enemy.Instance != null)
+        {
+            UI_Enemy.Instance.RemoveHpBar(_enemy);
+        }
     }
 }

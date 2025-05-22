@@ -76,7 +76,6 @@ public class UIManager : MonoBehaviour
     public void UI_TimerRefresh(float time)
     {
         Timer.text = $"{(int)time}";
-        CurrentTime.value = time;
     }
     
 }
