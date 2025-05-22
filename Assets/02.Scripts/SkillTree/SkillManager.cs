@@ -13,7 +13,7 @@ public class SkillManager : MonoBehaviour
 {
     public static SkillManager instance;
     public SkillTreeMaker[] SkillTreeMakers;
-
+    public SkillTory[] SkillTories;
     public SkillType TreeType;
     
     // 스킬 트리 생성
@@ -22,6 +22,9 @@ public class SkillManager : MonoBehaviour
     public SkillTree _magicSkillTree;
     
     private Dictionary<string, SkillSet> _skillSetDict = new Dictionary<string, SkillSet>();
+    
+    private SkillTory _selectskillTory;
+    
     public int SkillPoint { get; private set; }
 
     private void Awake()
@@ -44,10 +47,14 @@ public class SkillManager : MonoBehaviour
 
     private void Start()
     {
+        // 스킬 창 세팅
+        _selectskillTory = SkillTories[0];
+        // 트리 세팅
         _swordSkillTree = SkillTreeMakers[0].Skill;
         _bowSkillTree = SkillTreeMakers[1].Skill;
         _magicSkillTree = SkillTreeMakers[2].Skill;
     }
+    
     // skillset children을 찾기 위한 skillset구하기
     public void RegisterSkill(SkillSet skillSet)
     {
@@ -141,6 +148,26 @@ public class SkillManager : MonoBehaviour
         };
         
         return tree;
+    }
+
+    public void SwitchSkilltory(EquipmentType type)
+    {
+        _selectskillTory.gameObject.SetActive(false);
+        
+        switch (type)
+        {
+            case EquipmentType.Sword:
+                _selectskillTory = SkillTories[0];
+                break;
+            case EquipmentType.Bow:
+                _selectskillTory = SkillTories[1];
+                break;
+            case EquipmentType.Magic:
+                _selectskillTory = SkillTories[2];
+                break;
+        }
+        
+        _selectskillTory.gameObject.SetActive(true);
     }
 
 }

@@ -74,7 +74,6 @@ public class StageManager : MonoBehaviour
                 {
                     CombatStart();
                 }
-
                 break;
             
             case EPhaseType.Combat:
