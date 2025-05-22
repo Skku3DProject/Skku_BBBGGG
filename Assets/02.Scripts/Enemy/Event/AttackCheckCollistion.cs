@@ -2,21 +2,20 @@ using UnityEngine;
 
 public class AttackCheckCollistion : MonoBehaviour
 {
-    private Enemy _enemy;
+    private Damage _damage;
     public CapsuleCollider _capsuleCollider;
 
-    private void Awake()
+    public void Initialized(Damage damage)
     {
-        _enemy = GetComponentInParent<Enemy>();
-        _capsuleCollider = GetComponent<CapsuleCollider>();
+        _damage = damage;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<IDamageAble>(out var dmg) && other.CompareTag("Player"))
         {
-            dmg.TakeDamage(new Damage(_enemy.EnemyData.Power, _enemy.gameObject, _enemy.EnemyData.KnockbackPower));
-            _capsuleCollider.enabled = false;
+            dmg.TakeDamage(_damage);
+            gameObject.SetActive(false);
         }
     }
 }

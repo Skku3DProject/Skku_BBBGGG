@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 3a2482aacdd747840be206eaf79d751f
+AssetOrigin:
+  serializedVersion: 1
+  productId: 290680
+  packageName: KayKit - Skeletons Character Pack (for Unity)
+  packageVersion: 1.0
+  assetPath: Assets/KayKit/Characters/KayKit - Skeletons (for Unity)/Models/Accessories/Skeleton_Golem_Axe.fbx
+  uploadId: 678587
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -16,8 +23,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -107,10 +112,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 290680
-  packageName: KayKit - Skeletons Character Pack (for Unity)
-  packageVersion: 1.0
-  assetPath: Assets/KayKit/Characters/KayKit - Skeletons (for Unity)/Models/Accessories/Skeleton_Golem_Axe.fbx
-  uploadId: 678587

@@ -1,26 +1,60 @@
-using NUnit.Framework;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     // 웨이브 별로 지정된 갯수, 종류 소환
 
-    public List<GameObject> PreSetList; 
-    
+    public List<GameObject> PreSetList;
+
     private List<Enemy> _enemys;
     public List<Enemy> enemy => _enemys;
 
-    public EnemySpawnerSo SpawnerSo;
+    public List<So_EnemySpawner> SpawnerSo;
 
     public int MaxSpawnCount = 10;
 
+    private void Awake()
+    {
+
+
+    }
     private void Start()
     {
         MaxSpawnCount = MaxSpawnCount * PreSetList.Count;
+        UI_Enemy.Instance.SetHPBarMaxSize(MaxSpawnCount);
 
-        UI_Enemy.Instance.HPBarPooling(MaxSpawnCount);
+        Pool();
 
+        StageManager.instance.OnCombatStart += Spawn;
+
+    }
+
+    private void Update()
+    {
+
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    Spawn();
+        //}
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Initialize();
+        }
+
+        //if(Input.GetMouseButtonDown(0))
+        //{
+        //    foreach(Enemy enemy in _enemys)
+        //    {
+        //        Damage damage = new Damage(10, gameObject, 100);
+        //        enemy.GetComponent<EnemyController>().TakeDamage(damage);
+        //    }
+        //}
+    }
+
+    private void Pool()
+    {
         _enemys = new List<Enemy>(MaxSpawnCount);
 
         for (int i = 0; i < PreSetList.Count; i++)
@@ -35,61 +69,30 @@ public class EnemySpawner : MonoBehaviour
                 _enemys.Add(enemy);
             }
         }
-
-        StageManager.instance.OnCombatStart += Spawn;
-
     }
-
-    private void Awake()
-    {
-       
-    }
-
-
-
-    private void Update()
-    {
-        
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    Spawn();
-        //}
-
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-                Initialize();
-        }
-
-        //if(Input.GetMouseButtonDown(0))
-        //{
-        //    foreach(Enemy enemy in _enemys)
-        //    {
-        //        Damage damage = new Damage(10, gameObject, 100);
-        //        enemy.GetComponent<EnemyController>().TakeDamage(damage);
-        //    }
-        //}
-    }
-
     public void Spawn()
     {
-        // 타입 별 for문
-        for(int enemyType = 0; enemyType < (int)SpawnerSo.EnemyTypes.Count; enemyType++)
+  
+        // 현재 데이터를 읽는다.
+        int CurrentStage = (int)StageManager.instance.GetCurrentStage();
+        for (int spawnCountIndex = 0; spawnCountIndex < SpawnerSo[CurrentStage].SpawnCounts.Count; spawnCountIndex++)
         {
-            // 소환 갯수
-            for(int spawnCount = 0; spawnCount < (int)SpawnerSo.SpawnCounts[enemyType]; spawnCount++ )
+            for (int spawnCount = 0; spawnCount < SpawnerSo[CurrentStage].SpawnCounts[spawnCountIndex]; spawnCount++)
             {
-                // 타입과 공격 타입 이 같고 비활성화된 애들만 소환
-                foreach(Enemy enemy in _enemys)
+                foreach (Enemy enemy in _enemys)
                 {
-                    if(enemy.isActiveAndEnabled == false && enemy.EnemyData.EnemyAttackType == SpawnerSo.EnemyAttackTypes[enemyType] 
-                        && enemy.EnemyData.EnemyType == SpawnerSo.EnemyTypes[enemyType])
+
+                    if (SpawnerSo[CurrentStage].EnemyTypes[spawnCountIndex].name + "(Clone)" == enemy.name && enemy.isActiveAndEnabled == false)
                     {
-                        enemy.GetComponent<EnemyController>().Initialize();
+                        enemy.Initialize(); // Enemy 초기화
+                        enemy.GetComponent<EnemyController>().Initialize(); // FSM 초기화
                         enemy.gameObject.SetActive(true);
                         break;
                     }
                 }
+
             }
+          
         }
     }
 

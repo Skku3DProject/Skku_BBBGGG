@@ -24,7 +24,7 @@ public class UI_Enemy : MonoBehaviour
 
     }
 
-    public void HPBarPooling(int capacity)
+    public void SetHPBarMaxSize(int capacity)
     {
         _hpBars = new List<GameObject>(capacity);
     }

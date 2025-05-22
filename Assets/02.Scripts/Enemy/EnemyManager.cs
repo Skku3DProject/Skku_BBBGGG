@@ -19,23 +19,19 @@ public class EnemyManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    /// <summary>적 풀에 추가</summary>
     public void Register(Enemy e)
     {
         if (!_activeEnemies.Contains(e))
             _activeEnemies.Add(e);
     }
 
-    /// <summary>적 풀에서 제거</summary>
     public void Unregister(Enemy e)
     {
         if (_activeEnemies.Count <= 0) return;
         _activeEnemies.Remove(e);
     }
 
-    /// <summary>
-    /// 주어진 적을 제외한 활성화된 모든 이웃 리스트 반환
-    /// </summary>
+    // 주어진 적을 제외한 활성화된 모든 이웃 리스트 반환
     public List<Enemy> GetNeighbors(Enemy self)
     {
         // 필요에 따라 거리 필터링 등 추가 가능

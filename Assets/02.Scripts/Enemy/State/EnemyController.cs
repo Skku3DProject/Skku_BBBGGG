@@ -23,15 +23,14 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
 
     private Enemy _enemy;
 
-
-    public void Awake()
+    private void Awake()
     {
         _enemy = GetComponent<Enemy>();
+        SetState();
         Initialize();
     }
 
-
-    public void Initialize()
+    private void SetState()
     {
         _stateMap = new Dictionary<EEnemyState, IFSM>();
         // 딕셔너리에 상태 객체 등록
@@ -59,34 +58,7 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
         {
             _stateMap.Add(EEnemyState.Die, new EnemyDieState(_enemy));
         }
-
-        _currentState = EEnemyState.Idle;
-        _stateMap[_currentState].Start();
-
-        _enemy.Initialize();
     }
-
-
-    public void Update()
-    {
-        EEnemyState nextState = _stateMap[_currentState].Update();
-        if (nextState != _currentState)
-        {
-            ChangeState(nextState);
-        }
-    }
-
-
-    private void ChangeState(EEnemyState nextState)
-    {
-        // 현재 상태 종료
-        _stateMap[_currentState].End();
-        // 새 상태 진입
-        _currentState = nextState;
-        _stateMap[_currentState].Start();
-    }
-
-
     private IFSM CreateStateInstance(EEnemyState state)
     {
         switch (state)
@@ -115,7 +87,30 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
         return null;
     }
 
+    public void Initialize()
+    {
+        _currentState = EEnemyState.Idle;
+        _stateMap[_currentState].Start();
+    }
 
+    public void Update()
+    {
+        EEnemyState nextState = _stateMap[_currentState].Update();
+        if (nextState != _currentState)
+        {
+            ChangeState(nextState);
+        }
+    }
+
+    private void ChangeState(EEnemyState nextState)
+    {
+        // 현재 상태 종료
+        _stateMap[_currentState].End();
+        // 새 상태 진입
+        _currentState = nextState;
+        _stateMap[_currentState].Start();
+    }
+    
     public void TakeDamage(Damage damage)
     {
         if (_currentState == EEnemyState.Damaged || _currentState == EEnemyState.Die)
@@ -133,17 +128,14 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
         if (_enemy.Health <= 0)
         {
             ChangeState(EEnemyState.Die);
-          //  _enemy.Animator.SetTrigger("Die");
             return;
         }
 
         ChangeState(EEnemyState.Damaged);
-
     }
-    
-    public void EndAnimEvent()
+    public void EndAttackAnimEvent()
     {
-        ChangeState(_currentState);
+        ChangeState(EEnemyState.Move);
     }
 
     /*

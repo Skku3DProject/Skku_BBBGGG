@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 3da3a185f95151d41babfddd1baac4d7
+AssetOrigin:
+  serializedVersion: 1
+  productId: 290680
+  packageName: KayKit - Skeletons Character Pack (for Unity)
+  packageVersion: 1.0
+  assetPath: Assets/KayKit/Characters/KayKit - Skeletons (for Unity)/Models/Accessories/Skeleton_Shield_Large_B.fbx
+  uploadId: 678587
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -16,8 +23,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -107,10 +112,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 290680
-  packageName: KayKit - Skeletons Character Pack (for Unity)
-  packageVersion: 1.0
-  assetPath: Assets/KayKit/Characters/KayKit - Skeletons (for Unity)/Models/Accessories/Skeleton_Shield_Large_B.fbx
-  uploadId: 678587

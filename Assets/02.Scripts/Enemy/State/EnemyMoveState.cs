@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.Android.Gradle.Manifest;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyMoveState : IFSM
 {
@@ -21,27 +22,27 @@ public class EnemyMoveState : IFSM
 
     public void Start()
     {
-        Debug.Log("Move Start");
+        _enemy.Animator.SetBool("IsRun" , true);
     }
 
     public EEnemyState Update()
     {
-        _enemy.FindTarget();
-
         if (_enemy.TryAttack()) // 공격 가능 불가능
         {
+            EnemyManager.Instance.Unregister(_enemy);
             return EEnemyState.Attack;
         }
 
+        _enemy.TargetOnPlayer();
+
         MoveWithSeparationAndGravity();
 
-        _enemy.Animator.SetInteger("Speed", (int)_speed);
         return EEnemyState.Move;
     }
 
     public void End()
     {
-
+        _enemy.Animator.SetBool("IsRun", false);
     }
 
     private void MoveWithSeparationAndGravity()
@@ -70,6 +71,13 @@ public class EnemyMoveState : IFSM
         // 5) 최종 이동 및 적용
         Vector3 finalMove = moveDir * _speed + _enemy.GravityVelocity;
         _enemy.CharacterController.Move(finalMove * Time.deltaTime);
+
+        Vector3 targetPosition = _enemy.Target.transform.position;
+        targetPosition.y = _enemy.transform.position.y; // Y축 고정
+   
+        _enemy.transform.LookAt(targetPosition);
+
+
     }
 
     private Vector3 CalculateSeparation(Vector3 pos)

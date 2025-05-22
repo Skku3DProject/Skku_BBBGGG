@@ -7,10 +7,11 @@ public class EnemyIdleState : IFSM
     private Enemy _enemy;
 
     private float _timer = 0;
-    private float StartTimer = 2;
+    private float _idleTime = 2;
     public EnemyIdleState(Enemy enemy)
     {
         _enemy = enemy;
+        _idleTime = _enemy.EnemyData.IdleTime;
     }
     public void Start()
     {
@@ -22,7 +23,7 @@ public class EnemyIdleState : IFSM
         Gravity();
        
         _timer += Time.deltaTime;
-        if (_timer > StartTimer)
+        if (_timer >= _idleTime)
         {
             return EEnemyState.Move;
         }

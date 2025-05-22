@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 669514577915571294}
   - component: {fileID: 3506382804730177720}
   - component: {fileID: 7326836371724971513}
+  - component: {fileID: -5646031537131658941}
   m_Layer: 9
   m_Name: Elite_MeleeAttackEnemy
   m_TagString: Enemy
@@ -208,9 +209,22 @@ CharacterController:
   m_Radius: 2
   m_SlopeLimit: 45
   m_StepOffset: 1
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.2
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &-5646031537131658941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919701108089533735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ea8d8499f77fc45a482d30e854d027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 0}
 --- !u!1 &2314523205273505859
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,7 +567,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c8a253bc1d9e7814a87d01583a336bd9, type: 2}
+  - {fileID: 2100000, guid: 957781e2e64d0264f970dde36a30bd93, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -578,7 +592,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300000, guid: ee6e796417b82b244b6b2c8bbd78f17f, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 0f2c5202b918687408ac5bc7429a03ea, type: 3}
   m_Bones:
   - {fileID: 7352073701690266312}
   - {fileID: 809051035210119964}

@@ -19,6 +19,7 @@ public class TempPlayer : MonoBehaviour, IDamageAble
 
     public void TakeDamage(Damage damage)
     {
+        Debug.Log("PlayerHit!!!!!!!!~!");
     }
 
     void Start()

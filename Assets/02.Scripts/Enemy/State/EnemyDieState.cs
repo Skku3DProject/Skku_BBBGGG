@@ -9,7 +9,7 @@ public class EnemyDieState : IFSM
     }
     public void Start()
     {
-
+        _enemy.Animator.SetBool("IsDie",true);
     }
 
     public EEnemyState Update()
