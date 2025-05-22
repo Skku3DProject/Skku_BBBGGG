@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class SkillNode
 {
@@ -7,8 +8,13 @@ public class SkillNode
     // 데이터 고정 값
     public string Name => _data.Name;
     public int MaxLevel => _data.MaxLevel;
+    public float Cooldown => _data.Cooldown;
+    public Sprite Icon => _data.Icon;
+    
+    
     public List<SkillNode> Children {get; private set;} // 자식 스킬 목록
     public SkillNode Parent {get; private set;} // 선행 스킬 -> 먼저 필요한 스킬
+    
     
     // 변하는 데이터
     // 스킬 레벨 

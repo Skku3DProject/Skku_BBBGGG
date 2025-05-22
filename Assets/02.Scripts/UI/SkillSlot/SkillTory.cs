@@ -2,12 +2,11 @@ using System;
 using UnityEngine;
 public class SkillTory : MonoBehaviour
 {
-    public TempSkillSlot[] SkillSlot;
-    [SerializeField] private GameObject _base;
-    [SerializeField] private GameObject _gridSystem;
+    public SkillType skillType;
+    
     private void Start()
     {
-        SkillSlot = _base.GetComponentsInChildren<TempSkillSlot>();
+            
     }
     
     

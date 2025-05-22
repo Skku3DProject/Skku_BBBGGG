@@ -6,4 +6,6 @@ public class SkillNodeSO : ScriptableObject
     public SkillType Type;
     public string Name;
     public int MaxLevel;
+    public float Cooldown;
+    public Sprite Icon;
 }
