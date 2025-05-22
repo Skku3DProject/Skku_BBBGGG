@@ -26,6 +26,8 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        if (PlayerModeManager.Instance.CurrentMode != EPlayerMode.Weapon) return;
+
         if (Input.GetMouseButtonDown(0) && !IsAttacking)
         {
             if (_equipmentController.GetCurrentEquipType() == EquipmentType.Sword)

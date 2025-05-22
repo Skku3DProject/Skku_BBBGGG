@@ -44,14 +44,40 @@ public class PlayerEquipmentController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q)) // 무기 순환
+        if(Input.GetKeyDown(KeyCode.Alpha1)) // 검
         {
-            CycleWeapons();
+            PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
+            SetEquipment(EquipmentType.Sword);
         }
-        if (Input.GetKeyDown(KeyCode.E)) // 도구 활성화
+        if (Input.GetKeyDown(KeyCode.Alpha2))//활
         {
-            SetEquipment(tool);
+            PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
+            SetEquipment(EquipmentType.Bow);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha3))//지팡이
+        {
+            PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
+            SetEquipment(EquipmentType.Magic);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))//곡괭이
+        {
+            PlayerModeManager.Instance.SetMode(EPlayerMode.Pickaxe);
+            SetEquipment(EquipmentType.Pickaxe);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))//블럭
+        {
+            PlayerModeManager.Instance.SetMode(EPlayerMode.Block);
+           // SetEquipment(EquipmentType.); 큐브
+        }
+
+        //if (Input.GetKeyDown(KeyCode.Q)) // 무기 순환
+        //{
+        //    CycleWeapons();
+        //}
+        //if (Input.GetKeyDown(KeyCode.E)) // 도구 활성화
+        //{
+        //    SetEquipment(tool);
+        //}
     }
 
     private void CycleWeapons()

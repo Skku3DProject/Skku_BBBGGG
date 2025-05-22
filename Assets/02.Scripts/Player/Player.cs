@@ -13,6 +13,7 @@ public class Player : MonoBehaviour, IDamageAble
     private bool _isGrounded;
     private CharacterController _characterController;
     private Animator _playerAnimator;
+    public Animator Animator => _playerAnimator;
 
     [Header("Ground Check")]
     public Transform GroundCheck;
@@ -32,10 +33,11 @@ public class Player : MonoBehaviour, IDamageAble
 
     private void Update()
     {
-        // 바닥 체크
-        _isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
 
-  
+        // 바닥 체크
+        //_isGrounded = Physics.CheckSphere(GroundCheck.position, GroundDistance, GroundMask);
+
+
         if (_isGrounded && _velocity.y < 0)
         {
             _velocity.y = -2f;
@@ -53,7 +55,7 @@ public class Player : MonoBehaviour, IDamageAble
         _playerAnimator.SetFloat("MoveSpeed", moveSpeed, 0.1f, Time.deltaTime); // 부드러운 전환
 
         // 점프
-        if (Input.GetButtonDown("Jump") && _isGrounded)
+        if (Input.GetButtonDown("Jump") && _characterController.isGrounded)//_isGrounded)
         {
 
             _velocity.y = Mathf.Sqrt(PlayerStats.JumpPower * -2f * _gravity);

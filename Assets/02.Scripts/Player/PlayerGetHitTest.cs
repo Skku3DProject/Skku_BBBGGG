@@ -16,11 +16,11 @@ public class PlayerGetHitTest : MonoBehaviour
 
         Debug.Log("오크의 무기가 무언가에 닿음: " + other.name);
 
-        if (other.TryGetComponent<IDamageAble>(out var dmg) && other.CompareTag("Player"))
-        {
-            dmg.TakeDamage(new Damage(_enemy.EnemyData.Power, _enemy.gameObject, _enemy.EnemyData.KnockbackPower));
-            _lastHitTime = Time.time; // 마지막 충돌 시간 갱신
-        }
+        //if (other.TryGetComponent<IDamageAble>(out var dmg) && other.CompareTag("Player"))
+        //{
+        //    dmg.TakeDamage(new Damage(_enemy.EnemyData.Power, _enemy.gameObject, _enemy.EnemyData.KnockbackPower));
+        //    _lastHitTime = Time.time; // 마지막 충돌 시간 갱신
+        //}
     }
 
 
