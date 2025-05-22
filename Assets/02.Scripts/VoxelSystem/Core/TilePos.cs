@@ -34,8 +34,6 @@ public class TilePos
         {Tile.Grass, new TilePos(1,0)},
         {Tile.GrassSide, new TilePos(0,1)},
         {Tile.Stone, new TilePos(0,2)},
-        {Tile.TreeSide, new TilePos(0,4)},
-        {Tile.TreeCX, new TilePos(0,3)},
-        {Tile.Leaves, new TilePos(0,5)},
+
     };
 }

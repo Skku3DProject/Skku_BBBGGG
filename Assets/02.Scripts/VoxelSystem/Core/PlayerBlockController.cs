@@ -9,7 +9,7 @@ public class PlayerBlockController : MonoBehaviour
     public float MaxDistance = 4f;
 
     [Header("복셀 세팅")]
-    public VoxelType PlaceType = VoxelType.Grass;
+    public VoxelType PlaceType = VoxelType.Grass; // 어떤 블럭을 배치할지
 
     void Update()
     {
@@ -22,25 +22,35 @@ public class PlayerBlockController : MonoBehaviour
 
     private void HandleBlockInput()
     {
-        if (PlayerModeManager.Instance.CurrentMode == EPlayerMode.Pickaxe)
+        if (PlayerModeManager.Instance.CurrentMode == EPlayerMode.Pickaxe) // 현재 플레이어 모드를 체크하고
         {
-            if (Input.GetMouseButtonDown(0)) // 좌클릭 → 블럭 파괴
+            if (Input.GetMouseButtonDown(0)) // 좌클릭 → 블럭 파괴 or 나무나 철광석 캐기
             {
-                if (TryMineEnvironmentObject())
-                    return;
-
-                Vector3Int pos = GetTargetBlockPosition(false);
-                BlockSystem.DamageBlock(pos, 1);
+                TryDestroyBlockOrMineObject();
             }
         }
-        else if (PlayerModeManager.Instance.CurrentMode == EPlayerMode.Block)
+        else if (PlayerModeManager.Instance.CurrentMode == EPlayerMode.Block)// 현재 플레이어 모드를 체크하고
         {
             if (Input.GetMouseButtonDown(0)) // 우클릭 → 블럭 설치
             {
-                Vector3Int pos = GetTargetBlockPosition(true);
-                BlockSystem.PlaceBlock(pos, PlaceType);
+                TryPlaceBlock();
             }
         }
+    }
+
+    private void TryPlaceBlock()
+    {
+        Vector3Int pos = GetTargetBlockPosition(true);
+        BlockSystem.PlaceBlock(pos, PlaceType);
+    }
+
+    private void TryDestroyBlockOrMineObject()
+    {
+        if (TryMineEnvironmentObject())
+            return;
+
+        Vector3Int pos = GetTargetBlockPosition(false);
+        BlockSystem.DamageBlock(pos, 1);
     }
 
     private Vector3Int GetTargetBlockPosition(bool placing)
