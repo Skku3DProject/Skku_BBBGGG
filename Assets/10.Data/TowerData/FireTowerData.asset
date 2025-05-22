@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 301c573aac4b9164eb75baa7daf4195e, type: 3}
+  m_Script: {fileID: 11500000, guid: ab0229f7d27d5d0478d7254bb1dc32e9, type: 3}
   m_Name: FireTowerData
   m_EditorClassIdentifier: 
   Health: 100
-  Range: 20
-  Damage: 40
-  AttackRate: 3
-  SplashRadius: 3
-  Cost: 1
+  Range: 10
+  Damage: 30
+  AttackRate: 5
+  SplashRadius: 5
