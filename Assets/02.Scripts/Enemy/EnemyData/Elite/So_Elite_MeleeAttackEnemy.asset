@@ -16,11 +16,11 @@ MonoBehaviour:
   EnemyType: 2
   EnemyAttackType: 0
   ProjectilePrefab: {fileID: 0}
-  Health: 100
+  Health: 20
   KnockbackPower: 0
   DamageValue: 10
-  FindDistance: 15
-  AttackDistance: 5
+  FindDistance: 2
+  AttackDistance: 4
   MovePointDistance: 0.1
   SeparationDistance: 5
   AreaRange: 0

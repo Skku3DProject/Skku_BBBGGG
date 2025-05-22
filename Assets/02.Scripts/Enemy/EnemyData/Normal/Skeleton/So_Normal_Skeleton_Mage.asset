@@ -16,10 +16,10 @@ MonoBehaviour:
   EnemyType: 0
   EnemyAttackType: 0
   ProjectilePrefab: {fileID: 3607720602487732084, guid: c5a96a3518351d04b8312ae163491fc0, type: 3}
-  Health: 100
+  Health: 10
   KnockbackPower: 0
   DamageValue: 10
-  FindDistance: 50
+  FindDistance: 10
   AttackDistance: 30
   MovePointDistance: 0.1
   SeparationDistance: 3

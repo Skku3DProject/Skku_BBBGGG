@@ -8,14 +8,14 @@ public class PlayerBlockController : MonoBehaviour
     public LayerMask ChunkLayer;
     public LayerMask EnvirLayer;
     public float MaxDistance = 4f;
-    private Player _player;
+    private ThirdPersonPlayer _player;
 
     [Header("복셀 세팅")]
     public VoxelType PlaceType = VoxelType.Grass; // 어떤 블럭을 배치할지
 
     private void Awake()
     {
-        _player = GetComponent<Player>();
+        _player = GetComponent<ThirdPersonPlayer>();
     }
 
     void Update()
@@ -33,7 +33,7 @@ public class PlayerBlockController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0)) // 좌클릭 → 블럭 파괴 or 나무나 철광석 캐기
             {
-                _player.Animator.SetTrigger("PickaxeDig");
+                _player.PlayerAnimator.SetTrigger("PickaxeDig");
             }
         }
         else if (PlayerModeManager.Instance.CurrentMode == EPlayerMode.Block)// 현재 플레이어 모드를 체크하고

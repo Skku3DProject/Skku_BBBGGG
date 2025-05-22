@@ -26,7 +26,7 @@ public class FireBall : ProjectileBase
                 target.TakeDamage(new Damage(_data.Damage, gameObject,5));
             }
         }
-        BlockSystem.DamageBlocksInRadius(hit.point, 5, 10);
+        //BlockSystem.DamageBlocksInRadius(hit.point, 5, 10);
 
         //Vector3Int blockPos = Vector3Int.FloorToInt(hit.point);
         //BlockSystem.DamageBlock(blockPos, 10);
@@ -51,7 +51,7 @@ public class FireBall : ProjectileBase
                 {
                     Debug.Log("Enemy SplashDamage");
                     d.TakeDamage(new Damage(_data.Damage,gameObject,5));
-                    BlockSystem.DamageBlocksInRadius(hit.transform.position, 5, 10);
+                    //BlockSystem.DamageBlocksInRadius(hit.transform.position, 5, 10);
                 }
             }
         }

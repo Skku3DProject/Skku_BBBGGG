@@ -16,16 +16,16 @@ MonoBehaviour:
   EnemyType: 0
   EnemyAttackType: 0
   ProjectilePrefab: {fileID: 0}
-  Health: 100
+  Health: 10
   KnockbackPower: 0
   DamageValue: 10
-  FindDistance: 10
+  FindDistance: 2
   AttackDistance: 2
   MovePointDistance: 0.1
   SeparationDistance: 3
   AreaRange: 0
   IdleTime: 2
-  Speed: 6
+  Speed: 10
   Gravity: -9.8
   SearchLayerMask:
     serializedVersion: 2

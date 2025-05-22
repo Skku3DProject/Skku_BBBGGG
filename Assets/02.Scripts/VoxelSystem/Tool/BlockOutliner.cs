@@ -6,7 +6,7 @@ public class BlockOutliner : MonoBehaviour
     [Header("참조")]
     public Camera playerCamera;
     public LayerMask GroundLayer;
-    private Player _player;
+    private ThirdPersonPlayer _player;
 
     [Header("라인렌더러 세팅")]
     public Material lineMaterial;
@@ -17,7 +17,7 @@ public class BlockOutliner : MonoBehaviour
 
     void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonPlayer>();
 
         var go = new GameObject("BlockHighlighterLine");
         lr = go.AddComponent<LineRenderer>();
