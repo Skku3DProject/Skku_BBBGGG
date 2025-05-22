@@ -35,12 +35,12 @@ public class PlayerAttack : MonoBehaviour
                 if (_currentAttackIndex == 0)
                 {
                     _playerAnimation.SetTrigger("SwordAttack1");
-                    Debug.Log("1번 공격");
+                    //Debug.Log("1번 공격");
                 }
                 else
                 {
                     _playerAnimation.SetTrigger("SwordAttack2");
-                    Debug.Log("2번 공격");
+                   // Debug.Log("2번 공격");
                 }
 
                 IsAttacking = true;
@@ -51,28 +51,19 @@ public class PlayerAttack : MonoBehaviour
     //검이 적과 충돌
      public void TryDamageEnemy(GameObject enemy)
      {
-        Debug.Log("적과 충돌해서 공격할거임");
+       // Debug.Log("적과 충돌해서 공격할거임");
 
          if(!IsAttacking)
          {
              return;
          }
-
-        /*IDamageAble damageable = enemy.GetComponent<IDamageAble>();
-        if(damageable != null)
-        {
-            float attackPower = _equipmentController.GetCurrentWeaponAttackPower();
-            Damage damage = new Damage(attackPower, gameObject, 3f);
-            damageable.TakeDamage(damage);
-        }*/
-
         // 현재 무기 타입 확인
         var currentEquipType = _equipmentController.GetCurrentEquipType();
-        Debug.Log($"현재 장착 무기 타입: {currentEquipType}");
+        //Debug.Log($"현재 장착 무기 타입: {currentEquipType}");
 
         // 공격력 확인
         float attackPower = _equipmentController.GetCurrentWeaponAttackPower();
-        Debug.Log($"현재 무기 공격력: {attackPower}");
+       // Debug.Log($"현재 무기 공격력: {attackPower}");
 
         // 데미지 줄 수 있는 대상인지 확인
         IDamageAble damageable = enemy.GetComponent<IDamageAble>();
@@ -80,7 +71,7 @@ public class PlayerAttack : MonoBehaviour
         {
             Damage damage = new Damage(attackPower, gameObject, 3f);
             damageable.TakeDamage(damage);
-            Debug.Log($"공격 성공: {enemy.name}에게 {attackPower} 데미지를 줌");
+           // Debug.Log($"공격 성공: {enemy.name}에게 {attackPower} 데미지를 줌");
         }
         else
         {

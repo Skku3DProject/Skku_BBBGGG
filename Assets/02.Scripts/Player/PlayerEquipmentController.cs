@@ -105,7 +105,7 @@ public class PlayerEquipmentController : MonoBehaviour
 
     public EquipmentType GetCurrentEquipType()
     {
-        Debug.Log("현재 무기 타입은" + _currentEquipType + "입니다.");
+      //  Debug.Log("현재 무기 타입은" + _currentEquipType + "입니다.");
         return _currentEquipType;
         
     }
@@ -126,26 +126,26 @@ public class PlayerEquipmentController : MonoBehaviour
 
         return 0f;*/
 
-        Debug.Log($"공격력 요청: 현재 장착 장비 타입은 {_currentEquipType}");
+       // Debug.Log($"공격력 요청: 현재 장착 장비 타입은 {_currentEquipType}");
 
         if (WeaponAttackSO == null || WeaponAttackSO.Count == 0)
         {
-            Debug.LogWarning("WeaponAttackSO 리스트가 비어 있음!");
+           // Debug.LogWarning("WeaponAttackSO 리스트가 비어 있음!");
             return 0f;
         }
 
         foreach (var weaponSO in WeaponAttackSO)
         {
-            Debug.Log($"WeaponSO: 이름={weaponSO.WeaponName}, 공격력={weaponSO.AttackPower}");
+           // Debug.Log($"WeaponSO: 이름={weaponSO.WeaponName}, 공격력={weaponSO.AttackPower}");
 
             if (weaponSO.WeaponName.Trim().ToLower() == _currentEquipType.ToString().ToLower())
             {
-                Debug.Log($"매칭 성공: {weaponSO.WeaponName}의 공격력은 {weaponSO.AttackPower}");
+               // Debug.Log($"매칭 성공: {weaponSO.WeaponName}의 공격력은 {weaponSO.AttackPower}");
                 return weaponSO.AttackPower;
             }
         }
 
-        Debug.LogWarning("공격력 매칭 실패: 해당 무기 이름이 없음");
+        //Debug.LogWarning("공격력 매칭 실패: 해당 무기 이름이 없음");
         return 0f;
     }//-> PlayerAttact에서 사용중
 }

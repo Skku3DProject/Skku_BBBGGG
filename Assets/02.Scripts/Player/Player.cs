@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageAble
 {
+
     [Header("Player Stats")]
     public PlayerStatsSO PlayerStats;
+    private float _currnetHealth;
+
 
     private float _gravity = -9.81f;
     private Vector3 _velocity;
@@ -20,8 +23,11 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+
         _characterController = GetComponent<CharacterController>();
         _playerAnimator = GetComponent<Animator>();
+
+        _currnetHealth = PlayerStats.MaxHealth;
     }
 
     private void Update()
@@ -57,5 +63,27 @@ public class Player : MonoBehaviour
         _velocity.y += _gravity * Time.deltaTime;
         _characterController.Move(_velocity * Time.deltaTime);
 
+    }
+
+
+
+    //데미지
+    public void TakeDamage(Damage damage)
+    {
+        _currnetHealth -= damage.Value;
+        
+        Debug.Log($"플레이어 {damage.Value}만큼 피해를 입음");
+        _playerAnimator.SetTrigger("SwordGetHit");
+        if (_currnetHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    //사망
+    private void Die()
+    {
+       // _playerAnimator.SetTrigger("SwordDie");
+        Debug.Log("사망...");
     }
 }
