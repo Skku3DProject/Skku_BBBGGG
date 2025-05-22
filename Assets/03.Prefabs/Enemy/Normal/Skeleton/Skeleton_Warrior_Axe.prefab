@@ -809,9 +809,9 @@ GameObject:
   - component: {fileID: 4852719716849360044}
   - component: {fileID: 6757451426322356934}
   - component: {fileID: -7073099490491152317}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Skeleton_Warrior_Axe
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

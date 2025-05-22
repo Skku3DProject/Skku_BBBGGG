@@ -696,7 +696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolEntries:
-  - key: 
+  - key: EnemyArrow
     prefab: {fileID: 0}
     size: 0
 --- !u!4 &239722180

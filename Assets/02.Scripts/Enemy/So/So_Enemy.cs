@@ -57,6 +57,8 @@ public class So_Enemy : ScriptableObject
     [Header("분리 강도")]
     public float SeparationWeight = 1f;
     public float GoalWeight = 1f;
+    public float CohesionWeight = 1f;
+    public float AlignmentWeight = 1f;
     /*
       SeparationWeight = 0 → 분리 무시
       SeparationWeight = 1 → 분리와 목표 방향 동등 비중

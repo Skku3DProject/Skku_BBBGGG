@@ -14668,10 +14668,9 @@ MonoBehaviour:
     m_Bits: 8
   gravity: -9.81
   flightTime: 1.5
-  damageRadius: 3
   targetMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 256
 --- !u!135 &4999150927902475201
 SphereCollider:
   m_ObjectHideFlags: 0

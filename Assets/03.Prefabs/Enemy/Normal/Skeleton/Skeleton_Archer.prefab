@@ -1493,9 +1493,9 @@ GameObject:
   - component: {fileID: 6876659309955705291}
   - component: {fileID: -128012373004896404}
   - component: {fileID: -6446275292152809918}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Skeleton_Archer
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1562,9 +1562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: a7fc6fd306aa6d1489b1f8aca55d1247, type: 2}
   GravityVelocity: {x: 0, y: 0, z: 0}
-  others: []
-  CharacterController: {fileID: 0}
-  Animator: {fileID: 0}
+  CurrentMoveDirection: {x: 0, y: 0, z: 0}
   UI_EnemyHpbar: {fileID: 0}
   UI_offset: {fileID: 4979425043063443844}
 --- !u!114 &6876659309955705291
@@ -1616,7 +1614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ea8d8499f77fc45a482d30e854d027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 0}
+  ProjectilePrefab: {fileID: 919132149155446097, guid: b00c103878428cf46abf9c10f1ef1791, type: 3}
 --- !u!1 &6628943230737950743
 GameObject:
   m_ObjectHideFlags: 0

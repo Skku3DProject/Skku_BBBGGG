@@ -809,9 +809,9 @@ GameObject:
   - component: {fileID: -7916506815452738822}
   - component: {fileID: -3232584638398658042}
   - component: {fileID: 8100126896534022151}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Skeleton_Warrior_Mace
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

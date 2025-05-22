@@ -138,6 +138,12 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
         ChangeState(EEnemyState.Move);
     }
 
+    // 죽었을때 해야하는 행동
+    public void EndDieAnimEvent()
+    {
+        gameObject.SetActive(false);
+    }
+
     /*
  // LOD 설정: Near/Mid/Far 거리
  [SerializeField] float nearDistance = 10f;

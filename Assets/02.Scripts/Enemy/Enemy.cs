@@ -33,6 +33,8 @@ public class Enemy : MonoBehaviour
     private const int MaxHits = 8;
     private readonly Collider[] _hits = new Collider[MaxHits];
 
+    public Vector3 CurrentMoveDirection;
+
     [Header("UI")]
     public UI_EnemyHpbar UI_EnemyHpbar;
     public Transform UI_offset;
@@ -92,7 +94,7 @@ public class Enemy : MonoBehaviour
         }
         if ((transform.position - Player.transform.position).sqrMagnitude < _findDistance)
         {
-           
+            EnemyManager.Instance.Unregister(this);
             _target = _player;
             return;
         }

@@ -2,33 +2,46 @@ using UnityEngine;
 
 public class EnemyAttackCheckEvent : MonoBehaviour
 {
-    public GameObject Prefab;
+    public GameObject ProjectilePrefab;
+    private EnemyProjectile _projectile;
     private Enemy _enemy;
     private static Collider[] _hits = new Collider[8];
 
     private Damage _damage;
 
+  
+
     private void Awake()
     {
         _enemy = GetComponentInParent<Enemy>();
-        _damage = new Damage(_enemy.EnemyData.DamageValue, _enemy.gameObject, _enemy.EnemyData.KnockbackPower);
+       
     }
+    private void Start()
+    {
+        _damage = new Damage(_enemy.EnemyData.DamageValue, _enemy.gameObject, _enemy.EnemyData.KnockbackPower);
 
+        if (_enemy.EnemyData.EnemyAttackType != EEnemyAttackType.Ranged)
+            return;
+
+       
+
+        if (_projectile == null)
+        {
+            Debug.Log("EnemyProjectile 클래스 없어요");
+        }
+    }
     public void RangedAttackSpawn()
     {
-        // 자식에 풀링으로 소환되어있는 오브젝트를 팔에 장착.
+        GameObject Projectile = Instantiate(ProjectilePrefab, transform);
+        _projectile = Projectile.GetComponent<EnemyProjectile>();
     }
 
     public void RangedAttackEvent()
     {
-        // 발사
-        Debug.Log("RangedAttackEvent");
+        _projectile.Launch(_enemy.Target.transform, transform.position);
     }
-
     public void MeleeAttackEvent()
     {
-        Debug.Log("MeleeAttackEvent");
-
         int cnt = Physics.OverlapSphereNonAlloc(
             _enemy.transform.position, _enemy.EnemyData.AttackDistance,
             _hits,
@@ -47,10 +60,6 @@ public class EnemyAttackCheckEvent : MonoBehaviour
 
         }
     }
-    // 원거리
- 
-
-    // 범위 공격
     public void AreaAttackEvent()
     {
         Collider[] hits = new Collider[8];

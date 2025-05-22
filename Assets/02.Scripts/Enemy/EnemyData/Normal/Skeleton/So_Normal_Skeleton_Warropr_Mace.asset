@@ -25,7 +25,7 @@ MonoBehaviour:
   SeparationDistance: 3
   AreaRange: 0
   IdleTime: 2
-  Speed: 5
+  Speed: 3
   Gravity: -9.8
   SearchLayerMask:
     serializedVersion: 2
@@ -35,3 +35,5 @@ MonoBehaviour:
     m_Bits: 320
   SeparationWeight: 1
   GoalWeight: 1
+  CohesionWeight: 1
+  AlignmentWeight: 1

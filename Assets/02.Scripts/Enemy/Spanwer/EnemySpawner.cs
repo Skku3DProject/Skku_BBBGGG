@@ -14,6 +14,10 @@ public class EnemySpawner : MonoBehaviour
 
     public int MaxSpawnCount = 10;
 
+    private float _minDistance = 1.0f; // 최소 거리 설정 
+
+    private List<GameObject> _positionList;
+
     private void Awake()
     {
 
@@ -23,20 +27,21 @@ public class EnemySpawner : MonoBehaviour
     {
         MaxSpawnCount = MaxSpawnCount * PreSetList.Count;
         UI_Enemy.Instance.SetHPBarMaxSize(MaxSpawnCount);
+        _positionList = new List<GameObject>(MaxSpawnCount);
 
         Pool();
 
-        StageManager.instance.OnCombatStart += Spawn;
+      //  StageManager.instance.OnCombatStart += Spawn;
 
     }
 
     private void Update()
     {
 
-        //if (Input.GetKeyDown(KeyCode.P))
-        //{
-        //    Spawn();
-        //}
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Spawn();
+        }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
@@ -56,7 +61,6 @@ public class EnemySpawner : MonoBehaviour
     private void Pool()
     {
         _enemys = new List<Enemy>(MaxSpawnCount);
-
         for (int i = 0; i < PreSetList.Count; i++)
         {
             for (int j = 0; j < MaxSpawnCount; j++)
@@ -72,28 +76,81 @@ public class EnemySpawner : MonoBehaviour
     }
     public void Spawn()
     {
-  
-        // 현재 데이터를 읽는다.
-        int CurrentStage = (int)StageManager.instance.GetCurrentStage();
-        for (int spawnCountIndex = 0; spawnCountIndex < SpawnerSo[CurrentStage].SpawnCounts.Count; spawnCountIndex++)
+        int currentStage = (int)StageManager.instance.GetCurrentStage();
+
+        _positionList.Clear(); // 기존 위치 초기화
+
+        for (int spawnCountIndex = 0; spawnCountIndex < SpawnerSo[currentStage].SpawnCounts.Count; spawnCountIndex++)
         {
-            for (int spawnCount = 0; spawnCount < SpawnerSo[CurrentStage].SpawnCounts[spawnCountIndex]; spawnCount++)
+            int spawnCount = SpawnerSo[currentStage].SpawnCounts[spawnCountIndex];
+            string targetName = SpawnerSo[currentStage].EnemyTypes[spawnCountIndex].name + "(Clone)";
+
+            for (int spawnCountProgress = 0; spawnCountProgress < spawnCount; spawnCountProgress++)
             {
-                foreach (Enemy enemy in _enemys)
+                Enemy enemy = GetInactiveEnemy(targetName);
+                if (enemy != null)
                 {
-
-                    if (SpawnerSo[CurrentStage].EnemyTypes[spawnCountIndex].name + "(Clone)" == enemy.name && enemy.isActiveAndEnabled == false)
-                    {
-                        enemy.Initialize(); // Enemy 초기화
-                        enemy.GetComponent<EnemyController>().Initialize(); // FSM 초기화
-                        enemy.gameObject.SetActive(true);
-                        break;
-                    }
+                    _minDistance = enemy.CharacterController.radius;
+                    Vector3 spawnPos = GetValidSpawnPosition();
+                    enemy.transform.position = spawnPos;
+                    InitializeEnemy(enemy);
+                    _positionList.Add(enemy.gameObject);
                 }
-
             }
-          
         }
+
+    }
+    private Enemy GetInactiveEnemy(string targetName)
+    {
+        foreach (Enemy enemy in _enemys)
+        {
+            if (enemy.name == targetName && !enemy.gameObject.activeSelf)
+            {
+                return enemy;
+            }
+        }
+        return null;
+    }
+    private Vector3 GetValidSpawnPosition()
+    {
+        Vector3 spawnOffset;
+        int maxAttempts = 50;
+        int attempts = 0;
+
+        do
+        {
+            spawnOffset = GetRandomSpawnPosition();
+            attempts++;
+        }
+        while (!IsValidPosition(transform.position + spawnOffset) && attempts < maxAttempts);
+
+        return transform.position + spawnOffset;
+    }
+    private bool IsValidPosition(Vector3 position)
+    {
+        foreach (GameObject obj in _positionList)
+        {
+            if (Vector3.Distance(obj.transform.position, position) < _minDistance)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private Vector3 GetRandomSpawnPosition()
+    {
+        float x = Random.Range(-10f, 10f);
+        float z = Random.Range(-10f, 10f);
+        float y = transform.position.y; // 지면 높이
+        return new Vector3(x, y, z);
+    }
+    private void InitializeEnemy(Enemy enemy)
+    {
+        enemy.Initialize();
+        enemy.GetComponent<EnemyController>().Initialize();
+        enemy.gameObject.SetActive(true);
+        UI_Enemy.Instance.SetHpBarToEnemy(enemy);
     }
 
     private void Initialize()

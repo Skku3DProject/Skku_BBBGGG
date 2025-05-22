@@ -182,9 +182,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: badccae760a693a4b8aaea957d87f9d2, type: 2}
   GravityVelocity: {x: 0, y: 0, z: 0}
-  others: []
-  CharacterController: {fileID: 0}
-  Animator: {fileID: 0}
   UI_EnemyHpbar: {fileID: 0}
   UI_offset: {fileID: 2089207871794647476}
 --- !u!143 &7326836371724971513

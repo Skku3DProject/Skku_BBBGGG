@@ -46,9 +46,9 @@ GameObject:
   - component: {fileID: 9117273178770977773}
   - component: {fileID: 8447482548991345179}
   - component: {fileID: -409773023190474951}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Elite_Skeleton_Golem
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,9 +126,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: c35ea9ce8e3c17a408f4cbc8b925f00b, type: 2}
   GravityVelocity: {x: 0, y: 0, z: 0}
-  others: []
-  CharacterController: {fileID: 0}
-  Animator: {fileID: 0}
   UI_EnemyHpbar: {fileID: 0}
   UI_offset: {fileID: 1009408412020603019}
 --- !u!143 &8447482548991345179
