@@ -21,12 +21,12 @@ public class PlayerModeManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3))
-            SetMode(EPlayerMode.Weapon);
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-            SetMode(EPlayerMode.Pickaxe);
-        else if(Input.GetKeyDown(KeyCode.Alpha5))
-            SetMode(EPlayerMode.Block);
+        //if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3))
+        //    SetMode(EPlayerMode.Weapon);
+        //else if (Input.GetKeyDown(KeyCode.Alpha4))
+        //    SetMode(EPlayerMode.Pickaxe);
+        //else if(Input.GetKeyDown(KeyCode.Alpha5))
+        //    SetMode(EPlayerMode.Block);
     }
 
     public void SetMode(EPlayerMode mode)
@@ -35,5 +35,8 @@ public class PlayerModeManager : MonoBehaviour
 
         CurrentMode = mode;
         OnModeChanged?.Invoke(mode);
+
+
+        Debug.Log(CurrentMode.ToString());
     }
 }

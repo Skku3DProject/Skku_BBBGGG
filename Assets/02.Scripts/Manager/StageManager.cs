@@ -73,7 +73,6 @@ public class StageManager : MonoBehaviour
                 if (_timer <= 0)
                 {
                     CombatStart();
-                    UIManager.instance.UI_Phase(_currentPhase);
                 }
 
                 break;
@@ -85,7 +84,6 @@ public class StageManager : MonoBehaviour
                 if (_timer <= 0 || _allEnemiesDead)
                 {
                     CombatEnd();
-                    UIManager.instance.UI_Phase(_currentPhase);
                 }
                 break;
             
@@ -97,8 +95,8 @@ public class StageManager : MonoBehaviour
         _currentStage = EStageType.Stage1;
         _currentPhase = EPhaseType.Ready;
         _timer = _readyTime;
-        UIManager.instance.UI_Stage(_currentStage);
-        UIManager.instance.UI_Phase(_currentPhase);
+        // UIManager.instance.UI_Stage(_currentStage);
+        UIManager.instance.UI_SetMaxTimer(_readyTime);
         UIManager.instance.UI_TimerRefresh(_timer);
     }
 
@@ -111,6 +109,8 @@ public class StageManager : MonoBehaviour
     {
         _currentPhase = EPhaseType.End;
         _timer = _readyTime;
+        
+        UIManager.instance.UI_SetMaxTimer(_readyTime);
         OnCombatEnd?.Invoke();
         
         NextStage();
@@ -120,6 +120,8 @@ public class StageManager : MonoBehaviour
     {
         _currentPhase = EPhaseType.Combat;
         _timer = _combatTime;
+        
+        UIManager.instance.UI_SetMaxTimer(_combatTime);
         OnCombatStart?.Invoke();
         _allEnemiesDead = false;
     }
@@ -137,8 +139,7 @@ public class StageManager : MonoBehaviour
             Debug.Log("스테이지 끝");
         }
         UIManager.instance.UI_TimerRefresh(_timer);
-        UIManager.instance.UI_Phase(_currentPhase);
-        UIManager.instance.UI_Stage(_currentStage);
+        // UIManager.instance.UI_Stage(_currentStage);
     }
 
     public void OnAllEnemiesDefeated()

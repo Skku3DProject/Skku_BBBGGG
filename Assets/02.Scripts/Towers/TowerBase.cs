@@ -11,7 +11,7 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
     [Header("ÂüÁ¶")]
     [SerializeField] protected Transform _topTowerTransform;
     [SerializeField] protected GameObject _bulletPrefab;
-    [SerializeField] protected SphereCollider sphereCollider;
+    [SerializeField] protected SphereCollider _sphereCollider;
     [SerializeField] protected TowerAttackRange _attackRange;
 
     protected float _currentHealth;
@@ -32,7 +32,7 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
 
     protected virtual void Start()
     {
-        sphereCollider.radius = _data.Range;
+        _sphereCollider.radius = _data.Range;
     }
     protected virtual void Update()
     {

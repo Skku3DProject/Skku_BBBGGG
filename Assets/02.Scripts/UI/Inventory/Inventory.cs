@@ -7,6 +7,10 @@ public class Inventory : MonoBehaviour
     public TempItemSO test2;
     private int _keyOffSet = -1;
     public bool InventoryOpen = false;
+
+    public GameObject[] SkillInventory;
+    
+    
     // 슬롯들 받아오기
     [SerializeField] private GameObject _inventoryBase;
 

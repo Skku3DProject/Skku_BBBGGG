@@ -366,5 +366,5 @@ MonoBehaviour:
   _data: {fileID: 11400000, guid: e642dea07b4c712439bc04ff1179c89d, type: 2}
   _topTowerTransform: {fileID: 4401633439267466477}
   _bulletPrefab: {fileID: 3607720602487732084, guid: c5a96a3518351d04b8312ae163491fc0, type: 3}
-  sphereCollider: {fileID: 5823537174173956525}
+  _sphereCollider: {fileID: 5823537174173956525}
   _attackRange: {fileID: 5364898080908283110}
