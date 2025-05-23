@@ -56,14 +56,14 @@ public class UIManager : MonoBehaviour
         ui.SetActive(true);
     }
 
-    public void UI_SetMaxStat(float hp, float mp)
+    public void UI_PlayerSetMaxStat(float hp, float mp)
     {
-        UI_SetMaxHP(hp);
-        UI_SetMaxMp(mp);
+        UI_PlayerSetMaxHP(hp);
+        UI_PlayerSetMaxMp(mp);
     }
     // 슬라이더 맥스 밸류 정하는 메서드
-    public void UI_SetMaxMp(float value) =>SetSliderValue(Mpbar, value);
-    public void UI_SetMaxHP(float value) => SetSliderValue(HpBar, value);
+    public void UI_PlayerSetMaxMp(float value) =>SetSliderValue(Mpbar, value);
+    public void UI_PlayerSetMaxHP(float value) => SetSliderValue(HpBar, value);
     public void UI_SetMaxTimer(float value) => SetSliderValue(CurrentTime, value);
     
     // 슬라이더 리프레시하는 메서드
