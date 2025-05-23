@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
     //public GameObject GameOverPanel;
     
     public TextMeshProUGUI Timer;
+    public GameObject TimerObject;
+    public GameObject CountObject;
+    public TextMeshProUGUI CurrentEnemy;
     // public TextMeshProUGUI Stage;
     // public TextMeshProUGUI Phase;
     // 싱글톤
@@ -28,6 +31,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void CurrentCountRefresh()
+    {
+        CurrentEnemy.text = $"{EnemyManager.Instance.CurruntEnemyList.Count}";
+    }
     // 재화 변경
     public void RefreshCurrency()
     {
@@ -40,7 +47,15 @@ public class UIManager : MonoBehaviour
     {
       //  GameOverPanel.SetActive(true);
     }
-    
+
+    public void UI_ObjectOnOff(GameObject ui)
+    {
+        TimerObject.SetActive(false);
+        CountObject.SetActive(false);
+        
+        ui.SetActive(true);
+    }
+
     // 슬라이더 맥스 밸류 정하는 메서드
     public void UI_SetMaxMp(float value) =>SetSliderValue(Mpbar, value);
     public void UI_SetMaxHP(float value) => SetSliderValue(HpBar, value);

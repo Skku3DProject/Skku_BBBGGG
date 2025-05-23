@@ -43,7 +43,7 @@ public class StageManager : MonoBehaviour
     private EPhaseType _currentPhase = EPhaseType.None;
     // 몬스터 카운트
     public int EnemyCount;
-    private bool _allEnemiesDead = false;
+    private bool _allEnemiesDead => EnemyManager.Instance.CurruntEnemyList.Count <= 0;
     
     private void Awake()
     {
@@ -77,10 +77,10 @@ public class StageManager : MonoBehaviour
                 break;
             
             case EPhaseType.Combat:
-                _timer -= Time.deltaTime;
-                UIManager.instance.UI_TimerRefresh(_timer);
+                UIManager.instance.CurrentCountRefresh();
+                EnemyCount = EnemyManager.Instance.CurruntEnemyList.Count;
                 
-                if (_timer <= 0 || _allEnemiesDead)
+                if (_allEnemiesDead)
                 {
                     CombatEnd();
                 }
@@ -108,8 +108,8 @@ public class StageManager : MonoBehaviour
     {
         _currentPhase = EPhaseType.End;
         _timer = _readyTime;
-        
         UIManager.instance.UI_SetMaxTimer(_readyTime);
+        UIManager.instance.UI_ObjectOnOff(UIManager.instance.TimerObject);
         OnCombatEnd?.Invoke();
         
         NextStage();
@@ -121,8 +121,8 @@ public class StageManager : MonoBehaviour
         _timer = _combatTime;
         
         UIManager.instance.UI_SetMaxTimer(_combatTime);
+        UIManager.instance.UI_ObjectOnOff(UIManager.instance.CountObject);
         OnCombatStart?.Invoke();
-        _allEnemiesDead = false;
     }
     // 다음 스테이지 전환
     private void NextStage()
@@ -140,12 +140,7 @@ public class StageManager : MonoBehaviour
         UIManager.instance.UI_TimerRefresh(_timer);
         // UIManager.instance.UI_Stage(_currentStage);
     }
-
-    public void OnAllEnemiesDefeated()
-    {
-        _allEnemiesDead = true;
-    }
-
+    
     public EStageType GetCurrentStage()
     {
         return _currentStage;

@@ -130,7 +130,7 @@ public class SkillManager : MonoBehaviour
         return MaxLevelCheck(tree, skillName);
     }
 
-    private SkillTree TreeCheck(SkillType type)
+    public SkillTree TreeCheck(SkillType type)
     {
         SkillTree tree = null;
         

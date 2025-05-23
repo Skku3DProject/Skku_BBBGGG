@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
@@ -11,7 +12,7 @@ public class SkillNode
     public float Cooldown => _data.Cooldown;
     public Sprite Icon => _data.Icon;
     
-    
+    public Action SkillUnlockedAction;
     public List<SkillNode> Children {get; private set;} // 자식 스킬 목록
     public SkillNode Parent {get; private set;} // 선행 스킬 -> 먼저 필요한 스킬
     
@@ -47,6 +48,13 @@ public class SkillNode
         {
             SkillLevel++;
             Debug.Log($"{Name} 현재 레벨 = {SkillLevel}");
+            foreach (var child in Children)
+            {
+                if (child.IsUnlocked)
+                {
+                    child.SkillUnlockedAction?.Invoke();
+                }
+            }
             return true;
         }
         

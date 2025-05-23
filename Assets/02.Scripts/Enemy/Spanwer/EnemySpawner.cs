@@ -114,7 +114,7 @@ public class EnemySpawner : MonoBehaviour
                 }
             }
         }
-
+        UIManager.instance.CurrentCountRefresh();
     }
     private Enemy GetInactiveEnemy(string targetName)
     {

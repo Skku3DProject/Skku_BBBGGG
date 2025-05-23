@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     private GameObject _target;
     public GameObject Target => _target;
 
-    private GameObject _gaol; // º£ÀÌ½º Ä·ÇÁ
+    private GameObject _gaol; // ï¿½ï¿½ï¿½Ì½ï¿½ Ä·ï¿½ï¿½
     public GameObject Gaol => _gaol;
 
     private GameObject _player;
@@ -110,10 +110,10 @@ public class Enemy : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        // Å½Áö °Å¸® ½Ã°¢È­ (ÆÄ¶õ»ö)
+        // Å½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½Ã°ï¿½È­ (ï¿½Ä¶ï¿½ï¿½ï¿½)
         Gizmos.color = Color.cyan;
 
-        // _findDistance°¡ SqrMagnitude ±âÁØÀÌ¹Ç·Î ·çÆ®¸¦ ¾º¿ö¾ß ½ÇÁ¦ °Å¸®
+        // _findDistanceï¿½ï¿½ SqrMagnitude ï¿½ï¿½ï¿½ï¿½ï¿½Ì¹Ç·ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½
         float radius = Mathf.Sqrt(EnemyData.FindDistance);
 
         Gizmos.DrawWireSphere(transform.position, radius);

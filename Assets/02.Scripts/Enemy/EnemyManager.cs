@@ -33,6 +33,7 @@ public class EnemyManager : MonoBehaviour
     {
         if (_activeEnemies.Count <= 0) return;
         _curruntEnemyList.Remove(enemy);
+        UIManager.instance.CurrentCountRefresh();
     }
 
 
