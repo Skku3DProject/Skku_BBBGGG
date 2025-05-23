@@ -30,9 +30,6 @@ public class Enemy : MonoBehaviour
     private float _findDistance;
     private float _attackDistance;
 
-    private const int MaxHits = 8;
-    private readonly Collider[] _hits = new Collider[MaxHits];
-
     public Vector3 CurrentMoveDirection;
 
     [Header("UI")]
@@ -56,11 +53,13 @@ public class Enemy : MonoBehaviour
         {
             UI_EnemyHpbar.Initialized();
         }
+        EnemyManager.Instance.Enable(this);
     }
 
     void OnDisable()
     {
         EnemyManager.Instance.Unregister(this);
+        EnemyManager.Instance.UnEnable(this);
     }
     
     public void Initialize()

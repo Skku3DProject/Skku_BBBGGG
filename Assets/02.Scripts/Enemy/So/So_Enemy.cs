@@ -30,6 +30,7 @@ public class So_Enemy : ScriptableObject
 
     [Header("공격 물체")]
     public GameObject ProjectilePrefab;
+    public int PrefabSize = 5;
 
     [Header("기본 스텟")]
     public float Health = 100;

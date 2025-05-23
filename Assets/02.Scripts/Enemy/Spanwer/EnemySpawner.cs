@@ -17,19 +17,14 @@ public class EnemySpawner : MonoBehaviour
     private float _minDistance = 1.0f; // 최소 거리 설정 
 
     private List<GameObject> _positionList;
-
-    private void Awake()
-    {
-
-
-    }
+   
     private void Start()
     {
         MaxSpawnCount = MaxSpawnCount * PreSetList.Count;
         UI_Enemy.Instance.SetHPBarMaxSize(MaxSpawnCount);
         _positionList = new List<GameObject>(MaxSpawnCount);
 
-        Pool();
+        EnemyPool();
 
       //  StageManager.instance.OnCombatStart += Spawn;
 
@@ -58,7 +53,7 @@ public class EnemySpawner : MonoBehaviour
         //}
     }
 
-    private void Pool()
+    private void EnemyPool()
     {
         _enemys = new List<Enemy>(MaxSpawnCount);
         for (int i = 0; i < PreSetList.Count; i++)
@@ -67,12 +62,33 @@ public class EnemySpawner : MonoBehaviour
             {
                 GameObject enemyObject = Instantiate(PreSetList[i], transform);
                 Enemy enemy = enemyObject.GetComponent<Enemy>();
+
+                EnemyProjectilePool(enemy);
+
                 enemy.Initialize();
                 enemy.gameObject.SetActive(false);
                 UI_Enemy.Instance.SetHpBarToEnemy(enemy);
                 _enemys.Add(enemy);
             }
         }
+    }
+
+    private void EnemyProjectilePool(Enemy enemy)
+    {
+        if (enemy.EnemyData.ProjectilePrefab == null)
+        {
+            return;
+        }
+        List<GameObject> prefabs = new List<GameObject>(enemy.EnemyData.PrefabSize);
+
+        for(int i=0; i< enemy.EnemyData.PrefabSize; i++)
+        {
+            GameObject prefab = Instantiate(enemy.EnemyData.ProjectilePrefab, enemy.transform);
+            prefab.SetActive(false);
+            prefabs.Add(prefab); 
+        }
+
+        enemy.gameObject.GetComponent<EnemyAttackCheckEvent>().ProjectilePrefabs = prefabs;
     }
     public void Spawn()
     {

@@ -1,20 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAttackCheckEvent : MonoBehaviour
 {
-    public GameObject ProjectilePrefab;
+    public List<GameObject> ProjectilePrefabs;
+
     private EnemyProjectile _projectile;
     private Enemy _enemy;
+
+
     private static Collider[] _hits = new Collider[8];
 
     private Damage _damage;
 
-  
-
     private void Awake()
     {
         _enemy = GetComponentInParent<Enemy>();
-       
+
     }
     private void Start()
     {
@@ -23,8 +25,6 @@ public class EnemyAttackCheckEvent : MonoBehaviour
         if (_enemy.EnemyData.EnemyAttackType != EEnemyAttackType.Ranged)
             return;
 
-       
-
         if (_projectile == null)
         {
             Debug.Log("EnemyProjectile 클래스 없어요");
@@ -32,13 +32,25 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     }
     public void RangedAttackSpawn()
     {
-        GameObject Projectile = Instantiate(ProjectilePrefab, transform);
-        _projectile = Projectile.GetComponent<EnemyProjectile>();
+        foreach (GameObject prefab in ProjectilePrefabs)
+        {
+            if (prefab != null || prefab.gameObject.activeInHierarchy == false)
+            {
+
+                _projectile = prefab.GetComponent<EnemyProjectile>();
+                _projectile.gameObject.SetActive(true);
+                break;
+            }
+        }
     }
 
     public void RangedAttackEvent()
     {
-        _projectile.Launch(_enemy.Target.transform, transform.position);
+        Vector3 targetPosition = _enemy.Target.transform.position;
+        targetPosition.y = _enemy.transform.position.y; // Y축 고정
+        _enemy.transform.LookAt(targetPosition);
+
+        _projectile.Launch(_enemy.Target.transform, _enemy.transform.position, 1);
     }
     public void MeleeAttackEvent()
     {

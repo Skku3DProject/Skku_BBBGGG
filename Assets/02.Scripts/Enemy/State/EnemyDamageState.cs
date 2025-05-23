@@ -23,7 +23,7 @@ public class EnemyDamageState : IFSM
         if (_damagedTimer > _damagedTime)
         {
             _damagedTimer = 0;
-            return EEnemyState.Idle;
+            return EEnemyState.Move;
         }
 
         return EEnemyState.Damaged;

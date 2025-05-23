@@ -136,6 +136,7 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
     public void EndAttackAnimEvent()
     {
         ChangeState(EEnemyState.Move);
+        // 어택 종료
     }
 
     // 죽었을때 해야하는 행동

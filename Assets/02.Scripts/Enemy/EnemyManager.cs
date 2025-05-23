@@ -5,6 +5,10 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
 
+    private  List<Enemy> _curruntEnemyList = new List<Enemy>();
+    public  List<Enemy> CurruntEnemyList => _curruntEnemyList;
+
+
     // 劝己拳等 利 府胶飘
     private readonly List<Enemy> _activeEnemies = new List<Enemy>();
 
@@ -18,6 +22,19 @@ public class EnemyManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+
+    public void Enable(Enemy enemy)
+    {
+        if (!_activeEnemies.Contains(enemy))
+            _curruntEnemyList.Add(enemy);
+    }
+
+    public void UnEnable(Enemy enemy)
+    {
+        if (_activeEnemies.Count <= 0) return;
+        _curruntEnemyList.Remove(enemy);
+    }
+
 
     public void Register(Enemy enemy)
     {

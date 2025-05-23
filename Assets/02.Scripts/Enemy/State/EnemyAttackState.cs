@@ -9,17 +9,16 @@ public class EnemyAttackState : IFSM
     }
     public void Start()
     {
-        _enemy.Animator.SetTrigger("Attack");
+        _enemy.Animator.SetBool("IsAttack",true);
     }
 
     public EEnemyState Update()
     {
-
         return EEnemyState.Attack;
     }
 
     public void End()
     {
-
+        _enemy.Animator.SetBool("IsAttack", false);
     }
 }
