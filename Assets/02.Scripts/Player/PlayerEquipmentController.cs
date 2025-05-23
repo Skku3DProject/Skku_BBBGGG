@@ -7,7 +7,8 @@ public enum EquipmentType
     Sword,
     Bow,
     Magic,
-    Pickaxe
+    Pickaxe,
+    Block
 }
 public class PlayerEquipmentController : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class PlayerEquipmentController : MonoBehaviour
     public GameObject Pickaxe;
     public GameObject Bow;
     public GameObject Magic;
+    public GameObject Block;
 
     private Animator _playerAnimation;
 
@@ -27,8 +29,8 @@ public class PlayerEquipmentController : MonoBehaviour
     private EquipmentType _currentEquipType = EquipmentType.Sword;
 
     // 장비 타입 배열 (순환용)
-    private EquipmentType[] weapons = { EquipmentType.Sword, EquipmentType.Bow, EquipmentType.Magic };
-    private EquipmentType tool = EquipmentType.Pickaxe;
+    //private EquipmentType[] weapons = { EquipmentType.Sword, EquipmentType.Bow, EquipmentType.Magic };
+    //private EquipmentType[] tools = { EquipmentType.Pickaxe, EquipmentType.Block };
 
     //무기 이름과 공격력
     public List<WeaponAttackSO> WeaponAttackSO;
@@ -67,7 +69,7 @@ public class PlayerEquipmentController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha5))//블럭
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Block);
-           // SetEquipment(EquipmentType.); 큐브
+            SetEquipment(EquipmentType.Block); //블럭
         }
 
         //if (Input.GetKeyDown(KeyCode.Q)) // 무기 순환
@@ -80,12 +82,12 @@ public class PlayerEquipmentController : MonoBehaviour
         //}
     }
 
-    private void CycleWeapons()
+   /* private void CycleWeapons()
     {
         int currentIndex = System.Array.IndexOf(weapons, _currentEquipType);
         int nextIndex = (currentIndex + 1) % weapons.Length;
         SetEquipment(weapons[nextIndex]);
-    }
+    }*/
 
     private void SetEquipment(EquipmentType equipType)
     {
@@ -97,6 +99,7 @@ public class PlayerEquipmentController : MonoBehaviour
         Pickaxe.SetActive(false);
         Bow.SetActive(false);
         Magic.SetActive(false);
+        Block.SetActive(false);
 
         // 해당 장비 활성화
         switch (equipType)
@@ -113,6 +116,9 @@ public class PlayerEquipmentController : MonoBehaviour
                 break;
             case EquipmentType.Magic:
                 Magic.SetActive(true);
+                break;
+            case EquipmentType.Block:
+                Block.SetActive(true);
                 break;
         }
 

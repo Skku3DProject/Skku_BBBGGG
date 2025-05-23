@@ -40,7 +40,7 @@ public class PlayerBlockController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0)) // 우클릭 → 블럭 설치
             {
-                //_player.Animator.SetTrigger("BlockPlace"); -- 나중에 블럭설치모션
+                _player.PlayerAnimator.SetTrigger("BlockPlace"); //-- 나중에 블럭설치모션
 
                 TryPlaceBlock();
             }
