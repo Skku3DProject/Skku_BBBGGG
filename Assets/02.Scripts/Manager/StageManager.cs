@@ -110,6 +110,7 @@ public class StageManager : MonoBehaviour
         _timer = _readyTime;
         UIManager.instance.UI_SetMaxTimer(_readyTime);
         UIManager.instance.UI_ObjectOnOff(UIManager.instance.TimerObject);
+        Debug.Log("몬스터 다 죽었음몬스터 다 죽었음몬스터 다 죽었음몬스터 다 죽었음몬스터 다 죽었음");
         OnCombatEnd?.Invoke();
         
         NextStage();
@@ -122,6 +123,7 @@ public class StageManager : MonoBehaviour
         
         UIManager.instance.UI_SetMaxTimer(_combatTime);
         UIManager.instance.UI_ObjectOnOff(UIManager.instance.CountObject);
+        Debug.Log("전투 시작!");
         OnCombatStart?.Invoke();
     }
     // 다음 스테이지 전환
