@@ -865,6 +865,9 @@ MonoBehaviour:
     RotationOffset: {x: -30, y: 0, z: 0}
     FieldOfView: 0
   _rotationSpeed: 300
+  cameraCollisionLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &163170043
 GameObject:
   m_ObjectHideFlags: 0
@@ -6133,31 +6136,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8722979952443358439, guid: eb3fa0c9027882b4084517c1a3342a1f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1
+      value: 0.09975197
       objectReference: {fileID: 0}
     - target: {fileID: 8722979952443358439, guid: eb3fa0c9027882b4084517c1a3342a1f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.0002546236
       objectReference: {fileID: 0}
     - target: {fileID: 8722979952443358439, guid: eb3fa0c9027882b4084517c1a3342a1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.02182119
+      value: 0.04765962
       objectReference: {fileID: 0}
     - target: {fileID: 8722979952443358439, guid: eb3fa0c9027882b4084517c1a3342a1f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.32436025
+      value: -0.6547902
       objectReference: {fileID: 0}
     - target: {fileID: 8722979952443358439, guid: eb3fa0c9027882b4084517c1a3342a1f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0067083538
+      value: -0.5542807
       objectReference: {fileID: 0}
     - target: {fileID: 8722979952443358439, guid: eb3fa0c9027882b4084517c1a3342a1f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7423413
+      value: -0.49385062
       objectReference: {fileID: 0}
     - target: {fileID: 8722979952443358439, guid: eb3fa0c9027882b4084517c1a3342a1f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5862379
+      value: 0.14189534
       objectReference: {fileID: 0}
     - target: {fileID: 8722979952443358439, guid: eb3fa0c9027882b4084517c1a3342a1f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6169,7 +6172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8722979952443358439, guid: eb3fa0c9027882b4084517c1a3342a1f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 128.69101
+      value: 226.326
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6395,7 +6398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9b86082a0f323040923f4d2d033526d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerStats: {fileID: 0}
+  PlayerStats: {fileID: 11400000, guid: edd38af94058eb84d8af69539de48251, type: 2}
 --- !u!114 &1715117805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7211,6 +7214,9 @@ MonoBehaviour:
   - {fileID: 1790813749}
   - {fileID: 184841298}
   Timer: {fileID: 1995346338}
+  TimerObject: {fileID: 0}
+  CountObject: {fileID: 0}
+  CurrentEnemy: {fileID: 0}
 --- !u!114 &1991341268
 MonoBehaviour:
   m_ObjectHideFlags: 0

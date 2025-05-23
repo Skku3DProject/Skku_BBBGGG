@@ -13,6 +13,10 @@ public class PlayerBlockController : MonoBehaviour
     [Header("복셀 세팅")]
     public VoxelType PlaceType = VoxelType.Grass; // 어떤 블럭을 배치할지
 
+
+    //블럭 설치 연속 동작 방지
+    private bool _isDig = false;
+
     private void Awake()
     {
         _player = GetComponent<ThirdPersonPlayer>();
@@ -31,16 +35,17 @@ public class PlayerBlockController : MonoBehaviour
     {
         if (PlayerModeManager.Instance.CurrentMode == EPlayerMode.Pickaxe) // 현재 플레이어 모드를 체크하고
         {
-            if (Input.GetMouseButtonDown(0)) // 좌클릭 → 블럭 파괴 or 나무나 철광석 캐기
+            if (Input.GetMouseButtonDown(0) && _isDig==false) // 좌클릭 → 블럭 파괴 or 나무나 철광석 캐기
             {
                 _player.PlayerAnimator.SetTrigger("PickaxeDig");
+                _isDig = true;
             }
         }
         else if (PlayerModeManager.Instance.CurrentMode == EPlayerMode.Block)// 현재 플레이어 모드를 체크하고
         {
             if (Input.GetMouseButtonDown(0)) // 우클릭 → 블럭 설치
             {
-                _player.PlayerAnimator.SetTrigger("BlockPlace"); //-- 나중에 블럭설치모션
+                //_player.PlayerAnimator.SetTrigger("BlockPlace"); //-- 나중에 블럭설치모션
 
                 TryPlaceBlock();
             }
@@ -125,5 +130,11 @@ public class PlayerBlockController : MonoBehaviour
         }
 
         return false;
+    }
+
+    //애니메이션 블럭 부시는 동작 연속 방지
+    public void IsDigEnd()
+    {
+        _isDig = false;
     }
 }
