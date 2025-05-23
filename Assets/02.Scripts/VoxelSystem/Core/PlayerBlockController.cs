@@ -21,6 +21,10 @@ public class PlayerBlockController : MonoBehaviour
     {
         _player = GetComponent<ThirdPersonPlayer>();
     }
+    private void Start()
+    {
+        PlayerModeManager.OnModeChanged += OnModeChanged;
+    }
 
     void Update()
     {
@@ -137,4 +141,12 @@ public class PlayerBlockController : MonoBehaviour
     {
         _isDig = false;
     }
+    private void OnModeChanged(EPlayerMode type)
+    {
+        if (type != EPlayerMode.Pickaxe) return;
+
+        _isDig = false;
+
+    }
+
 }

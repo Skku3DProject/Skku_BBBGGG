@@ -22,6 +22,9 @@ public class PlayerAttack : MonoBehaviour
     {
         _playerAnimation = GetComponent<Animator>();
         _equipmentController = GetComponent<PlayerEquipmentController>();
+
+        PlayerModeManager.OnModeChanged += OnModeChanged;
+
     }
 
     void Update()
@@ -105,6 +108,11 @@ public class PlayerAttack : MonoBehaviour
     {
         IsAttacking = false;
     }
+    private void OnModeChanged(EPlayerMode type)
+    {
+        if (type != EPlayerMode.Weapon) return;
 
+        IsAttacking = false;
+    }
 
 }
