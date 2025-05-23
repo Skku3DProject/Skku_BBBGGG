@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 [Serializable]
 public struct CameraOffset
@@ -14,38 +14,76 @@ public class ThirdPersonCameraMode
     private float _rotationX;
     private float _rotationY;
 
-    public ThirdPersonCameraMode(CameraOffset offset, ref float rotationX, ref float rotationY, float rotationSpeed)
+    //// ↓ 충돌용 필드 추가
+    //private float _collisionRadius = 0.3f;         
+    //private float _collisionOffset = 0.1f;
+    //private LayerMask _collisionLayerMask;
+
+
+
+    public ThirdPersonCameraMode(CameraOffset offset, ref float rotationX, ref float rotationY, float rotationSpeed) //LayerMask layerMask)
     {
         _offset = offset;
         _rotationX = rotationX;
         _rotationY = rotationY;
         _rotationSpeed = rotationSpeed;
+        //_collisionLayerMask = layerMask;
     }
 
     public void UpdateCamera(Transform cameraTransform, Transform target)
     {
-
-        //float mouseX = Input.GetAxis("Mouse X");
-        //float mouseY = Input.GetAxis("Mouse Y");
-
-        //_rotationX += mouseX * _rotationSpeed * Time.deltaTime;
-        //_rotationY = Mathf.Clamp(_rotationY + mouseY * _rotationSpeed * Time.deltaTime, -60f, 60f);
-
-        //cameraTransform.position = target.position + target.rotation * _offset.PositionOffset;
-        //cameraTransform.eulerAngles = new Vector3(-_rotationY, _rotationX, 0);
-
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
         _rotationX += mouseX * _rotationSpeed * Time.deltaTime;
-        _rotationY = Mathf.Clamp(_rotationY + mouseY * _rotationSpeed * Time.deltaTime, -60f, 60f);
+        _rotationY = Mathf.Clamp(_rotationY + mouseY * _rotationSpeed * Time.deltaTime, -50f, 50f);
 
-        // ī�޶� ��ġ
-        cameraTransform.position = target.position + Quaternion.Euler(0f, _rotationX, 0f) * _offset.PositionOffset;
+        // 카메라 위치
+        cameraTransform.position = target.position + Quaternion.Euler(-_rotationY, _rotationX, 0f) * _offset.PositionOffset;
 
-        // ȸ�� ���ʹϾ����� ����
+        // 회전 쿼터니언으로 적용
         Quaternion rotation = Quaternion.Euler(-_rotationY, _rotationX, 0f);
         cameraTransform.rotation = rotation;
+
+        //// 기본 카메라 회전 및 위치 계산
+        //Quaternion rotation = Quaternion.Euler(-_rotationY, _rotationX, 0f);
+        //Vector3 desiredPos = target.position + rotation * _offset.PositionOffset;
+
+        //// 충돌 체크용 기준점
+        //Vector3 lookTarget = target.position;
+        //Vector3 moveVec = desiredPos - lookTarget;
+        //float moveDist = moveVec.magnitude;
+        //Vector3 moveDir = moveVec.normalized;
+
+
+        //float collisionRadius = 0.4f;   
+        //float collisionOffset = 0.2f;   // 벽과의 최소 거리
+
+        //if (Physics.SphereCast(
+        //        lookTarget,
+        //        collisionRadius,
+        //        moveDir,
+        //        out RaycastHit hit,
+        //        moveDist,
+        //        _collisionLayerMask))
+        //{
+
+        //    Vector3 slideDir = Vector3.ProjectOnPlane(moveDir, hit.normal).normalized;
+
+
+        //    float slideDist = Mathf.Max(hit.distance - collisionOffset, 0.1f);
+
+
+        //    cameraTransform.position = lookTarget + slideDir * slideDist;
+        //}
+        //else
+        //{
+        //    // 충돌 없으면 원래 위치
+        //    cameraTransform.position = desiredPos;
+        //}
+
+        //// 회전 적용
+        //cameraTransform.rotation = rotation;
 
     }
 }

@@ -89,7 +89,7 @@ public class PlayerLocomotion : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _yVelocity = /*_player.JumpPower;*/2f;
+            _yVelocity = _player.PlayerStats.JumpPower;
         }
         //bool canJump = _jumpCount < _player.MaxJumpCount && !_isClimbing;
 

@@ -19,10 +19,6 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
         if (PlayerStats)
             _currentHealth = PlayerStats.MaxHealth;
     }
-
-
-
-
     public void TakeDamage(Damage damage)
     {
     }
