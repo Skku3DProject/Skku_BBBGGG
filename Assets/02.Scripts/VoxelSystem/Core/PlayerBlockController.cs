@@ -104,9 +104,16 @@ public class PlayerBlockController : MonoBehaviour
     }
     private bool TryMineEnvironmentObject()
     {
+        Vector3 playerPos = _player.transform.position;
+
+        Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f);
         Ray ray = PlayerCamera != null
-            ? PlayerCamera.ScreenPointToRay(Input.mousePosition)
+            ? PlayerCamera.ScreenPointToRay(screenCenter)
             : new Ray(transform.position, transform.forward);
+
+        //Ray ray = PlayerCamera != null
+        //    ? PlayerCamera.ScreenPointToRay(Input.mousePosition)
+        //    : new Ray(transform.position, transform.forward);
 
         if (Physics.Raycast(ray, out RaycastHit hit, MaxDistance, EnvirLayer))
         {
