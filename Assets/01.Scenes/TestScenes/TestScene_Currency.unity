@@ -2278,13 +2278,15 @@ MonoBehaviour:
   CurrentTime: {fileID: 47445237}
   HpBar: {fileID: 0}
   Mpbar: {fileID: 0}
+  EXPBar: {fileID: 0}
   Currencies:
   - {fileID: 174730671}
   - {fileID: 1195400088}
   - {fileID: 112313913}
   Timer: {fileID: 860285509}
-  Stage: {fileID: 665667929}
-  Phase: {fileID: 299502919}
+  TimerObject: {fileID: 0}
+  CountObject: {fileID: 0}
+  CurrentEnemy: {fileID: 0}
 --- !u!114 &419797231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3795,6 +3797,7 @@ MonoBehaviour:
   test: {fileID: 11400000, guid: 41de70da5be40ed44b4b81493e77a213, type: 2}
   test2: {fileID: 11400000, guid: 92237304f0da63e49937087090458a0b, type: 2}
   InventoryOpen: 0
+  SkillInventory: []
   _inventoryBase: {fileID: 1798882250}
   _gridSystem: {fileID: 805417068}
   _slots: []
@@ -4535,6 +4538,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HPbar: {fileID: 5062905442513654304, guid: 1e7b830092741ee4ba7ffa5ad1ecba3e, type: 3}
+  maxDistance: 50
+  maxVisibleHealthBars: 30
 --- !u!223 &1190805670
 Canvas:
   m_ObjectHideFlags: 0
@@ -5154,8 +5159,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1126898218}
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   lineMaterial: {fileID: 2100000, guid: b44e180ec03a326468f8018805357786, type: 2}
   lineWidth: 0.05
+  MaxDistance: 5
 --- !u!1 &1444930231
 GameObject:
   m_ObjectHideFlags: 0
