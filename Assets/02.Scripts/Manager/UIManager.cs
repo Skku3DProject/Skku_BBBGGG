@@ -56,6 +56,11 @@ public class UIManager : MonoBehaviour
         ui.SetActive(true);
     }
 
+    public void UI_SetMaxStat(float hp, float mp)
+    {
+        UI_SetMaxHP(hp);
+        UI_SetMaxMp(mp);
+    }
     // 슬라이더 맥스 밸류 정하는 메서드
     public void UI_SetMaxMp(float value) =>SetSliderValue(Mpbar, value);
     public void UI_SetMaxHP(float value) => SetSliderValue(HpBar, value);
@@ -69,6 +74,7 @@ public class UIManager : MonoBehaviour
     private void SetSliderValue(Slider slider, float value)
     {
         slider.maxValue = value;
+        RefreshSlider(slider, value);
     }
     //슬라이더를 조절하는 함수 베이스
     private void RefreshSlider(Slider slider, float value)
