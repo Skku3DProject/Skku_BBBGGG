@@ -25,7 +25,10 @@ public class PlayerLocomotion : MonoBehaviour
         HandleInput();
         ApplyMovement();
         UpdateMoveAnimation();
-
+        if (_player.CurrentStamina < _player.PlayerStats.Stamina && !_isRunning && _player.CharacterController.isGrounded)
+        {
+            _player.RecoverStamina();
+        }
     }
     private void UpdateMoveAnimation_Directional(Vector3 inputDir)
     {
@@ -48,7 +51,7 @@ public class PlayerLocomotion : MonoBehaviour
     private void HandleInput()
     {
         Jump();
-
+        Run();
     }
 
     private void ApplyMovement()
@@ -83,6 +86,23 @@ public class PlayerLocomotion : MonoBehaviour
         return dir;
     }
 
+    private void Run()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && _player.CurrentStamina > 0f)
+        {
+
+            _currentSpeed = _player.PlayerStats.MoveSpeed *1.5f;
+            _isRunning = true;
+            _player.UseStamina(20f);
+            _player.PlayerAnimator.SetBool("IsRunning", _isRunning);
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            _currentSpeed = _player.PlayerStats.MoveSpeed;
+            _isRunning = false;
+            _player.PlayerAnimator.SetBool("IsRunning", _isRunning);
+        }
+    }
 
     private void Jump()
     {

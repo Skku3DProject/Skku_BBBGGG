@@ -15,6 +15,6 @@ MonoBehaviour:
   MaxHealth: 1000
   MoveSpeed: 7
   JumpPower: 6
-  Stamina: 0
+  Stamina: 100
   Exp: 0
   Level: 0
