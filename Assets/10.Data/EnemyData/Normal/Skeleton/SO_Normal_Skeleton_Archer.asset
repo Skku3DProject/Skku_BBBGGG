@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc550e1c3cb84384ca5161604757e266, type: 3}
-  m_Name: SO_Normal_Skeleton_Mage
+  m_Name: SO_Normal_Skeleton_Archer
   m_EditorClassIdentifier: 
   AvailableStates: 0000000001000000020000000300000004000000
   EnemyType: 0
   EnemyAttackType: 1
-  ProjectilePrefab: {fileID: 5737820991993077119, guid: 04f15d3983a09784a83db171533213f8, type: 3}
+  ProjectilePrefab: {fileID: 919132149155446097, guid: b00c103878428cf46abf9c10f1ef1791, type: 3}
   PrefabSize: 5
-  Health: 100
+  Health: 200
   KnockbackPower: 100
   DamageValue: 10
   FindDistance: 15
@@ -26,7 +26,7 @@ MonoBehaviour:
   SeparationDistance: 1
   AreaRange: 0
   IdleTime: 2
-  Speed: 4
+  Speed: 2
   Gravity: -9.8
   SearchLayerMask:
     serializedVersion: 2

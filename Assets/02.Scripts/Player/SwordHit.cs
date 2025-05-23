@@ -12,7 +12,8 @@ public class SwordHit : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(PlayerAttack == null)
+        Debug.Log("적 공격");
+        if (PlayerAttack == null)
         {
             Debug.Log("PlayerAttack 없음");
         }

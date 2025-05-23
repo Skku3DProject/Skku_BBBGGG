@@ -40,7 +40,7 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
 
         _attackTimer -= Time.deltaTime;
 
-        if(_attackTimer<0)
+        if (_attackTimer < 0)
         {
             if (_attackRange.CanAttakc == false) return;
             Attack();
@@ -50,7 +50,10 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
 
     private void TraceNearEnemy()
     {
-        Transform targetEnemy = _attackRange.NearEnemy;
+
+        if (_attackRange._targets.Count == 0) return;
+
+        Transform targetEnemy = _attackRange.NearEnemy.transform;
 
         if (targetEnemy == null)
             return;
@@ -75,7 +78,7 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
     {
         _currentHealth -= damage.Value;
 
-        if(_currentHealth<=0)
+        if (_currentHealth <= 0)
         {
             ObjectPool.Instance.ReturnToPool(gameObject);
         }

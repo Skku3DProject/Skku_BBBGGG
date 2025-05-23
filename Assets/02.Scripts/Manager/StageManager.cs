@@ -43,7 +43,7 @@ public class StageManager : MonoBehaviour
     private EPhaseType _currentPhase = EPhaseType.None;
     // 몬스터 카운트
     public int EnemyCount;
-    private bool _allEnemiesDead => EnemyManager.Instance.CurruntEnemyList.Count <= 0;
+    private bool _allEnemiesDead => EnemyManager.Instance.CurruntEnemyList.Count <= 0;  
     
     private void Awake()
     {
@@ -79,8 +79,7 @@ public class StageManager : MonoBehaviour
             case EPhaseType.Combat:
                 UIManager.instance.CurrentCountRefresh();
                 EnemyCount = EnemyManager.Instance.CurruntEnemyList.Count;
-                
-                if (_allEnemiesDead)
+                if (EnemyCount == 0) 
                 {
                     CombatEnd();
                 }

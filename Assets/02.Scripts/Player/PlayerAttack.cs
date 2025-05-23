@@ -74,9 +74,9 @@ public class PlayerAttack : MonoBehaviour
         IDamageAble damageable = enemy.GetComponent<IDamageAble>();
         if (damageable != null)
         {
-            Damage damage = new Damage(attackPower, gameObject,3f);
+            Damage damage = new Damage(attackPower, gameObject,300f);
             damageable.TakeDamage(damage);
-           // Debug.Log($"공격 성공: {enemy.name}에게 {attackPower} 데미지를 줌");
+            Debug.Log($"공격 성공: {enemy.name}에게 {attackPower} 데미지를 줌");
         }
         else
         {

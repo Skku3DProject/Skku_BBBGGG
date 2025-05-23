@@ -55,13 +55,11 @@ public class Enemy : MonoBehaviour
         {
             UI_EnemyHpbar.Initialized();
         }
-        EnemyManager.Instance.Enable(this);
     }
 
     void OnDisable()
     {
         EnemyManager.Instance.Unregister(this);
-        EnemyManager.Instance.UnEnable(this);
     }
     
     public void Initialize()
@@ -75,7 +73,7 @@ public class Enemy : MonoBehaviour
     {
         _health -= damage.Value;
         UI_EnemyHpbar.UpdateHealth(_health / _maxHealth);
-        Debug.Log($"TakeDamageEnemy HP: {_health}");
+
     }
 
     public bool TryAttack()

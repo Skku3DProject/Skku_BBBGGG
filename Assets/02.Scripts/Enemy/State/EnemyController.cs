@@ -113,10 +113,13 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
     
     public void TakeDamage(Damage damage)
     {
+        Debug.Log("damage1");
         if (_currentState == EEnemyState.Damaged || _currentState == EEnemyState.Die)
         {
             return;
         }
+
+        Debug.Log("damage2");
 
         // ³Ë¹é
         Vector3 dir = (damage.From.transform.position - transform.position) * -1;

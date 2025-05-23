@@ -17,7 +17,7 @@ MonoBehaviour:
   EnemyAttackType: 0
   ProjectilePrefab: {fileID: 0}
   PrefabSize: 5
-  Health: 100
+  Health: 1000
   KnockbackPower: 100
   DamageValue: 10
   FindDistance: 5

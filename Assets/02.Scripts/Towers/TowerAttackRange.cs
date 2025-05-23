@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class TowerAttackRange : MonoBehaviour
 {
-    public Transform NearEnemy { private set; get; }
-    private readonly List<Transform> _targets = new();
+    public GameObject NearEnemy { private set; get; }
+    public readonly List<GameObject> _targets = new();
 
 
 
@@ -13,7 +13,7 @@ public class TowerAttackRange : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            _targets.Add(other.transform);
+            _targets.Add(other.gameObject);
             UpdateNearEnemy();
         }
     }
@@ -22,7 +22,7 @@ public class TowerAttackRange : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            _targets.Remove(other.transform);
+            _targets.Remove(other.gameObject);
             UpdateNearEnemy();
         }
     }
@@ -30,21 +30,31 @@ public class TowerAttackRange : MonoBehaviour
     private void Update()
     {
         UpdateNearEnemy();
-        if (NearEnemy != null) CanAttakc = true;
-        else CanAttakc = false;
 
+
+        if (_targets.Count > 0)
+        {
+            if (NearEnemy.activeSelf) { CanAttakc = true; }
+            else
+            {
+                CanAttakc = false;
+                NearEnemy = null;
+            }
+
+        }
     }
 
     private void UpdateNearEnemy()
     {
         float minDist = float.MaxValue;
-        Transform closest = null;
+        GameObject closest = null;
 
         foreach (var target in _targets)
         {
+            Debug.Log(target.gameObject.name);
             if (target == null) continue;
 
-            float dist = Vector3.Distance(transform.position, target.position);
+            float dist = Vector3.Distance(transform.position, target.transform.position);
             if (dist < minDist)
             {
                 minDist = dist;

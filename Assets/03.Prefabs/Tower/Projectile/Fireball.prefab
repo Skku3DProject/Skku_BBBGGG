@@ -14670,7 +14670,7 @@ MonoBehaviour:
   flightTime: 1.5
   targetMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
 --- !u!135 &4999150927902475201
 SphereCollider:
   m_ObjectHideFlags: 0

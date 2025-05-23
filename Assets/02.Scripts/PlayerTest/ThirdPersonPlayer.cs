@@ -35,6 +35,8 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
     }
     public void TakeDamage(Damage damage)
     {
+        _currentHealth -= damage.Value;
+        UIManager.instance.UI_HpSlider(_currentHealth);
     }
 
     public void UseStamina(float amount)

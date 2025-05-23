@@ -70,7 +70,9 @@ public class UI_EnemyHpbar : MonoBehaviour
     {
         if (UI_Enemy.Instance != null)
         {
+            Debug.Log("Enemy Die");
             UI_Enemy.Instance.RemoveHpBar(_enemy);
+            gameObject.SetActive(false);
         }
     }
 }

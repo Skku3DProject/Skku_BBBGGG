@@ -26,18 +26,18 @@ public class EnemySpawner : MonoBehaviour
 
         EnemyPool();
 
-      //  StageManager.instance.OnCombatStart += Spawn;
+        StageManager.instance.OnCombatStart += Spawn;
 
     }
 
     private void Update()
     {
-
+        
         if (Input.GetKeyDown(KeyCode.P))
         {
             Spawn();
         }
-
+        
         if (Input.GetKeyDown(KeyCode.L))
         {
             Initialize();
@@ -85,7 +85,6 @@ public class EnemySpawner : MonoBehaviour
     public void Spawn()
     {
         int currentStage = (int)StageManager.instance.GetCurrentStage();
-
         _positionList.Clear(); // 기존 위치 초기화
 
         for (int spawnCountIndex = 0; spawnCountIndex < SpawnerSo[currentStage].SpawnCounts.Count; spawnCountIndex++)
@@ -106,6 +105,7 @@ public class EnemySpawner : MonoBehaviour
                 }
             }
         }
+
         UIManager.instance.CurrentCountRefresh();
     }
     private Enemy GetInactiveEnemy(string targetName)
@@ -159,6 +159,7 @@ public class EnemySpawner : MonoBehaviour
         enemy.GetComponent<EnemyController>().Initialize();
         enemy.gameObject.SetActive(true);
         UI_Enemy.Instance.SetHpBarToEnemy(enemy);
+        EnemyManager.Instance.Enable(enemy);
     }
 
     private void Initialize()

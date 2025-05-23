@@ -5,7 +5,7 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
 
-    private  List<Enemy> _curruntEnemyList = new List<Enemy>();
+    private  List<Enemy> _curruntEnemyList = new List<Enemy>(900);
     public  List<Enemy> CurruntEnemyList => _curruntEnemyList;
 
 
@@ -25,13 +25,13 @@ public class EnemyManager : MonoBehaviour
 
     public void Enable(Enemy enemy)
     {
-        if (!_activeEnemies.Contains(enemy))
+        if (!_curruntEnemyList.Contains(enemy))
             _curruntEnemyList.Add(enemy);
     }
 
     public void UnEnable(Enemy enemy)
     {
-        if (_activeEnemies.Count <= 0) return;
+        if (_curruntEnemyList.Count <= 0) return;
         _curruntEnemyList.Remove(enemy);
         UIManager.instance.CurrentCountRefresh();
     }
