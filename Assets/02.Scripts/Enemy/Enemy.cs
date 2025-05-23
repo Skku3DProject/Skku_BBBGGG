@@ -97,11 +97,25 @@ public class Enemy : MonoBehaviour
             _target = _player;
             return;
         }
-    }
 
+    }
+    public void OnPlayer()
+    {
+        _target = _player;
+    }
     private void OnPlayerLost()
     {
         _target = _gaol;
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        // 탐지 거리 시각화 (파란색)
+        Gizmos.color = Color.cyan;
+
+        // _findDistance가 SqrMagnitude 기준이므로 루트를 씌워야 실제 거리
+        float radius = Mathf.Sqrt(EnemyData.FindDistance);
+
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
 }

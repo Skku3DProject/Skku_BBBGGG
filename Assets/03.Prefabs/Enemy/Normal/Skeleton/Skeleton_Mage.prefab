@@ -508,7 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d578928b80e172428dbbe59eeeea2b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyData: {fileID: 11400000, guid: d57e80b4c11b00242a7df3c516df4867, type: 2}
+  EnemyData: {fileID: 11400000, guid: 8078c7eb421e9dc4091afaa168664432, type: 2}
   GravityVelocity: {x: 0, y: 0, z: 0}
   CurrentMoveDirection: {x: 0, y: 0, z: 0}
   UI_EnemyHpbar: {fileID: 0}
@@ -562,7 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ea8d8499f77fc45a482d30e854d027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProjectilePrefab: {fileID: 919132149155446097, guid: b00c103878428cf46abf9c10f1ef1791, type: 3}
+  ProjectilePrefabs: []
 --- !u!1 &3037311676926964130
 GameObject:
   m_ObjectHideFlags: 0

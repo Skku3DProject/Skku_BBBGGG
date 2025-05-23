@@ -130,6 +130,10 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
             ChangeState(EEnemyState.Die);
             return;
         }
+        if(damage.from.CompareTag("Player"))
+        {
+            _enemy.OnPlayer();
+        }
 
         ChangeState(EEnemyState.Damaged);
     }

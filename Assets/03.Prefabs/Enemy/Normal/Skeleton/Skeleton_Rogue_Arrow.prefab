@@ -1111,7 +1111,7 @@ GameObject:
   - component: {fileID: -4400294766958827334}
   - component: {fileID: 5426145200766061276}
   m_Layer: 9
-  m_Name: Skeleton_Rogue
+  m_Name: Skeleton_Rogue_Arrow
   m_TagString: Enemy
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1177,7 +1177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d578928b80e172428dbbe59eeeea2b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyData: {fileID: 11400000, guid: 1e490885d248b064aa9d4eafacb67104, type: 2}
+  EnemyData: {fileID: 11400000, guid: aa88667e8d0b39c4a9b237e07928e1e5, type: 2}
   GravityVelocity: {x: 0, y: 0, z: 0}
   CurrentMoveDirection: {x: 0, y: 0, z: 0}
   UI_EnemyHpbar: {fileID: 0}
@@ -1231,7 +1231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ea8d8499f77fc45a482d30e854d027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProjectilePrefab: {fileID: 919132149155446097, guid: b00c103878428cf46abf9c10f1ef1791, type: 3}
+  ProjectilePrefabs: []
 --- !u!1 &4750183518291090577
 GameObject:
   m_ObjectHideFlags: 0

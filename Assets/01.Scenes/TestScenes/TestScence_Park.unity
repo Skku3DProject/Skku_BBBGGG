@@ -2152,7 +2152,7 @@ GameObject:
   - component: {fileID: 674976445}
   - component: {fileID: 674976444}
   - component: {fileID: 674976443}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: BaseTower
   m_Icon: {fileID: 0}
