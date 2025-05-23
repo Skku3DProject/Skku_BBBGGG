@@ -27,13 +27,13 @@ public class EnemyMoveState : IFSM
 
     public EEnemyState Update()
     {
+        _enemy.TargetOnPlayer();
         if (_enemy.TryAttack()) // 공격 가능 불가능
         {
             EnemyManager.Instance.Unregister(_enemy);
             return EEnemyState.Attack;
         }
 
-        _enemy.TargetOnPlayer();
 
         MoveWithSeparationAndGravity();
 

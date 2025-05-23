@@ -1178,6 +1178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: aa88667e8d0b39c4a9b237e07928e1e5, type: 2}
+  ProjectileTransfrom: {fileID: 8501478112003840081}
   GravityVelocity: {x: 0, y: 0, z: 0}
   CurrentMoveDirection: {x: 0, y: 0, z: 0}
   UI_EnemyHpbar: {fileID: 0}
@@ -1207,7 +1208,7 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_LayerOverridePriority: 0
   m_ProvidesContacts: 0
   m_Enabled: 1

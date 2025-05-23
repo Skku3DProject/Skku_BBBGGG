@@ -43,14 +43,6 @@ public class EnemySpawner : MonoBehaviour
             Initialize();
         }
 
-        //if(Input.GetMouseButtonDown(0))
-        //{
-        //    foreach(Enemy enemy in _enemys)
-        //    {
-        //        Damage damage = new Damage(10, gameObject, 100);
-        //        enemy.GetComponent<EnemyController>().TakeDamage(damage);
-        //    }
-        //}
     }
 
     private void EnemyPool()
@@ -64,7 +56,6 @@ public class EnemySpawner : MonoBehaviour
                 Enemy enemy = enemyObject.GetComponent<Enemy>();
 
                 EnemyProjectilePool(enemy);
-
                 enemy.Initialize();
                 enemy.gameObject.SetActive(false);
                 UI_Enemy.Instance.SetHpBarToEnemy(enemy);
@@ -79,11 +70,12 @@ public class EnemySpawner : MonoBehaviour
         {
             return;
         }
+
         List<GameObject> prefabs = new List<GameObject>(enemy.EnemyData.PrefabSize);
 
         for(int i=0; i< enemy.EnemyData.PrefabSize; i++)
         {
-            GameObject prefab = Instantiate(enemy.EnemyData.ProjectilePrefab, enemy.transform);
+            GameObject prefab = Instantiate(enemy.EnemyData.ProjectilePrefab, enemy.ProjectileTransfrom);
             prefab.SetActive(false);
             prefabs.Add(prefab); 
         }

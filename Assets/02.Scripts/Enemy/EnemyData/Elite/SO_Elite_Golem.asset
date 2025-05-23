@@ -15,8 +15,8 @@ MonoBehaviour:
   AvailableStates: 0000000001000000020000000300000004000000
   EnemyType: 2
   EnemyAttackType: 1
-  ProjectilePrefab: {fileID: 5737820991993077119, guid: 04f15d3983a09784a83db171533213f8, type: 3}
-  PrefabSize: 5
+  ProjectilePrefab: {fileID: 5737820991993077119, guid: c09db8c23cbc5ad48bbb096a0e5c2908, type: 3}
+  PrefabSize: 10
   Health: 100
   KnockbackPower: 100
   DamageValue: 10

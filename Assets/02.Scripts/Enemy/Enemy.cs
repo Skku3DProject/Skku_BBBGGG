@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
     public So_Enemy EnemyData;
 
+    public Transform ProjectileTransfrom;
+
     private GameObject _target;
     public GameObject Target => _target;
 

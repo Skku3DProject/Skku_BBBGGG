@@ -119,7 +119,7 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
         }
 
         // ³Ë¹é
-        Vector3 dir = (damage.from.transform.position - transform.position) * -1;
+        Vector3 dir = (damage.From.transform.position - transform.position) * -1;
         dir.Normalize();
         _enemy.CharacterController.Move(dir * damage.KnockbackPower * Time.deltaTime);
 
@@ -130,7 +130,7 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
             ChangeState(EEnemyState.Die);
             return;
         }
-        if(damage.from.CompareTag("Player"))
+        if(damage.From.CompareTag("Player"))
         {
             _enemy.OnPlayer();
         }

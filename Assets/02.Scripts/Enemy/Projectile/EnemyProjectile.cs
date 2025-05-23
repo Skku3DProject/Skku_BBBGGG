@@ -4,73 +4,68 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
-    private Transform Target;         // 타겟 (적)
-    public float LaunchAngle = 45f;  // 발사 각도
-    private float gravity = -9.81f;   // 중력
-    private float FlightTime = 0f;    // 경과 시간 (디버깅용)
+    private Vector3 _startPos = Vector3.zero;
+    private Vector3 _endPos = Vector3.zero;
+    public float speed = 2;
 
-    private Vector3 _startPosition;
-    private Vector3 _velocity;
-    private bool _launched = false;
-    private Vector3 _gravityVector;
+    private float _timar = 0;
 
-    public void Launch(Transform target, Vector3 startPosition, float time)
+    private bool _isFire = false;
+    public void Init(Vector3 startPos , Vector3 endPos)
     {
-        Target = target;
-        _startPosition = startPosition;
+        _startPos = startPos;
+        _endPos = endPos;
 
-        // 초기 속도 계산
-        _velocity = CalculateLaunchVelocity(startPosition, target.position, time);
-        _gravityVector = Vector3.up * gravity;
-        _launched = true;
+        transform.position = _startPos;
     }
 
-    void Update()
+    public void Fire()
     {
-        if (!_launched) return;
+        _timar = 0;
+        _isFire = true;
+    }
 
-        // 포물선 이동
-        _velocity.y += gravity * Time.deltaTime;
-        transform.position += _velocity * Time.deltaTime;
+    private void Update()
+    {
+        if (!_isFire) return;
 
-        if (_velocity != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(_velocity);
+        Vector3 targetPos = (_endPos - _startPos).normalized;
 
-        FlightTime += Time.deltaTime;
-        if(FlightTime > 5)
+        transform.position = transform.position + targetPos * speed * Time.deltaTime;
+
+        _timar += Time.deltaTime;
+        if (2 < _timar)
         {
-            gameObject.SetActive(false);
-            _launched = false;
+            Unenalbe();
         }
     }
 
-    private Vector3 CalculateLaunchVelocity(Vector3 start, Vector3 end, float time)
+    private void OnGroundHit(RaycastHit hit)
     {
-        Vector3 toTarget = end - start;
-        Vector3 toTargetXZ = new Vector3(toTarget.x, 0, toTarget.z);
-
-        float y = toTarget.y;
-        float xzDistance = toTargetXZ.magnitude;
-
-        float vY = y / time - 0.5f * gravity * time;
-        float vXZ = xzDistance / time;
-
-        Vector3 result = toTargetXZ.normalized * vXZ;
-        result.y = vY;
-
-        return result;
+        Vector3Int blockPos = Vector3Int.FloorToInt(hit.point + hit.normal * -0.5f);
+        BlockSystem.DamageBlock(blockPos, 10);
+        gameObject.SetActive(false);
     }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<IDamageAble>(out var dmg) && other.CompareTag("Player"))
+        if (other.TryGetComponent<IDamageAble>(out var d) && other.CompareTag("Player"))
         {
-            Damage _damage = new Damage(10, this.gameObject);
-            dmg.TakeDamage(_damage);
-            gameObject.SetActive(false);
-            _launched = false;
+            d.TakeDamage(new Damage(10, gameObject));
         }
-   
+
+        /*
+        if (HitVfxPrefab)
+        {
+            ObjectPool.Instance.GetObject(HitVfxPrefab, other.transform.position, other.transform.rotation);
+        }
+        */
+        Unenalbe();
     }
 
+    private void Unenalbe()
+    {
+        gameObject.SetActive(false);
+        _timar = 0;
+        _isFire = false;
+    }
 }

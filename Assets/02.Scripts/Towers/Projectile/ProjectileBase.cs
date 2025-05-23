@@ -21,7 +21,7 @@ public class ProjectileBase : MonoBehaviour
         _timer = 0f;
     }
 
-    public void Init(Vector3 startPos, Vector3 targetPos, float flightDuration, SO_TowerData data)
+    public void Init(Vector3 startPos, Vector3 targetPos, float flightDuration, SO_TowerData data = null)
     {
         _target = targetPos;
         flightTime = flightDuration;

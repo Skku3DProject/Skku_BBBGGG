@@ -9,13 +9,15 @@ public interface IDamageAble
 public class Damage
 {
     public float Value;
-    public GameObject from;
+    public GameObject From;
+    public Vector3 Direction;
     public float KnockbackPower;
 
-    public Damage(float value, GameObject from, float knockbackPower = 0)
+    public Damage(float value, GameObject from, float knockbackPower = 0, Vector3 direction = new Vector3())
     {
         Value = value;
-        this.from = from;
+        this.From = from;
         KnockbackPower = knockbackPower;
+        Direction = direction;
     }
 }

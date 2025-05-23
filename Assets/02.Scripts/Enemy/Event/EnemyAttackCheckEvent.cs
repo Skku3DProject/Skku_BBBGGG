@@ -3,54 +3,89 @@ using UnityEngine;
 
 public class EnemyAttackCheckEvent : MonoBehaviour
 {
-    public List<GameObject> ProjectilePrefabs;
+    private static Collider[] _hits = new Collider[8];
 
     private EnemyProjectile _projectile;
     private Enemy _enemy;
-
-
-    private static Collider[] _hits = new Collider[8];
-
     private Damage _damage;
+
+    public List<GameObject> ProjectilePrefabs;
 
     private void Awake()
     {
         _enemy = GetComponentInParent<Enemy>();
-
+        _damage = new Damage(_enemy.EnemyData.DamageValue, _enemy.gameObject);
     }
-    private void Start()
-    {
-        _damage = new Damage(_enemy.EnemyData.DamageValue, _enemy.gameObject, _enemy.EnemyData.KnockbackPower);
 
-        if (_enemy.EnemyData.EnemyAttackType != EEnemyAttackType.Ranged)
-            return;
-
-        if (_projectile == null)
-        {
-            Debug.Log("EnemyProjectile 클래스 없어요");
-        }
-    }
     public void RangedAttackSpawn()
     {
-        foreach (GameObject prefab in ProjectilePrefabs)
-        {
-            if (prefab != null || prefab.gameObject.activeInHierarchy == false)
-            {
+        _projectile = null;
 
-                _projectile = prefab.GetComponent<EnemyProjectile>();
-                _projectile.gameObject.SetActive(true);
-                break;
+        if (ProjectilePrefabs == null || ProjectilePrefabs.Count == 0)
+        {
+            Debug.LogError("ProjectilePrefabs가 null이거나 비어있습니다!");
+            return;
+        }
+
+        for (int i = 0; i < ProjectilePrefabs.Count; i++)
+        {
+            GameObject prefab = ProjectilePrefabs[i];
+
+            if (prefab != null && !prefab.activeInHierarchy)
+            {
+                EnemyProjectile projectileComponent = prefab.GetComponent<EnemyProjectile>();
+                if (projectileComponent != null)
+                {
+                    _projectile = projectileComponent;
+                    _projectile.gameObject.SetActive(true);
+                    _projectile.Init(
+                                      _enemy.ProjectileTransfrom.position,
+                                      _enemy.Target.transform.position
+                                  );
+                    return; // 찾았으면 즉시 종료
+                }
+                else
+                {
+                    Debug.LogError($"발사체 {i}에 EnemyProjectile 컴포넌트가 없습니다!");
+                }
+            }
+        }
+
+        // 사용 가능한 발사체가 없을 때
+        Debug.LogWarning(" 사용 가능한 발사체가 없습니다!");
+        LogAllProjectileStates();
+    }
+    private void LogAllProjectileStates()
+    {
+        for (int i = 0; i < ProjectilePrefabs.Count; i++)
+        {
+            GameObject prefab = ProjectilePrefabs[i];
+            if (prefab != null)
+            {
+                EnemyProjectile proj = prefab.GetComponent<EnemyProjectile>();
             }
         }
     }
 
     public void RangedAttackEvent()
     {
+        if (_projectile == null)
+        {
+            Debug.LogError("발사할 발사체가 없습니다! RangedAttackSpawn을 먼저 호출.");
+            return;
+        }
+
+        if (_enemy.Target == null)
+        {
+            Debug.LogError("타겟이 설정되지 않았습니다!");
+            return;
+        }
+
         Vector3 targetPosition = _enemy.Target.transform.position;
         targetPosition.y = _enemy.transform.position.y; // Y축 고정
         _enemy.transform.LookAt(targetPosition);
+        _projectile.Fire();
 
-        _projectile.Launch(_enemy.Target.transform, _enemy.transform.position, 1);
     }
     public void MeleeAttackEvent()
     {
@@ -91,5 +126,29 @@ public class EnemyAttackCheckEvent : MonoBehaviour
         }
     }
 
+    public void CheckProjectile()
+    {
+        // 발사체 컴포넌트 검증
+        if (ProjectilePrefabs != null && ProjectilePrefabs.Count > 0)
+        {
+            bool hasValidProjectile = false;
+            foreach (var prefab in ProjectilePrefabs)
+            {
+                if (prefab != null && prefab.GetComponent<EnemyProjectile>() != null)
+                {
+                    hasValidProjectile = true;
+                    break;
+                }
+            }
 
+            if (!hasValidProjectile)
+            {
+                Debug.LogError("EnemyProjectile 컴포넌트가 없는 프리팹이 있습니다!");
+            }
+        }
+        else
+        {
+            Debug.LogError("ProjectilePrefabs가 비어있습니다!");
+        }
+    }
 }
