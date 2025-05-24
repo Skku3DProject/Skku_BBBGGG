@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerLocomotion : MonoBehaviour
 {
     private ThirdPersonPlayer _player;
+    private PlayerAttack _playerAttack;
 
     private const float Gravity = -9.8f;
     private float _yVelocity;
@@ -16,6 +17,7 @@ public class PlayerLocomotion : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<ThirdPersonPlayer>();
+        _playerAttack = GetComponent<PlayerAttack>();
         _currentSpeed = 4f;
         //_currentSpeed = _player.WalkSpeed;
     }
@@ -57,7 +59,12 @@ public class PlayerLocomotion : MonoBehaviour
     private void ApplyMovement()
     {
         Vector3 inputDir = GetInputDirection();
-        Vector3 move = inputDir * _currentSpeed;
+
+        //공격상태일때는 미세하게만 움직일수있음
+        float speedMultiplier = (_playerAttack != null && _playerAttack.IsAttacking) ? 0.2f : 1f;
+
+
+        Vector3 move = inputDir * _currentSpeed * speedMultiplier;
 
         // 중력 적용
         if (_player.CharacterController.isGrounded && _yVelocity < 0f)

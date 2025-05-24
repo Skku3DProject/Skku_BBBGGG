@@ -14,23 +14,26 @@ public class PlayerEquipmentController : MonoBehaviour
 {
     public static PlayerEquipmentController Instance;
 
+    [Header("무기별 오버라이드 컨트롤러")]
+    public RuntimeAnimatorController SwordOverrideController;
+    public RuntimeAnimatorController BowOverrideController;
+    public RuntimeAnimatorController MagicOverrideController;
+    public RuntimeAnimatorController PickaxeOverrideController;
+    public RuntimeAnimatorController BlockOverrideController;
 
     [Header("장비 오브젝트")]
     public GameObject Sword;
     public GameObject Shield;
-    public GameObject Pickaxe;
     public GameObject Bow;
+    public GameObject Arrow;
     public GameObject Magic;
+    public GameObject Pickaxe;
     public GameObject Block;
 
     private Animator _playerAnimation;
 
     // 현재 장비 타입
     private EquipmentType _currentEquipType = EquipmentType.Sword;
-
-    // 장비 타입 배열 (순환용)
-    //private EquipmentType[] weapons = { EquipmentType.Sword, EquipmentType.Bow, EquipmentType.Magic };
-    //private EquipmentType[] tools = { EquipmentType.Pickaxe, EquipmentType.Block };
 
     //무기 이름과 공격력
     public List<WeaponAttackSO> WeaponAttackSO;
@@ -71,23 +74,8 @@ public class PlayerEquipmentController : MonoBehaviour
             PlayerModeManager.Instance.SetMode(EPlayerMode.Block);
             SetEquipment(EquipmentType.Block); //블럭
         }
-
-        //if (Input.GetKeyDown(KeyCode.Q)) // 무기 순환
-        //{
-        //    CycleWeapons();
-        //}
-        //if (Input.GetKeyDown(KeyCode.E)) // 도구 활성화
-        //{
-        //    SetEquipment(tool);
-        //}
     }
 
-   /* private void CycleWeapons()
-    {
-        int currentIndex = System.Array.IndexOf(weapons, _currentEquipType);
-        int nextIndex = (currentIndex + 1) % weapons.Length;
-        SetEquipment(weapons[nextIndex]);
-    }*/
 
     private void SetEquipment(EquipmentType equipType)
     {
@@ -98,6 +86,7 @@ public class PlayerEquipmentController : MonoBehaviour
         Shield.SetActive(false);
         Pickaxe.SetActive(false);
         Bow.SetActive(false);
+        Arrow.SetActive(false);
         Magic.SetActive(false);
         Block.SetActive(false);
 
@@ -107,58 +96,37 @@ public class PlayerEquipmentController : MonoBehaviour
             case EquipmentType.Sword:
                 Sword.SetActive(true);
                 Shield.SetActive(true);
+                _playerAnimation.runtimeAnimatorController = SwordOverrideController;
                 break;
             case EquipmentType.Pickaxe:
                 Pickaxe.SetActive(true);
+                _playerAnimation.runtimeAnimatorController = PickaxeOverrideController;
                 break;
             case EquipmentType.Bow:
                 Bow.SetActive(true);
+                Arrow.SetActive(true);
+                _playerAnimation.runtimeAnimatorController = BowOverrideController;
                 break;
             case EquipmentType.Magic:
                 Magic.SetActive(true);
+                _playerAnimation.runtimeAnimatorController = MagicOverrideController;
                 break;
             case EquipmentType.Block:
                 Block.SetActive(true);
+                _playerAnimation.runtimeAnimatorController = BlockOverrideController;
                 break;
-        }
-
-        // 애니메이터 레이어 활성화
-        ActivateAnimationLayer(equipType.ToString());
-    }
-
-    private void ActivateAnimationLayer(string layerName)
-    {
-        for (int i = 0; i < _playerAnimation.layerCount; i++)
-        {
-            string currentLayerName = _playerAnimation.GetLayerName(i);
-            _playerAnimation.SetLayerWeight(i, currentLayerName == layerName ? 1f : 0f);
         }
     }
 
     public EquipmentType GetCurrentEquipType()
     {
-      //  Debug.Log("현재 무기 타입은" + _currentEquipType + "입니다.");
-        return _currentEquipType;
-        
+        return _currentEquipType; 
     }
 
 
     //현재 장비에 맞는 공격력 변환
     public float GetCurrentWeaponAttackPower()
     {
-        /*foreach (var weaponSO in WeaponAttackSO)
-        {
-            Debug.Log($"무기 이름 확인: {weaponSO.WeaponName}, 공격력: {weaponSO.AttackPower}");
-            if (weaponSO.WeaponName==_currentEquipType.ToString())
-            {
-                Debug.Log($"매칭된 무기 공격력 반환: {weaponSO.AttackPower}");
-                return weaponSO.AttackPower;
-            }
-        }
-
-        return 0f;*/
-
-       // Debug.Log($"공격력 요청: 현재 장착 장비 타입은 {_currentEquipType}");
 
         if (WeaponAttackSO == null || WeaponAttackSO.Count == 0)
         {
@@ -168,16 +136,13 @@ public class PlayerEquipmentController : MonoBehaviour
 
         foreach (var weaponSO in WeaponAttackSO)
         {
-           // Debug.Log($"WeaponSO: 이름={weaponSO.WeaponName}, 공격력={weaponSO.AttackPower}");
 
             if (weaponSO.WeaponName.Trim().ToLower() == _currentEquipType.ToString().ToLower())
             {
-               // Debug.Log($"매칭 성공: {weaponSO.WeaponName}의 공격력은 {weaponSO.AttackPower}");
                 return weaponSO.AttackPower;
             }
         }
 
-        //Debug.LogWarning("공격력 매칭 실패: 해당 무기 이름이 없음");
         return 0f;
-    }//-> PlayerAttact에서 사용중
+    }
 }

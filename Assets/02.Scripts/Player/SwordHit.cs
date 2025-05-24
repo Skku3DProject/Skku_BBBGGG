@@ -20,7 +20,11 @@ public class SwordHit : MonoBehaviour
 
         if(other.CompareTag("Enemy") && PlayerAttack.IsAttacking)
         {
-            PlayerAttack.TryDamageEnemy(other.gameObject);
+            Vector3 hitPosition = other.ClosestPoint(transform.position); // 충돌 지점 추정
+            Vector3 directionToEnemy = (other.transform.position - transform.position).normalized;
+            Vector3 oppositeDirection = -directionToEnemy;
+
+            PlayerAttack.TryDamageEnemy(other.gameObject, oppositeDirection);
             Debug.Log("적 공격");
         }
     }

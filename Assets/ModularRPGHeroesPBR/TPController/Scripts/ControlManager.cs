@@ -93,7 +93,7 @@ namespace DM
         {
            vertical = Input.GetAxis("Vertical");    //for getting vertical input.
            horizontal = Input.GetAxis("Horizontal");    //for getting horizontal input.
-           sprint = Input.GetButton("SprintInput");     //for getting sprint input.
+           //sprint = Input.GetButton("SprintInput");     //for getting sprint input.
            jump = Input.GetButtonDown("Jump");      //for getting jump input.
            normalAttack = Input.GetButtonDown("Fire1"); //for getting normal attack input.
            comboAttack = Input.GetButtonDown("Fire2");    //for getting combo attack input.
