@@ -16,7 +16,7 @@ MonoBehaviour:
   EnemyType: 0
   EnemyAttackType: 1
   ProjectilePrefab: {fileID: 919132149155446097, guid: b00c103878428cf46abf9c10f1ef1791, type: 3}
-  PrefabSize: 5
+  PrefabSize: 10
   Health: 200
   KnockbackPower: 100
   DamageValue: 10

@@ -76,6 +76,7 @@ public class EnemySpawner : MonoBehaviour
         for(int i=0; i< enemy.EnemyData.PrefabSize; i++)
         {
             GameObject prefab = Instantiate(enemy.EnemyData.ProjectilePrefab, enemy.ProjectileTransfrom);
+            prefab.GetComponent<EnemyProjectile>().SetParentTranfrom( enemy.ProjectileTransfrom) ;
             prefab.SetActive(false);
             prefabs.Add(prefab); 
         }

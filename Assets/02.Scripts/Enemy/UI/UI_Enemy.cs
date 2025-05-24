@@ -37,7 +37,6 @@ public class UI_Enemy : MonoBehaviour
         {
             _hpBars = new List<UI_EnemyHpbar>(capacity);
         }
-
     }
 
     public void SetHpBarToEnemy(Enemy enemy)
@@ -49,15 +48,13 @@ public class UI_Enemy : MonoBehaviour
         hpBarComponent.SetHpBarToEnemy(enemy);
         _hpBars.Add(hpBarComponent);
     }
-    public void RemoveHpBar(Enemy enemy)
+    public void TurnOffHpBar(Enemy enemy)
     {
-        for (int i = _hpBars.Count - 1; i >= 0; i--)
+        foreach(UI_EnemyHpbar hpbar in _hpBars)
         {
-            if (_hpBars[i].GetEnemy() == enemy)
+            if(hpbar.GetEnemy() == enemy)
             {
-                if (_hpBars[i] != null)
-                    _hpBars[i].gameObject.SetActive(false);
-                _hpBars.RemoveAt(i);
+                hpbar.gameObject.SetActive(false);
                 break;
             }
         }
@@ -83,7 +80,7 @@ public class UI_Enemy : MonoBehaviour
         }
 
         // 거리별 정렬을 위한 리스트
-        List<HealthBarDistanceInfo> healthBarInfos = new List<HealthBarDistanceInfo>();
+        List<HealthBarDistanceInfo>  _healthBarInfos = new List<HealthBarDistanceInfo>(_hpBars.Count);
 
         Vector3 cameraPos = _mainCamera.transform.position;
 
@@ -91,7 +88,10 @@ public class UI_Enemy : MonoBehaviour
         foreach (var hpBar in _hpBars)
         {
             Enemy enemy = hpBar.GetEnemy();
+
             if (enemy == null) continue;
+
+            if (enemy.Health <= 0) continue;
 
             Vector3 enemyPos = enemy.transform.position;
             float distance = Vector3.Distance(cameraPos, enemyPos);
@@ -99,7 +99,7 @@ public class UI_Enemy : MonoBehaviour
             // 기본 가시성 체크
             bool isVisible = CheckVisibility(enemyPos, distance);
 
-            healthBarInfos.Add(new HealthBarDistanceInfo
+            _healthBarInfos.Add(new HealthBarDistanceInfo
             {
                 hpBar = hpBar,
                 distance = distance,
@@ -108,11 +108,11 @@ public class UI_Enemy : MonoBehaviour
         }
 
         // 거리 순으로 정렬 (가까운 것부터)
-        healthBarInfos.Sort((a, b) => a.distance.CompareTo(b.distance));
+        _healthBarInfos.Sort((a, b) => a.distance.CompareTo(b.distance));
 
         // 최대 표시 개수 제한 적용
         int visibleCount = 0;
-        foreach (var info in healthBarInfos)
+        foreach (var info in _healthBarInfos)
         {
             bool shouldShow = info.isVisible && visibleCount < maxVisibleHealthBars;
 

@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe78c4b6609ed504fb41539b74faf004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  ProjectileData: {fileID: 11400000, guid: 1450c038b5c1bc34b8f8d93c629d1598, type: 2}
 --- !u!1 &5945218381229515737
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8060753845615863680
 Transform:
   m_ObjectHideFlags: 0

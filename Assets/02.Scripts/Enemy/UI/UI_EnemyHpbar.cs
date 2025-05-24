@@ -64,15 +64,5 @@ public class UI_EnemyHpbar : MonoBehaviour
     {
         Slider.value = 1;
     }
-
-    // Enemy가 파괴될 때 호출
-    public void OnEnemyDestroyed()
-    {
-        if (UI_Enemy.Instance != null)
-        {
-            Debug.Log("Enemy Die");
-            UI_Enemy.Instance.RemoveHpBar(_enemy);
-            gameObject.SetActive(false);
-        }
-    }
+  
 }

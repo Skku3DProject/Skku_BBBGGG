@@ -37,11 +37,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
                 if (projectileComponent != null)
                 {
                     _projectile = projectileComponent;
-                    _projectile.gameObject.SetActive(true);
-                    _projectile.Init(
-                                      _enemy.ProjectileTransfrom.position,
-                                      _enemy.Target.transform.position
-                                  );
+                    _projectile.Initialize();
                     return; // 찾았으면 즉시 종료
                 }
                 else
@@ -53,18 +49,6 @@ public class EnemyAttackCheckEvent : MonoBehaviour
 
         // 사용 가능한 발사체가 없을 때
         Debug.LogWarning(" 사용 가능한 발사체가 없습니다!");
-        LogAllProjectileStates();
-    }
-    private void LogAllProjectileStates()
-    {
-        for (int i = 0; i < ProjectilePrefabs.Count; i++)
-        {
-            GameObject prefab = ProjectilePrefabs[i];
-            if (prefab != null)
-            {
-                EnemyProjectile proj = prefab.GetComponent<EnemyProjectile>();
-            }
-        }
     }
 
     public void RangedAttackEvent()
@@ -84,8 +68,9 @@ public class EnemyAttackCheckEvent : MonoBehaviour
         Vector3 targetPosition = _enemy.Target.transform.position;
         targetPosition.y = _enemy.transform.position.y; // Y축 고정
         _enemy.transform.LookAt(targetPosition);
-        _projectile.Fire();
-
+        _projectile.Fire(_enemy.ProjectileTransfrom.position,
+                         _enemy.Target.transform.position + Vector3.up * 0.5f
+                        );
     }
     public void MeleeAttackEvent()
     {

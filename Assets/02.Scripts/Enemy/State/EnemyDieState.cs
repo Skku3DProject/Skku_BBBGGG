@@ -12,10 +12,8 @@ public class EnemyDieState : IFSM
         _enemy.Animator.SetBool("IsDie",true);
         _enemy.gameObject.SetActive(false);
         EnemyManager.Instance.UnEnable(_enemy);
-        if (_enemy.UI_EnemyHpbar != null)
-        {
-            _enemy.UI_EnemyHpbar.OnEnemyDestroyed();
-        }
+        UI_Enemy.Instance.TurnOffHpBar(_enemy);
+       
     }
 
     public EEnemyState Update()

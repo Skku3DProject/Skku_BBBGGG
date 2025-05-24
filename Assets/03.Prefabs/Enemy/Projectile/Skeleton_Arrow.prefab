@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe78c4b6609ed504fb41539b74faf004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  ProjectileData: {fileID: 11400000, guid: 3e78f28dd2527d148863c156ed020dcc, type: 2}
 --- !u!135 &3535415917452866501
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -201,7 +201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5912344974454636654, guid: 2e19f1a46fda1c5428b94948caf1ca15, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5931869243317043267, guid: 2e19f1a46fda1c5428b94948caf1ca15, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.b
