@@ -5,8 +5,8 @@ public class TowerAttackRange : MonoBehaviour
 {
     public GameObject NearEnemy { private set; get; }
     public readonly List<GameObject> _targets = new();
-
-
+    private float _updateTimer;
+    private TowerBase _owner;
 
     public bool CanAttakc = false;
     private void OnTriggerEnter(Collider other)
@@ -16,6 +16,11 @@ public class TowerAttackRange : MonoBehaviour
             _targets.Add(other.gameObject);
             UpdateNearEnemy();
         }
+    }
+
+    private void Start()
+    {
+        _owner = GetComponentInParent<TowerBase>();
     }
 
     private void OnTriggerExit(Collider other)
@@ -29,19 +34,14 @@ public class TowerAttackRange : MonoBehaviour
 
     private void Update()
     {
-        UpdateNearEnemy();
-
-
-        if (_targets.Count > 0)
+        _updateTimer -= Time.deltaTime;
+        if (_updateTimer < 0f)
         {
-            if (NearEnemy.activeSelf) { CanAttakc = true; }
-            else
-            {
-                CanAttakc = false;
-                NearEnemy = null;
-            }
-
+            _updateTimer = 0.5f;
+            UpdateNearEnemy();
         }
+
+        CanAttakc = (NearEnemy != null && NearEnemy.activeSelf);
     }
 
     private void UpdateNearEnemy()
@@ -49,13 +49,19 @@ public class TowerAttackRange : MonoBehaviour
         float minDist = float.MaxValue;
         GameObject closest = null;
 
+        // 리스트 클린업
+        for (int i = _targets.Count - 1; i >= 0; i--)
+        {
+            if (_targets[i] == null || !_targets[i].activeSelf)
+            {
+                _targets.RemoveAt(i);
+            }
+        }
+
         foreach (var target in _targets)
         {
-            Debug.Log(target.gameObject.name);
-            if (target == null) continue;
-
             float dist = Vector3.Distance(transform.position, target.transform.position);
-            if (dist < minDist)
+            if (dist < minDist || dist >= _owner.Data.MinRange)
             {
                 minDist = dist;
                 closest = target;

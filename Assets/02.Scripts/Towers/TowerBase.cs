@@ -32,7 +32,7 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
 
     protected virtual void Start()
     {
-        _sphereCollider.radius = _data.Range;
+        _sphereCollider.radius = _data.MaxRange;
     }
     protected virtual void Update()
     {
