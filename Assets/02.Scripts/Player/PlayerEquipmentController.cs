@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-public enum EquipmentType
+public enum EEquipmentType
 {
     Sword,
     Bow,
@@ -33,15 +34,20 @@ public class PlayerEquipmentController : MonoBehaviour
     private Animator _playerAnimation;
 
     // 현재 장비 타입
-    private EquipmentType _currentEquipType = EquipmentType.Sword;
+    private EEquipmentType _currentEquipType = EEquipmentType.Sword;
 
     //무기 이름과 공격력
     public List<WeaponAttackSO> WeaponAttackSO;
 
+    public Action OnChangeEquipment;
+    private void Awake()
+    {
+        Instance = this;
+
+    }
 
     void Start()
     {
-        Instance = this;
 
         _playerAnimation = GetComponent<Animator>();
         SetEquipment(_currentEquipType);
@@ -52,32 +58,34 @@ public class PlayerEquipmentController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha1)) // 검
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
-            SetEquipment(EquipmentType.Sword);
+            SetEquipment(EEquipmentType.Sword);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))//활
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
-            SetEquipment(EquipmentType.Bow);
+            SetEquipment(EEquipmentType.Bow);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))//지팡이
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
-            SetEquipment(EquipmentType.Magic);
+            SetEquipment(EEquipmentType.Magic);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))//곡괭이
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Pickaxe);
-            SetEquipment(EquipmentType.Pickaxe);
+            SetEquipment(EEquipmentType.Pickaxe);
         }
         if (Input.GetKeyDown(KeyCode.Alpha5))//블럭
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Block);
-            SetEquipment(EquipmentType.Block); //블럭
+            SetEquipment(EEquipmentType.Block); //블럭
         }
+        OnChangeEquipment?.Invoke();
+
     }
 
 
-    private void SetEquipment(EquipmentType equipType)
+    private void SetEquipment(EEquipmentType equipType)
     {
         _currentEquipType = equipType;
 
@@ -93,32 +101,32 @@ public class PlayerEquipmentController : MonoBehaviour
         // 해당 장비 활성화
         switch (equipType)
         {
-            case EquipmentType.Sword:
+            case EEquipmentType.Sword:
                 Sword.SetActive(true);
                 Shield.SetActive(true);
                 _playerAnimation.runtimeAnimatorController = SwordOverrideController;
                 break;
-            case EquipmentType.Pickaxe:
+            case EEquipmentType.Pickaxe:
                 Pickaxe.SetActive(true);
                 _playerAnimation.runtimeAnimatorController = PickaxeOverrideController;
                 break;
-            case EquipmentType.Bow:
+            case EEquipmentType.Bow:
                 Bow.SetActive(true);
                 Arrow.SetActive(true);
                 _playerAnimation.runtimeAnimatorController = BowOverrideController;
                 break;
-            case EquipmentType.Magic:
+            case EEquipmentType.Magic:
                 Magic.SetActive(true);
                 _playerAnimation.runtimeAnimatorController = MagicOverrideController;
                 break;
-            case EquipmentType.Block:
+            case EEquipmentType.Block:
                 Block.SetActive(true);
                 _playerAnimation.runtimeAnimatorController = BlockOverrideController;
                 break;
         }
     }
 
-    public EquipmentType GetCurrentEquipType()
+    public EEquipmentType GetCurrentEquipType()
     {
         return _currentEquipType; 
     }

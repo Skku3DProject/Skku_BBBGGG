@@ -18,7 +18,7 @@ public class SwordHit : MonoBehaviour
             Debug.Log("PlayerAttack 없음");
         }
 
-        if(other.CompareTag("Enemy") && PlayerAttack.IsAttacking)
+        if(other.CompareTag("Enemy") && PlayerAttack.CurrentWeaponAttack.IsAttacking)
         {
             Vector3 hitPosition = other.ClosestPoint(transform.position); // 충돌 지점 추정
             Vector3 directionToEnemy = (other.transform.position - transform.position).normalized;

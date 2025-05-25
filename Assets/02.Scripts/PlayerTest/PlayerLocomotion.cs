@@ -62,7 +62,7 @@ public class PlayerLocomotion : MonoBehaviour
         Vector3 inputDir = GetInputDirection();
 
         //공격상태일때는 미세하게만 움직일수있음
-        float speedMultiplier = (_playerAttack != null && _playerAttack.IsAttacking) ? 0.2f : 1f;
+        float speedMultiplier = (_playerAttack != null && _playerAttack.CurrentWeaponAttack.IsAttacking) ? 0.2f : 1f;
 
 
         Vector3 move = inputDir * _currentSpeed * speedMultiplier;
