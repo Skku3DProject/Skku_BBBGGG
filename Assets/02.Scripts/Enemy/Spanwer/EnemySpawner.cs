@@ -56,13 +56,12 @@ public class EnemySpawner : MonoBehaviour
                 Enemy enemy = enemyObject.GetComponent<Enemy>();
 
                 EnemyProjectilePool(enemy);
-                enemy.Initialize();
                 enemy.gameObject.SetActive(false);
                 UI_Enemy.Instance.SetHpBarToEnemy(enemy);
                 _enemys.Add(enemy);
             }
         }
-    }
+	}
 
     private void EnemyProjectilePool(Enemy enemy)
     {
@@ -102,12 +101,12 @@ public class EnemySpawner : MonoBehaviour
                     Vector3 spawnPos = GetValidSpawnPosition();
                     enemy.transform.position = spawnPos;
                     InitializeEnemy(enemy);
-                    _positionList.Add(enemy.gameObject);
+					_positionList.Add(enemy.gameObject);
                 }
             }
         }
-
-        UIManager.instance.CurrentCountRefresh();
+        UI_Enemy.Instance.UpdateHealthBars();
+		UIManager.instance.CurrentCountRefresh();
     }
     private Enemy GetInactiveEnemy(string targetName)
     {
@@ -158,8 +157,6 @@ public class EnemySpawner : MonoBehaviour
     {
         enemy.Initialize();
         enemy.GetComponent<EnemyController>().Initialize();
-        enemy.gameObject.SetActive(true);
-        UI_Enemy.Instance.SetHpBarToEnemy(enemy);
         EnemyManager.Instance.Enable(enemy);
     }
 

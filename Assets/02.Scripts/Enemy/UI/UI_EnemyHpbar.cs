@@ -63,6 +63,7 @@ public class UI_EnemyHpbar : MonoBehaviour
     public void Initialized()
     {
         Slider.value = 1;
-    }
+		gameObject.SetActive(true);
+	}
   
 }

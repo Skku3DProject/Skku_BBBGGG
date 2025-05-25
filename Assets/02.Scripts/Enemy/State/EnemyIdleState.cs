@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class EnemyIdleState : IFSM
 {
-
     private Enemy _enemy;
 
     private float _timer = 0;
@@ -35,7 +34,6 @@ public class EnemyIdleState : IFSM
     {
         _timer = 0;
     }
-
 
     private void Gravity()
     {

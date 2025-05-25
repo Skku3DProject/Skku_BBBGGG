@@ -67,13 +67,14 @@ public class Enemy : MonoBehaviour
         _target = _gaol;
         _health = EnemyData.Health;
         _maxHealth = _health;
-    }
+		gameObject.SetActive(true);
+		UI_EnemyHpbar.Initialized();
+	}
 
     public void TakeDamage(Damage damage)
     {
         _health -= damage.Value;
         UI_EnemyHpbar.UpdateHealth(_health / _maxHealth);
-
     }
 
     public bool TryAttack()

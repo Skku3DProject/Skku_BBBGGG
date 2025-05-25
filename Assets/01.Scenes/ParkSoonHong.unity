@@ -3197,6 +3197,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThirdPersonPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 2042415629762981396, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3101947172516059273, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
