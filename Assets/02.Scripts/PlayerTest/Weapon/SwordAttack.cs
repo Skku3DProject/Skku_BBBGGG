@@ -24,15 +24,6 @@ public class SwordAttack : WeaponAttackBase
         _playerAnimation = GetComponent<Animator>();
         _equipmentController = GetComponent<PlayerEquipmentController>();
     }
-
-    void Update()
-    {
-        //if (IsAttacking && Time.time - _lastAttackTime > _comboResetTime)
-        //{
-        //    ResetCombo();
-        //}
-    }
-
     public override void Attack()
     {
         if (!IsAttacking)
@@ -123,8 +114,6 @@ public class SwordAttack : WeaponAttackBase
 
     public override void Tick()
     {
-        base.Tick();
-        Debug.Log("aim");
         // 공격 콤보 유지 시간 경과 체크
         if (IsAttacking && Time.time - _lastAttackTime > _comboResetTime)
         {

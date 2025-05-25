@@ -35,7 +35,7 @@ public class PlayerAttack : MonoBehaviour
                 break;
 
             default:
-                _currentWeaponAttack = null;
+                _currentWeaponAttack = GetComponent<SwordAttack>();
                 break;
         }
     }

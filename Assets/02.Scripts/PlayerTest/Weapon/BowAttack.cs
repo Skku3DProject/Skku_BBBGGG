@@ -41,7 +41,8 @@ public class BowAttack : WeaponAttackBase
     {
         if (arrowPrefab == null || shootPoint == null || Camera.main == null) return;
 
-        GameObject arrow = Instantiate(arrowPrefab, shootPoint.position, Quaternion.identity);
+        PlayerArrow arrow = Instantiate(arrowPrefab, shootPoint.position, Quaternion.identity).GetComponent<PlayerArrow>();
+        arrow.SetAttackPower(PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower());
 
         Rigidbody rb = arrow.GetComponent<Rigidbody>();
         if (rb == null) return;
@@ -98,69 +99,87 @@ public class BowAttack : WeaponAttackBase
     {
         IsAttacking = false;
         _canShootNext = true;
+        if (isAiming) IsAttacking = true;
     }
 
     public override void Tick()
     {
-        base.Tick();
+        HandleAimingInput();
+        HandleFireInput();
+        UpdateAttackCooldown();
+        UpdateTrajectory();
+    }
 
-        if (Input.GetMouseButtonDown(1)) // 오른쪽 버튼 눌렀을 때
+    private void HandleAimingInput()
+    {
+        if (Input.GetMouseButtonDown(1))
         {
-            isAiming = true;
+            SetAiming(true);
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            SetAiming(false);
+            IsAttacking = false;
+            _canShootNext = true;
+        }
+    }
+
+    private void SetAiming(bool aiming)
+    {
+        isAiming = aiming;
+        IsAttacking = aiming;
+        if (aiming)
+        {
             _player.PlayerAnimator.SetTrigger("Aim");
-            _player.PlayerAnimator.SetBool("IsAiming", isAiming);
         }
-        else if (Input.GetMouseButtonUp(1)) // 오른쪽 버튼 뗐을 때
-        {
-            isAiming = false;
-            _player.PlayerAnimator.SetBool("IsAiming", isAiming);
-        }
+        _player.PlayerAnimator.SetBool("IsAiming", aiming);
+    }
 
-        if (Input.GetMouseButtonDown(0) && _canShootNext)
-        {
-            Debug.Log($"Fire input detected. isAiming={isAiming}, _canShootNext={_canShootNext}");
-            if (isAiming)
-            {
-                ShootArrow();
-            }
-            else
-            {
-                Attack();
-            }
-        }
+    private void HandleFireInput()
+    {
+        if (!Input.GetMouseButtonDown(0) || !_canShootNext)
+            return;
 
-        if (IsAttacking && Time.time - _lastAttackTime > _comboResetTime)
-        {
+        if (isAiming)
+            ShootArrow();
+        else
+            Attack();
+    }
+
+    private void UpdateAttackCooldown()
+    {
+        if (!IsAttacking)
+            return;
+
+        if (Time.time - _lastAttackTime > _comboResetTime)
             ResetAttack();
-        }
+    }
 
-        //궤적표시
-        if (trajectoryRenderer != null)
+    private void UpdateTrajectory()
+    {
+        if (trajectoryRenderer == null)
+            return;
+
+        if (isAiming && IsAttacking)
         {
-            if (isAiming && !IsAttacking)
-            {
-                // 카메라 화면 중앙에서 Raycast 쏘기
-                Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-                Vector3 targetPoint;
-
-                if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f))
-                {
-                    targetPoint = hitInfo.point;
-                }
-                else
-                {
-                    targetPoint = ray.origin + ray.direction * 100f;
-                }
-
-                Vector3 shootDirection = (targetPoint - shootPoint.position).normalized;
-                Vector3 initVel = shootDirection * shootForce;
-
-                trajectoryRenderer.DrawTrajectory(shootPoint.position, initVel);
-            }
-            else
-            {
-                trajectoryRenderer.ClearTrajectory();
-            }
+            Vector3 initVel = CalculateShootDirection() * shootForce;
+            trajectoryRenderer.DrawTrajectory(shootPoint.position, initVel);
         }
+        else
+        {
+            trajectoryRenderer.ClearTrajectory();
+        }
+    }
+
+    private Vector3 CalculateShootDirection()
+    {
+        if (Camera.main == null)
+            return shootPoint.forward;
+
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f))
+            return (hitInfo.point - shootPoint.position).normalized;
+
+        return ray.direction;
     }
 }

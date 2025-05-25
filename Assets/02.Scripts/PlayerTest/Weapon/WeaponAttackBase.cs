@@ -9,6 +9,6 @@ public abstract class WeaponAttackBase : MonoBehaviour
     public abstract void OnAttackAnimationEnd();
     public abstract void EnableComboInput();
 
-    // 매 프레임 호출되는 가상 메서드
+    // 각 무기별로 틱에서 독립적으로 입력과 상태를 관리해야함 아니면 복잡해짐
     public virtual void Tick() { }
 }

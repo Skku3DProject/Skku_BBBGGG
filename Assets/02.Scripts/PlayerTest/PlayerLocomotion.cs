@@ -9,7 +9,6 @@ public class PlayerLocomotion : MonoBehaviour
     private float _yVelocity;
     private float _currentSpeed;
     private int _jumpCount;
-    private bool _isClimbing;
     private bool _isRunning;
     public float VerticalVelocity => _yVelocity;
     public bool IsRunning => _isRunning;
@@ -18,7 +17,7 @@ public class PlayerLocomotion : MonoBehaviour
     {
         _player = GetComponent<ThirdPersonPlayer>();
         _playerAttack = GetComponent<PlayerAttack>();
-        _currentSpeed = 4f;
+        _currentSpeed = _player.PlayerStats.MoveSpeed;
         //_currentSpeed = _player.WalkSpeed;
     }
 
@@ -96,6 +95,9 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void Run()
     {
+        if (_playerAttack.CurrentWeaponAttack.IsAttacking == true) return;
+
+
         if (Input.GetKey(KeyCode.LeftShift) && _player.CurrentStamina > 0f)
         {
 

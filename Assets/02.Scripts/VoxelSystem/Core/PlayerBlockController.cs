@@ -11,7 +11,7 @@ public class PlayerBlockController : MonoBehaviour
     private ThirdPersonPlayer _player;
 
     [Header("복셀 세팅")]
-    public VoxelType PlaceType = VoxelType.Grass; // 어떤 블럭을 배치할지
+    public VoxelType PlaceType = VoxelType.Stone; // 어떤 블럭을 배치할지
 
 
     //블럭 설치 연속 동작 방지
