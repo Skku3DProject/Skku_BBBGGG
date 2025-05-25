@@ -26,11 +26,11 @@ public class PlayerAttack : MonoBehaviour
 
         switch (weaponType)
         {
-            case EEquipmentType.Sword:
+            case EquipmentType.Sword:
                 _currentWeaponAttack = GetComponent<SwordAttack>();
                 break;
 
-            case EEquipmentType.Bow:
+            case EquipmentType.Bow:
                 _currentWeaponAttack = GetComponent<BowAttack>();
                 break;
 
