@@ -1,8 +1,10 @@
 ﻿using Unity.Cinemachine;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerAttack : MonoBehaviour
 {
+    private ThirdPersonPlayer _player;
     private Animator _playerAnimation;
     private PlayerEquipmentController _equipmentController;
 
@@ -23,6 +25,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
+        _player = GetComponent<ThirdPersonPlayer>(); 
         _playerAnimation = GetComponent<Animator>();
         _equipmentController = GetComponent<PlayerEquipmentController>();
 
@@ -64,6 +67,7 @@ public class PlayerAttack : MonoBehaviour
         _currentAttackIndex = index;
         _canNextCombo = false;
         _nextComboQueued = false;
+        _player.CharacterController.stepOffset = 0f;
     }
     private void ResetCombo()
     {
@@ -111,10 +115,11 @@ public class PlayerAttack : MonoBehaviour
     // 애니메이션 이벤트에서 호출됨 (마지막 프레임 근처)
     public void OnAttackAnimationEnd()
     {
-        Debug.Log("??");
+        _player.CharacterController.stepOffset = 1f;
 
         if (_nextComboQueued)
         {
+
             _comboStep++;
             if (_comboStep > 3) // 최대 콤보 단계 제한 (0~4 총 5단계)
             {
@@ -128,6 +133,7 @@ public class PlayerAttack : MonoBehaviour
         {
             ResetCombo();
         }
+
     }
     private void OnModeChanged(EPlayerMode type)
     {

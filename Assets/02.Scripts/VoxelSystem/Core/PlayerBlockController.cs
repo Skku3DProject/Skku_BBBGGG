@@ -41,7 +41,7 @@ public class PlayerBlockController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && _isDig==false) // ÁÂÅ¬¸¯ ¡æ ºí·° ÆÄ±« or ³ª¹«³ª Ã¶±¤¼® Ä³±â
             {
-                _player.PlayerAnimator.SetTrigger("PickaxeDig");
+                _player.PlayerAnimator.SetTrigger("Attack");
                 _isDig = true;
             }
         }

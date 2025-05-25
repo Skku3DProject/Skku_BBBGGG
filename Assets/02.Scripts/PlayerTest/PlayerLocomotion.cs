@@ -31,6 +31,7 @@ public class PlayerLocomotion : MonoBehaviour
         {
             _player.RecoverStamina();
         }
+        _player.PlayerAnimator.SetBool("OnGround", _player.CharacterController.isGrounded);
     }
     private void UpdateMoveAnimation_Directional(Vector3 inputDir)
     {
@@ -117,6 +118,7 @@ public class PlayerLocomotion : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _yVelocity = _player.PlayerStats.JumpPower;
+            _player.PlayerAnimator.SetTrigger("Jump");
         }
         //bool canJump = _jumpCount < _player.MaxJumpCount && !_isClimbing;
 
