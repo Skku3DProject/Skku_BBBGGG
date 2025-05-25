@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
@@ -10,6 +11,8 @@ public class SkillNode
     public string Name => _data.Name;
     public int MaxLevel => _data.MaxLevel;
     public float Cooldown => _data.Cooldown;
+    public float SkillTimer = 0;
+    public bool IsCooldown => SkillTimer > 0;
     public Sprite Icon => _data.Icon;
     
     public Action SkillUnlockedAction;

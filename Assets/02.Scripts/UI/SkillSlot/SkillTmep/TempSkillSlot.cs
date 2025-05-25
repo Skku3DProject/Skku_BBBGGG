@@ -31,7 +31,7 @@ public class TempSkillSlot : MonoBehaviour
         
     }
     
-    public void ActivateSkillSlot()
+    private void ActivateSkillSlot()
     {
         IsActive = true;
         LockedImage.gameObject.SetActive(false);
@@ -40,5 +40,21 @@ public class TempSkillSlot : MonoBehaviour
     {
         
     }
-    
+    // 스킬 사용하면 쿨타임 적용하기
+    private IEnumerator UseSkillCoroutine()
+    {
+        Cooltimer = Cooldown;
+        
+        while (Cooltimer <= 0)
+        {
+            Cooltimer -= Time.deltaTime;
+            CoolTimerOn(Cooltimer);
+            yield return null;
+        }
+    }
+
+    private void CoolTimerOn(float cooltime)
+    {
+        CooltimeSlider.fillAmount = cooltime / Cooldown;
+    }
 }

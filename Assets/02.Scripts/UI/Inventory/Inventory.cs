@@ -1,7 +1,8 @@
 using UnityEditor.UIElements;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class 
+    Inventory : MonoBehaviour
 {
     public TempItemSO test;
     public TempItemSO test2;
@@ -9,7 +10,7 @@ public class Inventory : MonoBehaviour
     public bool InventoryOpen = false;
 
     public GameObject[] SkillInventory;
-    
+    private TempItemSO _selectedItem;
     
     // 슬롯들 받아오기
     [SerializeField] private GameObject _inventoryBase;
@@ -29,17 +30,10 @@ public class Inventory : MonoBehaviour
     private void Update()
     {
         OpenInventory();
-        if(Input.anyKeyDown)
-        {
-            TempItemSO selectedItem = SelectSlot();
-            if (selectedItem != null)
-            {
-                Debug.Log($"{selectedItem.ItemName}");
-            }
-        }
+        SelectSlot();
     }
 
-    private TempItemSO SelectSlot()
+    private void SelectSlot()
     {
         for (int i = 0; i < Mathf.Min(9, _slots.Length); i++)
         {
@@ -52,13 +46,13 @@ public class Inventory : MonoBehaviour
 
                 _keyOffSet = i;
                 _slots[_keyOffSet].HighlightSlot(true);
-                return _slots[_keyOffSet].ItemTemp;      
+                _selectedItem = _slots[_keyOffSet].ItemTemp;      
                
+                SkillManager.instance.SwitchSkilltory(_selectedItem.EquipmentType);
             } 
             
         }
-
-        return null;
+        
     }
     // 인벤토리 온 오프
     private void OpenInventory()
@@ -111,5 +105,10 @@ public class Inventory : MonoBehaviour
     public void TestAcquire2()
     {
         AcquireItem(test2);
+    }
+
+    public TempItemSO GetItem()
+    {
+        return _selectedItem;
     }
 }

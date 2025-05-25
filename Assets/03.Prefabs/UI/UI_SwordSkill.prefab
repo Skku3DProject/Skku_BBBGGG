@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 2109931523478121355}
   - {fileID: 507511920938031300}
   - {fileID: 443550701257899265}
+  InvenType: 0
 --- !u!1 &1503858982416131198
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,12 +583,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillNode: {fileID: 11400000, guid: b669a97dd1656604ab7474b40d519aac, type: 2}
+  SlotData: {fileID: 0}
   SkillIcon: {fileID: 8378710623457029866}
   Cooldown: 0
   IsActive: 1
   CooltimeSlider: {fileID: 123565263129008050}
   Cooltimer: 0
+  LockedImage: {fileID: 0}
 --- !u!1 &4395233570025025196
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,12 +1121,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillNode: {fileID: 11400000, guid: 722601ad756d448429ae1794ca80afcd, type: 2}
+  SlotData: {fileID: 0}
   SkillIcon: {fileID: 2017977211023483322}
   Cooldown: 0
   IsActive: 1
   CooltimeSlider: {fileID: 2874143361415140550}
   Cooltimer: 0
+  LockedImage: {fileID: 0}
 --- !u!1 &7422172458658102770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1332,7 +1335,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.213
+  m_FillAmount: 0.1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1426,9 +1429,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillNode: {fileID: 11400000, guid: 403eb867e3ec3ab40b432ae8c7a96cb0, type: 2}
+  SlotData: {fileID: 0}
   SkillIcon: {fileID: 5101156392427639139}
   Cooldown: 0
   IsActive: 1
   CooltimeSlider: {fileID: 8426400303114540337}
   Cooltimer: 0
+  LockedImage: {fileID: 0}
