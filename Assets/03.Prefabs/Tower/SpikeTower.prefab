@@ -96,6 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9173403674548717176}
   - component: {fileID: 6827871050217503028}
+  - component: {fileID: 6845233380202242907}
   m_Layer: 0
   m_Name: SpikeTower
   m_TagString: Untagged
@@ -140,3 +141,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.49345863, z: 1}
   m_Center: {x: 0, y: 0.2532707, z: 0}
+--- !u!114 &6845233380202242907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6292268103419620999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84161a5abc070804280bf8ba005754ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data: {fileID: 11400000, guid: cbb5077f46b6d5a4b80faf92d0e0879b, type: 2}
