@@ -8,5 +8,9 @@ public class UIInputHandler : MonoBehaviour
         {
             PopUpManager.Instance.Open(EPopupType.UI_BuildMenu);
         }
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            PopUpManager.Instance.Open(EPopupType.UI_SkillPopup);
+        }
     }
 }

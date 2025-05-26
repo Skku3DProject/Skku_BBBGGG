@@ -1,10 +1,8 @@
 using UnityEngine;
 
-public class 
-    Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
-    public TempItemSO test;
-    public TempItemSO test2;
+    public TempItemSO[] Items;
     private int _keyOffSet = -1;
     public bool InventoryOpen = false;
 
@@ -23,7 +21,6 @@ public class
     {
         _slots = _inventoryBase.GetComponentsInChildren<Slot>();
         TestAcquire();
-        TestAcquire2();
     }
 
     private void Update()
@@ -99,11 +96,10 @@ public class
 
     public void TestAcquire()
     {
-        AcquireItem(test);
-    }    
-    public void TestAcquire2()
-    {
-        AcquireItem(test2);
+        foreach (var item in Items)
+        {
+            AcquireItem(item);
+        }
     }
 
     public TempItemSO GetItem()

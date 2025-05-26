@@ -7,6 +7,7 @@ public enum EPopupType
 {
     UI_OptionPopup,
     UI_BuildMenu,
+    UI_SkillPopup,
 }
 public class PopUpManager : MonoBehaviour
 {

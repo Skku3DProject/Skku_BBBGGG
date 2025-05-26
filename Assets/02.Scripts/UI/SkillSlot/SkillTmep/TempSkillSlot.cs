@@ -6,7 +6,7 @@ public class TempSkillSlot : MonoBehaviour
 {
     public SO_TempSkillSlot SlotData; // 데이터 받아오는 SO
     private SkillNode _skillNode;
-    private SkillTory _skillTory;
+    [SerializeField]private SkillTory _skillTory;
     public Image SkillIcon;       //  sprite -> 아이콘
     public float Cooldown;        // 적용할 쿨타임 (여기서 독립적으로 관리)
     
@@ -20,15 +20,15 @@ public class TempSkillSlot : MonoBehaviour
     private void OnEnable()
     {
         _skillTory = GetComponentInParent<SkillTory>();
-        _skillNode = _skillTory.FindSkillData(SlotData.name);
+        _skillNode = FindSkills(SlotData.Name);
         _skillNode.SkillUnlockedAction += ActivateSkillSlot;
+        Debug.Log("temp skill start");
     }
     // 스킬 슬롯창에 들어갈 아이콘 설정
     public void Setup()
     {
         SkillIcon.sprite = _skillNode.Icon;
         IsActive = _skillNode.IsActive;
-        
     }
     
     private void ActivateSkillSlot()
@@ -36,10 +36,7 @@ public class TempSkillSlot : MonoBehaviour
         IsActive = true;
         LockedImage.gameObject.SetActive(false);
     }
-    public void NodeSetup()
-    {
-        
-    }
+    
     // 스킬 사용하면 쿨타임 적용하기
     private IEnumerator UseSkillCoroutine()
     {
@@ -56,5 +53,19 @@ public class TempSkillSlot : MonoBehaviour
     private void CoolTimerOn(float cooltime)
     {
         CooltimeSlider.fillAmount = cooltime / Cooldown;
+    }
+
+    private SkillNode FindSkills(string skillName)
+    {
+        Debug.Log(_skillTory);
+        
+        SkillTree tree = SkillManager.instance.TreeCheck(_skillTory.InvenType);
+        Debug.Log(_skillTory.InvenType);
+        Debug.Log(skillName);
+        
+        Debug.Log(tree);
+        
+        Debug.Log("findSkilldat skill start");
+        return tree.FindSkill(skillName);
     }
 }
