@@ -3,12 +3,12 @@ using UnityEngine;
 public class PlayerLocomotion : MonoBehaviour
 {
     private ThirdPersonPlayer _player;
+    private PlayerAttack _playerAttack;
 
     private const float Gravity = -9.8f;
     private float _yVelocity;
     private float _currentSpeed;
     private int _jumpCount;
-    private bool _isClimbing;
     private bool _isRunning;
     public float VerticalVelocity => _yVelocity;
     public bool IsRunning => _isRunning;
@@ -16,7 +16,8 @@ public class PlayerLocomotion : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<ThirdPersonPlayer>();
-        _currentSpeed = 4f;
+        _playerAttack = GetComponent<PlayerAttack>();
+        _currentSpeed = _player.PlayerStats.MoveSpeed;
         //_currentSpeed = _player.WalkSpeed;
     }
 
@@ -29,6 +30,7 @@ public class PlayerLocomotion : MonoBehaviour
         {
             _player.RecoverStamina();
         }
+        _player.PlayerAnimator.SetBool("OnGround", _player.CharacterController.isGrounded);
     }
     private void UpdateMoveAnimation_Directional(Vector3 inputDir)
     {
@@ -57,7 +59,12 @@ public class PlayerLocomotion : MonoBehaviour
     private void ApplyMovement()
     {
         Vector3 inputDir = GetInputDirection();
-        Vector3 move = inputDir * _currentSpeed;
+
+        //공격상태일때는 미세하게만 움직일수있음
+        float speedMultiplier = (_playerAttack != null && _playerAttack.CurrentWeaponAttack.IsAttacking) ? 0.2f : 1f;
+
+
+        Vector3 move = inputDir * _currentSpeed * speedMultiplier;
 
         // 중력 적용
         if (_player.CharacterController.isGrounded && _yVelocity < 0f)
@@ -88,6 +95,9 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void Run()
     {
+        if (_playerAttack.CurrentWeaponAttack.IsAttacking == true) return;
+
+
         if (Input.GetKey(KeyCode.LeftShift) && _player.CurrentStamina > 0f)
         {
 
@@ -110,6 +120,7 @@ public class PlayerLocomotion : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _yVelocity = _player.PlayerStats.JumpPower;
+            _player.PlayerAnimator.SetTrigger("Jump");
         }
         //bool canJump = _jumpCount < _player.MaxJumpCount && !_isClimbing;
 

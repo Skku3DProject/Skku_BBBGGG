@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WeaponAttackSO_Bow
   m_EditorClassIdentifier: 
   WeaponName: Bow
-  AttackPower: 20
+  AttackPower: 150

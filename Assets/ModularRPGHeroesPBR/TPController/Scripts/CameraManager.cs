@@ -40,18 +40,8 @@ namespace DM
             float h = Input.GetAxis("Mouse X");
             float v = Input.GetAxis("Mouse Y");
 
-            float c_h = Input.GetAxis("RightAxis X");
-            float c_v = Input.GetAxis("RightAxis Y");
-
             float targetSpeed = mouseSpeed;
 
-
-            if(c_h != 0 || c_v != 0)
-            {
-                h = c_h;
-                v = c_v;
-                targetSpeed = controllerSpeed;
-            }
 
             FollowTarget(d);
             HandleRotations(d, v, h, targetSpeed);

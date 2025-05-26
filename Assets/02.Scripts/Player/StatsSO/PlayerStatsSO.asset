@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 1000
   MoveSpeed: 7
-  JumpPower: 6
+  JumpPower: 10
   Stamina: 100
   Exp: 0
   Level: 0
