@@ -51,16 +51,14 @@ public class SkillNode
         {
             SkillLevel++;
             Debug.Log($"{Name} 현재 레벨 = {SkillLevel}");
-            foreach (var child in Children)
+            if (IsActive)
             {
-                if (child.IsUnlocked)
-                {
-                    child.SkillUnlockedAction?.Invoke();
-                }
+                SkillUnlockedAction?.Invoke();
             }
+  
             return true;
         }
-        
+
         Debug.Log("상위 스킬이 열리지 않았습니다.");
         return false;
     }

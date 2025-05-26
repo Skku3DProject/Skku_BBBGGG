@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2340320ba958bd468ed81c9c0cd91af, type: 3}
-  m_Name: SkillNodeSO_1 8
+  m_Script: {fileID: 11500000, guid: b231b75c7a938e341922c3d7a3da832b, type: 3}
+  m_Name: SO_SkillSlot_Magic
   m_EditorClassIdentifier: 
-  Type: 2
   Name: Magic1
-  MaxLevel: 4
-  Cooldown: 0
-  Icon: {fileID: 308216405, guid: ac283963041aea647b6285990bb472ea, type: 3}
+  EEquipmentType: 2
+  CoolDown: 5
+  Icon: {fileID: -1944115293, guid: ac283963041aea647b6285990bb472ea, type: 3}

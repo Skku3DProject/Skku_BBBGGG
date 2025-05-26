@@ -15,7 +15,7 @@ public class SkillManager : MonoBehaviour
     public SkillTreeMaker[] SkillTreeMakers;
     public SkillTory[] SkillTories;
     public SkillType TreeType;
-    
+
     // 스킬 트리 생성
     public  SkillTree _swordSkillTree;
     public SkillTree _bowSkillTree;
@@ -37,22 +37,30 @@ public class SkillManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        foreach (var maker in SkillTreeMakers)
+        {
+            maker.InitTree();
+        }
+        
+        // 트리 세팅
+        _swordSkillTree = SkillTreeMakers[0].Skill;
+        _bowSkillTree = SkillTreeMakers[1].Skill;
+        _magicSkillTree = SkillTreeMakers[2].Skill;
+        Debug.Log("treeset start");
+
     }
 
     private void OnEnable()
     {
         SkillPoint = 10;
-
     }
 
     private void Start()
     {
         // 스킬 창 세팅
         _selectskillTory = SkillTories[0];
-        // 트리 세팅
-        _swordSkillTree = SkillTreeMakers[0].Skill;
-        _bowSkillTree = SkillTreeMakers[1].Skill;
-        _magicSkillTree = SkillTreeMakers[2].Skill;
+
     }
     
     // skillset children을 찾기 위한 skillset구하기
@@ -154,7 +162,7 @@ public class SkillManager : MonoBehaviour
     {
         _selectskillTory.gameObject.SetActive(false);
         
-        switch (type)
+        switch(type)
         {
             case EquipmentType.Sword:
                 _selectskillTory = SkillTories[0];
