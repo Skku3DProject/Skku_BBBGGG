@@ -659,7 +659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlotData: {fileID: 0}
+  SlotData: {fileID: 11400000, guid: 722601ad756d448429ae1794ca80afcd, type: 2}
   _skillTory: {fileID: 0}
   SkillIcon: {fileID: 8552371197234462674}
   Cooldown: 0
@@ -1274,7 +1274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlotData: {fileID: 0}
+  SlotData: {fileID: 11400000, guid: b669a97dd1656604ab7474b40d519aac, type: 2}
   _skillTory: {fileID: 0}
   SkillIcon: {fileID: 5756716235115146750}
   Cooldown: 0
@@ -1659,7 +1659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlotData: {fileID: 0}
+  SlotData: {fileID: 11400000, guid: 403eb867e3ec3ab40b432ae8c7a96cb0, type: 2}
   _skillTory: {fileID: 0}
   SkillIcon: {fileID: 1288685579331706261}
   Cooldown: 0

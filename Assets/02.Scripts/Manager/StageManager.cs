@@ -32,17 +32,14 @@ public class StageManager : MonoBehaviour
     
     private float _timer;
     [SerializeField] private float _readyTime = 1f;
-    [SerializeField] private float _combatTime = 1f;
-
-    public Action OnStageStart;
-    public Action OnStageEnd;
+    
     public Action OnCombatStart;
     public Action OnCombatEnd;
     
     private EStageType _currentStage = EStageType.Tutorial;
     private EPhaseType _currentPhase = EPhaseType.None;
-    // 몬스터 카운트
-    public int EnemyCount;
+    
+    // 에너미 카운트 세기
     private bool _allEnemiesDead => EnemyManager.Instance.CurruntEnemyList.Count <= 0;  
     
     private void Awake()
@@ -78,8 +75,7 @@ public class StageManager : MonoBehaviour
             
             case EPhaseType.Combat:
                 UIManager.instance.CurrentCountRefresh();
-                EnemyCount = EnemyManager.Instance.CurruntEnemyList.Count;
-                if (EnemyCount == 0) 
+                if (_allEnemiesDead) 
                 {
                     CombatEnd();
                 }
@@ -93,23 +89,17 @@ public class StageManager : MonoBehaviour
         _currentStage = EStageType.Stage1;
         _currentPhase = EPhaseType.Ready;
         _timer = _readyTime;
-        // UIManager.instance.UI_Stage(_currentStage);
         UIManager.instance.UI_SetMaxTimer(_readyTime);
         UIManager.instance.UI_TimerRefresh(_timer);
     }
 
-    private void StartReadyPhase()
-    {
-        _currentPhase = EPhaseType.Ready;
-        _timer = 0;
-    }
     public void CombatEnd()
     {
         _currentPhase = EPhaseType.End;
         _timer = _readyTime;
         UIManager.instance.UI_SetMaxTimer(_readyTime);
         UIManager.instance.UI_ObjectOnOff(UIManager.instance.TimerObject);
-        Debug.Log("몬스터 다 죽었음몬스터 다 죽었음몬스터 다 죽었음몬스터 다 죽었음몬스터 다 죽었음");
+        
         OnCombatEnd?.Invoke();
         
         NextStage();
@@ -118,11 +108,8 @@ public class StageManager : MonoBehaviour
     private void CombatStart()
     {
         _currentPhase = EPhaseType.Combat;
-        _timer = _combatTime;
-        
-        UIManager.instance.UI_SetMaxTimer(_combatTime);
         UIManager.instance.UI_ObjectOnOff(UIManager.instance.CountObject);
-        Debug.Log("전투 시작!");
+        
         OnCombatStart?.Invoke();
     }
     // 다음 스테이지 전환
@@ -139,7 +126,6 @@ public class StageManager : MonoBehaviour
             Debug.Log("스테이지 끝");
         }
         UIManager.instance.UI_TimerRefresh(_timer);
-        // UIManager.instance.UI_Stage(_currentStage);
     }
     
     public EStageType GetCurrentStage()

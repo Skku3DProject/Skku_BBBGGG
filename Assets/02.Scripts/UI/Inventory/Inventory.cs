@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour
         OpenInventory();
         SelectSlot();
     }
-
+    // 아이템창에서 선택한 슬롯에 따라 skill창 바꾸기
     private void SelectSlot()
     {
         for (int i = 0; i < Mathf.Min(9, _slots.Length); i++)

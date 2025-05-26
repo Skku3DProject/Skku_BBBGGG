@@ -16,8 +16,7 @@ public class UIManager : MonoBehaviour
     public GameObject TimerObject;
     public GameObject CountObject;
     public TextMeshProUGUI CurrentEnemy;
-    // public TextMeshProUGUI Stage;
-    // public TextMeshProUGUI Phase;
+    
     // 싱글톤
     public void Awake()
     {
@@ -38,9 +37,9 @@ public class UIManager : MonoBehaviour
     // 재화 변경
     public void RefreshCurrency()
     {
-        Currencies[0].text = $"Gold :{CurrencyManager.instance.CurrentCurrency().Gold}";
-        Currencies[1].text = $"Wood :{CurrencyManager.instance.CurrentCurrency().Wood}";
-        Currencies[2].text = $"Stone :{CurrencyManager.instance.CurrentCurrency().Stone}";
+        Currencies[0].text = $"{CurrencyManager.instance.CurrentCurrency().Gold}";
+        Currencies[1].text = $"{CurrencyManager.instance.CurrentCurrency().Wood}";
+        Currencies[2].text = $"{CurrencyManager.instance.CurrentCurrency().Stone}";
     }
     // 게임오버
     public void UI_GameOver()
@@ -81,19 +80,6 @@ public class UIManager : MonoBehaviour
     {
         slider.value = value;
     }
-    
-    // public void UI_Stage(EStageType stage)
-    // {
-    //     Stage.text = stage.ToString();
-    // }
-    //
-    // public void UI_Phase(EPhaseType phase)
-    // {
-    //     Phase.text = phase.ToString();
-    // }
-    //
-    //
-    
     public void UI_TimerRefresh(float time)
     {
         Timer.text = $"{(int)time}";
