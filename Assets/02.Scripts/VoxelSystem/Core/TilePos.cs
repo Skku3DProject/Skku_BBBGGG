@@ -30,10 +30,10 @@ public class TilePos
 
     public static Dictionary<Tile, TilePos> tiles = new Dictionary<Tile, TilePos>()
     {
-        {Tile.Dirt, new TilePos(0,0)},
-        {Tile.Grass, new TilePos(1,0)},
-        {Tile.GrassSide, new TilePos(0,1)},
-        {Tile.Stone, new TilePos(0,2)},
+        {Tile.Dirt, new TilePos(5,0)},
+        {Tile.Grass, new TilePos(6,0)},
+        {Tile.GrassSide, new TilePos(7,0)},
+        {Tile.Stone, new TilePos(4,0)},
 
     };
 }
