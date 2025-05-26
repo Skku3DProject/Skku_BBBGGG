@@ -1,6 +1,4 @@
-﻿using Unity.Cinemachine;
-using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
+﻿using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {

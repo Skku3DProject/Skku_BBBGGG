@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Data;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public enum EEnemyState
 {

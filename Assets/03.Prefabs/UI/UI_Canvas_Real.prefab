@@ -2580,7 +2580,7 @@ MonoBehaviour:
   Timer: {fileID: 3779910001768745081}
   TimerObject: {fileID: 3801402270377205335}
   CountObject: {fileID: 4237724620410311483}
-  CurrentEnemy: {fileID: 3779910001768745081}
+  CurrentEnemy: {fileID: 5884659190064921846}
 --- !u!114 &351838839650145741
 MonoBehaviour:
   m_ObjectHideFlags: 0
