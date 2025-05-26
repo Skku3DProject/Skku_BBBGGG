@@ -9,6 +9,12 @@ public class EnemyDamageState : IFSM
     public EnemyDamageState(Enemy enemy)
     {
         _enemy = enemy;
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        _damagedTime = _enemy.EnemyData.DamagedTime;
     }
     public void Start()
     {

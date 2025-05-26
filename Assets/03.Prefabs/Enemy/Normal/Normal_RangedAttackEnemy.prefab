@@ -523,6 +523,7 @@ GameObject:
   - component: {fileID: 5579543091692692224}
   - component: {fileID: 5941470335209132552}
   - component: {fileID: 882713787657196194}
+  - component: {fileID: 4195232353261203431}
   m_Layer: 9
   m_Name: Normal_RangedAttackEnemy
   m_TagString: Enemy
@@ -595,7 +596,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: 9731ed1adb9e75045a2bace310d24ac2, type: 2}
+  ProjectileTransfrom: {fileID: 0}
   GravityVelocity: {x: 0, y: 0, z: 0}
+  CurrentMoveDirection: {x: 0, y: 0, z: 0}
   UI_EnemyHpbar: {fileID: 0}
   UI_offset: {fileID: 8551100245870876881}
 --- !u!143 &5941470335209132552
@@ -635,7 +638,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ea8d8499f77fc45a482d30e854d027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 5567141573365586511, guid: 3ac66729e1b79d54ead15483d62c4379, type: 3}
+  ProjectilePrefabs: []
+--- !u!114 &4195232353261203431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7429422838566746885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d090e9af1940a4e81d88a1b3fca0bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7641909615770404320
 GameObject:
   m_ObjectHideFlags: 0

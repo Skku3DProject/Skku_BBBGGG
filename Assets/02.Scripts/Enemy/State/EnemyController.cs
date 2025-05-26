@@ -21,9 +21,12 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
 
     private Enemy _enemy;
 
+    private EnemyVisual _enemyVisual;
+
     private void Awake()
     {
         _enemy = GetComponent<Enemy>();
+        _enemyVisual = GetComponent<EnemyVisual>();
         SetState();
         Initialize();
     }
@@ -111,20 +114,20 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
     
     public void TakeDamage(Damage damage)
     {
-        Debug.Log("damage1");
         if (_currentState == EEnemyState.Damaged || _currentState == EEnemyState.Die)
         {
             return;
         }
 
-        Debug.Log("damage2");
-
         // ³Ë¹é
-        Vector3 dir = (damage.From.transform.position - transform.position) * -1;
+        Vector3 dir = (damage.From.transform.position - transform.position).normalized * -1f;
+        dir += Vector3.up * 0.5f; // »ìÂ¦ ´ë°¢¼± À§·Î
         dir.Normalize();
+
         _enemy.CharacterController.Move(dir * damage.KnockbackPower * Time.deltaTime);
 
         _enemy.TakeDamage(damage);
+        _enemyVisual.PlayHitFeedback(_enemy.EnemyData.DamagedTime);
 
         if (_enemy.Health <= 0)
         {

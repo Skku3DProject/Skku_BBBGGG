@@ -28,6 +28,9 @@ public class So_Enemy : ScriptableObject
     public EEnemyType EnemyType;
     public EEnemyAttackType EnemyAttackType;
 
+    [Header("시간")]
+    public float DamagedTime = 0.5f;
+
     [Header("공격 물체")]
     public GameObject ProjectilePrefab;
     public int PrefabSize = 5;

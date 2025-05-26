@@ -809,6 +809,7 @@ GameObject:
   - component: {fileID: 4852719716849360044}
   - component: {fileID: 6757451426322356934}
   - component: {fileID: -7073099490491152317}
+  - component: {fileID: -1160747098995149363}
   m_Layer: 9
   m_Name: Skeleton_Warrior_Axe
   m_TagString: Enemy
@@ -878,6 +879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyData: {fileID: 11400000, guid: 8d64ae0751c7c3b4c9c10266d3550de2, type: 2}
+  ProjectileTransfrom: {fileID: 0}
   GravityVelocity: {x: 0, y: 0, z: 0}
   CurrentMoveDirection: {x: 0, y: 0, z: 0}
   UI_EnemyHpbar: {fileID: 0}
@@ -932,6 +934,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProjectilePrefabs: []
+--- !u!114 &-1160747098995149363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384884184112096675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d090e9af1940a4e81d88a1b3fca0bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2910221618307621725
 GameObject:
   m_ObjectHideFlags: 0

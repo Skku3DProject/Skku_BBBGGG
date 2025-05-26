@@ -1870,6 +1870,7 @@ GameObject:
   - component: {fileID: 6876659309955705291}
   - component: {fileID: -128012373004896404}
   - component: {fileID: -6446275292152809918}
+  - component: {fileID: -366672065021717246}
   m_Layer: 9
   m_Name: Skeleton_Archer
   m_TagString: Enemy
@@ -1994,6 +1995,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProjectilePrefabs: []
+--- !u!114 &-366672065021717246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6143643343095581565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d090e9af1940a4e81d88a1b3fca0bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6628943230737950743
 GameObject:
   m_ObjectHideFlags: 0
