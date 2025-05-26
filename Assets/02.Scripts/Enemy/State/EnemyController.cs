@@ -120,10 +120,12 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
         }
 
         // ³Ë¹é
-        Vector3 dir = (damage.From.transform.position - transform.position).normalized * -1f;
+       // Vector3 dir = (damage.From.transform.position - transform.position).normalized * -1f;
+        Vector3 dir = damage.Direction;
         dir += Vector3.up * 0.5f; // »ìÂ¦ ´ë°¢¼± À§·Î
         dir.Normalize();
 
+        _enemy.transform.LookAt(_enemy.Player.transform);
         _enemy.CharacterController.Move(dir * damage.KnockbackPower * Time.deltaTime);
 
         _enemy.TakeDamage(damage);
@@ -134,6 +136,7 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
             ChangeState(EEnemyState.Die);
             return;
         }
+
         if(damage.From.CompareTag("Player"))
         {
             _enemy.OnPlayer();

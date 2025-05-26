@@ -22,9 +22,8 @@ public class SwordHit : MonoBehaviour
         {
             Vector3 hitPosition = other.ClosestPoint(transform.position); // 충돌 지점 추정
             Vector3 directionToEnemy = (other.transform.position - transform.position).normalized;
-            Vector3 oppositeDirection = -directionToEnemy;
 
-            PlayerAttack.TryDamageEnemy(other.gameObject, oppositeDirection);
+            PlayerAttack.TryDamageEnemy(other.gameObject, directionToEnemy);
             Debug.Log("적 공격");
         }
     }

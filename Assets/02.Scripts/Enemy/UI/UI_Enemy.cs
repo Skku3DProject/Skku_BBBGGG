@@ -10,13 +10,21 @@ public class UI_Enemy : MonoBehaviour
 	public float maxDistance = 50f; // 최대 표시 거리
 	public int maxVisibleHealthBars = 30; // 최대 표시 개수
 
+<<<<<<< Updated upstream
 	private List<UI_EnemyHpbar> _hpBars;
 	private List<UI_EnemyHpbar> _AcitveHpBars;
 	private Camera _mainCamera;
+=======
+    private List<UI_EnemyHpbar> _hpBars;
+    private Camera _mainCamera;
+    // 거리별 정렬을 위한 리스트
+    private List<HealthBarDistanceInfo> _healthBarInfos = new List<HealthBarDistanceInfo>();
+>>>>>>> Stashed changes
 
 	private List<HealthBarDistanceInfo> _healthBarInfos;
 
 
+<<<<<<< Updated upstream
 	void Awake()
 	{
 		if (Instance != null)
@@ -41,8 +49,24 @@ public class UI_Enemy : MonoBehaviour
 		_hpBars = new List<UI_EnemyHpbar>(capacity);
 		_AcitveHpBars = new List<UI_EnemyHpbar>(capacity);
 	}
+=======
+    public void SetHPBarMaxSize(int capacity)
+    {
+        if (_hpBars == null)
+        {
+            _hpBars = new List<UI_EnemyHpbar>(capacity);
+        }
+    }
+
+    // Enemy와 묶어주기.
+    public void SetHpBarToEnemy(Enemy enemy)
+    {
+        GameObject hpBar = Instantiate(HPbar, transform);
+        UI_EnemyHpbar hpBarComponent = hpBar.GetComponent<UI_EnemyHpbar>();
+>>>>>>> Stashed changes
 
 
+<<<<<<< Updated upstream
 	public void SetHpBarToEnemy(Enemy enemy)
 	{
 		GameObject hpBar = Instantiate(HPbar, transform);
@@ -70,6 +94,20 @@ public class UI_Enemy : MonoBehaviour
 		Debug.Log(_healthBarInfos.Count);
 
 		Vector3 cameraPos = _mainCamera.transform.position;
+=======
+    private void UpdateAllHealthBars()
+    {
+        //// 유효하지 않은 체력바 제거
+        //for (int i = _hpBars.Count - 1; i >= 0; i--)
+        //{
+        //    if (_hpBars[i] == null || _hpBars[i].GetEnemy() == null)
+        //    {
+        //        if (_hpBars[i] != null)
+        //            _hpBars[i].gameObject.SetActive(false);
+        //        _hpBars.RemoveAt(i);
+        //    }
+        //}
+>>>>>>> Stashed changes
 
 		// 1._hpBars 중에서 켜져있는애들을 저장
 		// 2. 켜져 있는 애들끼리 거리값 비교
@@ -79,7 +117,15 @@ public class UI_Enemy : MonoBehaviour
 		{
 			Enemy enemy = hpBar.GetEnemy();
 
+<<<<<<< Updated upstream
 			if (enemy == null || enemy.gameObject.activeInHierarchy == false) continue;
+=======
+        // 각 체력바의 거리와 가시성 계산
+        foreach (UI_EnemyHpbar hpBar in _hpBars)
+        {
+            Enemy enemy = hpBar.GetEnemy();
+            if (enemy == null) continue;
+>>>>>>> Stashed changes
 
 			Vector3 enemyPos = enemy.transform.position;
 			float distance = Vector3.Distance(cameraPos, enemyPos);
@@ -87,6 +133,7 @@ public class UI_Enemy : MonoBehaviour
 			// 기본 가시성 체크
 			bool isVisible = CheckVisibility(enemyPos, distance);
 
+<<<<<<< Updated upstream
 			_healthBarInfos.Add(new HealthBarDistanceInfo
 			{
 				hpBar = hpBar,
@@ -112,6 +159,26 @@ public class UI_Enemy : MonoBehaviour
 			}
 		}
 	}
+=======
+            _healthBarInfos.Add(new HealthBarDistanceInfo
+            {
+                hpBar = hpBar,
+                distance = distance,
+                isVisible = isVisible
+            });
+        }
+
+        // 거리 순으로 정렬 (가까운 것부터)
+        _healthBarInfos.Sort((a, b) => a.distance.CompareTo(b.distance));
+
+        foreach (var info in _healthBarInfos)
+        {
+            bool shouldShow = info.isVisible;
+
+            info.hpBar.gameObject.SetActive(shouldShow);
+        }
+    }
+>>>>>>> Stashed changes
 
 	// 전부 끝났을때 한번만 실행
 	public void UpdateHealthBars()

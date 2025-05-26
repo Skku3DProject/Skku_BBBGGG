@@ -20,6 +20,7 @@ public class EnemyDamageState : IFSM
     {
         _damagedTimer = 0;
         _enemy.Animator.SetTrigger("Damage");
+        _enemy.CharacterController.stepOffset = 0;
     }
 
     public EEnemyState Update()
@@ -40,6 +41,7 @@ public class EnemyDamageState : IFSM
     public void End()
     {
         _damagedTimer = 0;
+        _enemy.CharacterController.stepOffset = _enemy.StepOffset;
     }
 
 	private void Gravity()

@@ -71,7 +71,7 @@ public class SwordAttack : WeaponAttackBase
         IDamageAble damageable = enemy.GetComponent<IDamageAble>();
         if (damageable != null)
         {
-            Damage damage = new Damage(attackPower, gameObject, 10f, dir);
+            Damage damage = new Damage(attackPower, gameObject, 100f, dir);
             damageable.TakeDamage(damage);
             Debug.Log($"공격 성공: {enemy.name}에게 {attackPower} 데미지를 줌");
         }

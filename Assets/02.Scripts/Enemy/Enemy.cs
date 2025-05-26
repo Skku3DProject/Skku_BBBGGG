@@ -38,6 +38,9 @@ public class Enemy : MonoBehaviour
     public UI_EnemyHpbar UI_EnemyHpbar;
     public Transform UI_offset;
 
+    private float _stepOffset = 0;
+    public float StepOffset => _stepOffset;
+
     private void Awake()
     {
         _gaol = GameObject.FindGameObjectWithTag("BaseTower");
@@ -46,6 +49,7 @@ public class Enemy : MonoBehaviour
         _animator = GetComponent<Animator>();
         _findDistance = EnemyData.FindDistance * EnemyData.FindDistance;
         _attackDistance = EnemyData.AttackDistance * EnemyData.AttackDistance;
+        _stepOffset = _characterController.stepOffset;
     }
     
     void OnEnable()
