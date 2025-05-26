@@ -1460,7 +1460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4944217b652af70499b87637be6e6374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _readyTime: 3
+  _readyTime: 10
   _combatTime: 1
   EnemyCount: 0
 --- !u!1001 &368375667
@@ -1855,7 +1855,7 @@ MonoBehaviour:
   ChunkLayer:
     serializedVersion: 2
     m_Bits: 8
-  Distance: 100
+  Distance: 30
   GrassPrefab: {fileID: 4375382654496483180, guid: fe4ddc300bb879c4f860a9a1954689fb, type: 3}
   MushroomPrefab: {fileID: 4569295655211456005, guid: 403a5055922ec0e4eb2f6ed427208efc, type: 3}
   TreePrefab: {fileID: 3086538645063425187, guid: 17a7eacbeefbb2443868f4ebe1bfb9f6, type: 3}
@@ -3034,10 +3034,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 368375668}
   _thirdPersonOffset:
-    PositionOffset: {x: 1, y: 1.5, z: -4}
+    PositionOffset: {x: 0.5, y: 1.5, z: -4.5}
     RotationOffset: {x: 0, y: -30, z: 0}
     FieldOfView: 0
-  _rotationSpeed: 100
+  _rotationSpeed: 300
   cameraCollisionLayer:
     serializedVersion: 2
     m_Bits: 8
