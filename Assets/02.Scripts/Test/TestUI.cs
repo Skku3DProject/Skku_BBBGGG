@@ -12,6 +12,7 @@ public class TestUI : MonoBehaviour
     void Update()
     {
         SkillSwitchingTest();
+        CooltimeTset();
     }
     private void SkillSwitchingTest()
     {
@@ -52,6 +53,7 @@ public class TestUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             SkillManager.instance.SelectskillTory.SkillSlots[0].UseSkill();   
+           
         }
     }
 }

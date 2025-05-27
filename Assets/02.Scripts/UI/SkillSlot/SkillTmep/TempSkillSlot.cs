@@ -10,7 +10,7 @@ public class TempSkillSlot : MonoBehaviour
     public Image SkillIcon;       //  sprite -> 아이콘
     public float Cooldown;        // 적용할 쿨타임 (여기서 독립적으로 관리)
 
-    private bool _isCooldown => Cooldown <= 0; // 쿨타임 다 돌았나?
+    private bool _isCooldown => Cooltimer <= 0; // 쿨타임 다 돌았나?
     public bool IsActive = true; // 스킬 사용할 수 있나요?
     
     // 변경되는 스킬 아이콘들 = 스킬이 쿨타임이면 변한다.
@@ -24,7 +24,6 @@ public class TempSkillSlot : MonoBehaviour
         _skillNode = FindSkills(SlotData.Name);
         Cooldown = _skillNode.Cooldown;
         _skillNode.SkillUnlockedAction += ActivateSkillSlot;
-        Debug.Log("temp skill start");
     }
     // 스킬 슬롯창에 들어갈 아이콘 설정
     public void Setup()
@@ -48,6 +47,7 @@ public class TempSkillSlot : MonoBehaviour
 
         if (_isCooldown)
         {
+            
             StartCoroutine(UseSkillCoroutine());   
         }
     }
@@ -56,7 +56,7 @@ public class TempSkillSlot : MonoBehaviour
     {
         Cooltimer = Cooldown;
         
-        while (Cooltimer <= 0)
+        while (Cooltimer > 0)
         {
             Cooltimer -= Time.deltaTime;
             CoolTimerOn(Cooltimer);
@@ -74,12 +74,7 @@ public class TempSkillSlot : MonoBehaviour
         Debug.Log(_skillTory);
         
         SkillTree tree = SkillManager.instance.TreeCheck(_skillTory.InvenType);
-        Debug.Log(_skillTory.InvenType);
-        Debug.Log(skillName);
-        
-        Debug.Log(tree);
-        
-        Debug.Log("findSkilldat skill start");
+
         return tree.FindSkill(skillName);
     }
 }

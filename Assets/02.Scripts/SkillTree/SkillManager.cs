@@ -177,6 +177,7 @@ public class SkillManager : MonoBehaviour
         }
         
         SelectskillTory.gameObject.SetActive(true);
+        
     }
 
 }
