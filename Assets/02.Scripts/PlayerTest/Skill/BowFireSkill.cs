@@ -3,12 +3,17 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SwordSpinSkill : WeaponSkillBase
+public class BowFireSkill : WeaponSkillBase
 {
     private Animator _playerAnimation;
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
 
+
+    [SerializeField] private GameObject _fireEffect;
+    [SerializeField] private float _skillDamageMultiplier = 1.5f;  // 불화살 스킬 데미지 배율
+
+    [SerializeField] private float _skillDuration = 15f; // 불화살 유지 시간
 
     [SerializeField] private float cooltime = 5f;
     private float lastUseTime;
@@ -26,33 +31,34 @@ public class SwordSpinSkill : WeaponSkillBase
     {
         if (!IsSkillAvailable())
         {
-            Debug.Log("회전 공격 쿨타임 안 찼음");
+            Debug.Log("불 화살 공격 쿨타임 안참");
             return;
         }
 
         //장착하고 있는 게 검이 아니면 스킬 사용 불가
-        if (_equipmentController.GetCurrentEquipType() != EquipmentType.Sword)
+        if (_equipmentController.GetCurrentEquipType() != EquipmentType.Bow)
         {
             return;
         }
 
         IsUsingSkill = true;
-        //lastUseTime = Time.time;
+       // lastUseTime = Time.time;
 
-        _playerAnimation.SetTrigger("SpinAttack");//애니메이션 실행
+        // 스킬 사용 시 불 이펙트 활성화
+        _fireEffect.SetActive(true);
+
+        //_playerAnimation.SetTrigger("Attack");//애니메이션 실행
         _player.CharacterController.stepOffset = 0f;
 
-        StartCoroutine(EndSpinSkillAfterDelay(5f));
+        StartCoroutine(EndFireArrowSkillAfterDelay(_skillDuration));
 
     }
 
-    private IEnumerator EndSpinSkillAfterDelay(float delay)
+    private IEnumerator EndFireArrowSkillAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        // 강제로 Idle 상태로 전환
-        _playerAnimation.SetTrigger("Idle"); // 또는 SetBool로 상태 전환할 수도 있음
-
+        _fireEffect.SetActive(false);     //  불 이펙트 OFF
         IsUsingSkill = false;
         _player.CharacterController.stepOffset = 1f;
 
@@ -67,9 +73,9 @@ public class SwordSpinSkill : WeaponSkillBase
 
     public override void Tick()
     {
-        Debug.Log("스핀하는 스킬 발동" + "Q 안 누름");
+        Debug.Log("불 화살 공격 발동" + "E 안 누름");
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             UseSkill();
         }
@@ -90,18 +96,20 @@ public class SwordSpinSkill : WeaponSkillBase
 
     public override void TryDamageEnemy(GameObject enemy, Vector3 hitDirection)
     {
-        if(!IsUsingSkill)
+        if (!IsUsingSkill)
         {
             return;
         }
 
-        float power = _equipmentController.GetCurrentWeaponAttackPower();
+        float power = _equipmentController.GetCurrentWeaponAttackPower() * _skillDamageMultiplier;
+        //float power = _equipmentController.GetCurrentWeaponAttackPower();
         IDamageAble damageAble = enemy.GetComponent<IDamageAble>();
         if (damageAble != null)
         {
+            
             Damage damage = new Damage(power, gameObject, 100f, hitDirection);
             damageAble.TakeDamage(damage);
-            Debug.Log($"회전베기 스킬로 {enemy.name}에게 {power}데미지를 입혔다!");
+            Debug.Log($"불화살 스킬로 {enemy.name}에게 {power}데미지를 입혔다!");
         }
     }
 
