@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7831962645433579517}
   - component: {fileID: 3479237734040017790}
   - component: {fileID: 7136778431191834664}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 000_static_Mushroom_03_combined_static
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 6134108528379094104}
   - component: {fileID: 1699940674705217634}
   - component: {fileID: 2820155707545590836}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 000_static_Mushroom_03_combined_static
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1063933591120809466}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Level00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6073023473398170917}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Level01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2619082380513221391}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Level02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 2929327902439737243}
   - component: {fileID: 7074910121363038734}
   - component: {fileID: 761160857198686982}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mushroom_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -478,7 +478,7 @@ GameObject:
   - component: {fileID: 7472333675723976114}
   - component: {fileID: 8328771842769847435}
   - component: {fileID: 45388449537091542}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 000_static_Mushroom_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4665621468748980051}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: _UMS_LODs_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
