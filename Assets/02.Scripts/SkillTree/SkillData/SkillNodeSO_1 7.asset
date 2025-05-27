@@ -15,5 +15,5 @@ MonoBehaviour:
   Type: 1
   Name: Bow4
   MaxLevel: 3
-  Cooldown: 0
+  Cooldown: 6
   Icon: {fileID: 308216405, guid: ac283963041aea647b6285990bb472ea, type: 3}

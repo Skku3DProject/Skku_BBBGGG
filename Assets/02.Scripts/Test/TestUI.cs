@@ -4,6 +4,7 @@ using UnityEngine;
 public class TestUI : MonoBehaviour
 {
     private EquipmentType _equipmentType;
+    public SkillCooltimeHandler cooltimeHandler;
     private void Start()
     {
         StageManager.instance.OnCombatEnd += ActionTest;
@@ -52,8 +53,7 @@ public class TestUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            SkillManager.instance.SelectskillTory.SkillSlots[0].UseSkill();   
-           
+            cooltimeHandler.StartCooldown(SkillManager.instance.SelectskillTory.SkillSlots[0]);
         }
     }
 }

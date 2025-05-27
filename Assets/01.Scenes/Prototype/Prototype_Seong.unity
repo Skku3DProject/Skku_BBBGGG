@@ -1187,7 +1187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2551205955396829689, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
       propertyPath: _readyTime
-      value: 15
+      value: 11111111
       objectReference: {fileID: 0}
     - target: {fileID: 2851594203352931298, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1794,6 +1794,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3466133413458536812, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
   m_PrefabInstance: {fileID: 270521302}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &318508664 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1977386995752341605, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
+  m_PrefabInstance: {fileID: 270521302}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab8777a71044094585b79fd2a916401, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &368375667
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2730,6 +2741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e420ed4bae6bd04d9d4b55dfdbf13bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooltimeHandler: {fileID: 318508664}
 --- !u!114 &701785540
 MonoBehaviour:
   m_ObjectHideFlags: 0
