@@ -40,7 +40,7 @@ public class StageManager : MonoBehaviour
     private EPhaseType _currentPhase = EPhaseType.None;
     
     // 에너미 카운트 세기
-    private bool _allEnemiesDead => EnemyManager.Instance.CurruntEnemyList.Count <= 0;  
+    private bool _allEnemiesDead => EnemyManager.Instance.ActiveEnemies.Count <= 0;  
     
     private void Awake()
     {

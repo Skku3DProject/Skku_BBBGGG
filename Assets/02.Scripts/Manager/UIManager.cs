@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
 
     public void CurrentCountRefresh()
     {
-        CurrentEnemy.text = $"{EnemyManager.Instance.CurruntEnemyList.Count}";
+        CurrentEnemy.text = $"{EnemyManager.Instance.ActiveEnemies.Count}";
     }
     // 재화 변경
     public void RefreshCurrency()

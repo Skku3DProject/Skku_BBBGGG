@@ -23,10 +23,13 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
 
     private EnemyVisual _enemyVisual;
 
+    private EnemyAttackCheckEvent _enemyAttackCheckEvent;
+
     private void Awake()
     {
         _enemy = GetComponent<Enemy>();
         _enemyVisual = GetComponent<EnemyVisual>();
+        _enemyAttackCheckEvent = GetComponent<EnemyAttackCheckEvent>();
         SetState();
         Initialize();
     }
@@ -49,6 +52,7 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
         {
             _stateMap.Add(EEnemyState.Move, new EnemyMoveState(_enemy));
         }
+
 
         if (!_stateMap.ContainsKey(EEnemyState.Damaged))
         {
@@ -114,39 +118,49 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
     
     public void TakeDamage(Damage damage)
     {
+        if(EnemyManager.Instance.TryCheckRegister(_enemy))
+        {
+            EnemyManager.Instance.Unregister(_enemy, _enemy.EnemyData.EnemyAttackType);
+        }
+
         if (_currentState == EEnemyState.Damaged || _currentState == EEnemyState.Die)
         {
             return;
         }
-
-        // 넉백
-       // Vector3 dir = (damage.From.transform.position - transform.position).normalized * -1f;
-        Vector3 dir = damage.Direction;
-        dir += Vector3.up * 0.5f; // 살짝 대각선 위로
-        dir.Normalize();
-
-        _enemy.transform.LookAt(_enemy.Player.transform);
-        _enemy.CharacterController.Move(dir * damage.KnockbackPower * Time.deltaTime);
+        // 실제 데미지 
 
         _enemy.TakeDamage(damage);
-        _enemyVisual.PlayHitFeedback(_enemy.EnemyData.DamagedTime);
-
         if (_enemy.Health <= 0)
         {
             ChangeState(EEnemyState.Die);
             return;
         }
-
-        if(damage.From.CompareTag("Player"))
+        
+        if(_enemyAttackCheckEvent.IsAttack)
         {
-            _enemy.OnPlayer();
+            return;
         }
+        // 공격 중이면 리턴
 
+        OnHitEffect(damage.Direction, damage);
         ChangeState(EEnemyState.Damaged);
+    }
+
+    private void OnHitEffect(Vector3 direction, Damage damage)
+    {
+        direction += Vector3.up * 0.5f; // 살짝 대각선 위로
+        direction.Normalize();
+
+        Vector3 targetPosition = _enemy.Target.transform.position;
+        targetPosition.y = _enemy.transform.position.y; // Y축 고정
+        _enemy.transform.LookAt(targetPosition);
+        _enemy.CharacterController.Move(direction * damage.KnockbackPower * Time.deltaTime);
+        _enemyVisual.PlayHitFeedback(_enemy.EnemyData.DamagedTime);
     }
     public void EndAttackAnimEvent()
     {
         ChangeState(EEnemyState.Move);
+        _enemyAttackCheckEvent.EndAttackEnvet();
         // 어택 종료
     }
 

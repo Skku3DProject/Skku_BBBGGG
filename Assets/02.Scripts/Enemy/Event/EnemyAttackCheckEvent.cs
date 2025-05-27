@@ -11,6 +11,9 @@ public class EnemyAttackCheckEvent : MonoBehaviour
 
     public List<GameObject> ProjectilePrefabs;
 
+    private bool _isAttack = false;
+    public bool IsAttack => _isAttack;
+
     private void Awake()
     {
         _enemy = GetComponentInParent<Enemy>();
@@ -20,7 +23,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     public void RangedAttackSpawn()
     {
         _projectile = null;
-
+        _isAttack = true;
         if (ProjectilePrefabs == null || ProjectilePrefabs.Count == 0)
         {
             Debug.LogError("ProjectilePrefabs가 null이거나 비어있습니다!");
@@ -71,9 +74,12 @@ public class EnemyAttackCheckEvent : MonoBehaviour
         _projectile.Fire(_enemy.ProjectileTransfrom.position,
                          _enemy.Target.transform.position + Vector3.up * 0.5f
                         );
+
+        _isAttack = false;
     }
     public void MeleeAttackEvent()
     {
+        _isAttack = true;
         int cnt = Physics.OverlapSphereNonAlloc(
             _enemy.transform.position, _enemy.EnemyData.AttackDistance,
             _hits,
@@ -92,6 +98,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
 
         }
     }
+
     public void AreaAttackEvent()
     {
         Collider[] hits = new Collider[8];
@@ -111,29 +118,8 @@ public class EnemyAttackCheckEvent : MonoBehaviour
         }
     }
 
-    public void CheckProjectile()
+    public void EndAttackEnvet()
     {
-        // 발사체 컴포넌트 검증
-        if (ProjectilePrefabs != null && ProjectilePrefabs.Count > 0)
-        {
-            bool hasValidProjectile = false;
-            foreach (var prefab in ProjectilePrefabs)
-            {
-                if (prefab != null && prefab.GetComponent<EnemyProjectile>() != null)
-                {
-                    hasValidProjectile = true;
-                    break;
-                }
-            }
-
-            if (!hasValidProjectile)
-            {
-                Debug.LogError("EnemyProjectile 컴포넌트가 없는 프리팹이 있습니다!");
-            }
-        }
-        else
-        {
-            Debug.LogError("ProjectilePrefabs가 비어있습니다!");
-        }
+        _isAttack = false;
     }
 }

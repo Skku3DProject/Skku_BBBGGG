@@ -28,21 +28,53 @@ public class EnemyMoveState : IFSM
         _enemy.TargetOnPlayer();
         if (_enemy.TryAttack()) // 공격 가능 불가능
         {
-            EnemyManager.Instance.Unregister(_enemy);
+            EnemyManager.Instance.Unregister(_enemy,_enemy.EnemyData.EnemyAttackType);
             return EEnemyState.Attack;
         }
 
+        if(_enemy.EnemyData.EnemyAttackType != EEnemyAttackType.Fly )
+        {
+            MoveWithSeparationAndGravity();
+        }
+        else
+        {
+            MoveWithSeparationAndFly();
+        }
 
-        MoveWithSeparationAndGravity();
-
-        return EEnemyState.Move;
+            return EEnemyState.Move;
     }
 
     public void End()
     {
         _enemy.Animator.SetBool("IsRun", false);
     }
+    private void MoveWithSeparationAndFly()
+    {
+        Vector3 pos = _enemy.transform.position;
 
+        Vector3 goalDir = (_enemy.Target.transform.position - pos).normalized;
+        Vector3 sepDir = CalculateSeparation(pos);
+        Vector3 cohDir = CalculateCohesion(pos);
+        Vector3 alignDir = CalculateAlignment();
+
+        float goalWeight = _enemy.EnemyData.GoalWeight;
+        float sepWeight = _enemy.EnemyData.SeparationWeight;
+        float cohWeight = _enemy.EnemyData.CohesionWeight;
+        float alignWeight = _enemy.EnemyData.AlignmentWeight;
+
+        Vector3 desiredDir = (goalDir * goalWeight + sepDir * sepWeight + cohDir * cohWeight + alignDir * alignWeight).normalized;
+
+        Vector3 moveDir = Vector3.Lerp(_prevDirection, desiredDir, 0.15f).normalized;
+        _prevDirection = moveDir;
+
+        // 5) 최종 이동 및 적용
+        _enemy.CharacterController.Move(moveDir * _speed * Time.deltaTime);
+
+        Vector3 targetPosition = _enemy.Target.transform.position;
+        targetPosition.y = _enemy.transform.position.y; // Y축 고정
+        _enemy.transform.LookAt(targetPosition);
+        _enemy.CurrentMoveDirection = _prevDirection;
+    }
     private void MoveWithSeparationAndGravity()
     {
         Vector3 pos = _enemy.transform.position;

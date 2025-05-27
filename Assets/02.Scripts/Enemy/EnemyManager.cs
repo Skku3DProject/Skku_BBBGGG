@@ -5,12 +5,10 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
 
-    private  List<Enemy> _curruntEnemyList = new List<Enemy>(900);
-    public  List<Enemy> CurruntEnemyList => _curruntEnemyList;
-
-
+    private readonly Dictionary<EEnemyAttackType,List<Enemy>> _aggregationEnemyDictionary = new Dictionary<EEnemyAttackType, List<Enemy>>();
     // 劝己拳等 利 府胶飘
-    private readonly List<Enemy> _activeEnemies = new List<Enemy>();
+    private  List<Enemy> _activeEnemies;
+    public  List<Enemy> ActiveEnemies => _activeEnemies;
 
     void Awake()
     {
@@ -23,30 +21,38 @@ public class EnemyManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void SetEnemiesList(int capacity)
+    {
+        _activeEnemies = new List<Enemy>(capacity);
+    }
+
     public void Enable(Enemy enemy)
-    {
-        if (!_curruntEnemyList.Contains(enemy))
-            _curruntEnemyList.Add(enemy);
-    }
-
-    public void UnEnable(Enemy enemy)
-    {
-        if (_curruntEnemyList.Count <= 0) return;
-        _curruntEnemyList.Remove(enemy);
-        UIManager.instance.CurrentCountRefresh();
-    }
-
-
-    public void Register(Enemy enemy)
     {
         if (!_activeEnemies.Contains(enemy))
             _activeEnemies.Add(enemy);
     }
 
-    public void Unregister(Enemy enemy)
+    public void UnEnable(Enemy enemy)
     {
         if (_activeEnemies.Count <= 0) return;
         _activeEnemies.Remove(enemy);
+        UIManager.instance.CurrentCountRefresh();
+    }
+
+    public void Register(Enemy enemy, EEnemyAttackType type)
+    {
+        /*
+        if (_aggregationEnemyDictionary.Count <= 0) return;
+        _aggregationEnemyDictionary[type].Remove(enemy);
+       */
+    }
+
+    public void Unregister(Enemy enemy, EEnemyAttackType type)
+    {
+        /*
+        if (!_aggregationEnemyDictionary[type].Contains(enemy))
+            _aggregationEnemyDictionary[type].Add(enemy);
+      */
     }
 
     public bool TryCheckRegister(Enemy enemy)

@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.Port;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -12,36 +14,25 @@ public class EnemySpawner : MonoBehaviour
 
     public List<So_EnemySpawner> SpawnerSo;
 
+    public float SpawnTime = 0.3f;
+    
     public int MaxSpawnCount = 10;
 
     private float _minDistance = 1.0f; // 최소 거리 설정 
 
     private List<GameObject> _positionList;
    
+
     private void Start()
     {
         MaxSpawnCount = MaxSpawnCount * PreSetList.Count;
+        EnemyManager.Instance.SetEnemiesList(MaxSpawnCount);
         UI_Enemy.Instance.SetHPBarMaxSize(MaxSpawnCount);
         _positionList = new List<GameObject>(MaxSpawnCount);
 
         EnemyPool();
 
         StageManager.instance.OnCombatStart += Spawn;
-
-    }
-
-    private void Update()
-    {
-        
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Spawn();
-        }
-        
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Initialize();
-        }
 
     }
 
@@ -84,6 +75,11 @@ public class EnemySpawner : MonoBehaviour
     }
     public void Spawn()
     {
+        StartCoroutine(Spawn_Coroutine());
+    }
+
+    private IEnumerator Spawn_Coroutine()
+    {
         int currentStage = (int)StageManager.instance.GetCurrentStage();
         _positionList.Clear(); // 기존 위치 초기화
 
@@ -101,12 +97,14 @@ public class EnemySpawner : MonoBehaviour
                     Vector3 spawnPos = GetValidSpawnPosition();
                     enemy.transform.position = spawnPos;
                     InitializeEnemy(enemy);
-					_positionList.Add(enemy.gameObject);
+                    _positionList.Add(enemy.gameObject);
                 }
+                yield return new WaitForSeconds(SpawnTime);
             }
         }
         UI_Enemy.Instance.UpdateHealthBars();
-		UIManager.instance.CurrentCountRefresh();
+        UIManager.instance.CurrentCountRefresh();
+        yield break;
     }
     private Enemy GetInactiveEnemy(string targetName)
     {

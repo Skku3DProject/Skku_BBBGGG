@@ -14,8 +14,11 @@ public class EnemyAttackState : IFSM
 
     public EEnemyState Update()
     {
-		Gravity();
-		return EEnemyState.Attack;
+        if (_enemy.EnemyData.EnemyAttackType != EEnemyAttackType.Fly)
+        {
+            Gravity();
+        }
+        return EEnemyState.Attack;
     }
 
     public void End()

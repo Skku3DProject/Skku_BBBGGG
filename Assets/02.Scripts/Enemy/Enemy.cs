@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
     
     void OnEnable()
     {
-        EnemyManager.Instance.Register(this);
+        EnemyManager.Instance.Enable(this);
         if(UI_EnemyHpbar != null)
         {
             UI_EnemyHpbar.Initialized();
@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
 
     void OnDisable()
     {
-        EnemyManager.Instance.Unregister(this);
+        EnemyManager.Instance.UnEnable(this);
     }
     
     public void Initialize()
@@ -78,6 +78,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(Damage damage)
     {
         _health -= damage.Value;
+        _target = damage.From.gameObject;
         UI_EnemyHpbar.UpdateHealth(_health / _maxHealth);
     }
 
@@ -98,7 +99,7 @@ public class Enemy : MonoBehaviour
         }
         if ((transform.position - Player.transform.position).sqrMagnitude < _findDistance)
         {
-            EnemyManager.Instance.Unregister(this);
+            EnemyManager.Instance.Unregister(this, EnemyData.EnemyAttackType);
             _target = _player;
             return;
         }

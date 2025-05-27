@@ -18,7 +18,10 @@ public class EnemyIdleState : IFSM
 
     public EEnemyState Update() // 서로 거리 조절
     {
-        Gravity();
+        if (_enemy.EnemyData.EnemyAttackType != EEnemyAttackType.Fly)
+        {
+            Gravity();
+        }
        
         _timer += Time.deltaTime;
         if (_timer >= _idleTime)

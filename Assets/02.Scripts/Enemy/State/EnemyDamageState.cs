@@ -25,9 +25,12 @@ public class EnemyDamageState : IFSM
 
     public EEnemyState Update()
     {
-        Gravity();
+        if (_enemy.EnemyData.EnemyAttackType != EEnemyAttackType.Fly)
+        {
+            Gravity();
+        }
 
-		_damagedTimer += Time.deltaTime;
+        _damagedTimer += Time.deltaTime;
 
         if (_damagedTimer > _damagedTime)
         {
