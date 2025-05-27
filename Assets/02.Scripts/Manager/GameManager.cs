@@ -26,17 +26,7 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    // 웨이브 타이머
-    private float _timer = 0;
 
-    private void Update()
-    {
-        if (CurrentState == GameState.Run)
-        {
-            StartGame();
-        }
-    }
-    
     //현재 게임 상태 변경하기
     public void ChangeState(GameState newState)
     {
@@ -51,7 +41,7 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Run:
             {
-                StartGame();
+                ContinueGame();
                 break;
             }
             case GameState.Pause:
@@ -70,7 +60,6 @@ public class GameManager : MonoBehaviour
     private void StartGame()
     {
         Time.timeScale = 1;
-        _timer += Time.deltaTime;
     }
     // 거점이 파괴되면 게임오버
     private void GameOver()
@@ -80,16 +69,15 @@ public class GameManager : MonoBehaviour
     // 게임 pause 
     private void PauseGame()
     {   
-        PopUpManager.Instance.Open(EPopupType.UI_OptionPopup, ContinueGame);
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
     }
     // 게임 계속하기
-    private void ContinueGame()
+    public void ContinueGame()
     {
         CurrentState = GameState.Run;
-        Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;
+        PopUpManager.Instance.PauseBackground.gameObject.SetActive(false);
     }
     // 게임 재시작 = 로딩 씬으로 이동 -> 버튼으로 구현 예정
     public void RestartGame()

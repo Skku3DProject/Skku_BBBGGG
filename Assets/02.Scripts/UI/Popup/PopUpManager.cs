@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // 팝업으로 사용할 UI들 정리하기
 public enum EPopupType
@@ -14,7 +15,8 @@ public class PopUpManager : MonoBehaviour
     public static PopUpManager Instance;
     public List<UI_Popup> Popups;
     private Stack<UI_Popup>  _openPopups = new Stack<UI_Popup>();
-
+    public Image PauseBackground;
+    
     private void Awake()
     {
         if (Instance == null)
@@ -38,7 +40,6 @@ public class PopUpManager : MonoBehaviour
                     UI_Popup popup = _openPopups.Pop();
                     bool opened = popup.isActiveAndEnabled;
                     popup.Close();
-
                     // Peek() 대신 그냥 break
                     if (opened)
                         break;
@@ -56,8 +57,8 @@ public class PopUpManager : MonoBehaviour
                 //} 
             }
             else
-            {
-                GameManager.instance.ChangeState(GameState.Pause);
+            { 
+                Open(EPopupType.UI_OptionPopup, GameManager.instance.ContinueGame);
             }
         }
     }
@@ -78,5 +79,10 @@ public class PopUpManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void PopUpClose(Action callBack = null)
+    {
+        _openPopups.Pop();
     }
 }

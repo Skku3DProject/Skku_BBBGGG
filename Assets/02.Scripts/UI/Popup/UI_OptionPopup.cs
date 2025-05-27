@@ -10,6 +10,8 @@ public class UI_OptionPopup : UI_Popup
     public void OnClickContinue()
     {
         gameObject.SetActive(false);
+        Close();
+        PopUpManager.Instance.PopUpClose();
         GameManager.instance.ChangeState(GameState.Run);
     }
 

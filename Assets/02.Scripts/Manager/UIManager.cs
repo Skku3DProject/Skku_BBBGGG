@@ -5,18 +5,21 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
+    [Header("슬라이더")]
     public Slider CurrentTime;
     public Slider HpBar;
     public Slider Mpbar;
     public Slider EXPBar;
+    [Header("텍스트")]
     public TextMeshProUGUI[] Currencies;
-    public GameObject GameOverPanel;
-    
+    public TextMeshProUGUI CurrentEnemy;
     public TextMeshProUGUI Timer;
+    [Header("오브젝트")]
+    public GameObject GameOverPanel;
     public GameObject TimerObject;
     public GameObject CountObject;
-    public TextMeshProUGUI CurrentEnemy;
-    
+    [Header("이미지")]
+    public Image PauseBackground;
     // 싱글톤
     public void Awake()
     {

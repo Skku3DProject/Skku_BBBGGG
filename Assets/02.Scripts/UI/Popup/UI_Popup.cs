@@ -13,6 +13,8 @@ public class UI_Popup : MonoBehaviour
         Cursor.visible = true;
 
         gameObject.SetActive(true);
+        GameManager.instance.ChangeState(GameState.Pause);
+        PopUpManager.Instance.PauseBackground.gameObject.SetActive(true);
     }
 
     public void Close()
@@ -20,8 +22,9 @@ public class UI_Popup : MonoBehaviour
         _closeCallback?.Invoke();
 
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.visible = true;
 
         gameObject.SetActive(false);
+
     }
 }

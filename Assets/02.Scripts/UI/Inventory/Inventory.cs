@@ -6,7 +6,6 @@ public class Inventory : MonoBehaviour
     private int _keyOffSet = -1;
     public bool InventoryOpen = false;
 
-    public GameObject[] SkillInventory;
     private TempItemSO _selectedItem;
     
     // 슬롯들 받아오기
