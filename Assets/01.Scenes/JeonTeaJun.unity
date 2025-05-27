@@ -1164,7 +1164,7 @@ PrefabInstance:
     - target: {fileID: 2697860302316313766, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
       propertyPath: _TripleArrow
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1879473779}
     - target: {fileID: 2697860302316313766, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
       propertyPath: trajectoryRenderer
       value: 
@@ -1201,6 +1201,10 @@ PrefabInstance:
       propertyPath: SwordSlashEffect
       value: 
       objectReference: {fileID: 702727853}
+    - target: {fileID: 7615806702234201845, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1220,6 +1224,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2042415629762981396, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1879473766}
+    - targetCorrespondingSourceObject: {fileID: 2042415629762981396, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1879473779}
   m_SourcePrefab: {fileID: 100100000, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
 --- !u!4 &702727847 stripped
 Transform:
@@ -3778,6 +3785,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooltime: 5
+--- !u!114 &1879473779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702727848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a42d0604c29c2a448031297a1e84c6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _arrowPrefab: {fileID: 5014901011304848109, guid: f49ce3859ae50fc4ba8d3f23fc9b1722, type: 3}
+  _skillDamageMultiplier: 1.5
+  _cooltime: 5
+  _numberOfArrows: 3
+  _arrowSpreadAngle: 10
+  _arrowForce: 20
+  _arrowLifetime: 5
+  _skillDuration: 15
 --- !u!1 &1895504435
 GameObject:
   m_ObjectHideFlags: 0

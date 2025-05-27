@@ -51,6 +51,7 @@ public class BowFireSkill : WeaponSkillBase
         _player.CharacterController.stepOffset = 0f;
 
         StartCoroutine(EndFireArrowSkillAfterDelay(_skillDuration));
+        Debug.Log("불 화살 공격");
 
     }
 
