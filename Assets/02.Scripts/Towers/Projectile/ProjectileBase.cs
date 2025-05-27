@@ -47,7 +47,7 @@ public class ProjectileBase : MonoBehaviour
         _timer += Time.deltaTime;
 
         // flightTime 이후부터 일정 시간 동안 계속 충돌 검사 시도
-        if (_timer > flightTime && _timer <= flightTime + 5f && !_checkedGroundHit)
+        if (_timer >= flightTime-1/* && _timer <= flightTime + 5f*/ && !_checkedGroundHit)
         {
             if (CheckGroundHit()) // true면 충돌 성공
             {
@@ -66,7 +66,7 @@ public class ProjectileBase : MonoBehaviour
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
-
+        if (other.CompareTag("Tower")) return;
     }
 
     private Vector3 CalculateLaunchVelocity(Vector3 start, Vector3 end, float time)

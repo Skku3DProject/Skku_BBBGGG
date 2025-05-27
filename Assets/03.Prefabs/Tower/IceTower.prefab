@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5824293260331309914}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ICeRock (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 8170696143712456308}
   - component: {fileID: 6294978095281986502}
   - component: {fileID: 7365491147983001776}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: polySurface2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 2125484625130501704}
   - component: {fileID: 8714623337673756467}
   - component: {fileID: 985215386114494631}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: polySurface2 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,9 +220,12 @@ GameObject:
   - component: {fileID: 8603868282783829948}
   - component: {fileID: 6737869130594085275}
   - component: {fileID: 5264499461740234680}
-  m_Layer: 0
+  - component: {fileID: 6534648976017126240}
+  - component: {fileID: 24495330229420290}
+  - component: {fileID: 8201554003638320653}
+  m_Layer: 6
   m_Name: IceTower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -336,6 +339,112 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2773743, y: 4.935517, z: 2.0650759}
   m_Center: {x: 0.076187134, y: 2.4731772, z: 0.06310749}
+--- !u!54 &6534648976017126240
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6274716828977566885}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &24495330229420290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6274716828977566885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91fc9178a0b0c3d4bb8b6d91b16d9893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerOptions:
+    triggerType: 0
+    minimumCollisionForce: 0
+    filterCollisionsByTag: 0
+    triggerAllowedTags: []
+    triggerKey: 0
+  fractureOptions:
+    fragmentCount: 10
+    xAxis: 1
+    yAxis: 1
+    zAxis: 1
+    detectFloatingFragments: 0
+    asynchronous: 0
+    insideMaterial: {fileID: 0}
+    textureScale: {x: 1, y: 1}
+    textureOffset: {x: 0, y: 0}
+  refractureOptions:
+    enableRefracturing: 0
+    maxRefractureCount: 1
+    invokeCallbacks: 0
+  callbackOptions:
+    onFracture:
+      m_PersistentCalls:
+        m_Calls: []
+    onCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+  currentRefractureCount: 0
+--- !u!114 &8201554003638320653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6274716828977566885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 605444303d16d4544bb76342ce272af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerOptions:
+    triggerType: 0
+    minimumCollisionForce: 0
+    filterCollisionsByTag: 0
+    triggerAllowedTags: []
+    triggerKey: 0
+  fractureOptions:
+    fragmentCount: 10
+    xAxis: 1
+    yAxis: 1
+    zAxis: 1
+    detectFloatingFragments: 0
+    asynchronous: 0
+    insideMaterial: {fileID: 0}
+    textureScale: {x: 1, y: 1}
+    textureOffset: {x: 0, y: 0}
+  callbackOptions:
+    onFracture:
+      m_PersistentCalls:
+        m_Calls: []
+    onCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+  prefractureOptions:
+    unfreezeAll: 1
+    saveFragmentsToDisk: 0
+    saveLocation: 
 --- !u!1 &6456247969501979571
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +456,7 @@ GameObject:
   - component: {fileID: 2628633256244851418}
   - component: {fileID: 7769568364541716145}
   - component: {fileID: 5248931135248879276}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: polySurface1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +542,7 @@ GameObject:
   - component: {fileID: 8190198231504119043}
   - component: {fileID: 8146291212498117853}
   - component: {fileID: 6857482254157652188}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grill_low (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,7 +628,7 @@ GameObject:
   - component: {fileID: 3098406081533741509}
   - component: {fileID: 6938944643603860181}
   - component: {fileID: 8200053351823387214}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -586,7 +695,7 @@ GameObject:
   - component: {fileID: 4575564791779081896}
   - component: {fileID: 866514514078497031}
   - component: {fileID: 5673563220610539313}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: polySurface2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

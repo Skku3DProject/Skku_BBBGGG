@@ -360,10 +360,10 @@ MonoBehaviour:
     size: 50
   - key: ArrowTower
     prefab: {fileID: 634377025880031044, guid: 764b9e4879abdb143872fe11a3900d14, type: 3}
-    size: 10
+    size: 1
   - key: FireballTower
     prefab: {fileID: 9166186074018161065, guid: 78dc8f41cee61a141a2f556bff02ef4b, type: 3}
-    size: 10
+    size: 1
   - key: FireballHitVfx
     prefab: {fileID: 753054468046317402, guid: 8694715191a75d54a99a8ce36938677b, type: 3}
     size: 50
@@ -3509,67 +3509,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b08222bc45be1ea49ae98be93020589a, type: 3}
---- !u!1001 &8516789964442450042
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1882478826957632597, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 1882478826957632597, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1882478826957632597, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1882478826957632597, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1882478826957632597, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1882478826957632597, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1882478826957632597, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1882478826957632597, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1882478826957632597, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1882478826957632597, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3044035691608477855, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-      propertyPath: m_Name
-      value: JumpPad
-      objectReference: {fileID: 0}
-    - target: {fileID: 3044035691608477855, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3589,4 +3528,3 @@ SceneRoots:
   - {fileID: 1729899589}
   - {fileID: 1781616765}
   - {fileID: 424950159}
-  - {fileID: 8516789964442450042}

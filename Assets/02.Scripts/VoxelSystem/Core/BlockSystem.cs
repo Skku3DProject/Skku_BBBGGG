@@ -29,40 +29,43 @@ public class BlockSystem : MonoBehaviour
     }
 
     // 블럭 데미지
-    public static void DamageBlock(Vector3Int worldPos, int dmg)
+    public static void DamageBlock(Vector3Int worldPos, int dmg, bool rebuildMesh = true)
     {
+
         if (!GetBlockType(worldPos, out var type) || type == VoxelType.Air)
             return;
 
-        // 초기 체력 설정 (청크 생성 시 초기화되지 않은 경우)
         if (!BlockHealthController.HasHealth(worldPos))
-        {
             BlockHealthController.SetHealth(worldPos, GetInitialHealth(type));
-        }
 
-        // 현재 HP 디버그 로그
         int preHp = BlockHealthController.GetHealth(worldPos);
         Debug.Log($"[BlockSystem] DamageBlock at {worldPos}, HP: {preHp} -> {preHp - dmg}");
 
-        // 데미지 파티클 재생
-        if (BlockEffectManager.Instance != null)
-            BlockEffectManager.Instance.PlayDamageEffect(worldPos);
+        BlockEffectManager.Instance?.PlayDamageEffect(worldPos);
 
-        // 체력 감소 및 파괴 처리
         if (BlockHealthController.Damage(worldPos, dmg))
         {
-            // 파괴 파티클 재생
-            if (BlockEffectManager.Instance != null)
-                BlockEffectManager.Instance.PlayBreakEffect(worldPos);
-
+            BlockEffectManager.Instance?.PlayBreakEffect(worldPos);
             Debug.Log($"[BlockSystem] Block broken at {worldPos}");
-            // 블럭 제거
-            PlaceBlock(worldPos, VoxelType.Air);
+
+            if (TryGetChunk(worldPos, out var chunk, out var local))
+            {
+                chunk.Blocks[local.x, local.y, local.z] = VoxelType.Air;
+                if (rebuildMesh)
+                    chunk.BuildMesh();
+            }
+        }
+        else if (rebuildMesh)
+        {
+            if (TryGetChunk(worldPos, out var chunk, out _))
+                chunk.BuildMesh();
         }
     }
 
     public static void DamageBlocksInRadius(Vector3 center, float radius, int damage)
     {
+        HashSet<Chunk> affectedChunks = new HashSet<Chunk>();
+
         int minX = Mathf.FloorToInt(center.x - radius);
         int maxX = Mathf.CeilToInt(center.x + radius);
         int minY = Mathf.FloorToInt(center.y - radius);
@@ -76,27 +79,23 @@ public class BlockSystem : MonoBehaviour
             {
                 for (int z = minZ; z <= maxZ; z++)
                 {
-                    Vector3Int blockPos = new Vector3Int(x, y, z);
-                    float distance = Vector3.Distance(center, blockPos + Vector3.one * 0.5f); // 블럭 중심 기준
-
-                    if (distance <= radius)
+                    Vector3Int pos = new Vector3Int(x, y, z);
+                    if (Vector3.Distance(center, pos + Vector3.one * 0.5f) <= radius)
                     {
-                        BlockSystem.DamageBlock(blockPos, damage);
+                        if (TryGetChunk(pos, out var chunk, out _))
+                        {
+                            DamageBlock(pos, damage, rebuildMesh: false);
+                            affectedChunks.Add(chunk);
+                        }
                     }
                 }
             }
         }
-    }
-    // 블럭 타입 조회
-    public static bool GetBlockType(Vector3Int worldPos, out VoxelType type)
-    {
-        if (TryGetChunk(worldPos, out var chunk, out var local))
+
+        foreach (var chunk in affectedChunks)
         {
-            type = chunk.Blocks[local.x, local.y, local.z];
-            return true;
+            chunk.BuildMesh();
         }
-        type = VoxelType.Air;
-        return false;
     }
 
     // 좌표 변환
@@ -119,7 +118,7 @@ public class BlockSystem : MonoBehaviour
         bool valid = localX >= 0 && localX < Chunk.CHUNK_WIDTH + 2
                    && localY >= 0 && localY < Chunk.CHUNK_HEIGHT
                    && localZ >= 0 && localZ < Chunk.CHUNK_WIDTH + 2;
-
+        
         if (!valid)
         {
             localPos = default;
@@ -132,5 +131,16 @@ public class BlockSystem : MonoBehaviour
     private static int GetInitialHealth(VoxelType type)
     {
         return _initialHealthMap.TryGetValue(type, out var hp) ? hp : 1;
+    }
+
+    public static bool GetBlockType(Vector3Int worldPos, out VoxelType type)
+    {
+        if (TryGetChunk(worldPos, out var chunk, out var localPos))
+        {
+            type = chunk.Blocks[localPos.x, localPos.y, localPos.z];
+            return true;
+        }
+        type = VoxelType.Air;
+        return false;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class TowerBase : MonoBehaviour, IDamageAble
@@ -13,16 +14,18 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
     [SerializeField] protected GameObject _bulletPrefab;
     [SerializeField] protected SphereCollider _sphereCollider;
     [SerializeField] protected TowerAttackRange _attackRange;
+    private FractureExplosion fracture;
 
     protected float _currentHealth;
     protected Vector3 _faceToEnemyDir;
-
+    private List<GameObject> fragments = new List<GameObject>();
 
     protected float _attackTimer;
 
     protected virtual void Awake()
     {
         _attackRange = GetComponentInChildren<TowerAttackRange>();
+        fracture = GetComponentInChildren<FractureExplosion>();
     }
     protected virtual void OnEnable()
     {
@@ -77,12 +80,22 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
     public void TakeDamage(Damage damage)
     {
         _currentHealth -= damage.Value;
+        Debug.Log("TowerDamaged");
 
         if (_currentHealth <= 0)
         {
+            // Æø¹ß ½ÇÇà
+            fragments = fracture.Explode();
+            Invoke(nameof(DisableFragments), 6f);
+            gameObject.SetActive(false);
+
             ObjectPool.Instance.ReturnToPool(gameObject);
         }
     }
 
-
+    private void DisableFragments()
+    {
+        foreach (var frag in fragments)
+            frag.SetActive(false);
+    }
 }

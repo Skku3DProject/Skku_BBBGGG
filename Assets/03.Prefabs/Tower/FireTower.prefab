@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 3498197957182529633}
   - component: {fileID: 5823537174173956525}
   - component: {fileID: 5364898080908283110}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,10 +251,13 @@ GameObject:
   - component: {fileID: 3983230233663883491}
   - component: {fileID: 5106816069880111081}
   - component: {fileID: 6288279460816789716}
+  - component: {fileID: 3598711422998197336}
   - component: {fileID: -9020041866920088243}
+  - component: {fileID: 1684575669834311689}
+  - component: {fileID: 3264190436192324657}
   m_Layer: 6
   m_Name: FireTower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -351,6 +354,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.9146682, y: 4.0159864, z: 2.0650764}
   m_Center: {x: 0.0352481, y: 1.9977293, z: 0.05933404}
+--- !u!54 &3598711422998197336
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9166186074018161065}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &-9020041866920088243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,3 +398,62 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 3607720602487732084, guid: c5a96a3518351d04b8312ae163491fc0, type: 3}
   _sphereCollider: {fileID: 5823537174173956525}
   _attackRange: {fileID: 5364898080908283110}
+--- !u!114 &1684575669834311689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9166186074018161065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0515413c55e09234d9a18245e470ee06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fragmentCount: 10
+  insideMaterial: {fileID: 2100000, guid: 98f7ce8067c23884594fa2f87bf548de, type: 3}
+  detectFloatingFragments: 0
+  textureScale: {x: 1, y: 1}
+  textureOffset: {x: 0, y: 0}
+  explosionForce: 10
+  explosionRadius: 5
+  upwardsModifier: 0
+--- !u!114 &3264190436192324657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9166186074018161065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 605444303d16d4544bb76342ce272af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerOptions:
+    triggerType: 0
+    minimumCollisionForce: 0
+    filterCollisionsByTag: 0
+    triggerAllowedTags: []
+    triggerKey: 0
+  fractureOptions:
+    fragmentCount: 10
+    xAxis: 1
+    yAxis: 1
+    zAxis: 1
+    detectFloatingFragments: 0
+    asynchronous: 0
+    insideMaterial: {fileID: 0}
+    textureScale: {x: 1, y: 1}
+    textureOffset: {x: 0, y: 0}
+  callbackOptions:
+    onFracture:
+      m_PersistentCalls:
+        m_Calls: []
+    onCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+  prefractureOptions:
+    unfreezeAll: 1
+    saveFragmentsToDisk: 0
+    saveLocation: 

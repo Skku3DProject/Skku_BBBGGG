@@ -11,6 +11,7 @@ public class BowAttack : WeaponAttackBase
     public Transform shootPoint;
     public float shootForce = 30f;
     public TrajectoryRenderer trajectoryRenderer;
+    [SerializeField] private LayerMask aimLayerMask; // Ground, Enemy 등 원하는 레이어 지정
 
     public override bool IsAttacking { get; protected set; }
 
@@ -51,7 +52,7 @@ public class BowAttack : WeaponAttackBase
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         Vector3 targetPoint;
 
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f))
+        if (Physics.Raycast(ray,out RaycastHit hitInfo, 100f))
         {
             targetPoint = hitInfo.point;
         }
@@ -177,7 +178,8 @@ public class BowAttack : WeaponAttackBase
             return shootPoint.forward;
 
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f))
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f, aimLayerMask))
             return (hitInfo.point - shootPoint.position).normalized;
 
         return ray.direction;

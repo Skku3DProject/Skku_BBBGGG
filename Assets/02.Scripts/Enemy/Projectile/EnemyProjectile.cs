@@ -1,8 +1,15 @@
 using UnityEngine;
 
+public enum EnemyProjectileType
+{
+    Arrow,
+    Stone
+}
 public class EnemyProjectile : MonoBehaviour
 {
     public So_EnemyProjectile ProjectileData;
+
+    public EnemyProjectileType type;
 
     private Damage _damage;
     private Transform _parentTranfrom;
@@ -65,16 +72,12 @@ public class EnemyProjectile : MonoBehaviour
         if (_velocity != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(_velocity);
 
-    
-
         _timer += Time.deltaTime;
 
-        if (_timer > ProjectileData.FlightTime && _timer <= ProjectileData.FlightTime + 5f && !_checkedGroundHit)
+        //CheckGroundHit();
+        if (_timer > 0.5f)//ProjectileData.FlightTime)
         {
-            if (CheckGroundHit()) // true면 충돌 성공
-            {
-                _checkedGroundHit = true;
-            }
+            CheckGroundHit();
         }
 
         // 검사 실패한 채로 너무 오래되면 삭제
@@ -101,7 +104,12 @@ public class EnemyProjectile : MonoBehaviour
     }
     protected virtual bool CheckGroundHit()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 2f, ProjectileData.GroundMask))
+        Vector3 forward = transform.forward;
+        Vector3 down = Vector3.down;
+
+        // 중간 방향 벡터
+        Vector3 midDirection = (forward + down).normalized;
+        if (Physics.Raycast(transform.position, midDirection, out RaycastHit hit, 0.5f, ProjectileData.GroundMask))
         {
             OnGroundHit(hit);
             return true; // 충돌 성공
@@ -111,12 +119,15 @@ public class EnemyProjectile : MonoBehaviour
     private void OnGroundHit(RaycastHit hit)
     {
         Vector3Int blockPos = Vector3Int.FloorToInt(hit.point + hit.normal * -0.5f);
-        // BlockSystem.DamageBlock(blockPos, 10);
+
+        if(type == EnemyProjectileType.Stone)
+            BlockSystem.DamageBlocksInRadius(blockPos, 5f,10);
+
         UnEnable();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<IDamageAble>(out IDamageAble damageAble) && other.CompareTag("Player"))
+        if (other.TryGetComponent<IDamageAble>(out IDamageAble damageAble) && other.CompareTag("Player") || other.CompareTag("Tower"))
         {
             damageAble.TakeDamage(_damage);
             UnEnable();
