@@ -57,7 +57,6 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        TutorialEnd();
     }
 
     private void Update()

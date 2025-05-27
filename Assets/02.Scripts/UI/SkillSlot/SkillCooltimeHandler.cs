@@ -14,6 +14,7 @@ public class SkillCooltimeHandler : MonoBehaviour
 
         if (slot.IsCooldown)
         {
+            slot.Skill.UseSkill();
             StartCoroutine(UseSkillCoroutine(slot));
         }
     }

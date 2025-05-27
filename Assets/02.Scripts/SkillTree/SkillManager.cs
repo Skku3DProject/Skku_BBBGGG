@@ -23,7 +23,7 @@ public class SkillManager : MonoBehaviour
     public SkillTree _magicSkillTree;
 
     private Dictionary<string, SkillSet> _skillSetDict = new Dictionary<string, SkillSet>();
-
+    public Action skillAction;
     public SkillTory SelectskillTory { get; private set; }
 
     public int SkillPoint { get; private set; }

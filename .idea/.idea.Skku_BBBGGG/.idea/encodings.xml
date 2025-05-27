@@ -4,5 +4,8 @@
     <file url="file://$PROJECT_DIR$/Assets/02.Scripts/Enemy/EnemyManager.cs" charset="EUC-KR" />
     <file url="file://$PROJECT_DIR$/Assets/02.Scripts/Enemy/Spanwer/EnemySpawner.cs" charset="EUC-KR" />
     <file url="file://$PROJECT_DIR$/Assets/02.Scripts/Enemy/State/EnemyController.cs" charset="EUC-KR" />
+    <file url="file://$PROJECT_DIR$/Assets/02.Scripts/Player/Player.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/02.Scripts/PlayerTest/Skill/SwordSpinSkill.cs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Assets/02.Scripts/PlayerTest/Skill/WeaponSkillBase.cs" charset="UTF-8" />
   </component>
 </project>

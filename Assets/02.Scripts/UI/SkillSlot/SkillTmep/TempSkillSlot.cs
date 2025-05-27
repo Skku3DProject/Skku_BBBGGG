@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class TempSkillSlot : MonoBehaviour
 {
+    public WeaponSkillBase Skill;
     public SkillCooltimeHandler CooltimeHandler;
     public SO_TempSkillSlot SlotData; // 데이터 받아오는 SO
     private SkillNode _skillNode;
@@ -19,6 +20,11 @@ public class TempSkillSlot : MonoBehaviour
     public float Cooltimer = 0;      // 쿨타임용 타이머
     
     public Image LockedImage;
+
+    private void Awake()
+    {
+        Skill = GetComponent<WeaponSkillBase>();
+    }
     private void OnEnable()
     {
         _skillTory = GetComponentInParent<SkillTory>();

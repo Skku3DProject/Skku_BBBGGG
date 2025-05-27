@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     public Slider Mpbar;
     public Slider EXPBar;
     public TextMeshProUGUI[] Currencies;
-    //public GameObject GameOverPanel;
+    public GameObject GameOverPanel;
     
     public TextMeshProUGUI Timer;
     public GameObject TimerObject;
@@ -44,7 +44,7 @@ public class UIManager : MonoBehaviour
     // 게임오버
     public void UI_GameOver()
     {
-      //  GameOverPanel.SetActive(true);
+      GameOverPanel.SetActive(true);
     }
 
     public void UI_ObjectOnOff(GameObject ui)

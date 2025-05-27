@@ -5,6 +5,8 @@ public class TestUI : MonoBehaviour
 {
     private EquipmentType _equipmentType;
     public SkillCooltimeHandler cooltimeHandler;
+    public float Timer;
+    
     private void Start()
     {
         StageManager.instance.OnCombatEnd += ActionTest;
@@ -54,6 +56,13 @@ public class TestUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             cooltimeHandler.StartCooldown(SkillManager.instance.SelectskillTory.SkillSlots[0]);
+            
         }
     }
+
+    public void TutorialTest()
+    {
+
+    }
+    
 }

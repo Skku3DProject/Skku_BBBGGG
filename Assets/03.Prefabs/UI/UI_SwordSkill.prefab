@@ -659,6 +659,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Skill: {fileID: 0}
+  CooltimeHandler: {fileID: 0}
   SlotData: {fileID: 11400000, guid: 722601ad756d448429ae1794ca80afcd, type: 2}
   _skillTory: {fileID: 0}
   SkillIcon: {fileID: 8552371197234462674}
@@ -1274,6 +1276,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Skill: {fileID: 0}
+  CooltimeHandler: {fileID: 0}
   SlotData: {fileID: 11400000, guid: b669a97dd1656604ab7474b40d519aac, type: 2}
   _skillTory: {fileID: 0}
   SkillIcon: {fileID: 5756716235115146750}
@@ -1580,6 +1584,7 @@ GameObject:
   - component: {fileID: 5672661369073665006}
   - component: {fileID: 3826338960811273106}
   - component: {fileID: 1288685579331706261}
+  - component: {fileID: 5001597368121457561}
   - component: {fileID: 2109931523478121355}
   m_Layer: 5
   m_Name: UI_SkillSlot
@@ -1647,6 +1652,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5001597368121457561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8525648430444317617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fea699a439b93d545bad8a8f7151700d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooltime: 5
 --- !u!114 &2109931523478121355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1659,6 +1677,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Skill: {fileID: 0}
+  CooltimeHandler: {fileID: 0}
   SlotData: {fileID: 11400000, guid: 403eb867e3ec3ab40b432ae8c7a96cb0, type: 2}
   _skillTory: {fileID: 0}
   SkillIcon: {fileID: 1288685579331706261}
