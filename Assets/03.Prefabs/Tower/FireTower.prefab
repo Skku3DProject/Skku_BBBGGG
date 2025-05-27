@@ -410,13 +410,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0515413c55e09234d9a18245e470ee06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fragmentCount: 10
-  insideMaterial: {fileID: 2100000, guid: 98f7ce8067c23884594fa2f87bf548de, type: 3}
-  detectFloatingFragments: 0
-  textureScale: {x: 1, y: 1}
-  textureOffset: {x: 0, y: 0}
+  fragmentPrefabs: {fileID: 4989874286084197583, guid: b727db30ff4914c4cb319ffdd80bc864, type: 3}
   explosionForce: 10
-  explosionRadius: 5
+  explosionRadius: 3
   upwardsModifier: 0
 --- !u!114 &3264190436192324657
 MonoBehaviour:

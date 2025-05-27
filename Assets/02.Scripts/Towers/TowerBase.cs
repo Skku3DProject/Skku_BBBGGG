@@ -18,8 +18,6 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
 
     protected float _currentHealth;
     protected Vector3 _faceToEnemyDir;
-    private List<GameObject> fragments = new List<GameObject>();
-
     protected float _attackTimer;
 
     protected virtual void Awake()
@@ -85,7 +83,7 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
         if (_currentHealth <= 0)
         {
             // Æø¹ß ½ÇÇà
-            fragments = fracture.Explode();
+            fracture.Explode();
             Invoke(nameof(DisableFragments), 6f);
             gameObject.SetActive(false);
 
@@ -95,7 +93,6 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
 
     private void DisableFragments()
     {
-        foreach (var frag in fragments)
-            frag.SetActive(false);
+        fracture.ReturnFragmentsToPool();
     }
 }

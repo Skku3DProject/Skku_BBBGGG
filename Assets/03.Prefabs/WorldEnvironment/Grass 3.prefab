@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7940941234930952549}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Level01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 6853559104307387406}
   - component: {fileID: 4502039548576107649}
   - component: {fileID: 7158582896320534526}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 000_static_Grass_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7709240438168281836}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: _UMS_LODs_
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 6309097371138046997}
   - component: {fileID: 575047502489949963}
   - component: {fileID: 6428681048659856755}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Grass 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +329,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5784673010468445714}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Level00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 3279533442720511912}
   - component: {fileID: 5097883451725526910}
   - component: {fileID: 7076318937003604621}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 000_static_Grass 3_combined_static
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 6112554675030964073}
   - component: {fileID: 3195350945121072894}
   - component: {fileID: 3839171818393266003}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 000_static_Grass 3_combined_static
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -533,7 +533,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224694803535332980}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Level02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -627,6 +627,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 79d063a03c2341349a61533399bab287, type: 3}
       propertyPath: m_Name
       value: Grass_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 79d063a03c2341349a61533399bab287, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
