@@ -23,7 +23,7 @@ public class FireBall : ProjectileBase
             if (col.TryGetComponent<IDamageAble>(out var target))
             {
                 Debug.Log("GroundHit SplashDamage");
-                target.TakeDamage(new Damage(_data.Damage, gameObject, 5));
+                target.TakeDamage(new Damage(_data.Damage, _owner, 5));
             }
         }
     }
@@ -44,7 +44,7 @@ public class FireBall : ProjectileBase
                 if (hit.TryGetComponent<IDamageAble>(out var d))
                 {
                     Debug.Log("Enemy SplashDamage2");
-                    d.TakeDamage(new Damage(_data.Damage, gameObject, 5));
+                    d.TakeDamage(new Damage(_data.Damage, _owner, 5));
                 }
             }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class ProjectileBase : MonoBehaviour
 {
@@ -15,20 +16,21 @@ public class ProjectileBase : MonoBehaviour
     private Vector3 _velocity;
     private float _timer;
     private Vector3 _gravityVector;
+    protected GameObject _owner;
 
     private void OnEnable()
     {
         _timer = 0f;
     }
 
-    public void Init(Vector3 startPos, Vector3 targetPos, float flightDuration, SO_TowerData data = null)
+    public void Init(Vector3 startPos, Vector3 targetPos, float flightDuration, GameObject owner,SO_TowerData data = null)
     {
         _target = targetPos;
         flightTime = flightDuration;
         _data = data;
 
         transform.position = startPos;
-
+        _owner = owner;
         // 속도 계산
         _velocity = CalculateLaunchVelocity(startPos, targetPos, flightTime);
         _gravityVector = Vector3.up * gravity;

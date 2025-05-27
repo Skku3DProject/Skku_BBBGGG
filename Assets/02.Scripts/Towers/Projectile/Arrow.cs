@@ -17,7 +17,7 @@ public class Arrow : ProjectileBase
         {
             Debug.Log("HitEnemy");
             //d.TakeDamage(damage);
-            d.TakeDamage(new Damage(_data.Damage, gameObject));
+            d.TakeDamage(new Damage(_data.Damage, _owner));
         }
         if (HitVfxPrefab)
         {

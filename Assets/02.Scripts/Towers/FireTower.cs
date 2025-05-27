@@ -11,6 +11,7 @@ public class FireTower : TowerBase
             startPos,
             _attackRange.NearEnemy.transform.position,
             flightDuration: 1.5f,
+            owner: gameObject,
             data: _data
         );
     }
