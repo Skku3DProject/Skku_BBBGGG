@@ -9,7 +9,8 @@ public class TempSkillSlot : MonoBehaviour
     [SerializeField]private SkillTory _skillTory;
     public Image SkillIcon;       //  sprite -> 아이콘
     public float Cooldown;        // 적용할 쿨타임 (여기서 독립적으로 관리)
-    
+
+    private bool _isCooldown => Cooldown <= 0; // 쿨타임 다 돌았나?
     public bool IsActive = true; // 스킬 사용할 수 있나요?
     
     // 변경되는 스킬 아이콘들 = 스킬이 쿨타임이면 변한다.
@@ -21,6 +22,7 @@ public class TempSkillSlot : MonoBehaviour
     {
         _skillTory = GetComponentInParent<SkillTory>();
         _skillNode = FindSkills(SlotData.Name);
+        Cooldown = _skillNode.Cooldown;
         _skillNode.SkillUnlockedAction += ActivateSkillSlot;
         Debug.Log("temp skill start");
     }
@@ -36,7 +38,19 @@ public class TempSkillSlot : MonoBehaviour
         IsActive = true;
         LockedImage.gameObject.SetActive(false);
     }
-    
+
+    public void UseSkill()
+    {
+        if (!IsActive)
+        {
+         return;   
+        }
+
+        if (_isCooldown)
+        {
+            StartCoroutine(UseSkillCoroutine());   
+        }
+    }
     // 스킬 사용하면 쿨타임 적용하기
     private IEnumerator UseSkillCoroutine()
     {

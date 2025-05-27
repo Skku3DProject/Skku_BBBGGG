@@ -39,4 +39,19 @@ public class TestUI : MonoBehaviour
     {
         Debug.Log("스테이지 종료");
     }
+    // 2. 그 스킬칸의 isactive를 체크
+    /// <summary>
+    /// 스킬 사용시 -> 스킬을 찾아서 -> 스킬의 쿨타임을 적용시킨다.
+    /// 1. 스킬을 사용한다. -> input값에 따라 skilltory안에 slot의 n번째 스킬을 체크함
+    /// 2. 그 스킬칸의 isactive를 체크
+    /// 3. 만약 true라면 -> use스킬을 사용한다.
+    /// 4. 
+    /// </summary>
+    public void CooltimeTset()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SkillManager.instance.SelectskillTory.SkillSlots[0].UseSkill();   
+        }
+    }
 }

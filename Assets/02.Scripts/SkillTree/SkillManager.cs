@@ -9,6 +9,7 @@ public enum SkillType
     Bow,
     Magic
 }
+
 public class SkillManager : MonoBehaviour
 {
     public static SkillManager instance;
@@ -17,14 +18,14 @@ public class SkillManager : MonoBehaviour
     public SkillType TreeType;
 
     // 스킬 트리 생성
-    public  SkillTree _swordSkillTree;
+    public SkillTree _swordSkillTree;
     public SkillTree _bowSkillTree;
     public SkillTree _magicSkillTree;
-    
+
     private Dictionary<string, SkillSet> _skillSetDict = new Dictionary<string, SkillSet>();
-    
-    private SkillTory _selectskillTory;
-    
+
+    public SkillTory SelectskillTory { get; private set; }
+
     public int SkillPoint { get; private set; }
 
     private void Awake()
@@ -59,7 +60,7 @@ public class SkillManager : MonoBehaviour
     private void Start()
     {
         // 스킬 창 세팅
-        _selectskillTory = SkillTories[0];
+        SelectskillTory = SkillTories[0];
 
     }
     
@@ -160,22 +161,22 @@ public class SkillManager : MonoBehaviour
 
     public void SwitchSkilltory(EquipmentType type)
     {
-        _selectskillTory.gameObject.SetActive(false);
+        SelectskillTory.gameObject.SetActive(false);
         
         switch(type)
         {
             case EquipmentType.Sword:
-                _selectskillTory = SkillTories[0];
+                SelectskillTory = SkillTories[0];
                 break;
             case EquipmentType.Bow:
-                _selectskillTory = SkillTories[1];
+                SelectskillTory = SkillTories[1];
                 break;
             case EquipmentType.Magic:
-                _selectskillTory = SkillTories[2];
+                SelectskillTory = SkillTories[2];
                 break;
         }
         
-        _selectskillTory.gameObject.SetActive(true);
+        SelectskillTory.gameObject.SetActive(true);
     }
 
 }
