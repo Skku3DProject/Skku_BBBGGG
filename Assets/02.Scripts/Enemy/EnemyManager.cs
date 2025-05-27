@@ -5,76 +5,108 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
 
-    private readonly Dictionary<EEnemyAttackType,List<Enemy>> _aggregationEnemyDictionary = new Dictionary<EEnemyAttackType, List<Enemy>>();
     // 활성화된 적 리스트
-    private  List<Enemy> _activeEnemies;
-    public  List<Enemy> ActiveEnemies => _activeEnemies;
+    private List<Enemy> _activeEnemies;
+    public List<Enemy> ActiveEnemies => _activeEnemies;
 
-    void Awake()
+    private List<IEnemyGroupingStrategy> _groupStrategies;
+
+    public IEnemyGroupingStrategy GroupingStrategy { get; private set; }
+
+    private Dictionary<Enemy, IEnemyGroupingStrategy> _enemyStrategies = new();
+    private MoveTypeGroupingStrategy _moveTypeStrategy = new();
+    private TargetBasedGroupingStrategy _targetStrategy = new();
+    private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+        DontDestroyOnLoad(this);
 
+    }
     public void SetEnemiesList(int capacity)
     {
         _activeEnemies = new List<Enemy>(capacity);
     }
-
-    public void Enable(Enemy enemy)
+    public void OnActivity(Enemy enemy)
     {
         if (!_activeEnemies.Contains(enemy))
             _activeEnemies.Add(enemy);
     }
 
-    public void UnEnable(Enemy enemy)
+    public void UnActivity(Enemy enemy)
     {
         if (_activeEnemies.Count <= 0) return;
         _activeEnemies.Remove(enemy);
+
+        if (_enemyStrategies.TryGetValue(enemy, out var strategy))
+        {
+            strategy.LeaveGroup(enemy);
+            _enemyStrategies.Remove(enemy);
+        }
+
         UIManager.instance.CurrentCountRefresh();
     }
 
-    public void Register(Enemy enemy, EEnemyAttackType type)
+    public void SetMoveTypeGrouping(Enemy enemy)
     {
-        /*
-        if (_aggregationEnemyDictionary.Count <= 0) return;
-        _aggregationEnemyDictionary[type].Remove(enemy);
-       */
+        SetGrouping(enemy, _moveTypeStrategy);
     }
 
-    public void Unregister(Enemy enemy, EEnemyAttackType type)
+    public void SetTargetGrouping(Enemy enemy)
     {
-        /*
-        if (!_aggregationEnemyDictionary[type].Contains(enemy))
-            _aggregationEnemyDictionary[type].Add(enemy);
-      */
+        SetGrouping(enemy, _targetStrategy);
     }
 
-    public bool TryCheckRegister(Enemy enemy)
+    public void ClearGrouping(Enemy enemy)
     {
-        if (!_activeEnemies.Contains(enemy))
+        if (_enemyStrategies.TryGetValue(enemy, out var strategy))
         {
-            return false;
+            strategy.LeaveGroup(enemy);
+            _enemyStrategies.Remove(enemy);
         }
-        return true;
     }
 
-    // 주어진 적을 제외한 활성화된 모든 이웃 리스트 반환
-    public List<Enemy> GetNeighbors(Enemy self)
+    private void SetGrouping(Enemy enemy, IEnemyGroupingStrategy newStrategy)
     {
-        List<Enemy> neighbors = new List<Enemy>();
-        foreach (var enemy in _activeEnemies)
+        if (_enemyStrategies.TryGetValue(enemy, out var oldStrategy))
         {
-            if (enemy != self)
-            {
-                neighbors.Add(enemy);
-            }
+            oldStrategy.LeaveGroup(enemy);
         }
-        return neighbors;
+
+        newStrategy.JoinGroup(enemy);
+        _enemyStrategies[enemy] = newStrategy;
+    }
+
+    public bool TryCheckMoveRegister(Enemy enemy)
+    {
+        if (_enemyStrategies.TryGetValue(enemy, out var strategy))
+        {
+            return strategy is MoveTypeGroupingStrategy;
+        }
+        return false;
+    }
+
+    public List<Enemy> GetNeighbors(Enemy enemy, float neighborRadius)
+    {
+        if (!_enemyStrategies.TryGetValue(enemy, out var strategy))
+            return new List<Enemy>();
+
+        List<Enemy> rawGroup = strategy.GetGroupMembers(enemy);
+        List<Enemy> filtered = new();
+
+        foreach (var other in rawGroup)
+        {
+            if (other == enemy) continue;
+
+            float dist = Vector3.Distance(enemy.transform.position, other.transform.position);
+            if (dist <= neighborRadius)
+                filtered.Add(other);
+        }
+
+        return filtered;
     }
 }

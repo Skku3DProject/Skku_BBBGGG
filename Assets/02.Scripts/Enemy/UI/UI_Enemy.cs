@@ -55,7 +55,6 @@ public class UI_Enemy : MonoBehaviour
     private void UpdateAllHealthBars()
     {
         _healthBarInfos.Clear();
-        Debug.Log(_healthBarInfos.Count);
         Vector3 cameraPos = _mainCamera.transform.position;
         // 1._hpBars 중에서 켜져있는애들을 저장
         // 2. 켜져 있는 애들끼리 거리값 비교

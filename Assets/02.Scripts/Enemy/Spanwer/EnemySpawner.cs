@@ -155,7 +155,7 @@ public class EnemySpawner : MonoBehaviour
     {
         enemy.Initialize();
         enemy.GetComponent<EnemyController>().Initialize();
-        EnemyManager.Instance.Enable(enemy);
+        EnemyManager.Instance.OnActivity(enemy);
     }
 
     private void Initialize()

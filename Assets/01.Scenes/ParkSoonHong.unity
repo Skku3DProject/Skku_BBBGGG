@@ -1962,42 +1962,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Spawner
       objectReference: {fileID: 0}
-    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
-      propertyPath: PreSetList.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
-      propertyPath: 'PreSetList.Array.data[1]'
-      value: 
-      objectReference: {fileID: 2391359435489877134, guid: baade0fd5a7993641ba45e1e26e7d60d, type: 3}
-    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
-      propertyPath: 'PreSetList.Array.data[2]'
-      value: 
-      objectReference: {fileID: 2801390549913854848, guid: 7ec794da1b0f0b74aaab7e1c81680ce0, type: 3}
-    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
-      propertyPath: 'PreSetList.Array.data[3]'
-      value: 
-      objectReference: {fileID: 6143643343095581565, guid: a3b07e6a4ee90c34d8ebc26d230d0460, type: 3}
-    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
-      propertyPath: 'PreSetList.Array.data[4]'
-      value: 
-      objectReference: {fileID: 4196742738127299694, guid: 36969ffd235bccb459db670b7465479b, type: 3}
-    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
-      propertyPath: 'PreSetList.Array.data[5]'
-      value: 
-      objectReference: {fileID: 2384884184112096675, guid: 0a92a5844d3a8b0478db5428a374863e, type: 3}
-    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
-      propertyPath: 'PreSetList.Array.data[6]'
-      value: 
-      objectReference: {fileID: 2384884184112096675, guid: 91822a963e5015747b84763a06a56b09, type: 3}
-    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
-      propertyPath: 'PreSetList.Array.data[7]'
-      value: 
-      objectReference: {fileID: 1919701108089533735, guid: 31f70267f6d6411458186a29d3e3b1a8, type: 3}
-    - target: {fileID: 8652763400163284218, guid: f1adf6522497b93499376dbd08eb9da7, type: 3}
-      propertyPath: 'PreSetList.Array.data[8]'
-      value: 
-      objectReference: {fileID: 1008570438300534873, guid: b0d01ab4e1cc4424faa8cdc8fe958b5d, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4387,6 +4351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e420ed4bae6bd04d9d4b55dfdbf13bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooltimeHandler: {fileID: 0}
 --- !u!114 &1722397151
 MonoBehaviour:
   m_ObjectHideFlags: 0

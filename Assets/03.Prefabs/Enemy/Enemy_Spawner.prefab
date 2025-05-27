@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PreSetList:
   - {fileID: 6143643343095581565, guid: 31c2eda2bcbaa054fb2f3e597d783ac1, type: 3}
+  - {fileID: 2391359435489877134, guid: baade0fd5a7993641ba45e1e26e7d60d, type: 3}
   - {fileID: 2801390549913854848, guid: 7ec794da1b0f0b74aaab7e1c81680ce0, type: 3}
   - {fileID: 6143643343095581565, guid: a3b07e6a4ee90c34d8ebc26d230d0460, type: 3}
   - {fileID: 4196742738127299694, guid: 36969ffd235bccb459db670b7465479b, type: 3}
@@ -56,11 +57,11 @@ MonoBehaviour:
   - {fileID: 1919701108089533735, guid: 31f70267f6d6411458186a29d3e3b1a8, type: 3}
   - {fileID: 1008570438300534873, guid: b0d01ab4e1cc4424faa8cdc8fe958b5d, type: 3}
   SpawnerSo:
-  - {fileID: 11400000, guid: 1d6ee1529c39e2941ad266cfef2119ab, type: 2}
-  - {fileID: 11400000, guid: 00d6f42fa9e8c7c49ae7ff6bbe2ad530, type: 2}
-  - {fileID: 11400000, guid: 29838d33611a9d043a484316821b7919, type: 2}
-  - {fileID: 11400000, guid: 6ab58202f051a044fa4be61a99b0f698, type: 2}
-  - {fileID: 11400000, guid: b655cd98437dc0f428426d64ddff5e5e, type: 2}
+  - {fileID: 11400000, guid: b287112cd8bb79341a206e694a2e1225, type: 2}
+  - {fileID: 11400000, guid: 1bc35aebb538a9e4da3f9209becea595, type: 2}
+  - {fileID: 11400000, guid: 690a0e547c04c954990e4399803c64ff, type: 2}
+  - {fileID: 11400000, guid: 7ad7386ff3453c946a6cc433c6e15abf, type: 2}
+  - {fileID: 11400000, guid: 4cc2ed466a6d99d4a992e7214ee709c8, type: 2}
   SpawnTime: 0.1
   MaxSpawnCount: 10
 --- !u!1001 &4325984575899979376

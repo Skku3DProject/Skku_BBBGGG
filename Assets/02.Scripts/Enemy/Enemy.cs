@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     private GameObject _target;
     public GameObject Target => _target;
 
-    private GameObject _gaol; // ���̽� ķ��
+    private GameObject _gaol;
     public GameObject Gaol => _gaol;
 
     private GameObject _player;
@@ -52,74 +52,74 @@ public class Enemy : MonoBehaviour
         _stepOffset = _characterController.stepOffset;
     }
     
-    void OnEnable()
-    {
-        EnemyManager.Instance.Enable(this);
-        if(UI_EnemyHpbar != null)
-        {
-            UI_EnemyHpbar.Initialized();
-        }
-    }
-
-    void OnDisable()
-    {
-        EnemyManager.Instance.UnEnable(this);
-    }
-    
     public void Initialize()
     {
         _target = _gaol;
         _health = EnemyData.Health;
         _maxHealth = _health;
-		gameObject.SetActive(true);
-		UI_EnemyHpbar.Initialized();
+
+        if (UI_EnemyHpbar != null)
+        {
+            UI_EnemyHpbar.Initialized();
+        }
+
+        EnemyManager.Instance.SetMoveTypeGrouping(this);
+        gameObject.SetActive(true);
 	}
 
     public void TakeDamage(Damage damage)
     {
         _health -= damage.Value;
-        _target = damage.From.gameObject;
+        if (damage.From.CompareTag("Player"))
+        {
+            GoOnPlayer();
+        }
+        else
+        {
+            _target = damage.From.gameObject;
+        }
+
         UI_EnemyHpbar.UpdateHealth(_health / _maxHealth);
     }
 
     public bool TryAttack()
     {
+        if(_target.gameObject.activeInHierarchy == false && _target != _gaol)
+        {
+            _target = _gaol;
+        }
+
         if ((transform.position - _target.transform.position).sqrMagnitude < _attackDistance)
         {
             return true;
         }
         return false;
     }
-
     public void TargetOnPlayer()
     {
         if(_target == _player)
         {
             return;
         }
+
         if ((transform.position - Player.transform.position).sqrMagnitude < _findDistance)
         {
-            EnemyManager.Instance.Unregister(this, EnemyData.EnemyAttackType);
-            _target = _player;
+            GoOnPlayer();
             return;
         }
-
     }
-    public void OnPlayer()
+
+    private void GoOnPlayer()
     {
+        EnemyManager.Instance.SetTargetGrouping(this);
         _target = _player;
     }
-    private void OnPlayerLost()
-    {
-        _target = _gaol;
-    }
+  
 
     private void OnDrawGizmosSelected()
     {
-        // Ž�� �Ÿ� �ð�ȭ (�Ķ���)
         Gizmos.color = Color.cyan;
 
-        // _findDistance�� SqrMagnitude �����̹Ƿ� ��Ʈ�� ������ ���� �Ÿ�
         float radius = Mathf.Sqrt(EnemyData.FindDistance);
 
         Gizmos.DrawWireSphere(transform.position, radius);

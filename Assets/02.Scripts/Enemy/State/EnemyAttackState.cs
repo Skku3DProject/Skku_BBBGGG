@@ -10,11 +10,12 @@ public class EnemyAttackState : IFSM
     public void Start()
     {
         _enemy.Animator.SetBool("IsAttack",true);
+        EnemyManager.Instance.ClearGrouping(_enemy);
     }
 
     public EEnemyState Update()
     {
-        if (_enemy.EnemyData.EnemyAttackType != EEnemyAttackType.Fly)
+        if (_enemy.EnemyData.EnemyMoveType != EEnemyMoveType.Fly)
         {
             Gravity();
         }

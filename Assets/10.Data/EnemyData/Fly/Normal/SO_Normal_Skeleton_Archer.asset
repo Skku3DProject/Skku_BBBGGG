@@ -14,20 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AvailableStates: 0000000001000000020000000300000004000000
   EnemyType: 0
-  EnemyAttackType: 2
+  EnemyMoveType: 1
   DamagedTime: 0.5
-  ProjectilePrefab: {fileID: 919132149155446097, guid: b00c103878428cf46abf9c10f1ef1791, type: 3}
+  ProjectilePrefab: {fileID: 5737820991993077119, guid: 584f9ba41221de444bfaae33cbaa736b, type: 3}
   PrefabSize: 10
   Health: 200
   KnockbackPower: 100
   DamageValue: 10
   FindDistance: 15
-  AttackDistance: 20
+  AttackDistance: 10
   MovePointDistance: 0.1
   SeparationDistance: 1
   AreaRange: 0
   IdleTime: 2
-  Speed: 2
+  Speed: 3
   Gravity: -9.8
   SearchLayerMask:
     serializedVersion: 2
@@ -39,3 +39,4 @@ MonoBehaviour:
   GoalWeight: 1
   CohesionWeight: 1
   AlignmentWeight: 1
+  FlockNeighborRadius: 3

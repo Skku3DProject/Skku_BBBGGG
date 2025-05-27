@@ -33,7 +33,6 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
         SetState();
         Initialize();
     }
-
     private void SetState()
     {
         _stateMap = new Dictionary<EEnemyState, IFSM>();
@@ -118,9 +117,9 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
     
     public void TakeDamage(Damage damage)
     {
-        if(EnemyManager.Instance.TryCheckRegister(_enemy))
+        if(!EnemyManager.Instance.TryCheckMoveRegister(_enemy)) // 공격 그룹에 속해 있으면
         {
-            EnemyManager.Instance.Unregister(_enemy, _enemy.EnemyData.EnemyAttackType);
+            EnemyManager.Instance.ClearGrouping(_enemy);
         }
 
         if (_currentState == EEnemyState.Damaged || _currentState == EEnemyState.Die)
@@ -128,8 +127,8 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
             return;
         }
         // 실제 데미지 
-
         _enemy.TakeDamage(damage);
+
         if (_enemy.Health <= 0)
         {
             ChangeState(EEnemyState.Die);
@@ -142,20 +141,21 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
         }
         // 공격 중이면 리턴
 
-        OnHitEffect(damage.Direction, damage);
+        OnHit(damage);
         ChangeState(EEnemyState.Damaged);
     }
 
-    private void OnHitEffect(Vector3 direction, Damage damage)
+    private void OnHit(Damage damage)
     {
-        direction += Vector3.up * 0.5f; // 살짝 대각선 위로
-        direction.Normalize();
+        damage.Direction += Vector3.up * 0.5f; // 살짝 대각선 위로
+        damage.Direction.Normalize();
 
         Vector3 targetPosition = _enemy.Target.transform.position;
         targetPosition.y = _enemy.transform.position.y; // Y축 고정
         _enemy.transform.LookAt(targetPosition);
-        _enemy.CharacterController.Move(direction * damage.KnockbackPower * Time.deltaTime);
+        _enemy.CharacterController.Move(damage.Direction * damage.KnockbackPower * Time.deltaTime);
         _enemyVisual.PlayHitFeedback(_enemy.EnemyData.DamagedTime);
+
     }
     public void EndAttackAnimEvent()
     {
@@ -168,6 +168,7 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
     public void EndDieAnimEvent()
     {
         gameObject.SetActive(false);
+        EnemyManager.Instance.UnActivity(_enemy);
     }
 
     /*

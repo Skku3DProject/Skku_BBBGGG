@@ -25,7 +25,7 @@ public class EnemyDamageState : IFSM
 
     public EEnemyState Update()
     {
-        if (_enemy.EnemyData.EnemyAttackType != EEnemyAttackType.Fly)
+        if (_enemy.EnemyData.EnemyMoveType != EEnemyMoveType.Fly)
         {
             Gravity();
         }

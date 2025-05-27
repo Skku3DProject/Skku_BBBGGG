@@ -9,11 +9,11 @@ public enum EEnemyType
 
     Count,
 }
-public enum EEnemyAttackType
+public enum EEnemyMoveType
 {
-    Melee,
-    Ranged,
+    Ground,
     Fly,
+    GroundFly,
 
 
     Count,
@@ -26,7 +26,7 @@ public class So_Enemy : ScriptableObject
     [Header("상태")]
     public EEnemyState[] AvailableStates;
     public EEnemyType EnemyType;
-    public EEnemyAttackType EnemyAttackType;
+    public EEnemyMoveType EnemyMoveType;
 
     [Header("시간")]
     public float DamagedTime = 0.5f;
@@ -58,11 +58,12 @@ public class So_Enemy : ScriptableObject
     public LayerMask SearchLayerMask;
     public LayerMask AttackLayerMask;
 
-    [Header("분리 강도")]
+    [Header("플로킹 알고리즘")]
     public float SeparationWeight = 1f;
     public float GoalWeight = 1f;
     public float CohesionWeight = 1f;
     public float AlignmentWeight = 1f;
+    public float FlockNeighborRadius = 3f;
     /*
       SeparationWeight = 0 → 분리 무시
       SeparationWeight = 1 → 분리와 목표 방향 동등 비중

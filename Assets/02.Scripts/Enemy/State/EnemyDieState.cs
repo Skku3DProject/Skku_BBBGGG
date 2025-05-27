@@ -11,9 +11,7 @@ public class EnemyDieState : IFSM
     {
         _enemy.Animator.SetTrigger("Die");
         
-        EnemyManager.Instance.UnEnable(_enemy);
         UI_Enemy.Instance.TurnOffHpBar(_enemy);
-       
     }
 
     public EEnemyState Update()
