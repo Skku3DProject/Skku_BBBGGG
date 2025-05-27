@@ -1007,6 +1007,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooltimeHandler: {fileID: 1085406506}
+  Timer: 0
 --- !u!114 &504654675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2721,6 +2722,8 @@ MonoBehaviour:
   PlayerTransform: {fileID: 702727847}
   BaseCampTransform: {fileID: 1483997684}
   SpawenrTransform: {fileID: 225332602}
+  ChestPrefab: {fileID: 5786370049334567863, guid: 19ffd48077398244d9808b2466db625c, type: 3}
+  MaxChestCount: 10
   GridWidth: 50
   GridHeight: 50
   ChunkLayer:

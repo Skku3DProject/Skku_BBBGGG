@@ -8,7 +8,10 @@ public class WorldManager : MonoBehaviour
     public Transform PlayerTransform;
     public Transform BaseCampTransform;
     public Transform SpawenrTransform;
-
+    [Header("보물상자 프리팹")]
+    public GameObject ChestPrefab;
+    public int MaxChestCount = 10;
+    private List<Vector3> _cavePositions = new(); // 동굴 후보 위치
     [Header("그리드 세팅")]
     public int GridWidth = 5;
     public int GridHeight = 5;
@@ -56,16 +59,38 @@ public class WorldManager : MonoBehaviour
                 CreateChunk(new Vector2Int(x, z));
             }
         }
-    }
 
+        PlaceChests(); // 생성 후 보물상자 배치
+    }
+    void PlaceChests()
+    {
+        int chestCount = Mathf.Min(MaxChestCount, _cavePositions.Count);
+        if (chestCount == 0) return;
+
+        List<Vector3> shuffled = new List<Vector3>(_cavePositions);
+        ShuffleList(shuffled); // 랜덤 섞기
+
+        for (int i = 0; i < chestCount; i++)
+        {
+            Instantiate(ChestPrefab, shuffled[i], Quaternion.identity, transform);
+        }
+    }
+    void ShuffleList<T>(List<T> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            int rnd = Random.Range(i, list.Count);
+            (list[i], list[rnd]) = (list[rnd], list[i]);
+        }
+    }
     void CreateChunk(Vector2Int coord)
     {
         Vector3 worldPos = new Vector3(coord.x * Chunk.CHUNK_WIDTH, 0f, coord.y * Chunk.CHUNK_WIDTH);
         GameObject chunkObj = Instantiate(ChunkPrefab, worldPos, Quaternion.identity, transform);
         Chunk chunk = chunkObj.GetComponent<Chunk>();
 
-//        PopulateBlocksPerilnNoise(chunk, coord);
-        PopulateBlocksCustomNoise(chunk, coord);
+        PopulateBlocksPerilnNoise(chunk, coord);
+        //PopulateBlocksCustomNoise(chunk, coord);
 
         chunk.BuildMesh();
         SpawnEnvironmentObjects(chunk);
@@ -154,33 +179,62 @@ public class WorldManager : MonoBehaviour
                 int globalX = coord.x * Chunk.CHUNK_WIDTH + (x - 1);
                 int globalZ = coord.y * Chunk.CHUNK_WIDTH + (z - 1);
 
-                // 1. 전체적으로 평탄한 기본 지형
+                // ==== 1. 평지 베이스 ====
                 float baseNoise = Mathf.PerlinNoise(globalX * NoiseScale, globalZ * NoiseScale);
-                float baseHeight = baseNoise * 1.5f + 5f; // 약간의 기복 + 기본 높이 상승
+                float baseHeight = baseNoise * 4f + 6f; // 2~4 사이의 낮은 평지
 
-                // 2. 부드러운 언덕
-                float hillNoise = Mathf.PerlinNoise(globalX * 0.02f + 1000f, globalZ * 0.02f + 1000f);
-                float hillHeight = Mathf.SmoothStep(0f, 1f, hillNoise) * 4f;
+                // ==== 2. 언덕 노이즈 ====
+                float hillNoise = Mathf.PerlinNoise(globalX * 0.03f + 2000f, globalZ * 0.03f + 2000f);
+                float hillHeight = Mathf.SmoothStep(0f, 1f, hillNoise) * 25f; // 최대 15
 
-                // 3. 산 노이즈 (확률 약간 증가 + 높이 강화)
-                float mountainNoise = Mathf.PerlinNoise(globalX * 0.01f + 2345f, globalZ * 0.01f + 6789f);
-                float mountainMask = Mathf.SmoothStep(0.85f, 0.92f, mountainNoise); // 조금 더 자주 나오게
-                float mountainHeight = mountainMask * 20f; // 강한 고도 차이
+                // ==== 3. 언덕 마스크 ====
+                float hillMask = Mathf.PerlinNoise(globalX * 0.01f + 1234f, globalZ * 0.01f + 5678f);
+                hillMask = Mathf.SmoothStep(0.4f, 0.65f, hillMask); // 언덕 위치 마스킹
 
-                // 4. 최종 높이 계산
-                float totalHeight = baseHeight + hillHeight + mountainHeight;
-                int maxHeight = Mathf.Clamp(Mathf.FloorToInt(totalHeight), 0, Chunk.CHUNK_HEIGHT - 1);
+                // ==== 4. 중심 평탄화 영역 설정 ====
+                float mapCenterX = GridWidth * Chunk.CHUNK_WIDTH / 2f;
+                float mapCenterZ = GridHeight * Chunk.CHUNK_WIDTH / 2f;
+                float distToCenter = Vector2.Distance(new Vector2(globalX, globalZ), new Vector2(mapCenterX, mapCenterZ));
 
-                // 5. 블록 배치
+                float flatRadius = 48f; // 약 6청크 반지름
+                float fadeRadius = 32f; // 경계 흐리기 범위
+                float flatness = 0f;
+
+                if (distToCenter < flatRadius)
+                    flatness = 1f;
+                else if (distToCenter < flatRadius + fadeRadius)
+                    flatness = Mathf.SmoothStep(1f, 0f, (distToCenter - flatRadius) / fadeRadius);
+
+                // ==== 5. 최종 높이 계산 ====
+                float totalHeight = baseHeight + hillHeight * hillMask;
+                float targetHeight = Mathf.Lerp(totalHeight, 10f, flatness); // 중심은 높이 10으로
+                int maxHeight = Mathf.Clamp(Mathf.FloorToInt(targetHeight), 0, Chunk.CHUNK_HEIGHT - 1);
+
+                // ==== 6. 동굴 노이즈 (단순 제거형 동굴) ====
                 for (int y = 0; y < Chunk.CHUNK_HEIGHT; y++)
                 {
-                    if (y > maxHeight)
+                    //float caveNoise = Mathf.PerlinNoise(globalX * 0.1f + 4000f, globalZ * 0.1f + 4000f + y * 0.05f);
+                    //bool isCave = (y < maxHeight - 3 && caveNoise > 0.65f); // 듬성듬성 구멍
+
+                    float caveNoise = CaveNoise3D(globalX * 0.02f, y * 0.02f, globalZ * 0.02f);
+                    bool isCave = (y < maxHeight - 3 && caveNoise > 0.58f);
+
+                    if (y > maxHeight || isCave)
                     {
                         chunk.Blocks[x, y, z] = VoxelType.Air;
+                        if (y > 3 && y + 1 < Chunk.CHUNK_HEIGHT)
+                        {
+                            VoxelType below = chunk.Blocks[x, y - 1, z];
+                            if (below == VoxelType.Stone || below == VoxelType.Dirt || below == VoxelType.Grass)
+                            {
+                                Vector3 pos = chunk.transform.position + new Vector3(x - 1 + 0.5f, y + 0.5f, z - 1 + 0.5f);
+                                _cavePositions.Add(pos);
+                            }
+                        }
                     }
                     else if (y == maxHeight)
                     {
-                        chunk.Blocks[x, y, z] = maxHeight >= 20 ? VoxelType.Stone : VoxelType.Grass;
+                        chunk.Blocks[x, y, z] = VoxelType.Grass;
                     }
                     else if (y >= maxHeight - 3)
                     {
@@ -193,6 +247,14 @@ public class WorldManager : MonoBehaviour
                 }
             }
         }
+    }
+    // 유사 3D 노이즈 함수
+    float CaveNoise3D(float x, float y, float z)
+    {
+        float xy = Mathf.PerlinNoise(x, y);
+        float yz = Mathf.PerlinNoise(y, z);
+        float zx = Mathf.PerlinNoise(z, x);
+        return (xy + yz + zx) / 3f;
     }
     private void PopulateBlocksCustomNoise(Chunk chunk, Vector2Int coord)
     {
