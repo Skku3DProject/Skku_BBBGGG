@@ -11,7 +11,6 @@ public class BowAttack : WeaponAttackBase
     public Transform shootPoint;
     public float shootForce = 30f;
     public TrajectoryRenderer trajectoryRenderer;
-    [SerializeField] private LayerMask aimLayerMask; // Ground, Enemy 등 원하는 레이어 지정
 
     public override bool IsAttacking { get; protected set; }
 
@@ -19,6 +18,11 @@ public class BowAttack : WeaponAttackBase
     private bool _canShootNext = true;
     private float _comboResetTime = 1.5f;
     private float _lastAttackTime;
+
+
+
+    [SerializeField] private BowFireSkill _fireArrow;//활 스킬
+    [SerializeField] private BowThreeArrowSkill _TripleArrow;//활 스킬2
 
     void Awake()
     {
@@ -52,7 +56,7 @@ public class BowAttack : WeaponAttackBase
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         Vector3 targetPoint;
 
-        if (Physics.Raycast(ray,out RaycastHit hitInfo, 100f))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f))
         {
             targetPoint = hitInfo.point;
         }
@@ -116,12 +120,14 @@ public class BowAttack : WeaponAttackBase
         if (Input.GetMouseButtonDown(1))
         {
             SetAiming(true);
+
         }
         else if (Input.GetMouseButtonUp(1))
         {
             SetAiming(false);
             IsAttacking = false;
             _canShootNext = true;
+
         }
     }
 
@@ -145,6 +151,8 @@ public class BowAttack : WeaponAttackBase
             ShootArrow();
         else
             Attack();
+
+
     }
 
     private void UpdateAttackCooldown()
@@ -170,6 +178,13 @@ public class BowAttack : WeaponAttackBase
         {
             trajectoryRenderer.ClearTrajectory();
         }
+
+        //조준이 완료되면 쏠 수 있도록
+        if (_TripleArrow != null)
+        {
+            _fireArrow?.Tick();
+            _TripleArrow.Tick();
+        }
     }
 
     private Vector3 CalculateShootDirection()
@@ -178,8 +193,7 @@ public class BowAttack : WeaponAttackBase
             return shootPoint.forward;
 
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f, aimLayerMask))
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f))
             return (hitInfo.point - shootPoint.position).normalized;
 
         return ray.direction;
