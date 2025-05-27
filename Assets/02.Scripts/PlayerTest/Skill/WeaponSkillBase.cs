@@ -17,7 +17,7 @@ public abstract class WeaponSkillBase : MonoBehaviour
     public abstract void OnSkillAnimationEnd();
 
     //쿨타임 체크
-    public virtual bool IsSkillAvailable() => true;
+   // public virtual bool IsSkillAvailable() => true;
 
     //스킬 쿨타임 관리
     public virtual void Tick() { }

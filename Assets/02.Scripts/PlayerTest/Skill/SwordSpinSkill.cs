@@ -5,30 +5,34 @@ using System.Collections.Generic;
 
 public class SwordSpinSkill : WeaponSkillBase
 {
+    public GameObject MyPlayer;
     private Animator _playerAnimation;
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
 
 
-    [SerializeField] private float cooltime = 5f;
-    private float lastUseTime;
+    //[SerializeField] private float cooltime = 5f;
+   // private float lastUseTime;
 
     public override bool IsUsingSkill { get; protected set; }
 
     private void Awake()
     {
-        _playerAnimation = GetComponent<Animator>();
-        _equipmentController = GetComponent<PlayerEquipmentController>();
-        _player = GetComponent<ThirdPersonPlayer>();
+        MyPlayer = GameObject.FindGameObjectWithTag("Player");
+        _playerAnimation = MyPlayer.GetComponent<Animator>();
+        _equipmentController = MyPlayer.GetComponent<PlayerEquipmentController>();
+        _player = MyPlayer.GetComponent<ThirdPersonPlayer>();
     }
 
     public override void UseSkill()
     {
-        if (!IsSkillAvailable())
+        //쿨타임 조건 없애기
+
+        /*if (!IsSkillAvailable())
         {
             Debug.Log("회전 공격 쿨타임 안 찼음");
             return;
-        }
+        }*/
 
         //장착하고 있는 게 검이 아니면 스킬 사용 불가
         if (_equipmentController.GetCurrentEquipType() != EquipmentType.Sword)
@@ -57,13 +61,13 @@ public class SwordSpinSkill : WeaponSkillBase
         _player.CharacterController.stepOffset = 1f;
 
         //스킬 끝나고 쿨타임
-        lastUseTime = Time.time;
+        //lastUseTime = Time.time;
     }
 
-    public override bool IsSkillAvailable()
+    /*public override bool IsSkillAvailable()
     {
         return Time.time >= lastUseTime + cooltime;
-    }
+    }*/
 
     public override void Tick()
     {

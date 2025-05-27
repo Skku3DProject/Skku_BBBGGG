@@ -3768,10 +3768,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fadc818aaa43e4abec189fe7b8cc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MyPlayer: {fileID: 702727848}
   _fireEffect: {fileID: 1246183436}
   _skillDamageMultiplier: 1.5
   _skillDuration: 15
-  cooltime: 5
 --- !u!114 &1879473767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3784,7 +3784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea699a439b93d545bad8a8f7151700d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooltime: 5
+  MyPlayer: {fileID: 702727848}
 --- !u!114 &1879473779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3797,9 +3797,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a42d0604c29c2a448031297a1e84c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MyPlayer: {fileID: 702727848}
   _arrowPrefab: {fileID: 5014901011304848109, guid: f49ce3859ae50fc4ba8d3f23fc9b1722, type: 3}
   _skillDamageMultiplier: 1.5
-  _cooltime: 5
   _numberOfArrows: 3
   _arrowSpreadAngle: 10
   _arrowForce: 20
