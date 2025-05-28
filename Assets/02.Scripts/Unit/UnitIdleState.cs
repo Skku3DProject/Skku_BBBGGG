@@ -23,9 +23,30 @@ public class UnitIdleState : UnitState
     void SearchForEnemy()
     {
         Collider[] hits = Physics.OverlapSphere(_unit.transform.position, _unit.DetectRange, _unit.EnemyLayer);
-        if (hits.Length > 0)
+
+        GameObject nearestNonFlyEnemy = null;
+        float nearestDist = float.MaxValue;
+
+        foreach (var hit in hits)
         {
-            _unit.NearestEnemy = hits[0].transform; // 가장 가까운 적을 찾는 로직 개선 할거 임시용
+            Enemy enemy = hit.gameObject.GetComponent<Enemy>();
+            if (enemy == null) continue;
+
+            // 비행 적이면 무시
+            if (enemy.EnemyData.EnemyMoveType == EEnemyMoveType.Fly)
+                continue;
+
+            float dist = Vector3.Distance(_unit.transform.position, hit.transform.position);
+            if (dist < nearestDist)
+            {
+                nearestDist = dist;
+                nearestNonFlyEnemy = hit.gameObject;
+            }
+        }
+
+        if (nearestNonFlyEnemy != null)
+        {
+            _unit.NearestEnemy = nearestNonFlyEnemy;
             _stateMachine.ChangeState(EUnitState.Move);
         }
     }

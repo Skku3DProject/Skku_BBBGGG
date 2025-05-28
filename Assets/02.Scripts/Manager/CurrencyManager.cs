@@ -35,7 +35,7 @@ public class CurrencyManager : MonoBehaviour
     {
         _currentCurrency = new Currency()
         {
-            Gold = 0, Wood = 0, Stone = 0
+            Gold = 10000, Wood = 10000, Stone = 10000
         };
         
         UIManager.instance.RefreshCurrency();

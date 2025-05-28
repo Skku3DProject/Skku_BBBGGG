@@ -84,7 +84,7 @@ public class Enemy : MonoBehaviour
 
     public bool TryAttack()
     {
-        if(_target.gameObject.activeInHierarchy == false && _target != _gaol)
+        if(_target.gameObject.activeSelf == false && _target != _gaol)
         {
             _target = _gaol;
         }

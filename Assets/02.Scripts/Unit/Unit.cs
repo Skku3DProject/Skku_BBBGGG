@@ -15,10 +15,21 @@ public class Unit : MonoBehaviour
     private UnitStateMachine _stateMachine;
     private Dictionary<EUnitState, UnitState> _statesMap;
     public LayerMask EnemyLayer;
-    public Transform NearestEnemy;
+    public GameObject NearestEnemy;
+
+    private bool _isAttacking;
+    public bool IsAttacking =>_isAttacking;
+    public Collider AttackCollider;
+
+    [Header("º´»ç ½ºÅÝ")]
     public float MoveSpeed = 2f;
-    public float AttackRange = 5f;
+    public float AttackRange = 2f;
     public float DetectRange = 10f;
+
+
+    public void AnimTrigger() => _stateMachine.CurrentState.AnimTrigger();
+    public void StartAttackAnim() => _isAttacking = true;
+    public void EndAttackAnim() => _isAttacking = false;
 
     private void Awake()
     {

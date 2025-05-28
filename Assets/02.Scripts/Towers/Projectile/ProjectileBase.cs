@@ -66,7 +66,7 @@ public class ProjectileBase : MonoBehaviour
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Tower")) return;
+        if (other.CompareTag("Tower") && other.CompareTag("GameController")) return;
     }
 
     private Vector3 CalculateLaunchVelocity(Vector3 start, Vector3 end, float time)

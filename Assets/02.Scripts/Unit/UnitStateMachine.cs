@@ -16,6 +16,7 @@ public class UnitStateMachine
         _stateMap = stateMap;
         _enemy = enemy;
         IsInited = true;
+        ChangeState(_currentState);
     }
     public void ChangeState(UnitState state)
     {
