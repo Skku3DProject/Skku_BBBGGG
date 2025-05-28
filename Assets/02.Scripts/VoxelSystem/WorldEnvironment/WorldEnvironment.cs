@@ -5,6 +5,8 @@ public class WorldEnvironment : MonoBehaviour
 {
     [SerializeField] private Currency _currency;
     [SerializeField] private float _health = 30;
+    [SerializeField] private GameObject HitPrefab;
+
 
     private FractureExplosion fracture;
     private List<GameObject> fragments = new List<GameObject>();
@@ -17,6 +19,7 @@ public class WorldEnvironment : MonoBehaviour
     {
         _health -= damage;
 
+        ObjectPool.Instance.GetObject(HitPrefab, gameObject.transform.position, Quaternion.identity);
         if (_health <= 0)
         {
             CurrencyManager.instance.Add(_currency);
