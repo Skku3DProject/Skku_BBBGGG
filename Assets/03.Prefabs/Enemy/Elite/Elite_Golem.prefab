@@ -275,7 +275,6 @@ MonoBehaviour:
   ProjectileTransfrom: {fileID: 939011603204699688}
   GravityVelocity: {x: 0, y: 0, z: 0}
   CurrentMoveDirection: {x: 0, y: 0, z: 0}
-  UI_EnemyHpbar: {fileID: 0}
   UI_offset: {fileID: 2089207871794647476}
 --- !u!143 &7326836371724971513
 CharacterController:
@@ -314,7 +313,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ea8d8499f77fc45a482d30e854d027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProjectilePrefabs: []
+  radius: 10
+  minDistanceFromCenter: 2
+  height: 10
 --- !u!114 &5559061442249155094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,7 +922,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 957781e2e64d0264f970dde36a30bd93, type: 2}
+  - {fileID: 2100000, guid: 0126a8e7c8a5ac04da6cb15697fc9f9e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

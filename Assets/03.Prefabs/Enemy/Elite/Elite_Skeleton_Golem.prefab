@@ -219,7 +219,6 @@ MonoBehaviour:
   ProjectileTransfrom: {fileID: 0}
   GravityVelocity: {x: 0, y: 0, z: 0}
   CurrentMoveDirection: {x: 0, y: 0, z: 0}
-  UI_EnemyHpbar: {fileID: 0}
   UI_offset: {fileID: 1009408412020603019}
 --- !u!143 &8447482548991345179
 CharacterController:
@@ -258,7 +257,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ea8d8499f77fc45a482d30e854d027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProjectilePrefabs: []
+  radius: 10
+  minDistanceFromCenter: 2
+  height: 10
 --- !u!114 &-8643302599079956760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,7 +358,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 248e26097004ccd4aa44d806ece500d7, type: 2}
+  - {fileID: 2100000, guid: 7ed8def2784821c4c9e7c5672a877c58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -552,7 +553,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 248e26097004ccd4aa44d806ece500d7, type: 2}
+  - {fileID: 2100000, guid: 7ed8def2784821c4c9e7c5672a877c58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -713,7 +714,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 248e26097004ccd4aa44d806ece500d7, type: 2}
+  - {fileID: 2100000, guid: 7ed8def2784821c4c9e7c5672a877c58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1443,7 +1444,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 248e26097004ccd4aa44d806ece500d7, type: 2}
+  - {fileID: 2100000, guid: 7ed8def2784821c4c9e7c5672a877c58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1572,7 +1573,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 248e26097004ccd4aa44d806ece500d7, type: 2}
+  - {fileID: 2100000, guid: 7ed8def2784821c4c9e7c5672a877c58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1733,7 +1734,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 248e26097004ccd4aa44d806ece500d7, type: 2}
+  - {fileID: 2100000, guid: 7ed8def2784821c4c9e7c5672a877c58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2052,7 +2053,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 248e26097004ccd4aa44d806ece500d7, type: 2}
+  - {fileID: 2100000, guid: 7ed8def2784821c4c9e7c5672a877c58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2407,6 +2408,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 4d8d893ede35d0e42837cf0add6caf75, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ed8def2784821c4c9e7c5672a877c58, type: 2}
     - target: {fileID: 919132149155446097, guid: 4d8d893ede35d0e42837cf0add6caf75, type: 3}
       propertyPath: m_Name
       value: Skeleton_Golem_Axe_Large
@@ -2469,6 +2474,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 4d8d893ede35d0e42837cf0add6caf75, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ed8def2784821c4c9e7c5672a877c58, type: 2}
     - target: {fileID: 919132149155446097, guid: 4d8d893ede35d0e42837cf0add6caf75, type: 3}
       propertyPath: m_Name
       value: Skeleton_Golem_Axe_Large
