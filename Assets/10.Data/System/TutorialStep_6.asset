@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eecdad304d7c8e429bf7b219a1395ae, type: 3}
+  m_Name: TutorialStep_6
+  m_EditorClassIdentifier: 
+  TutorialID: Third
+  Discription: "3\uBC88 \uBC84\uD2BC\uC744 \uB20C\uB7EC \uC2A4\uD0DC\uD504\uB97C
+    \uC7A5\uCC29\uD558\uC138\uC694"
+  currency:
+    Gold: 30
+    Wood: 30
+    Stone: 30
+  TutoType: 5
+  RequireAmount: 1

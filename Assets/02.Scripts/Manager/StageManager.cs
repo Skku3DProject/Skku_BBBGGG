@@ -93,8 +93,7 @@ public class StageManager : MonoBehaviour
         _currentStage = EStageType.Stage1;
         _currentPhase = EPhaseType.Ready;
         _timer = _readyTime;
-        UIManager.instance.UI_SetMaxTimer(_readyTime);
-        UIManager.instance.UI_TimerRefresh(_timer);
+        UIManager.instance.UI_TutorialEnd(_readyTime, _timer);
     }
 
     public void CombatEnd()

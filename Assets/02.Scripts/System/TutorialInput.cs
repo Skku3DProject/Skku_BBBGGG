@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class TutorialInput : MonoBehaviour
 {
+    private float _moveTime;
+    
     private void Update()
     {
         if (StageManager.instance.GetCurrentStage() != EStageType.Tutorial)
@@ -23,26 +25,56 @@ public class TutorialInput : MonoBehaviour
         
         switch (currentTutorial.Type)
         {
-            case TutorilaType.Moving :
-                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) ||Input.GetKeyDown(KeyCode.S)||Input.GetKeyDown(KeyCode.D))
+            case TutorialType.Moving :
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D))
                 {
-                    TutorialManager.Instance.AddProgress(TutorilaType.Moving, 1);
-                    Debug.Log("무빙 입력");
+                    _moveTime = 0.1f;
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.Moving, _moveTime);
                 }
                 break;
-            case TutorilaType.SwordEquipment :
+            case TutorialType.SwordEquipment :
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
-                    TutorialManager.Instance.AddProgress(TutorilaType.SwordEquipment, 1);
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.SwordEquipment, 1);
                 }
                 break;
-            case TutorilaType.SwordAttack :
+            case TutorialType.SwordAttack :
                 if (Input.GetMouseButtonDown(0))
                 {
-                    TutorialManager.Instance.AddProgress(TutorilaType.SwordAttack, 1);
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.SwordAttack, 1);
                 }
                 break;
-            
+            case TutorialType.BowEquipment :
+                if (Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.BowEquipment, 1);
+                }
+                break;
+            case TutorialType.BowAttack:
+                if (Input.GetMouseButtonDown(1))
+                {
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.BowAttack, 1);
+                }
+                break;
+            case TutorialType.MagicEquipment :
+                if (Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.MagicEquipment, 1);
+                }
+                break;
+            case TutorialType.MagicAttack :
+                if (Input.GetMouseButtonDown(0))
+                {
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.MagicAttack, 1);
+                }
+                break;
+            case TutorialType.PicAxeEquipment:
+                if (Input.GetKeyDown(KeyCode.Alpha4))
+                {
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.PicAxeEquipment, 1);
+                }
+                break;
+                
         }
     }
 }

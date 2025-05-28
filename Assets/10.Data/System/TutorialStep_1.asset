@@ -15,9 +15,8 @@ MonoBehaviour:
   TutorialID: First
   Discription: "WSAD\uB97C \uC774\uC6A9\uD558\uC5EC \uC6C0\uC9C1\uC774\uC138\uC694"
   currency:
-    Gold: 0
-    Wood: 0
-    Stone: 0
+    Gold: 100
+    Wood: 100
+    Stone: 100
   TutoType: 0
-  RequireReward: 0
   RequireAmount: 5

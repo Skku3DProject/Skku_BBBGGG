@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
-public enum TutorilaType
+public enum TutorialType
 {
     Moving,
     SwordEquipment,
@@ -23,13 +24,13 @@ public enum TutorilaType
 }
 public class TutorialManager : MonoBehaviour
 {
+    public Action<TutorialType, float> OnProgress;
     public List<SO_Tutorial> tutorialDataList;
-
-    private Queue<TutorialBase> tutorialQueue = new();
+    [SerializeField] private Queue<TutorialBase> tutorialQueue = new();
     private TutorialBase currentStep;
     public TutorialBase CurrentTutorial => currentStep;
     public static TutorialManager Instance { get; private set; }
-
+    
     private void Awake()
     {
         Instance = this;
@@ -42,27 +43,31 @@ public class TutorialManager : MonoBehaviour
         LoadNextStep();
     }
 
-    private TutorialBase CreateStepFromData(SO_Tutorial data)
+    private void Start()
     {
-        return data.TutoType switch
-        {
-            TutorilaType.Moving => new SecondTutorial(data),
-            TutorilaType.CollectWood => new FirstTutorial(data),
-            
-            // 다른 타입 추가 가능
-            _ => throw new NotImplementedException($"Unsupported tutorial type: {data.TutoType}")
-        };
+        TutorialEvent.OnProgress += AddProgress;
     }
 
-    public void AddProgress(TutorilaType type, int amount)
+    private TutorialBase CreateStepFromData(SO_Tutorial data)
+    { 
+        return new CollectTutorial(data);
+    }
+
+    public void AddProgress(TutorialType type, float amount)
     {
-        if (currentStep == null) return;
+        if (currentStep == null)
+        {
+            return;
+        }
 
         currentStep.OnProgress(type, amount);
-        Debug.Log("하나 먹음");
+
         if (currentStep.IsCompleted)
         {
             currentStep.OnComplete();
+            
+            CurrencyManager.instance.Add(currentStep.currency);
+            
             LoadNextStep();
         }
     }
@@ -73,10 +78,13 @@ public class TutorialManager : MonoBehaviour
          {
              currentStep = tutorialQueue.Dequeue();
              currentStep.Start();
+             UIManager.instance.UI_TutorialRefresh(currentStep.Discription);
+             Debug.Log($"{tutorialQueue.Count} tutorial queued");
          }
          else
          {
              Debug.Log("튜토리얼 완료!");
+             StageManager.instance.TutorialEnd();
          }
      }
      

@@ -14,12 +14,11 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI[] Currencies;
     public TextMeshProUGUI CurrentEnemy;
     public TextMeshProUGUI Timer;
+    public TextMeshProUGUI Tutorial;
     [Header("오브젝트")]
     public GameObject GameOverPanel;
     public GameObject TimerObject;
     public GameObject CountObject;
-    [Header("이미지")]
-    public Image PauseBackground;
     // 싱글톤
     public void Awake()
     {
@@ -58,6 +57,18 @@ public class UIManager : MonoBehaviour
         ui.SetActive(true);
     }
 
+    public void UI_TutorialRefresh(string tutorial)
+    {
+        Tutorial.text = $"{tutorial}";
+    }
+    // 튜토리얼 끝 튜토리얼 확인 창 사라지게 하기
+    public void UI_TutorialEnd(float readyTime, float timer)
+    {
+        UI_SetMaxTimer(readyTime);
+        UI_TimerRefresh(timer);
+        Tutorial.gameObject.SetActive(false);
+    }
+    // hp, mp 한번에 세팅
     public void UI_PlayerSetMaxStat(float hp, float mp)
     {
         UI_PlayerSetMaxHP(hp);

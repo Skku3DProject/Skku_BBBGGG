@@ -28,12 +28,7 @@ public class CurrencyManager : MonoBehaviour
 
     private void Start()
     {
-        Currency currency = new Currency()
-        {
-            Gold = 1000000, Stone = 1000000, Wood = 1000000
-
-        };
-        Add(currency);
+        Initialize();
     }
 
     private void Initialize()
@@ -42,6 +37,8 @@ public class CurrencyManager : MonoBehaviour
         {
             Gold = 0, Wood = 0, Stone = 0
         };
+        
+        UIManager.instance.RefreshCurrency();
     }
     // 재화가 있음을 확인
     public bool Have(Currency required)
@@ -58,6 +55,13 @@ public class CurrencyManager : MonoBehaviour
         _currentCurrency.Stone += currency.Stone;
         
         UIManager.instance.RefreshCurrency();
+       // // 튜토리얼일 경우 튜토리얼 퀘스트를 깬다.
+       //  if (StageManager.instance.GetCurrentStage() != EStageType.Tutorial)
+       //  {
+       //      return;
+       //  }
+       //  TutorialEvent.OnProgress?.Invoke(TutorialType.CollectWood,1);
+       //  TutorialEvent.OnProgress?.Invoke(TutorialType.CollectRock,1);
     }
     
     // 재화 사용 - 재화 하나 사용하기 (제거)

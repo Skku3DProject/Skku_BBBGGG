@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eecdad304d7c8e429bf7b219a1395ae, type: 3}
   m_Name: TutorialStep_5
   m_EditorClassIdentifier: 
-  TutorialID: First
-  Discription: "\uB098\uBB34\uB97C \uCE90\uC2ED\uC2DC\uC624"
+  TutorialID: Third
+  Discription: "\uB9C8\uC6B0\uC2A4 \uC624\uB978\uCABD \uD074\uB9AD\uC73C\uB85C \uC870\uC900\uD558\uACE0
+    \uBC1C\uC0AC\uD558\uC138\uC694"
   currency:
-    Gold: 100
-    Wood: 100
-    Stone: 100
-  TutoType: 0
-  RequireReward: 0
-  RequireAmount: 5
+    Gold: 30
+    Wood: 30
+    Stone: 30
+  TutoType: 3
+  RequireAmount: 1

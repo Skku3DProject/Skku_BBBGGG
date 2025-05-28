@@ -15,9 +15,8 @@ MonoBehaviour:
   TutorialID: Second
   Discription: "1\uBC88 \uBC84\uD2BC\uC744 \uB20C\uB7EC \uAC80\uC744 \uC7A5\uCC29\uD558\uC138\uC694"
   currency:
-    Gold: 0
-    Wood: 0
-    Stone: 0
+    Gold: 20
+    Wood: 20
+    Stone: 20
   TutoType: 1
-  RequireReward: 0
   RequireAmount: 1

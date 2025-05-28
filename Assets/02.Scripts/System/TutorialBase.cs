@@ -6,7 +6,7 @@ public abstract class TutorialBase
 
     public string TutorialID => _tutorial.TutorialID;
     public string Discription => _tutorial.Discription;
-    public TutorilaType Type => _tutorial.TutoType;
+    public TutorialType Type => _tutorial.TutoType;
     public Currency currency => _tutorial.currency;
     public bool IsCompleted => GetProgress() >= _tutorial.RequireAmount;
     
@@ -20,7 +20,7 @@ public abstract class TutorialBase
         Debug.Log($"튜토리얼 시작: {_tutorial.Discription}");
     }
 
-    public abstract void OnProgress(TutorilaType type, int amount);
-    protected abstract int GetProgress();
+    public abstract void OnProgress(TutorialType type, float amount);
+    protected abstract float GetProgress();
     public abstract void OnComplete();
 }
