@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc550e1c3cb84384ca5161604757e266, type: 3}
   m_Name: So_Normal_MeleeAttackEnemy
   m_EditorClassIdentifier: 
+  Key: Fly1
+  ProjectileKey: 
   AvailableStates: 
   EnemyType: 0
-  EnemyAttackType: 0
-  ProjectilePrefab: {fileID: 0}
-  Health: 100
+  EnemyMoveType: 0
+  EEnemyAttackTypes: 
+  DamagedTime: 0.5
+  MaxAttackPatternCount: 1
   KnockbackPower: 0
   DamageValue: 10
+  Health: 100
   FindDistance: 7
   AttackDistance: 3
   MovePointDistance: 0.1
@@ -35,3 +39,6 @@ MonoBehaviour:
     m_Bits: 320
   SeparationWeight: 1
   GoalWeight: 1
+  CohesionWeight: 1
+  AlignmentWeight: 1
+  FlockNeighborRadius: 3

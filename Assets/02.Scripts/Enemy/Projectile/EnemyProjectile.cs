@@ -5,14 +5,13 @@ public enum EnemyProjectileType
     Arrow,
     Stone
 }
-public class EnemyProjectile : MonoBehaviour
+public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
 {
     public So_EnemyProjectile ProjectileData;
 
     public EnemyProjectileType type;
 
     private Damage _damage;
-    private Transform _parentTranfrom;
     private Vector3 _startPosision = Vector3.zero;
     private Vector3 _targetPosision = Vector3.zero;
 
@@ -23,33 +22,44 @@ public class EnemyProjectile : MonoBehaviour
     private float _timer = 0;
 
     private bool _isFire = false;
-    private bool _checkedGroundHit = false;
+    private bool _isPooled = false; // 풀 반환 상태 추적
 
+    public void OnSpawn()
+    {
+        _isPooled = false;
+        Initialize();
+    }
+    public void OnDespawn()
+    {
+        _isPooled = true;
+    }
+  
     private void Awake()
     {
-        _damage = new Damage(ProjectileData.Damage, this.gameObject, ProjectileData.KnockbackPower);
-    }
-
-    public void SetParentTranfrom(Transform transform)
-    {
-        _parentTranfrom = transform;
+        if (ProjectileData != null)
+        {
+            _damage = new Damage(ProjectileData.Damage, this.gameObject, ProjectileData.KnockbackPower);
+        }
+        else
+        {
+            Debug.LogError($"ProjectileData is null on {gameObject.name}");
+        }
     }
 
     public void Initialize()
     {
-        transform.SetParent(_parentTranfrom);
         _isFire = false;
         _timer = 0;
+        _isPooled = false;
     }
 
-    public void Fire(Vector3 startPos, Vector3 targetPos)
+    public void Fire(Vector3 targetPos)
     {
-        gameObject.SetActive(true);
-        transform.SetParent(null);
+        if (_isPooled) return; // 이미 풀에 반환된 객체라면 실행하지 않음
 
-        _startPosision = startPos;
+        _startPosision = transform.position;
         _targetPosision = targetPos;
-        transform.position = startPos;
+        
 
         if (transform.localScale != Vector3.one)
         {
@@ -74,20 +84,25 @@ public class EnemyProjectile : MonoBehaviour
 
         _timer += Time.deltaTime;
 
-        //CheckGroundHit();
-        if (_timer > 0.5f)//ProjectileData.FlightTime)
+        if (_timer > 0.5f)
         {
             CheckGroundHit();
         }
 
         // 검사 실패한 채로 너무 오래되면 삭제
-        if (_timer > ProjectileData.LostTime)
+        if (ProjectileData != null && _timer > ProjectileData.LostTime)
         {
             UnEnable();
         }
     }
     private Vector3 CalculateLaunchVelocity()
     {
+        if (ProjectileData == null)
+        {
+            Debug.LogError("ProjectileData is null in CalculateLaunchVelocity");
+            return Vector3.zero;
+        }
+
         Vector3 toTarget = _targetPosision - _startPosision;
         Vector3 toTargetXZ = new Vector3(toTarget.x, 0, toTarget.z);
 
@@ -102,41 +117,72 @@ public class EnemyProjectile : MonoBehaviour
 
         return result;
     }
-    protected virtual bool CheckGroundHit()
+    private bool CheckGroundHit()
     {
+        if (_isPooled || ProjectileData == null) return false;
+
         Vector3 forward = transform.forward;
         Vector3 down = Vector3.down;
-
-        // 중간 방향 벡터
         Vector3 midDirection = (forward + down).normalized;
+
         if (Physics.Raycast(transform.position, midDirection, out RaycastHit hit, 0.5f, ProjectileData.GroundMask))
         {
             OnGroundHit(hit);
+            UnEnable();
             return true; // 충돌 성공
         }
         return false; // 충돌 못 함
     }
     private void OnGroundHit(RaycastHit hit)
     {
+        if (_isPooled) return;
+
         Vector3Int blockPos = Vector3Int.FloorToInt(hit.point + hit.normal * -0.5f);
 
         if(type == EnemyProjectileType.Stone)
             BlockSystem.DamageBlocksInRadius(blockPos, 5f,10);
-
-        UnEnable();
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<IDamageAble>(out IDamageAble damageAble) && other.CompareTag("Player") || other.CompareTag("Tower"))
+        if (_isPooled || other == null) return;
+
+        bool isValidTarget = other.CompareTag("Player") || other.CompareTag("Tower");
+
+        if (other.TryGetComponent<IDamageAble>(out IDamageAble damageAble) && isValidTarget)
         {
-            damageAble.TakeDamage(_damage);
+            if (damageAble != null && _damage != null)
+            {
+                damageAble.TakeDamage(_damage);
+            }
+         
+
+            if (type == EnemyProjectileType.Stone)
+                BlockSystem.DamageBlocksInRadius(other.transform.position, 5f, 10);
+
             UnEnable();
+        }
+        else
+        {
+            Debug.Log("설마?");
+           UnEnable();
         }
     }
 
     private void UnEnable()
     {
-        gameObject.SetActive(false);
-        transform.SetParent(_parentTranfrom);
+        if (_isPooled) return;
+
+        // EnemyObjectPoolManger 인스턴스 확인
+        if (EnemyObjectPoolManger.Instance != null && ProjectileData != null)
+        {
+            _isPooled = true;
+            EnemyObjectPoolManger.Instance.ReturnObject(ProjectileData.Key, gameObject);
+        }
+        else
+        {
+            Debug.LogError("EnemyObjectPoolManger.Instance or ProjectileData is null!");
+            // 풀 매니저가 없으면 객체 비활성화
+            gameObject.SetActive(false);
+        }
     }
 }

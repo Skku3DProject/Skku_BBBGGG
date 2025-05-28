@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc550e1c3cb84384ca5161604757e266, type: 3}
   m_Name: SO_Normal_Skeleton_Warrior_Mace
   m_EditorClassIdentifier: 
+  Key: Nomal6
+  ProjectileKey: 
   AvailableStates: 0000000001000000020000000300000004000000
   EnemyType: 0
   EnemyMoveType: 0
+  EEnemyAttackTypes: 
   DamagedTime: 0.5
-  ProjectilePrefab: {fileID: 0}
-  PrefabSize: 5
-  Health: 200
+  MaxAttackPatternCount: 1
   KnockbackPower: 100
   DamageValue: 10
+  Health: 200
   FindDistance: 2
   AttackDistance: 2
   MovePointDistance: 0.1

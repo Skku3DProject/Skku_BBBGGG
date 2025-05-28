@@ -44,10 +44,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1344
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 703
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProjectileData: {fileID: 11400000, guid: 312d1a5b3d2331a4ebc85816026c6bbb, type: 2}
+  type: 0
 --- !u!1001 &5593481495655480110
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,20 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class EnemyObjectPoolManager : MonoBehaviour
+public class EnemyPoolManager : MonoBehaviour
 {
-    public static EnemyObjectPoolManager Instance { get; private set; }
+    public static EnemyPoolManager Instance { get; private set; }
     // 타입별 전용 풀들 (컴파일 타임에 결정)
     private Dictionary<string, EnemyObjectPool> _pools = new Dictionary<string, EnemyObjectPool>();
-    [Header("Pool Settings")]
-    [SerializeField] private List<EnemyPoolContainer> _poolSettings;
+   [Header("Pool Settings")]
+    public So_EnemyPool So_PoolData;
 
+    private int _maxEnemyCount = 0;
+    public int MaxEnemyCount => _maxEnemyCount;
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
             //DontDestroyOnLoad(gameObject);
-
             InitializePools();
         }
         else
@@ -25,7 +26,7 @@ public class EnemyObjectPoolManager : MonoBehaviour
 
     private void InitializePools()
     {
-        foreach (EnemyPoolContainer poolSetting in _poolSettings)
+        foreach (EnemyPoolContainer poolSetting in So_PoolData.PoolSettings)
         {
             if (poolSetting.prefab != null && !string.IsNullOrEmpty(poolSetting.key))
             {
@@ -33,11 +34,11 @@ public class EnemyObjectPoolManager : MonoBehaviour
                 var pool = new EnemyObjectPool(
                     poolSetting.prefab,
                     poolSetting.initialSize,
-                    poolSetting.parent,
-                    poolSetting.maxSize
+                    this.gameObject.transform
                 );
 
                 _pools[poolSetting.key] = pool;
+                _maxEnemyCount += poolSetting.initialSize;
                 Debug.Log($"Pool created for key: {poolSetting.key}");
             }
             else
@@ -96,7 +97,7 @@ public class EnemyObjectPoolManager : MonoBehaviour
     }
 
     // 런타임에 새로운 풀 추가 (선택사항)
-    public void AddPool(string key, GameObject prefab, int initialSize = 10, Transform parent = null, int maxSize = 100)
+    public void AddPool(string key, GameObject prefab, int initialSize = 10, Transform parent = null)
     {
         if (_pools.ContainsKey(key))
         {
@@ -104,7 +105,7 @@ public class EnemyObjectPoolManager : MonoBehaviour
             return;
         }
 
-        var pool = new EnemyObjectPool(prefab, initialSize, parent, maxSize);
+        var pool = new EnemyObjectPool(prefab, initialSize, parent);
         _pools[key] = pool;
         Debug.Log($"Runtime pool created for key: {key}");
     }

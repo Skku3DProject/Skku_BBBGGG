@@ -22,6 +22,9 @@ public enum EEnemyMoveType
 [CreateAssetMenu(fileName = "EnemySo", menuName = "Scriptable Objects/EnemySo")]
 public class So_Enemy : ScriptableObject
 {
+    [Header("Key")]
+    public string Key;
+    public string ProjectileKey;
 
     [Header("상태")]
     public EEnemyState[] AvailableStates;
@@ -33,8 +36,6 @@ public class So_Enemy : ScriptableObject
     public float DamagedTime = 0.5f;
 
     [Header("공격")]
-    public GameObject ProjectilePrefab;
-    public int PrefabSize = 5;
     public int MaxAttackPatternCount = 1;
     public float KnockbackPower = 100;
     public float DamageValue = 10;

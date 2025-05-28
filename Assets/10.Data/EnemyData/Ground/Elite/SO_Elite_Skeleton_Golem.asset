@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc550e1c3cb84384ca5161604757e266, type: 3}
   m_Name: SO_Elite_Skeleton_Golem
   m_EditorClassIdentifier: 
+  Key: Elite2
+  ProjectileKey: 
   AvailableStates: 0000000001000000020000000300000004000000
   EnemyType: 2
   EnemyMoveType: 0
+  EEnemyAttackTypes: 
   DamagedTime: 0.5
-  ProjectilePrefab: {fileID: 0}
-  PrefabSize: 5
   MaxAttackPatternCount: 3
   KnockbackPower: 100
   DamageValue: 10

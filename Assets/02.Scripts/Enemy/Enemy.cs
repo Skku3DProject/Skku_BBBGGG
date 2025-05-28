@@ -35,8 +35,9 @@ public class Enemy : MonoBehaviour
     public Vector3 CurrentMoveDirection;
 
     [Header("UI")]
-    public UI_EnemyHpbar UI_EnemyHpbar;
     public Transform UI_offset;
+    private UI_EnemyHpbar _uI_EnemyHpbar;
+    public UI_EnemyHpbar UI_EnemyHpbar => _uI_EnemyHpbar;
 
     private float _stepOffset = 0;
     public float StepOffset => _stepOffset;
@@ -58,9 +59,9 @@ public class Enemy : MonoBehaviour
         _health = EnemyData.Health;
         _maxHealth = _health;
 
-        if (UI_EnemyHpbar != null)
+        if (_uI_EnemyHpbar != null)
         {
-            UI_EnemyHpbar.Initialized();
+            _uI_EnemyHpbar.Initialized();
         }
 
         EnemyManager.Instance.SetMoveTypeGrouping(this);
@@ -79,14 +80,15 @@ public class Enemy : MonoBehaviour
             _target = damage.From.gameObject;
         }
 
-        UI_EnemyHpbar.UpdateHealth(_health / _maxHealth);
+        _uI_EnemyHpbar.UpdateHealth(_health / _maxHealth);
     }
 
     public bool TryAttack()
     {
-        if(_target.gameObject.activeSelf == false && _target != _gaol)
+        if(_target.gameObject.activeSelf == false)
         {
             _target = _gaol;
+            return false;
         }
 
         if ((transform.position - _target.transform.position).sqrMagnitude < _attackDistance)
@@ -115,7 +117,10 @@ public class Enemy : MonoBehaviour
         _target = _player;
     }
   
-
+    public void SetUi(UI_EnemyHpbar uI_EnemyHpbar)
+    {
+        _uI_EnemyHpbar = uI_EnemyHpbar;
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;

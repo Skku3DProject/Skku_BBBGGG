@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc550e1c3cb84384ca5161604757e266, type: 3}
   m_Name: Normal_FLyAttackEnemy
   m_EditorClassIdentifier: 
+  Key: Fly1
+  ProjectileKey: MagicBall_Fire
   AvailableStates: 0000000001000000020000000300000004000000
   EnemyType: 0
   EnemyMoveType: 1
+  EEnemyAttackTypes: 
   DamagedTime: 0.5
-  ProjectilePrefab: {fileID: 5737820991993077119, guid: 584f9ba41221de444bfaae33cbaa736b, type: 3}
-  PrefabSize: 10
-  Health: 200
+  MaxAttackPatternCount: 1
   KnockbackPower: 100
   DamageValue: 10
+  Health: 200
   FindDistance: 15
   AttackDistance: 10
   MovePointDistance: 0.1

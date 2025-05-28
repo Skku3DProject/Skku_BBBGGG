@@ -42,12 +42,10 @@ public class UI_EnemyHpbar : MonoBehaviour
 
         // 3) UI 위치 반영
         _rt.anchoredPosition = localPoint;
-
     }
     public void SetHpBarToEnemy(Enemy enemy)
     {
         _enemy = enemy;
-        enemy.UI_EnemyHpbar = this;
     }
 
     public Enemy GetEnemy()

@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9012ff0207cbcc48a2abbdfaf07f3f4, type: 3}
   m_Name: So_EnemyProjectile_Arrow
   m_EditorClassIdentifier: 
+  Key: Arrow
   FlightTime: 1.5
   Damage: 10
   KnockbackPower: 0
-  LostTime: 10
+  LostTime: 5
   HitVfxPrefab: {fileID: 0}
   GroundMask:
     serializedVersion: 2

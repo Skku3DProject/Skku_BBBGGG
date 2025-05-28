@@ -4,8 +4,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemySpawnerSo", menuName = "Scriptable Objects/EnemySpawnerSo")]
 public class So_EnemySpawner : ScriptableObject
 {
-
-    public List<GameObject> EnemyTypes;
-
-    public List<int> SpawnCounts;
+    public List<EnemySpawnContainer> SpawnEneies;
 }

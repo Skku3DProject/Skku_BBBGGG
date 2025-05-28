@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class EnemyAttackCheckEvent : MonoBehaviour
@@ -9,8 +10,6 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     private EnemyProjectile _projectile;
     private Enemy _enemy;
     private Damage _damage;
-
-    public List<GameObject> ProjectilePrefabs;
 
     private bool _isAttack = false;
     public bool IsAttack => _isAttack;
@@ -44,36 +43,14 @@ public class EnemyAttackCheckEvent : MonoBehaviour
 
     public void RangedAttackSpawn()
     {
-        _projectile = null;
+        GameObject poolObject = EnemyObjectPoolManger.Instance.GetObject(_enemy.EnemyData.ProjectileKey, _enemy.ProjectileTransfrom.position);
         _isAttack = true;
-        if (ProjectilePrefabs == null || ProjectilePrefabs.Count == 0)
+        poolObject.TryGetComponent<EnemyProjectile>(out _projectile);
+        if (_projectile == null)
         {
             Debug.LogError("ProjectilePrefabs가 null이거나 비어있습니다!");
             return;
         }
-
-        for (int i = 0; i < ProjectilePrefabs.Count; i++)
-        {
-            GameObject prefab = ProjectilePrefabs[i];
-
-            if (prefab != null && !prefab.activeInHierarchy)
-            {
-                EnemyProjectile projectileComponent = prefab.GetComponent<EnemyProjectile>();
-                if (projectileComponent != null)
-                {
-                    _projectile = projectileComponent;
-                    _projectile.Initialize();
-                    return; // 찾았으면 즉시 종료
-                }
-                else
-                {
-                    Debug.LogError($"발사체 {i}에 EnemyProjectile 컴포넌트가 없습니다!");
-                }
-            }
-        }
-
-        // 사용 가능한 발사체가 없을 때
-        Debug.LogWarning(" 사용 가능한 발사체가 없습니다!");
     }
 
     public void RangedAttackEvent()
@@ -93,7 +70,8 @@ public class EnemyAttackCheckEvent : MonoBehaviour
         Vector3 targetPosition = _enemy.Target.transform.position;
         targetPosition.y = _enemy.transform.position.y; // Y축 고정
         _enemy.transform.LookAt(targetPosition);
-        _projectile.Fire(_enemy.ProjectileTransfrom.position,
+
+        _projectile.Fire(//_enemy.ProjectileTransfrom.position,
                          _enemy.Target.transform.position + Vector3.up * 0.5f
                         );
 
@@ -102,13 +80,13 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     // 병사 되살리기 공격
     public void Summon()
     {
-        for (int i = 0; i < _enemy.EnemyData.PrefabSize; i++)
-        {
-            Vector3 randomPos = GetRandomPositionAroundPlayer();
-            Vector3 spawnPosition = new Vector3(randomPos.x, transform.position.y + height, randomPos.z);
-            // 풀링 소환
-            //Instantiate(fallingObjectPrefab, spawnPosition, Quaternion.identity);
-        }
+        //for (int i = 0; i < _enemy.EnemyData.PrefabSize; i++)
+        //{
+        //    Vector3 randomPos = GetRandomPositionAroundPlayer();
+        //    Vector3 spawnPosition = new Vector3(randomPos.x, transform.position.y + height, randomPos.z);
+        //    // 풀링 소환
+        //    //Instantiate(fallingObjectPrefab, spawnPosition, Quaternion.identity);
+        //}
     }
     public void MeleeAttackEvent()
     {
@@ -133,13 +111,13 @@ public class EnemyAttackCheckEvent : MonoBehaviour
 
     public void SpawnAreaAttack()
     {
-        for (int i = 0; i < _enemy.EnemyData.PrefabSize; i++)
-        {
-            Vector3 randomPos = GetRandomPositionAroundPlayer();
-            Vector3 spawnPosition = new Vector3(randomPos.x, transform.position.y + height, randomPos.z);
-            // 풀링 소환
-            //Instantiate(fallingObjectPrefab, spawnPosition, Quaternion.identity);
-        }
+        //for (int i = 0; i < _enemy.EnemyData.PrefabSize; i++)
+        //{
+        //    Vector3 randomPos = GetRandomPositionAroundPlayer();
+        //    Vector3 spawnPosition = new Vector3(randomPos.x, transform.position.y + height, randomPos.z);
+        //    // 풀링 소환
+        //    //Instantiate(fallingObjectPrefab, spawnPosition, Quaternion.identity);
+        //}
     }
 
 

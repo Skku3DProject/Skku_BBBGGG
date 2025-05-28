@@ -3,13 +3,21 @@ using UnityEngine;
 public class UI_Enemy : MonoBehaviour
 {
     public static UI_Enemy Instance = null;
-    public GameObject HPbar;
+
     public float maxDistance = 50f; // 최대 표시 거리
     public int maxVisibleHealthBars = 30; // 최대 표시 개수
-    private List<UI_EnemyHpbar> _hpBars;
+    public int maxVisibleText = 30; // 최대 표시 개수
+
     private List<UI_EnemyHpbar> _AcitveHpBars;
+
     private Camera _mainCamera;
     private List<HealthBarDistanceInfo> _healthBarInfos;
+
+    private EnemyUIPoolManager _enemyUIPoolManager;
+
+    public string HealthBarKey;
+    public string DamageTextKey;
+
     void Awake()
     {
         if (Instance != null)
@@ -19,26 +27,31 @@ public class UI_Enemy : MonoBehaviour
         }
         Instance = this;
         _mainCamera = Camera.main;
+        _enemyUIPoolManager = GetComponent<EnemyUIPoolManager>();
     }
     private void Update()
     {
-        if ((_healthBarInfos != null))
+        if (_healthBarInfos != null)
         {
             UpdateAllHealthBars();
         }
     }
+
     public void SetHPBarMaxSize(int capacity)
     {
-        _hpBars = new List<UI_EnemyHpbar>(capacity);
-        _AcitveHpBars = new List<UI_EnemyHpbar>(capacity);
+        _AcitveHpBars = new List<UI_EnemyHpbar>(capacity); // 보이는
     }
-    public void SetHpBarToEnemy(Enemy enemy)
+    public UI_EnemyHpbar SetHpBarToEnemy(Enemy enemy)
     {
-        GameObject hpBar = Instantiate(HPbar, transform);
+        GameObject hpBar = _enemyUIPoolManager.GetObject(HealthBarKey);
         UI_EnemyHpbar hpBarComponent = hpBar.GetComponent<UI_EnemyHpbar>();
-        hpBar.SetActive(false);
         hpBarComponent.SetHpBarToEnemy(enemy);
-        _hpBars.Add(hpBarComponent);
+        _AcitveHpBars.Add(hpBarComponent);
+        if (hpBarComponent == null)
+        {
+            return null;
+        }
+        return hpBarComponent;
     }
     public void TurnOffHpBar(Enemy enemy)
     {
@@ -46,7 +59,7 @@ public class UI_Enemy : MonoBehaviour
         {
             if (hpbar.GetEnemy() == enemy)
             {
-                hpbar.gameObject.SetActive(false);
+                _enemyUIPoolManager.ReturnObject(HealthBarKey, hpbar.gameObject);
                 _AcitveHpBars.Remove(hpbar);
                 break;
             }
@@ -56,10 +69,7 @@ public class UI_Enemy : MonoBehaviour
     {
         _healthBarInfos.Clear();
         Vector3 cameraPos = _mainCamera.transform.position;
-        // 1._hpBars 중에서 켜져있는애들을 저장
-        // 2. 켜져 있는 애들끼리 거리값 비교
-        // 3.
-        // 각 체력바의 거리와 가시성 계산
+      
         foreach (var hpBar in _AcitveHpBars)
         {
             Enemy enemy = hpBar.GetEnemy();
@@ -97,15 +107,8 @@ public class UI_Enemy : MonoBehaviour
             _mainCamera = Camera.main;
             if (_mainCamera == null) return;
         }
-        foreach (UI_EnemyHpbar hpBar in _hpBars)
-        {
-            if (hpBar.gameObject.activeInHierarchy && hpBar.GetEnemy() != null)
-            {
-                _AcitveHpBars.Add(hpBar);
-            }
-        }
         // 거리별 정렬을 위한 리스트
-        _healthBarInfos = new List<HealthBarDistanceInfo>(_AcitveHpBars.Count);
+        _healthBarInfos = new List<HealthBarDistanceInfo>(maxVisibleHealthBars);
     }
     private bool CheckVisibility(Vector3 worldPos, float distance)
     {
@@ -126,45 +129,5 @@ public class UI_Enemy : MonoBehaviour
     public void ForceUpdateAll()
     {
         UpdateAllHealthBars();
-    }
-    // 특정 체력바만 업데이트
-    public void UpdateSpecificHealthBar(Enemy enemy)
-    {
-        foreach (var hpBar in _hpBars)
-        {
-            if (hpBar.GetEnemy() == enemy)
-            {
-                Vector3 enemyPos = enemy.transform.position;
-                float distance = Vector3.Distance(_mainCamera.transform.position, enemyPos);
-                bool isVisible = CheckVisibility(enemyPos, distance);
-                hpBar.gameObject.SetActive(isVisible);
-                break;
-            }
-        }
-    }
-    // 전체 체력바 시스템 비활성화
-    public void DeActivateAllHpBars()
-    {
-        foreach (var hpBar in _hpBars)
-        {
-            if (hpBar != null)
-                hpBar.gameObject.SetActive(false);
-        }
-    }
-    // 전체 체력바 시스템 활성화
-    public void ActivateAllHpBars()
-    {
-        ForceUpdateAll();
-    }
-    // 디버그 정보
-    public void GetDebugInfo(out int totalCount, out int activeCount)
-    {
-        totalCount = _hpBars.Count;
-        activeCount = 0;
-        foreach (var hpBar in _hpBars)
-        {
-            if (hpBar != null && hpBar.gameObject.activeSelf)
-                activeCount++;
-        }
     }
 }

@@ -69,7 +69,6 @@ public class EnemyAttackState : IFSM
         if(_isAttackPattern)
         {
             _randomAttackCount = RandomAttackCount();
-            Debug.Log("_randomAttackCount : " + _randomAttackCount);
             _enemy.Animator.SetFloat("AttackNum", _randomAttackCount);
         }
     }

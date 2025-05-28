@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9012ff0207cbcc48a2abbdfaf07f3f4, type: 3}
   m_Name: So_EnemyProjectile_MagicBall
   m_EditorClassIdentifier: 
+  Key: MagicBall
   FlightTime: 1.5
   Damage: 10
   KnockbackPower: 0

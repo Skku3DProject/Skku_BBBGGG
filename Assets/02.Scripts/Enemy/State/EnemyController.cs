@@ -11,7 +11,7 @@ public enum EEnemyState
     Die,
 }
 
-public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
+public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, ITickable
 {
     private EEnemyState _currentState = EEnemyState.Idle;
     public EEnemyState CurrentState => _currentState;
@@ -24,7 +24,26 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
     private EnemyVisual _enemyVisual;
 
     private EnemyAttackCheckEvent _enemyAttackCheckEvent;
+    public void OnSpawn()
+    {
+        Initialize();// 활성화 시 호출
 
+        UI_EnemyHpbar ui_EnemyHpbar = UI_Enemy.Instance.SetHpBarToEnemy(_enemy);
+        _enemy.SetUi(ui_EnemyHpbar);
+
+        _enemy.Initialize();
+        EnemyManager.Instance.OnActivity(_enemy);
+    }
+    public void OnDespawn()
+    {
+        // 비활성화 시 호출
+        UI_Enemy.Instance.TurnOffHpBar(_enemy);
+        EnemyManager.Instance.UnActivity(_enemy);
+    }
+    public void ResetState()
+    {
+        // 상태 완전 초기화용
+    }
     private void Awake()
     {
         _enemy = GetComponent<Enemy>();
@@ -42,6 +61,7 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
             _stateMap[state] = CreateStateInstance(state);
         }
 
+        // 기본으로 가지고 있어야할 스테이트 목록
         if (!_stateMap.ContainsKey(EEnemyState.Idle))
         {
             _stateMap.Add(EEnemyState.Idle, new EnemyIdleState(_enemy));
@@ -52,6 +72,10 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
             _stateMap.Add(EEnemyState.Move, new EnemyMoveState(_enemy));
         }
 
+        if(!_stateMap.ContainsKey(EEnemyState.Attack))
+        {
+            _stateMap.Add(EEnemyState.Attack, new EnemyAttackState(_enemy));
+        }
 
         if (!_stateMap.ContainsKey(EEnemyState.Damaged))
         {
@@ -144,7 +168,6 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
         OnHit(damage);
         ChangeState(EEnemyState.Damaged);
     }
-
     private void OnHit(Damage damage)
     {
         damage.Direction += Vector3.up * 0.5f; // 살짝 대각선 위로
@@ -167,61 +190,6 @@ public class EnemyController : MonoBehaviour, IDamageAble//, ITickable
     // 죽었을때 해야하는 행동
     public void EndDieAnimEvent()
     {
-        gameObject.SetActive(false);
-        EnemyManager.Instance.UnActivity(_enemy);
+        EnemyPoolManager.Instance.ReturnObject(_enemy.EnemyData.Key,_enemy.gameObject);
     }
-
-    /*
- // LOD 설정: Near/Mid/Far 거리
- [SerializeField] float nearDistance = 10f;
- [SerializeField] float midDistance = 20f;
- [SerializeField] float farDistance = 40f;
-
- private CharacterController _cc;
-
- public int LodLevel
- {
-     get
-     {
-         float dist = Vector3.Distance(transform.position, _enemy.Target.transform.position);
-         if (dist <= nearDistance) return 0;
-         if (dist <= midDistance) return 1;
-         return 2;
-     }
- }
-
- public float LodDistance
- {
-     get
-     {
-         // 각 레벨의 최대 거리 기준 반환
-         return LodLevel == 0 ? nearDistance
-              : LodLevel == 1 ? midDistance
-                               : farDistance;
-     }
- }
-
- public Vector3 position => transform.position;
-
-public void Tick()
-{
- EEnemyState nextState = _stateMap[_currentState].Update();
- if (nextState != _currentState)
- {
-     ChangeState(nextState);
- }
-}
-
-private void OnEnable()
-{
- TickManager.Register(this);
- Debug.Log("OnEnable");
-}
-
-private void OnDisable()
-{
- TickManager.Unregister(this);
- Debug.Log("OnDisable");
-}
-    */
 }

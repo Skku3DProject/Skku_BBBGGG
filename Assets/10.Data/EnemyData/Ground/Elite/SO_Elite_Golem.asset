@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc550e1c3cb84384ca5161604757e266, type: 3}
   m_Name: SO_Elite_Golem
   m_EditorClassIdentifier: 
+  Key: Elite1
+  ProjectileKey: Stone
   AvailableStates: 0000000001000000020000000300000004000000
   EnemyType: 2
-  EnemyAttackType: 1
-  ProjectilePrefab: {fileID: 5737820991993077119, guid: c09db8c23cbc5ad48bbb096a0e5c2908, type: 3}
-  PrefabSize: 10
-  Health: 1000
+  EnemyMoveType: 0
+  EEnemyAttackTypes: 
+  DamagedTime: 0.5
+  MaxAttackPatternCount: 1
   KnockbackPower: 100
   DamageValue: 10
+  Health: 1000
   FindDistance: 15
   AttackDistance: 15
   MovePointDistance: 0.1
@@ -38,3 +41,4 @@ MonoBehaviour:
   GoalWeight: 1
   CohesionWeight: 1
   AlignmentWeight: 1
+  FlockNeighborRadius: 3
