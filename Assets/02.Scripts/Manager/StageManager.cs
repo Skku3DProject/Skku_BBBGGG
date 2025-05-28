@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum EPhaseType
@@ -36,8 +37,8 @@ public class StageManager : MonoBehaviour
     public Action OnCombatStart;
     public Action OnCombatEnd;
     
-    private EStageType _currentStage = EStageType.Tutorial;
-    private EPhaseType _currentPhase = EPhaseType.None;
+    [SerializeField]private EStageType _currentStage = EStageType.Tutorial;
+    [SerializeField]private EPhaseType _currentPhase = EPhaseType.Tutorial;
     
     // 에너미 카운트 세기
     private bool _allEnemiesDead => EnemyManager.Instance.ActiveEnemies.Count <= 0;  
@@ -61,6 +62,10 @@ public class StageManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.J) && _currentPhase == EPhaseType.Tutorial)
+        {
+            TutorialEnd();
+        }
         switch (_currentPhase)
         {
             case EPhaseType.Ready:

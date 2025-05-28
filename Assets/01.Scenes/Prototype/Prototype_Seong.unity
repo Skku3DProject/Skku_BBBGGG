@@ -1259,7 +1259,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2551205955396829689, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
       propertyPath: _readyTime
-      value: 11111111
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551205955396829689, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
+      propertyPath: _currentPhase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2551205955396829689, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
+      propertyPath: _currentStage
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2851594203352931298, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2307,6 +2315,8 @@ MonoBehaviour:
   PlayerTransform: {fileID: 368375668}
   BaseCampTransform: {fileID: 190534849}
   SpawenrTransform: {fileID: 882713975}
+  ChestPrefab: {fileID: 5786370049334567863, guid: 19ffd48077398244d9808b2466db625c, type: 3}
+  MaxChestCount: 10
   GridWidth: 50
   GridHeight: 50
   ChunkLayer:
