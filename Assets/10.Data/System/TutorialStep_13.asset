@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eecdad304d7c8e429bf7b219a1395ae, type: 3}
-  m_Name: TutorialStep_5
+  m_Name: TutorialStep_13
   m_EditorClassIdentifier: 
   TutorialID: Third
-  Discription: "\uB9C8\uC6B0\uC2A4 \uC624\uB978\uCABD \uD074\uB9AD\uC73C\uB85C \uC870\uC900\uD558\uACE0
-    \uBC1C\uC0AC\uD558\uC138\uC694"
+  Discription: "'B'\uD0A4\uB97C \uB20C\uB7EC \uC6D0\uD558\uB294 \uD0C0\uC6CC\uB97C
+    \uC124\uCE58\uD558\uC138\uC694"
   currency:
-    Gold: 30
-    Wood: 30
-    Stone: 30
-  TutoType: 4
+    Gold: 0
+    Wood: 0
+    Stone: 0
+  TutoType: 12
   RequireAmount: 1

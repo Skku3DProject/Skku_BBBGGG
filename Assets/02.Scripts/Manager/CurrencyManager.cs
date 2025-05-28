@@ -20,12 +20,6 @@ public class CurrencyManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
-    private void OnEnable()
-    {
-        Initialize();
-    }
-
     private void Start()
     {
         Initialize();
@@ -55,13 +49,21 @@ public class CurrencyManager : MonoBehaviour
         _currentCurrency.Stone += currency.Stone;
         
         UIManager.instance.RefreshCurrency();
-       // // 튜토리얼일 경우 튜토리얼 퀘스트를 깬다.
-       //  if (StageManager.instance.GetCurrentStage() != EStageType.Tutorial)
-       //  {
-       //      return;
-       //  }
-       //  TutorialEvent.OnProgress?.Invoke(TutorialType.CollectWood,1);
-       //  TutorialEvent.OnProgress?.Invoke(TutorialType.CollectRock,1);
+       // 튜토리얼일 경우 튜토리얼 퀘스트를 깬다.
+        if (StageManager.instance.GetCurrentStage() != EStageType.Tutorial)
+        {
+            return;
+        }
+        var currentTutorial = TutorialManager.Instance.CurrentTutorial;
+        if (currentTutorial.Type == TutorialType.CollectWood && currency.Wood > 0)
+        {
+            TutorialEvent.OnProgress?.Invoke(TutorialType.CollectWood,1);
+            return;
+        }
+        if (currentTutorial.Type == TutorialType.CollectRock&& currency.Stone > 0)
+        {
+            TutorialEvent.OnProgress?.Invoke(TutorialType.CollectRock,1);
+        }
     }
     
     // 재화 사용 - 재화 하나 사용하기 (제거)
@@ -76,6 +78,16 @@ public class CurrencyManager : MonoBehaviour
         _currentCurrency.Wood -= currency.Wood;
         _currentCurrency.Stone -= currency.Stone;
         UIManager.instance.RefreshCurrency();
+        
+        if (StageManager.instance.GetCurrentStage() == EStageType.Tutorial)
+        {
+            var currentTutorial = TutorialManager.Instance.CurrentTutorial;
+            if (currentTutorial.Type == TutorialType.CreateTower)
+            {
+                TutorialEvent.OnProgress?.Invoke(TutorialType.CreateTower,1);
+            }
+            return true;
+        }
         
         return true;
     }

@@ -9,7 +9,7 @@ public abstract class TutorialBase
     public TutorialType Type => _tutorial.TutoType;
     public Currency currency => _tutorial.currency;
     public bool IsCompleted => GetProgress() >= _tutorial.RequireAmount;
-    
+    public int RequiredAmount => _tutorial.RequireAmount;
     public TutorialBase(SO_Tutorial data)
     {
         _tutorial= data;

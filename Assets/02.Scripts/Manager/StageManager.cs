@@ -62,10 +62,8 @@ public class StageManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J) && _currentPhase == EPhaseType.Tutorial)
-        {
-            TutorialEnd();
-        }
+        TutorialSkip();
+        
         switch (_currentPhase)
         {
             case EPhaseType.Ready:
@@ -88,6 +86,14 @@ public class StageManager : MonoBehaviour
         }
     }
 
+    public void TutorialSkip()
+    {
+        if (Input.GetKeyDown(KeyCode.J) && _currentPhase == EPhaseType.Tutorial)
+        {
+            TutorialEnd();
+            TutorialManager.Instance.TutorialSkip();
+        }
+    }
     public void TutorialEnd()
     {
         _currentStage = EStageType.Stage1;

@@ -74,7 +74,24 @@ public class TutorialInput : MonoBehaviour
                     TutorialEvent.OnProgress?.Invoke(TutorialType.PicAxeEquipment, 1);
                 }
                 break;
-                
+            case TutorialType.BlockEquipment:
+                if (Input.GetKeyDown(KeyCode.Alpha5))
+                {
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.BlockEquipment, 1);
+                }
+                break;
+            case TutorialType.CreateBlock:
+                if (Input.GetMouseButtonDown(0))
+                {
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.CreateBlock, 1);
+                }
+                break;
+            case TutorialType.InputKeyCodeK:
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.InputKeyCodeK, 1);
+                }
+                break;
         }
     }
 }

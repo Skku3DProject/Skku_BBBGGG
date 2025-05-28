@@ -18,5 +18,5 @@ MonoBehaviour:
     Gold: 30
     Wood: 30
     Stone: 30
-  TutoType: 1
+  TutoType: 2
   RequireAmount: 1

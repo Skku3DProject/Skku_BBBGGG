@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI CurrentEnemy;
     public TextMeshProUGUI Timer;
     public TextMeshProUGUI Tutorial;
+    public TextMeshProUGUI TutorialCount;
     [Header("오브젝트")]
     public GameObject GameOverPanel;
     public GameObject TimerObject;
@@ -56,16 +57,23 @@ public class UIManager : MonoBehaviour
         
         ui.SetActive(true);
     }
-
-    public void UI_TutorialRefresh(string tutorial)
+    //튜토리얼 전체 변경
+    public void UI_TutorialRefresh(string tutorial,float current, int require )
     {
         Tutorial.text = $"{tutorial}";
+        TutorialCount.text = $"{current} / {require}";
+    }
+
+    public void UI_TutoCurrentCountRefresh(float current, int require)
+    {
+        TutorialCount.text = $"{(int)current} / {require}";
     }
     // 튜토리얼 끝 튜토리얼 확인 창 사라지게 하기
     public void UI_TutorialEnd(float readyTime, float timer)
     {
         UI_SetMaxTimer(readyTime);
         UI_TimerRefresh(timer);
+        TutorialCount.gameObject.SetActive(false);
         Tutorial.gameObject.SetActive(false);
     }
     // hp, mp 한번에 세팅

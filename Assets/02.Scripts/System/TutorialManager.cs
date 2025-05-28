@@ -22,6 +22,7 @@ public enum TutorialType
     
     count
 }
+
 public class TutorialManager : MonoBehaviour
 {
     public Action<TutorialType, float> OnProgress;
@@ -30,7 +31,8 @@ public class TutorialManager : MonoBehaviour
     private TutorialBase currentStep;
     public TutorialBase CurrentTutorial => currentStep;
     public static TutorialManager Instance { get; private set; }
-    
+    public float CurrentCount = 0;
+
     private void Awake()
     {
         Instance = this;
@@ -49,7 +51,7 @@ public class TutorialManager : MonoBehaviour
     }
 
     private TutorialBase CreateStepFromData(SO_Tutorial data)
-    { 
+    {
         return new CollectTutorial(data);
     }
 
@@ -61,31 +63,43 @@ public class TutorialManager : MonoBehaviour
         }
 
         currentStep.OnProgress(type, amount);
-
+        CurrentCount += amount;
+        UIManager.instance.UI_TutoCurrentCountRefresh(CurrentCount, currentStep.RequiredAmount);
         if (currentStep.IsCompleted)
         {
             currentStep.OnComplete();
-            
+
             CurrencyManager.instance.Add(currentStep.currency);
-            
+            CurrentCount = 0;
             LoadNextStep();
         }
     }
 
     private void LoadNextStep()
-     {
-         if (tutorialQueue.Count > 0)
-         {
-             currentStep = tutorialQueue.Dequeue();
-             currentStep.Start();
-             UIManager.instance.UI_TutorialRefresh(currentStep.Discription);
-             Debug.Log($"{tutorialQueue.Count} tutorial queued");
-         }
-         else
-         {
-             Debug.Log("튜토리얼 완료!");
-             StageManager.instance.TutorialEnd();
-         }
-     }
-     
- }
+    {
+        if (tutorialQueue.Count > 0)
+        {
+            currentStep = tutorialQueue.Dequeue();
+            currentStep.Start();
+            UIManager.instance.UI_TutorialRefresh(currentStep.Discription, CurrentCount, currentStep.RequiredAmount);
+            Debug.Log($"{tutorialQueue.Count} tutorial queued");
+        }
+        else
+        {
+            Debug.Log("튜토리얼 완료!");
+            StageManager.instance.TutorialEnd();
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void TutorialSkip()
+    {
+        tutorialQueue.Clear();
+        LoadNextStep();
+    }
+
+    private void OnDisable()
+    {
+        TutorialEvent.OnProgress -= AddProgress;
+    }
+}
