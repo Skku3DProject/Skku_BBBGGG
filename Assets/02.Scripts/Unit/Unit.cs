@@ -17,9 +17,13 @@ public class Unit : MonoBehaviour
     public LayerMask EnemyLayer;
     public Transform NearestEnemy;
     public float MoveSpeed = 2f;
+    public float AttackRange = 5f;
+    public float DetectRange = 10f;
+
     private void Awake()
     {
         _stateMachine = new UnitStateMachine();
+        _animator = GetComponent<Animator>();
         _statesMap = new Dictionary<EUnitState, UnitState>()
         {
             {EUnitState.Idle , new UnitIdleState(_stateMachine, this, "Idle") },

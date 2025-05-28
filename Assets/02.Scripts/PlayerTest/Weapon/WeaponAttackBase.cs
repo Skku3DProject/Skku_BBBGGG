@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class WeaponAttackBase : MonoBehaviour
 {
-    public abstract bool IsAttacking { get; protected set; }
+    public bool IsAttacking;
     public abstract void Attack();
     public abstract void TryDamageEnemy(GameObject enemy, Vector3 dir);
     public abstract void OnAttackEffectPlay();

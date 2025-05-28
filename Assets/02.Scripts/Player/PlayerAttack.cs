@@ -26,14 +26,17 @@ public class PlayerAttack : MonoBehaviour
         {
             case EquipmentType.Sword:
                 _currentWeaponAttack = GetComponent<SwordAttack>();
+                //_currentWeaponAttack.IsAttacking = false;
                 break;
 
             case EquipmentType.Bow:
                 _currentWeaponAttack = GetComponent<BowAttack>();
+                //_currentWeaponAttack.IsAttacking = false;
                 break;
 
             default:
                 _currentWeaponAttack = GetComponent<SwordAttack>();
+                //_currentWeaponAttack.IsAttacking = false;
                 break;
         }
     }

@@ -22,7 +22,7 @@ public class UnitIdleState : UnitState
     }
     void SearchForEnemy()
     {
-        Collider[] hits = Physics.OverlapSphere(_unit.transform.position, 4f, _unit.EnemyLayer);
+        Collider[] hits = Physics.OverlapSphere(_unit.transform.position, _unit.DetectRange, _unit.EnemyLayer);
         if (hits.Length > 0)
         {
             _unit.NearestEnemy = hits[0].transform; // 가장 가까운 적을 찾는 로직 개선 할거 임시용

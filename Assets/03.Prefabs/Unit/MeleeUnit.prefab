@@ -910,7 +910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
   NearestEnemy: {fileID: 0}
   MoveSpeed: 2
 --- !u!1 &9096269677532895202

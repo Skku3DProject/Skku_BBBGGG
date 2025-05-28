@@ -31,19 +31,23 @@ public class UnitMoveState : UnitState
             return;
         }
 
-        Vector3 dir = (_unit.NearestEnemy.position - _unit.transform.position).normalized;
-        _unit.transform.position += dir * _unit.MoveSpeed * Time.deltaTime;
+        float dist = Vector3.Distance(_unit.transform.position, _unit.NearestEnemy.position);
+        if (dist <= _unit.AttackRange)
+        {
+            _stateMachine.ChangeState(EUnitState.Attack);
+            return;
+        }
 
-        //float dist = Vector3.Distance(_unit.transform.position, _unit.NearestEnemy.position);
-        //if (dist <= 2f)
-        //{
-        //    _stateMachine.ChangeState(EUnitState.Attack);
-        //}
-        //else
-        //{
-        //    Vector3 dir = (_unit.NearestEnemy.position - _unit.transform.position).normalized;
-        //    _unit.transform.position += dir * _unit.MoveSpeed * Time.deltaTime;
-        //}
+        Vector3 dir = (_unit.NearestEnemy.position - _unit.transform.position).normalized;
+
+        Vector3 lookDir = new Vector3(dir.x, 0, dir.z);
+        if (lookDir != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(lookDir);
+            _unit.transform.rotation = Quaternion.Slerp(_unit.transform.rotation, targetRotation, Time.deltaTime * 5f);
+        }
+
+        _unit.transform.position += dir * _unit.MoveSpeed * Time.deltaTime;
     }
 
 }

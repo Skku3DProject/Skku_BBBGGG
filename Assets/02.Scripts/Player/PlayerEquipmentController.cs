@@ -59,28 +59,33 @@ public class PlayerEquipmentController : MonoBehaviour
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
             SetEquipment(EquipmentType.Sword);
+            OnChangeEquipment?.Invoke();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))//활
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
             SetEquipment(EquipmentType.Bow);
+            OnChangeEquipment?.Invoke();
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))//지팡이
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
             SetEquipment(EquipmentType.Magic);
+            OnChangeEquipment?.Invoke();
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))//곡괭이
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Pickaxe);
             SetEquipment(EquipmentType.Pickaxe);
+            OnChangeEquipment?.Invoke();
         }
         if (Input.GetKeyDown(KeyCode.Alpha5))//블럭
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Block);
             SetEquipment(EquipmentType.Block); //블럭
+            OnChangeEquipment?.Invoke();
         }
-        OnChangeEquipment?.Invoke();
+
 
     }
 

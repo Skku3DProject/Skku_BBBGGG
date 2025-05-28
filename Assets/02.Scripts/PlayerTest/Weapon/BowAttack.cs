@@ -12,8 +12,6 @@ public class BowAttack : WeaponAttackBase
     public float shootForce = 30f;
     public TrajectoryRenderer trajectoryRenderer;
 
-    public override bool IsAttacking { get; protected set; }
-
     private bool isAiming = false;
     private bool _canShootNext = true;
     private float _comboResetTime = 1.5f;
@@ -29,6 +27,7 @@ public class BowAttack : WeaponAttackBase
         _playerAnimation = GetComponent<Animator>();
         _equipmentController = GetComponent<PlayerEquipmentController>();
         _player = GetComponent<ThirdPersonPlayer>();
+        _equipmentController.OnChangeEquipment += OnAttackAnimationEnd;
     }
 
     public override void Attack()

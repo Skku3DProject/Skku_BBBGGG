@@ -6,7 +6,6 @@ public class SwordAttack : WeaponAttackBase
     private Animator _playerAnimation;
     private PlayerEquipmentController _equipmentController;
 
-    public override bool IsAttacking { get; protected set; }
     private int _comboStep = 0;
     private bool _canNextCombo = true;
     private bool _nextComboQueued = false;
@@ -26,6 +25,7 @@ public class SwordAttack : WeaponAttackBase
         _player = GetComponent<ThirdPersonPlayer>();
         _playerAnimation = GetComponent<Animator>();
         _equipmentController = GetComponent<PlayerEquipmentController>();
+        _equipmentController.OnChangeEquipment += OnAttackAnimationEnd;
     }
     public override void Attack()
     {
