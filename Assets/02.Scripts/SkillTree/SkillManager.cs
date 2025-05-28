@@ -61,6 +61,7 @@ public class SkillManager : MonoBehaviour
     {
         // 스킬 창 세팅
         SelectskillTory = SkillTories[0];
+        SelectskillTory.gameObject.SetActive(true);
 
     }
     

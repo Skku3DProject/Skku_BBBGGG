@@ -20,12 +20,20 @@ public class Inventory : MonoBehaviour
     {
         _slots = _inventoryBase.GetComponentsInChildren<Slot>();
         TestAcquire();
+        Init(); 
     }
 
     private void Update()
     {
         OpenInventory();
         SelectSlot();
+    }
+
+    private void Init()
+    {
+        _slots[0].HighlightSlot(true);
+        _keyOffSet = 0;
+        _selectedItem = _slots[0].ItemTemp;
     }
     // 아이템창에서 선택한 슬롯에 따라 skill창 바꾸기
     private void SelectSlot()
