@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Attack01_BowThree
+  m_Name: Attack01_BowFire
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -59104,16 +59104,16 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.8333333
-    functionName: FireTripleArrows
+    functionName: ShootArrow
     data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 3a42d0604c29c2a448031297a1e84c6b, type: 3}
+    objectReferenceParameter: {fileID: 11500000, guid: 04fadc818aaa43e4abec189fe7b8cc2e, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 1.3333334
-    functionName: OnSkillAnimationEnd
+    functionName: OnAttackAnimationEnd
     data: 
-    objectReferenceParameter: {fileID: 11500000, guid: 3a42d0604c29c2a448031297a1e84c6b, type: 3}
+    objectReferenceParameter: {fileID: 11500000, guid: 04fadc818aaa43e4abec189fe7b8cc2e, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

@@ -1,25 +1,40 @@
-using Unity.VisualScripting;
+ï»¿using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class BowFireSkill : WeaponSkillBase
 {
+
+    [Header("Skill Settings")]
+    [SerializeField] private GameObject _arrowPrefab; // í™”ì‚´ í”„ë¦¬íŒ¹ í• ë‹¹ (ArrowProjectile ìŠ¤í¬ë¦½íŠ¸ ì—†ìŒ)
+Â  Â  [SerializeField] private float _skillDamageMultiplier = 2.5f; // ìŠ¤í‚¬ ë°ë¯¸ì§€ ë°°ìœ¨
+    [SerializeField] private Transform _bowArrowSpawnPoint; // í™œì˜ ì‹¤ì œ í™”ì‚´ ë°œì‚¬ ìœ„ì¹˜
+    [SerializeField] private float _arrowForce = 20f; // í™”ì‚´ ë°œì‚¬ í˜
+
     public GameObject MyPlayer;
     private Animator _playerAnimation;
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
 
 
-    [SerializeField] private GameObject _fireEffect;
-    [SerializeField] private float _skillDamageMultiplier = 1.5f;  // ºÒÈ­»ì ½ºÅ³ µ¥¹ÌÁö ¹èÀ²
+    public GameObject FireEffect;
 
-    [SerializeField] private float _skillDuration = 15f; // ºÒÈ­»ì À¯Áö ½Ã°£
-    
+    [SerializeField] private float _skillDuration = 15f; // ë¶ˆí™”ì‚´ ìœ ì§€ ì‹œê°„
+
+
+    //í˜„ì¬ ì´ ìŠ¤í‚¬ì„ ì‚¬ìš©í•˜ê³  ìˆëŠ” ìƒíƒœì¸ì§€ - ë‹¤ë¥¸ ìŠ¤í‚¬ ì‚¬ìš©í•˜ê³  ìˆìœ¼ë©´ í•´ë‹¹ ìŠ¤í‚¬ ë¹„í™œì„±
+    private BowThreeArrowSkill _bowThreeArrowSkill;
+    public bool CurrentArrowFireSkill;
+
     //[SerializeField] private float cooltime = 5f;
     //private float lastUseTime;
 
-    public override bool IsUsingSkill { get; protected set; }
+     public override bool IsUsingSkill { get; protected set; }
+    private bool _isAttacking;
+    //private bool _canShootNext = true;
+    //private float _lastAttackTime;
+
 
     private void Awake()
     {
@@ -27,33 +42,34 @@ public class BowFireSkill : WeaponSkillBase
         _playerAnimation = GetComponent<Animator>();
         _equipmentController = GetComponent<PlayerEquipmentController>();
         _player = MyPlayer.GetComponent<ThirdPersonPlayer>();
+        _bowThreeArrowSkill = MyPlayer.GetComponent<BowThreeArrowSkill>();
     }
 
     public override void UseSkill()
     {
        /* if (!IsSkillAvailable())
         {
-            Debug.Log("ºÒ È­»ì °ø°İ ÄğÅ¸ÀÓ ¾ÈÂü");
+            Debug.Log("ë¶ˆ í™”ì‚´ ê³µê²© ì¿¨íƒ€ì„ ì•ˆì°¸");
             return;
         }*/
 
-        //ÀåÂøÇÏ°í ÀÖ´Â °Ô °ËÀÌ ¾Æ´Ï¸é ½ºÅ³ »ç¿ë ºÒ°¡
+        //ì¥ì°©í•˜ê³  ìˆëŠ” ê²Œ ê²€ì´ ì•„ë‹ˆë©´ ìŠ¤í‚¬ ì‚¬ìš© ë¶ˆê°€
         if (_equipmentController.GetCurrentEquipType() != EquipmentType.Bow)
         {
             return;
         }
 
         IsUsingSkill = true;
-       // lastUseTime = Time.time;
+        // lastUseTime = Time.time;
 
-        // ½ºÅ³ »ç¿ë ½Ã ºÒ ÀÌÆåÆ® È°¼ºÈ­
-        _fireEffect.SetActive(true);
+        // ìŠ¤í‚¬ ì‚¬ìš© ì‹œ ë¶ˆ ì´í™íŠ¸ í™œì„±í™”
+        FireEffect.SetActive(true);
 
-        //_playerAnimation.SetTrigger("Attack");//¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+        //_playerAnimation.SetTrigger("Attack");//ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
         _player.CharacterController.stepOffset = 0f;
 
         StartCoroutine(EndFireArrowSkillAfterDelay(_skillDuration));
-        Debug.Log("ºÒ È­»ì °ø°İ");
+        Debug.Log("ë¶ˆ í™”ì‚´ ê³µê²©");
 
     }
 
@@ -61,26 +77,83 @@ public class BowFireSkill : WeaponSkillBase
     {
         yield return new WaitForSeconds(delay);
 
-        _fireEffect.SetActive(false);     //  ºÒ ÀÌÆåÆ® OFF
+        // ê°•ì œë¡œ Idle ìƒíƒœë¡œ ì „í™˜
+        _playerAnimation.SetTrigger("Idle"); // ë˜ëŠ” SetBoolë¡œ ìƒíƒœ ì „í™˜í•  ìˆ˜ë„ ìˆìŒ
+
+        FireEffect.SetActive(false);     //  ë¶ˆ ì´í™íŠ¸ OFF
         IsUsingSkill = false;
         _player.CharacterController.stepOffset = 1f;
 
-        //½ºÅ³ ³¡³ª°í ÄğÅ¸ÀÓ
+        Debug.Log("ë¶ˆí™”ì‚´ ìœ ì§€ì‹œê°„ ëë‚¨");
+        //ìŠ¤í‚¬ ëë‚˜ê³  ì¿¨íƒ€ì„
         //lastUseTime = Time.time;
     }
 
-   /* public override bool IsSkillAvailable()
+    public void ShootFireArrow()
     {
-        return Time.time >= lastUseTime + cooltime;
-    }*/
+        if (CurrentArrowFireSkill== true && _isAttacking == false)
+        {
+            _playerAnimation.SetTrigger("FireArrowAttack");
+            Debug.Log("ë¶ˆí™”ì‚´ ê³µê²©");
+            _isAttacking = true;
+        }
+
+    }
+
+    public void ShootArrow()
+    {
+        Debug.Log("ì• ë‹ˆë©”ì´ì…˜ ì¤‘ì— ì˜ëŠ”ê±° í˜¸ì¶œë¨ - ë¶ˆí™”ì‚´");
+
+        if (_arrowPrefab == null || _bowArrowSpawnPoint == null || Camera.main == null) return;
+
+        PlayerArrow arrow = Instantiate(_arrowPrefab, _bowArrowSpawnPoint.position, Quaternion.identity).GetComponent<PlayerArrow>();
+        arrow.SetAttackPower(PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower());
+
+        Rigidbody rb = arrow.GetComponent<Rigidbody>();
+        if (rb == null) return;
+
+        // ì¹´ë©”ë¼ í™”ë©´ ì¤‘ì•™ì—ì„œ Raycast ì˜ê¸°
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Vector3 targetPoint;
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f))
+        {
+            targetPoint = hitInfo.point;
+        }
+        else
+        {
+            // ë§ëŠ” ì§€ì  ì—†ìœ¼ë©´ ì¹´ë©”ë¼ ì• 100ë¯¸í„° ë°©í–¥ìœ¼ë¡œ ì„¤ì •
+            targetPoint = ray.origin + ray.direction * 100f;
+        }
+
+        // ë°œì‚¬ ë°©í–¥ ê³„ì‚° (í™”ì‚´ ìœ„ì¹˜ â†’ ëª©í‘œ ì§€ì )
+        Vector3 shootDirection = (targetPoint - _bowArrowSpawnPoint.position).normalized;
+
+        // í™”ì‚´ íšŒì „ ì„¤ì • (ë°œì‚¬ ë°©í–¥ ê¸°ì¤€)
+        arrow.transform.rotation = Quaternion.LookRotation(shootDirection);
+        arrow.transform.Rotate(90f, 0f, 0f, Space.Self);
+        // í™”ì‚´ ì†ë„ ì„¤ì •
+        rb.linearVelocity = shootDirection * _arrowForce;
+
+       // _canShootNext = false;
+        //IsAttacking = true;
+        //_lastAttackTime = Time.time;
+    }
+
+    /* public override bool IsSkillAvailable()
+     {
+         return Time.time >= lastUseTime + cooltime;
+     }*/
 
     public override void Tick()
     {
-        Debug.Log("ºÒ È­»ì °ø°İ ¹ßµ¿" + "E ¾È ´©¸§");
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+           
             UseSkill();
+            _bowThreeArrowSkill.CurrentThreeArrowSkill = false;
+            CurrentArrowFireSkill = true;
         }
     }
 
@@ -92,8 +165,9 @@ public class BowFireSkill : WeaponSkillBase
 
     public override void OnSkillAnimationEnd()
     {
-        // ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ³¡³µÀ» ¶§ Ã³¸®ÇÒ ³»¿ë ÀÛ¼º
-        IsUsingSkill = false;
+        // ì• ë‹ˆë©”ì´ì…˜ì´ ëë‚¬ì„ ë•Œ ì²˜ë¦¬í•  ë‚´ìš© ì‘ì„±
+        _isAttacking = false;
+        //IsUsingSkill = false;
         _player.CharacterController.stepOffset = 1f;
     }
 
@@ -105,14 +179,13 @@ public class BowFireSkill : WeaponSkillBase
         }
 
         float power = _equipmentController.GetCurrentWeaponAttackPower() * _skillDamageMultiplier;
-        //float power = _equipmentController.GetCurrentWeaponAttackPower();
+
         IDamageAble damageAble = enemy.GetComponent<IDamageAble>();
         if (damageAble != null)
         {
-            
             Damage damage = new Damage(power, gameObject, 100f, hitDirection);
             damageAble.TakeDamage(damage);
-            Debug.Log($"ºÒÈ­»ì ½ºÅ³·Î {enemy.name}¿¡°Ô {power}µ¥¹ÌÁö¸¦ ÀÔÇû´Ù!");
+            Debug.Log($"ë¶ˆí™”ì‚´ ìŠ¤í‚¬ë¡œ {enemy.name}ì—ê²Œ {power}ë°ë¯¸ì§€ë¥¼ ì…í˜”ë‹¤!");
         }
     }
 

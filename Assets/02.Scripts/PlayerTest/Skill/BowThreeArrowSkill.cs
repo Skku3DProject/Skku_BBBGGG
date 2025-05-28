@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class BowThreeArrowSkill : WeaponSkillBase
 {
@@ -9,11 +10,11 @@ public class BowThreeArrowSkill : WeaponSkillBase
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
 
-
+    
 
     [Header("Skill Settings")]
     [SerializeField] private GameObject _arrowPrefab; // 화살 프리팹 할당 (ArrowProjectile 스크립트 없음)
-    [SerializeField] private float _skillDamageMultiplier = 1.5f; // 불화살 스킬 데미지 배율
+    [SerializeField] private float _skillDamageMultiplier = 2.5f; // 스킬 데미지 배율
 
     [Header("Triple Shot Settings")]
     [SerializeField] private int _numberOfArrows = 3; // 발사할 화살 개수
@@ -21,28 +22,38 @@ public class BowThreeArrowSkill : WeaponSkillBase
     [SerializeField] private float _arrowForce = 20f; // 화살 발사 힘
     [SerializeField] private float _arrowLifetime = 5f; // 화살이 자동으로 사라지는 시간 (초)
 
-    [SerializeField] private float _skillDuration = 15f; // 화살 유지 시간
+    [SerializeField] private float _skillDuration = 15f; // 스킬 유지 시간
 
     [Header("Arrow Spawn Point")]
-    [SerializeField] private Transform _bowArrowSpawnPoint; // 활의 실제 화살 발사 위치 (빈 GameObject)
+    [SerializeField] private Transform _bowArrowSpawnPoint; // 활의 실제 화살 발사 위치
     [SerializeField] private Vector3 _arrowModelRotationOffset = new Vector3(90f, 0f, 0f); // 화살 모델의 초기 회전 보정 (필요시)
 
+    //현재 이 스킬을 사용하고 있는 상태인지 - 다른 스킬 사용하고 있으면 해당 스킬 비활성
+    private BowFireSkill _bowFireSkill;
+    public bool CurrentThreeArrowSkill;
     public override bool IsUsingSkill { get; protected set; }
     private bool _isAttacking;
-    private bool _canShootNext = true;
-    private float _lastAttackTime;
+   // public bool CanShootNext = true;
+    //private float _lastAttackTime;
 
 
     private void Awake()
     {
+        
         MyPlayer = GameObject.FindGameObjectWithTag("Player");
         _playerAnimation = GetComponent<Animator>();
         _equipmentController = GetComponent<PlayerEquipmentController>();
         _player = MyPlayer.GetComponent<ThirdPersonPlayer>();
+        _bowFireSkill = MyPlayer.GetComponent<BowFireSkill>();
     }
 
     public override void UseSkill()
     {
+        if(_bowFireSkill.FireEffect.activeSelf == true)
+        {
+            _bowFireSkill.FireEffect.SetActive(false);
+        }
+
         /* if (!IsSkillAvailable())
          {
              Debug.Log("트리플 샷 스킬 쿨타임 안 참");
@@ -70,16 +81,27 @@ public class BowThreeArrowSkill : WeaponSkillBase
     {
         yield return new WaitForSeconds(delay);
 
+        // 강제로 Idle 상태로 전환
+        _playerAnimation.SetTrigger("Idle"); // 또는 SetBool로 상태 전환할 수도 있음
+
         IsUsingSkill = false;
         _player.CharacterController.stepOffset = 1f;
 
         Debug.Log("트리플 샷 유지시간 끝남");
+        CurrentThreeArrowSkill = false;
+
     }
 
     public void ShootThreeArrow()
-    {
-        _playerAnimation.SetTrigger("ThreeArrowAttack");
-        Debug.Log("트리플 샷 공격");
+    {//
+       if (CurrentThreeArrowSkill == true && _isAttacking == false)
+        {
+            _playerAnimation.SetTrigger("ThreeArrowAttack");
+            Debug.Log("트리플 샷 공격");
+            _isAttacking = true;
+
+        }
+        
     }
 
     public void FireTripleArrows()
@@ -87,7 +109,7 @@ public class BowThreeArrowSkill : WeaponSkillBase
 
         Debug.Log("애니메이션 중에 쏘는거 호출됨 - 트리플 샷");
 
-        if (_arrowPrefab == null)
+        /*if (_arrowPrefab == null)
         {
             Debug.LogError("화살 프리팹이 할당되지 않음");
             return;
@@ -101,9 +123,8 @@ public class BowThreeArrowSkill : WeaponSkillBase
         {
             Debug.LogError("필요한 컴포넌트나 발사 지점이 할당되지 않았습니다. (플레이어, 카메라, 활 발사 지점)");
             return;
-        }
+        }*/
 
-        // **핵심 변경 1: 카메라 화면 중앙 Raycast를 이용한 조준점 계산**
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         Vector3 targetPoint;
 
@@ -154,9 +175,9 @@ public class BowThreeArrowSkill : WeaponSkillBase
                 StartCoroutine(DestroyArrowAfterDelay(arrowInstance, _arrowLifetime));
             }
 
-            _canShootNext = false;
-            _isAttacking = true;
-            _lastAttackTime = Time.time;
+           // CanShootNext = false;
+           // _isAttacking = true;
+           // _lastAttackTime = Time.time;
         }
     }
 
@@ -173,6 +194,7 @@ public class BowThreeArrowSkill : WeaponSkillBase
             rb.AddForce(force, ForceMode.VelocityChange); // 힘 적용
         }
 
+        _isAttacking = false;
         // 화살 수명 관리
         StartCoroutine(DestroyArrowAfterDelay(rb.gameObject, lifetime));
     }
@@ -181,7 +203,7 @@ public class BowThreeArrowSkill : WeaponSkillBase
     {
         Debug.Log("3개 활 쏘는 애니메이션 하고 실행될 거");
 
-        _canShootNext = true;
+        //CanShootNext = true;
         _isAttacking = false;
     }
 
@@ -203,14 +225,16 @@ public class BowThreeArrowSkill : WeaponSkillBase
         if (Input.GetKeyDown(KeyCode.R))
         {
             UseSkill();
+            _bowFireSkill.CurrentArrowFireSkill = false;
+            CurrentThreeArrowSkill = true;
         }
     }
 
 
     public override void OnSkillEffectPlay()
     {
-        IsUsingSkill = false;
-        _player.CharacterController.stepOffset = 1f;
+        //IsUsingSkill = false;
+        //_player.CharacterController.stepOffset = 1f;
     }
 
 

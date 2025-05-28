@@ -20,7 +20,7 @@ public class BowAttack : WeaponAttackBase
 
 
     [SerializeField] private BowFireSkill _fireArrow;//활 스킬
-    [SerializeField] private BowThreeArrowSkill _TripleArrow;//활 스킬2
+    [SerializeField] private BowThreeArrowSkill _tripleArrow;//활 스킬2
 
     void Awake()
     {
@@ -144,36 +144,43 @@ public class BowAttack : WeaponAttackBase
 
     private void HandleFireInput()
     {
-        if (!Input.GetMouseButtonDown(0) || !_canShootNext && _TripleArrow.IsUsingSkill == false)
+        
+
+
+        if (Input.GetMouseButtonDown(0) && _tripleArrow.CurrentThreeArrowSkill == true)
+        {
+            _tripleArrow.ShootThreeArrow();
+            //IsAttacking = true;
+            Debug.Log("화살 3개 발사 중중");
+        }
+
+        if (Input.GetMouseButtonDown(0) && _fireArrow.CurrentArrowFireSkill == true)
+        {
+            _fireArrow.ShootFireArrow();
+            //IsAttacking = true;
+            Debug.Log("불화살 발사 중중");
+        }
+
+
+        else if (!Input.GetMouseButtonDown(0) || !_canShootNext)
+           // && _tripleArrow.IsUsingSkill == false && _fireArrow.IsUsingSkill == false)
         {
             Debug.Log("가운데를 향해 화살 발사 시도");
             return;
         }
 
-        if (isAiming && _TripleArrow.IsUsingSkill == false)
+        else if (isAiming)
+            //&& _tripleArrow.IsUsingSkill == false && _fireArrow.IsUsingSkill == false)
         {
             ShootArrow();
             Debug.Log("가운데를 향해 화살을 쏜다");
         }
 
-
-        else
+        else if (Input.GetMouseButtonDown(0) 
+            && _tripleArrow.CurrentThreeArrowSkill == false && _fireArrow.CurrentArrowFireSkill == false)
         {
-            //Attack();
-            //Debug.Log("어택 애니메이션 실행");//일반이랑 불 화살도 이 코드 실행중
-
-            if (Input.GetMouseButtonDown(0) && _TripleArrow.IsUsingSkill == true)
-            {
-                _TripleArrow.ShootThreeArrow();
-                Debug.Log("화살 3개 발사 중중");
-            }
-
-
-            else
-            {
-                Attack();
-                Debug.Log("어택 애니메이션 실행");//일반이랑 불 화살도 이 코드 실행중
-            }
+            Attack();
+            Debug.Log("어택 애니메이션 실행");//일반이랑 불 화살도 이 코드 실행중
         }
 
 
@@ -208,12 +215,12 @@ public class BowAttack : WeaponAttackBase
         //조준이 완료되면 쏠 수 있도록
         if (_fireArrow != null)
         {
-            _fireArrow?.Tick();
+            _fireArrow.Tick();
         }
 
-        if (_TripleArrow != null)
+        if (_tripleArrow != null)
         {
-            _TripleArrow.Tick();
+            _tripleArrow.Tick();
         }
 
 
