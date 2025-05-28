@@ -27,7 +27,6 @@ public class BowAttack : WeaponAttackBase
         _playerAnimation = GetComponent<Animator>();
         _equipmentController = GetComponent<PlayerEquipmentController>();
         _player = GetComponent<ThirdPersonPlayer>();
-        _equipmentController.OnChangeEquipment += OnAttackAnimationEnd;
     }
 
     public override void Attack()
@@ -43,6 +42,8 @@ public class BowAttack : WeaponAttackBase
 
     public void ShootArrow()
     {
+        Debug.Log("애니메이션 중에 쏘는거 호출됨");
+
         if (arrowPrefab == null || shootPoint == null || Camera.main == null) return;
 
         PlayerArrow arrow = Instantiate(arrowPrefab, shootPoint.position, Quaternion.identity).GetComponent<PlayerArrow>();
@@ -143,13 +144,39 @@ public class BowAttack : WeaponAttackBase
 
     private void HandleFireInput()
     {
-        if (!Input.GetMouseButtonDown(0) || !_canShootNext)
+        if (!Input.GetMouseButtonDown(0) || !_canShootNext && _TripleArrow.IsUsingSkill == false)
+        {
+            Debug.Log("가운데를 향해 화살 발사 시도");
             return;
+        }
 
-        if (isAiming)
+        if (isAiming && _TripleArrow.IsUsingSkill == false)
+        {
             ShootArrow();
+            Debug.Log("가운데를 향해 화살을 쏜다");
+        }
+
+
         else
-            Attack();
+        {
+            //Attack();
+            //Debug.Log("어택 애니메이션 실행");//일반이랑 불 화살도 이 코드 실행중
+
+            if (Input.GetMouseButtonDown(0) && _TripleArrow.IsUsingSkill == true)
+            {
+                _TripleArrow.ShootThreeArrow();
+                Debug.Log("화살 3개 발사 중중");
+            }
+
+
+            else
+            {
+                Attack();
+                Debug.Log("어택 애니메이션 실행");//일반이랑 불 화살도 이 코드 실행중
+            }
+        }
+
+
 
 
     }
@@ -179,11 +206,17 @@ public class BowAttack : WeaponAttackBase
         }
 
         //조준이 완료되면 쏠 수 있도록
-        if (_TripleArrow != null)
+        if (_fireArrow != null)
         {
             _fireArrow?.Tick();
+        }
+
+        if (_TripleArrow != null)
+        {
             _TripleArrow.Tick();
         }
+
+
     }
 
     private Vector3 CalculateShootDirection()
