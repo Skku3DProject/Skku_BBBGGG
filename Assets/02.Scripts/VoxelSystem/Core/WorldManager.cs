@@ -64,17 +64,42 @@ public class WorldManager : MonoBehaviour
 
     void Start()
     {
-        BackupCentralChunks();
         StageManager.instance.OnCombatStart += BackupCentralChunks;
         StageManager.instance.OnCombatEnd += RestoreCentralChunks;
-        //StageManager.instance.OnCombatEnd += OnCombatEndRestore;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        BackupCentralChunks();
         GenerateGrid();
         PositionPlayerAtCenter();
         PositionSpawner();
     }
+
+    //--------------------------------------- 맵로딩용
+    public void InitWorld()
+    {
+        BackupCentralChunks();
+        GenerateGrid();
+    }
+    public void RegisterStageEvents()
+    {
+        if (StageManager.instance != null)
+        {
+            StageManager.instance.OnCombatStart += BackupCentralChunks;
+            StageManager.instance.OnCombatEnd += RestoreCentralChunks;
+
+            PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            BaseCampTransform = GameObject.FindGameObjectWithTag("BaseTower").transform;
+            PositionPlayerAtCenter();
+            SpawenrTransform = GameObject.FindGameObjectWithTag("EnemySpawner").transform;
+            PositionSpawner();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+    //-----------------------------------맵 로딩 용
+
+
     public void GenerateInEditor()
     {
         GenerateGrid();

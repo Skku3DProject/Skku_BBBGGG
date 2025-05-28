@@ -6,25 +6,31 @@ using UnityEngine.UI;
 
 public class SceneLoad : MonoBehaviour
 {
-    public Slider LoadingBar;
-    public int NextSceneIndex;
-    public TextMeshProUGUI ProgressText;
+    public WorldManager worldManager;
 
-    private void Start()
+    void Start()
     {
-        StartCoroutine(SceneLoading_Coroutine());
+        StartCoroutine(InitializeAndLoadGameScene());
     }
-    
-    // 씬 로드
-    private IEnumerator SceneLoading_Coroutine()
+
+    IEnumerator InitializeAndLoadGameScene()
     {
-        AsyncOperation ao = SceneManager.LoadSceneAsync(NextSceneIndex);
-        while (ao.isDone == false)
+        yield return null;
+        worldManager.InitWorld(); // 맵 생성
+
+        yield return new WaitForSeconds(1f); // 생성 완료 후 잠깐 대기
+
+        SceneManager.sceneLoaded += OnSceneLoaded; // 로드 콜백 등록
+        SceneManager.LoadScene("JeonTeaJun");
+    }
+
+    // 씬 전환 후 호출될 콜백
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "JeonTeaJun")
         {
-            LoadingBar.value = ao.progress;
-            ProgressText.text = $"{ao.progress * 100}% ";
-            yield return null;
-        } 
+            worldManager.RegisterStageEvents(); // 이벤트 등록
+            SceneManager.sceneLoaded -= OnSceneLoaded; // 한 번만 실행되게 제거
+        }
     }
-    
 }
