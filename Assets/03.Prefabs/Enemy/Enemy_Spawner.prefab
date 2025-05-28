@@ -56,6 +56,7 @@ MonoBehaviour:
   - {fileID: 2384884184112096675, guid: 91822a963e5015747b84763a06a56b09, type: 3}
   - {fileID: 1919701108089533735, guid: 31f70267f6d6411458186a29d3e3b1a8, type: 3}
   - {fileID: 1008570438300534873, guid: b0d01ab4e1cc4424faa8cdc8fe958b5d, type: 3}
+  - {fileID: 8570418276746054535, guid: c9e75bf491682d849bb1434d86092bf9, type: 3}
   SpawnerSo:
   - {fileID: 11400000, guid: b287112cd8bb79341a206e694a2e1225, type: 2}
   - {fileID: 11400000, guid: 1bc35aebb538a9e4da3f9209becea595, type: 2}

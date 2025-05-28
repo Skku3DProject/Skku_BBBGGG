@@ -1,9 +1,7 @@
 public class EnemyMoveState : IFSM
 {
-
     private Enemy _enemy;
-    private EnemyFlocking _enemyMoveSupporter;
-    private IEnemyTypeStrategy _behaviorStrategy;
+    private IEnemyMoveTypeStrategy _behaviorStrategy;
 
     public EnemyMoveState(Enemy enemy)
     {

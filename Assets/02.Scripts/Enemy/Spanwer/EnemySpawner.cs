@@ -22,7 +22,6 @@ public class EnemySpawner : MonoBehaviour
 
     private List<GameObject> _positionList;
    
-
     private void Start()
     {
         MaxSpawnCount = MaxSpawnCount * PreSetList.Count;

@@ -10,17 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc550e1c3cb84384ca5161604757e266, type: 3}
-  m_Name: SO_Normal_Skeleton_Archer
+  m_Name: SO_Boss_Skeleton_Necromancer
   m_EditorClassIdentifier: 
   AvailableStates: 0000000001000000020000000300000004000000
-  EnemyType: 0
-  EnemyMoveType: 1
+  EnemyType: 1
+  EnemyMoveType: 0
+  EEnemyAttackTypes: 
   DamagedTime: 0.5
-  ProjectilePrefab: {fileID: 5737820991993077119, guid: 584f9ba41221de444bfaae33cbaa736b, type: 3}
+  ProjectilePrefab: {fileID: 0}
   PrefabSize: 10
-  Health: 200
+  MaxAttackPatternCount: 2
   KnockbackPower: 100
   DamageValue: 10
+  Health: 200
   FindDistance: 15
   AttackDistance: 10
   MovePointDistance: 0.1

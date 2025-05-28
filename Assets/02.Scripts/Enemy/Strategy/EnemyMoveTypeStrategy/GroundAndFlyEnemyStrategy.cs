@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GroundAndFlyEnemyStrategy : IEnemyTypeStrategy
+public class GroundAndFlyEnemyStrategy : IEnemyMoveTypeStrategy
 {
     public void Move(Enemy enemy, float speed)
     {

@@ -27,18 +27,20 @@ public class So_Enemy : ScriptableObject
     public EEnemyState[] AvailableStates;
     public EEnemyType EnemyType;
     public EEnemyMoveType EnemyMoveType;
+    public EEnemyAttackType[] EEnemyAttackTypes;
 
     [Header("시간")]
     public float DamagedTime = 0.5f;
 
-    [Header("공격 물체")]
+    [Header("공격")]
     public GameObject ProjectilePrefab;
     public int PrefabSize = 5;
+    public int MaxAttackPatternCount = 1;
+    public float KnockbackPower = 100;
+    public float DamageValue = 10;
 
     [Header("기본 스텟")]
     public float Health = 100;
-    public float KnockbackPower = 100;
-    public float DamageValue = 10;
 
     [Header("비교 거리")]
     public float FindDistance = 7;
