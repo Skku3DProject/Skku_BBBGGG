@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5178976074642248924}
   - component: {fileID: 5225002046891584053}
   - component: {fileID: 1698122074451979677}
+  - component: {fileID: 7922782961122949362}
   m_Layer: 0
   m_Name: BlockBreakVfx
   m_TagString: Untagged
@@ -41,9 +42,9 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1929763394318644316}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 2
+  stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4891,3 +4892,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &7922782961122949362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929763394318644316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 665bf98626a52df4dbdb7b6e7e068a2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

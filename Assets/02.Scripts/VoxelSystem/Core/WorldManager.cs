@@ -1,6 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public class TempChunkData
+{
+    public VoxelType[,,] Blocks;
+
+    public TempChunkData(VoxelType[,,] original)
+    {
+        int sizeX = original.GetLength(0);
+        int sizeY = original.GetLength(1);
+        int sizeZ = original.GetLength(2);
+        Blocks = new VoxelType[sizeX, sizeY, sizeZ];
+
+        for (int x = 0; x < sizeX; x++)
+            for (int y = 0; y < sizeY; y++)
+                for (int z = 0; z < sizeZ; z++)
+                    Blocks[x, y, z] = original[x, y, z];
+    }
+}
 public class WorldManager : MonoBehaviour
 {
     [Header("참조")]
@@ -34,10 +54,21 @@ public class WorldManager : MonoBehaviour
     [Header("지형 노이즈")]
     public float NoiseScale = 0.1f;
 
+
+
+    private Dictionary<Vector2Int, TempChunkData> _savedChunkData = new();
+    private Vector2Int _centerCoord;
+    private int _saveRadius = 2; // 예: 5x5 청크 저장
+
     private Dictionary<Vector2Int, Chunk> _chunks = new Dictionary<Vector2Int, Chunk>();
 
     void Start()
     {
+        BackupCentralChunks();
+        StageManager.instance.OnCombatStart += BackupCentralChunks;
+        StageManager.instance.OnCombatEnd += RestoreCentralChunks;
+        //StageManager.instance.OnCombatEnd += OnCombatEndRestore;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         GenerateGrid();
@@ -340,5 +371,49 @@ public class WorldManager : MonoBehaviour
         }
     }
 
+    public void BackupCentralChunks()
+    {
+        Debug.Log("BackUpStart");
+        _savedChunkData.Clear();
+
+        int centerX = GridWidth / 2;
+        int centerZ = GridHeight / 2;
+        _centerCoord = new Vector2Int(centerX, centerZ);
+
+        for (int dx = -_saveRadius; dx <= _saveRadius; dx++)
+        {
+            for (int dz = -_saveRadius; dz <= _saveRadius; dz++)
+            {
+                Vector2Int coord = new Vector2Int(_centerCoord.x + dx, _centerCoord.y + dz);
+                if (_chunks.TryGetValue(coord, out var chunk))
+                {
+                    _savedChunkData[coord] = new TempChunkData(chunk.Blocks);
+                }
+            }
+        }
+    }
+
+    public void RestoreCentralChunks()
+    {
+        Debug.Log("ReStoreStart");
+        foreach (var pair in _savedChunkData)
+        {
+            Vector2Int coord = pair.Key;
+            if (_chunks.TryGetValue(coord, out var chunk))
+            {
+                var savedData = pair.Value;
+                int sizeX = savedData.Blocks.GetLength(0);
+                int sizeY = savedData.Blocks.GetLength(1);
+                int sizeZ = savedData.Blocks.GetLength(2);
+
+                for (int x = 0; x < sizeX; x++)
+                    for (int y = 0; y < sizeY; y++)
+                        for (int z = 0; z < sizeZ; z++)
+                            chunk.Blocks[x, y, z] = savedData.Blocks[x, y, z];
+
+                chunk.BuildMesh(); // 메쉬 재생성
+            }
+        }
+    }
 
 }

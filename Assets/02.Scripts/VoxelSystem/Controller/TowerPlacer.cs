@@ -7,6 +7,7 @@ public class TowerPlacer : MonoBehaviour
 
     //[Header("건물 목록")]
     //public List<BuildingType> BuildingTypes;
+    public GameObject TowerPlaceVfxPrefab;
 
     [Header("레이어 설정")]
     public LayerMask GroundMask;
@@ -168,6 +169,7 @@ public class TowerPlacer : MonoBehaviour
                 return;
             }
 
+            Instantiate(TowerPlaceVfxPrefab).transform.position = _previewInstance.transform.position;
             ObjectPool.Instance.GetObject(_selectedBuilding.Prefab, _previewInstance.transform.position, _previewInstance.transform.rotation);
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon); // 건설 후 무기 모드 복귀
             DestroyPreview();

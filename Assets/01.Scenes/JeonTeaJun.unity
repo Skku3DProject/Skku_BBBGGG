@@ -399,6 +399,12 @@ MonoBehaviour:
   - key: TowerFragment
     prefab: {fileID: 4989874286084197583, guid: b727db30ff4914c4cb319ffdd80bc864, type: 3}
     size: 30
+  - key: BlockDamagedVfx
+    prefab: {fileID: 1929763394318644316, guid: 5c2c1ef5592678042852d6fca65aac7a, type: 3}
+    size: 50
+  - key: BlockBreakVfx
+    prefab: {fileID: 1929763394318644316, guid: 6d2afd032cac2e14c90a4597ba10d12c, type: 3}
+    size: 100
 --- !u!4 &284569674
 Transform:
   m_ObjectHideFlags: 0
@@ -812,6 +818,10 @@ PrefabInstance:
       propertyPath: aimLayerMask.m_Bits
       value: 1544
       objectReference: {fileID: 0}
+    - target: {fileID: 3274150602547431135, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3597208488243653304, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -844,6 +854,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7770292710424237417, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 719a8ad346fb83e46a11537b32e85f5d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1239,6 +1253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59324e7b2dd30246b565875969aaca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TowerPlaceVfxPrefab: {fileID: 7778573688822411865, guid: 4d2ef61f87292204db12b31ad68b642c, type: 3}
   GroundMask:
     serializedVersion: 2
     m_Bits: 9

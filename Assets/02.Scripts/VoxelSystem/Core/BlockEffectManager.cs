@@ -26,7 +26,9 @@ public class BlockEffectManager : MonoBehaviour
         if (DamageEffectPrefab == null)
             return;
         Vector3 spawnPos = worldPos + new Vector3(0.5f, 0.5f, 0.5f);
-        Object.Instantiate(DamageEffectPrefab, spawnPos, Quaternion.identity);
+        ObjectPool.Instance.GetObject(DamageEffectPrefab, spawnPos, Quaternion.identity);
+
+        //Object.Instantiate(DamageEffectPrefab, spawnPos, Quaternion.identity);
     }
 
     public void PlayBreakEffect(Vector3Int worldPos)
@@ -34,6 +36,7 @@ public class BlockEffectManager : MonoBehaviour
         if (BreakEffectPrefab == null)
             return;
         Vector3 spawnPos = worldPos + new Vector3(0.5f, 0.5f, 0.5f);
-        Object.Instantiate(BreakEffectPrefab, spawnPos, Quaternion.identity);
+        //Object.Instantiate(BreakEffectPrefab, spawnPos, Quaternion.identity);
+        ObjectPool.Instance.GetObject(BreakEffectPrefab, spawnPos, Quaternion.identity);
     }
 }

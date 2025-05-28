@@ -14,8 +14,10 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
     [SerializeField] protected GameObject _bulletPrefab;
     [SerializeField] protected SphereCollider _sphereCollider;
     [SerializeField] protected TowerAttackRange _attackRange;
+    [SerializeField] protected GameObject _destroyVfxPrefab;
+    [SerializeField] protected Transform _destroyVfxPos;
+    
     private FractureExplosion fracture;
-
     protected float _currentHealth;
     protected Vector3 _faceToEnemyDir;
     protected float _attackTimer;
@@ -82,10 +84,12 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
 
         if (_currentHealth <= 0)
         {
+            Instantiate(_destroyVfxPrefab).transform.position = _destroyVfxPos.position;
             // Æø¹ß ½ÇÇà
             fracture.Explode();
             Invoke(nameof(DisableFragments), 6f);
             gameObject.SetActive(false);
+
 
             ObjectPool.Instance.ReturnToPool(gameObject);
         }
