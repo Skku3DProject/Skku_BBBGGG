@@ -17,7 +17,8 @@ public class SwordAttack : WeaponAttackBase
 
     private int _currentAttackIndex;
 
-    [SerializeField] private SwordSpinSkill _spinSkill;//검 스킬
+    public SwordSpinSkill SpinSkill;//검 스킬
+    public SwordDashSkill DashSkill;//대쉬 스킬
 
 
     void Awake()
@@ -131,7 +132,17 @@ public class SwordAttack : WeaponAttackBase
             Debug.Log("검 공격");
         }
 
+        if(SpinSkill !=null)
+        {
+            SpinSkill.Tick();
+        }
 
-        _spinSkill?.Tick();
+        if(DashSkill != null)
+        {
+            DashSkill.Tick();
+        }
+        //SpinSkill?.Tick();
+        //DashSkill?.Tick();
+
     }
 }

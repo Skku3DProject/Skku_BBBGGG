@@ -205,6 +205,7 @@ public class BowThreeArrowSkill : WeaponSkillBase
 
         //CanShootNext = true;
         _isAttacking = false;
+        _player.CharacterController.stepOffset = 1f;
     }
 
 

@@ -19,7 +19,7 @@ public class PlayerArrow : MonoBehaviour
             transform.Rotate(90f, 0f, 0f, Space.Self);
         }
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision other)
     {
         /*if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Ground"))
         {
@@ -31,33 +31,33 @@ public class PlayerArrow : MonoBehaviour
 
         }*/
 
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             //Debug.Log("적과 충돌");
-            Vector3 directionToEnemy = (collision.transform.position - transform.position).normalized;
+            Vector3 directionToEnemy = (other.transform.position - transform.position).normalized;
 
 
             if(BowAttack.Instance.TripleArrow.CurrentThreeArrowSkill == false 
                 && BowAttack.Instance.FireArrow.CurrentArrowFireSkill == false)
              {
-                BowAttack.Instance.TryDamageEnemy(collision.gameObject, directionToEnemy);
+                BowAttack.Instance.TryDamageEnemy(other.gameObject, directionToEnemy);
             }
 
             else if(BowAttack.Instance.TripleArrow.CurrentThreeArrowSkill == true)
             {
-                BowAttack.Instance.TripleArrow.TryDamageEnemy(collision.gameObject, directionToEnemy);
+                BowAttack.Instance.TripleArrow.TryDamageEnemy(other.gameObject, directionToEnemy);
             }
 
             else if (BowAttack.Instance.FireArrow.CurrentArrowFireSkill == true)
             {
-                BowAttack.Instance.FireArrow.TryDamageEnemy(collision.gameObject, directionToEnemy);
+                BowAttack.Instance.FireArrow.TryDamageEnemy(other.gameObject, directionToEnemy);
             }
 
             Destroy(gameObject);
 
         }
 
-        else if (collision.gameObject.CompareTag("Ground"))
+        else if (other.gameObject.CompareTag("Ground"))
         {
             Debug.Log("땅과 충돌");
             Destroy(gameObject);

@@ -12,7 +12,12 @@ public class SwordHit : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("적 공격");
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("검 공격해서 적과 닿은... 거니?");
+        }
+
+       /* Debug.Log("적 공격");
         if (PlayerAttack == null)
         {
             Debug.Log("PlayerAttack 없음");
@@ -25,6 +30,6 @@ public class SwordHit : MonoBehaviour
 
             PlayerAttack.TryDamageEnemy(other.gameObject, directionToEnemy);
             Debug.Log("적 공격");
-        }
+        }*/
     }
 }

@@ -5,16 +5,20 @@ using System.Collections.Generic;
 
 public class SwordSpinSkill : WeaponSkillBase
 {
+    //Q로 스킬 발동
+
     public GameObject MyPlayer;
     private Animator _playerAnimation;
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
-
+    [SerializeField] private float _skillDamageMultiplier = 2.5f;
 
     //[SerializeField] private float cooltime = 5f;
-   // private float lastUseTime;
-
+    // private float lastUseTime;
+    private SwordDashSkill _swordDashSkill;
+    public bool CurrentSwordSpinSkill;
     public override bool IsUsingSkill { get; protected set; }
+    private bool _isAttacking;
 
     private void Awake()
     {
@@ -22,10 +26,13 @@ public class SwordSpinSkill : WeaponSkillBase
         _playerAnimation = MyPlayer.GetComponent<Animator>();
         _equipmentController = MyPlayer.GetComponent<PlayerEquipmentController>();
         _player = MyPlayer.GetComponent<ThirdPersonPlayer>();
+        _swordDashSkill = MyPlayer.GetComponent<SwordDashSkill>();
     }
 
     public override void UseSkill()
     {
+        Debug.Log("검 스핀 공격 시작");
+
         //쿨타임 조건 없애기
 
         /*if (!IsSkillAvailable())
@@ -42,7 +49,7 @@ public class SwordSpinSkill : WeaponSkillBase
 
         IsUsingSkill = true;
         //lastUseTime = Time.time;
-
+        CurrentSwordSpinSkill = true;
         _playerAnimation.SetTrigger("SpinAttack");//애니메이션 실행
         _player.CharacterController.stepOffset = 0f;
 
@@ -62,6 +69,7 @@ public class SwordSpinSkill : WeaponSkillBase
 
         //스킬 끝나고 쿨타임
         //lastUseTime = Time.time;
+        CurrentSwordSpinSkill = false;
     }
 
     /*public override bool IsSkillAvailable()
@@ -76,19 +84,22 @@ public class SwordSpinSkill : WeaponSkillBase
         if (Input.GetKeyDown(KeyCode.Q))
         {
             UseSkill();
+            _swordDashSkill.CurrentSwordDashSkill = false;
+            CurrentSwordSpinSkill = true;
         }
     }
 
     public override void OnSkillEffectPlay()
     {
-        IsUsingSkill = false;
-        _player.CharacterController.stepOffset = 1f;
+        //IsUsingSkill = false;
+        //_player.CharacterController.stepOffset = 1f;
     }
 
     public override void OnSkillAnimationEnd()
     {
         // 애니메이션이 끝났을 때 처리할 내용 작성
-        IsUsingSkill = false;
+        _isAttacking = false;
+        //IsUsingSkill = false;
         _player.CharacterController.stepOffset = 1f;
     }
 
@@ -99,7 +110,7 @@ public class SwordSpinSkill : WeaponSkillBase
             return;
         }
 
-        float power = _equipmentController.GetCurrentWeaponAttackPower();
+        float power = _equipmentController.GetCurrentWeaponAttackPower() * _skillDamageMultiplier; ;
         IDamageAble damageAble = enemy.GetComponent<IDamageAble>();
         if (damageAble != null)
         {
