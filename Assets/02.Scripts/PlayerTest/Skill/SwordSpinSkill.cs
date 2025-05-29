@@ -18,7 +18,7 @@ public class SwordSpinSkill : WeaponSkillBase
     private SwordDashSkill _swordDashSkill;
     public bool CurrentSwordSpinSkill;
     public override bool IsUsingSkill { get; protected set; }
-    private bool _isAttacking;
+    public bool IsAttacking;
 
     private void Awake()
     {
@@ -47,13 +47,20 @@ public class SwordSpinSkill : WeaponSkillBase
             return;
         }
 
-        IsUsingSkill = true;
-        //lastUseTime = Time.time;
-        CurrentSwordSpinSkill = true;
-        _playerAnimation.SetTrigger("SpinAttack");//애니메이션 실행
-        _player.CharacterController.stepOffset = 0f;
+        if (IsAttacking == false)
+        {
+            IsUsingSkill = true;
+            //lastUseTime = Time.time;
+            CurrentSwordSpinSkill = true;
+            _playerAnimation.SetTrigger("SpinAttack");//애니메이션 실행
+            _player.CharacterController.stepOffset = 0f;
 
-        StartCoroutine(EndSpinSkillAfterDelay(5f));
+            IsAttacking = true;
+
+            StartCoroutine(EndSpinSkillAfterDelay(5f));
+        }
+
+            
 
     }
 
@@ -98,7 +105,7 @@ public class SwordSpinSkill : WeaponSkillBase
     public override void OnSkillAnimationEnd()
     {
         // 애니메이션이 끝났을 때 처리할 내용 작성
-        _isAttacking = false;
+        IsAttacking = false;
         //IsUsingSkill = false;
         _player.CharacterController.stepOffset = 1f;
     }
@@ -116,7 +123,7 @@ public class SwordSpinSkill : WeaponSkillBase
         {
             Damage damage = new Damage(power, gameObject, 100f, hitDirection);
             damageAble.TakeDamage(damage);
-            Debug.Log($"회전베기 스킬로 {enemy.name}에게 {power}데미지를 입혔다!");
+            //Debug.Log($"회전베기 스킬로 {enemy.name}에게 {power}데미지를 입혔다!");
         }
     }
 

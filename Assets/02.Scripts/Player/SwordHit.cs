@@ -14,7 +14,32 @@ public class SwordHit : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("검 공격해서 적과 닿은... 거니?");
+            Vector3 directionToEnemy = (other.transform.position - transform.position).normalized;
+
+
+           
+
+            if (SwordAttack.Instance.SpinSkill.CurrentSwordSpinSkill == true
+                && SwordAttack.Instance.SpinSkill.IsAttacking == true)
+            {
+                SwordAttack.Instance.SpinSkill.TryDamageEnemy(other.gameObject, directionToEnemy);
+
+               // Debug.Log("검 스핀으로 적 공격");
+            }
+
+            else if (SwordAttack.Instance.DashSkill.CurrentSwordDashSkill == true
+                && SwordAttack.Instance.DashSkill.IsAttacking == true)
+            {
+
+                SwordAttack.Instance.DashSkill.TryDamageEnemy(other.gameObject, directionToEnemy);
+               // Debug.Log("검 대쉬로 적 공격");
+            }
+
+            else
+            {
+                SwordAttack.Instance.TryDamageEnemy(other.gameObject, directionToEnemy);
+               // Debug.Log("일반 검으로 적 공격");
+            }
         }
 
        /* Debug.Log("적 공격");

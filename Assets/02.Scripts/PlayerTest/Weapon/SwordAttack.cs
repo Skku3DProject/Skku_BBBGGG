@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SwordAttack : WeaponAttackBase
 {
+    public static SwordAttack Instance;
+
     private ThirdPersonPlayer _player;
     private Animator _playerAnimation;
     private PlayerEquipmentController _equipmentController;
@@ -28,6 +30,12 @@ public class SwordAttack : WeaponAttackBase
         _equipmentController = GetComponent<PlayerEquipmentController>();
         _equipmentController.OnChangeEquipment += OnAttackAnimationEnd;
     }
+
+    private void Start()
+    {
+        Instance = this;
+    }
+
     public override void Attack()
     {
         if (!IsAttacking)

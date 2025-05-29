@@ -15,7 +15,7 @@ public class SwordDashSkill : WeaponSkillBase
     private SwordSpinSkill _swordSpinSkill;
     public bool CurrentSwordDashSkill;
     public override bool IsUsingSkill { get; protected set; }
-    private bool _isAttacking;
+    public bool IsAttacking;
 
     private void Awake()
     {
@@ -28,19 +28,25 @@ public class SwordDashSkill : WeaponSkillBase
 
     public override void UseSkill()
     {
-        Debug.Log("검 대쉬 공격 시작");
+        if(IsAttacking == false)
+        {
+            Debug.Log("검 대쉬 공격 시작");
 
-        if (_equipmentController.GetCurrentEquipType() != EquipmentType.Sword)
-            return;
+            if (_equipmentController.GetCurrentEquipType() != EquipmentType.Sword)
+                return;
 
-        IsUsingSkill = true;
-        CurrentSwordDashSkill = true;
+            IsUsingSkill = true;
+            CurrentSwordDashSkill = true;
 
-        _playerAnimation.SetTrigger("DashAttack");
-        _player.CharacterController.stepOffset = 0f;
+            _playerAnimation.SetTrigger("DashAttack");
+            _player.CharacterController.stepOffset = 0f;
 
-        // 대쉬 이동 시작
-        StartCoroutine(DashForward());
+            // 대쉬 이동 시작
+            StartCoroutine(DashForward());
+            IsAttacking = true;
+        }
+
+        
     }
 
     private IEnumerator DashForward()
@@ -85,7 +91,7 @@ public class SwordDashSkill : WeaponSkillBase
 
     public override void OnSkillAnimationEnd()
     {
-        _isAttacking = false;
+        IsAttacking = false;
         CurrentSwordDashSkill = false;
         _player.CharacterController.stepOffset = 1f;
     }
@@ -101,7 +107,7 @@ public class SwordDashSkill : WeaponSkillBase
         {
             Damage damage = new Damage(power, gameObject, 100f, hitDirection);
             damageAble.TakeDamage(damage);
-            Debug.Log($"대쉬 스킬로 {enemy.name}에게 {power} 데미지를 입혔다!");
+            //Debug.Log($"대쉬 스킬로 {enemy.name}에게 {power} 데미지를 입혔다!");
         }
     }
 }
