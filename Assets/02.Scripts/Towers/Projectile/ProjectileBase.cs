@@ -92,7 +92,6 @@ public class ProjectileBase : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 2f, _groundMask))
         {
-            Debug.Log("Raycast Hit Ground: " + hit.collider.name);
 
             OnGroundHit(hit);
             //if (HitVfxPrefab)

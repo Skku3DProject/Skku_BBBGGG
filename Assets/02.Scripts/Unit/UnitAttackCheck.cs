@@ -11,7 +11,6 @@ public class UnitAttackCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Рћ АјАн");
 
         if (other.CompareTag("Enemy") )
         {

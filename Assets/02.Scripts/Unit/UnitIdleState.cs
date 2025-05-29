@@ -53,7 +53,6 @@ public class UnitIdleState : UnitState
     public override void Update()
     {
         base.Update();
-        Debug.Log("Enter Idle");
         if (_stateTimer<0)
         {
             _stateTimer = _detectTime;

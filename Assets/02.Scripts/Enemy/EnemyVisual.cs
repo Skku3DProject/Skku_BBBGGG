@@ -45,7 +45,6 @@ public class EnemyVisual : MonoBehaviour
             {
                 _propBlock.SetColor(_ColorID, _hitColor);
                 r.SetPropertyBlock(_propBlock);
-                Debug.Log(_propBlock);
             }
         }
 

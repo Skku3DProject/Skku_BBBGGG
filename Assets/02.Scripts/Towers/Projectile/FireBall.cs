@@ -16,7 +16,6 @@ public class FireBall : ProjectileBase
         Collider[] hits = Physics.OverlapSphere(hit.point, _data.SplashRadius, targetMask);
         Debug.Log(_data.SplashRadius);
         if (hits.Length > 0)
-            Debug.Log("Enemy SplashDamaged");
         foreach (var col in hits)
         {
             Debug.Log("GroundHit SplashDamage");
@@ -43,7 +42,6 @@ public class FireBall : ProjectileBase
                 Debug.Log(hit.gameObject.name);
                 if (hit.TryGetComponent<IDamageAble>(out var d))
                 {
-                    Debug.Log("Enemy SplashDamage2");
                     d.TakeDamage(new Damage(_data.Damage, _owner, 5));
                 }
             }

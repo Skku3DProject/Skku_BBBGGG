@@ -15,7 +15,6 @@ public class Arrow : ProjectileBase
 
         if (other.TryGetComponent<IDamageAble>(out var d))
         {
-            Debug.Log("HitEnemy");
             //d.TakeDamage(damage);
             d.TakeDamage(new Damage(_data.Damage, _owner));
         }

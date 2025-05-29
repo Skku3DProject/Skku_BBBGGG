@@ -80,7 +80,6 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
     public void TakeDamage(Damage damage)
     {
         _currentHealth -= damage.Value;
-        Debug.Log("TowerDamaged");
 
         if (_currentHealth <= 0)
         {
