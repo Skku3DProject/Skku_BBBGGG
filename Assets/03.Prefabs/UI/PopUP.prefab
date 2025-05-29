@@ -1835,6 +1835,7 @@ MonoBehaviour:
   - {fileID: 5478964170023737733}
   - {fileID: 2024841491651161054}
   - {fileID: 4045342335325517123}
+  PauseBackground: {fileID: 0}
 --- !u!114 &7455252974067701384
 MonoBehaviour:
   m_ObjectHideFlags: 0
