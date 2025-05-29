@@ -24,7 +24,7 @@ public class EnemyManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
 
     }
     public void SetEnemiesList(int capacity)

@@ -39,7 +39,6 @@ public class EnemyPoolManager : MonoBehaviour
 
                 _pools[poolSetting.key] = pool;
                 _maxEnemyCount += poolSetting.initialSize;
-                Debug.Log($"Pool created for key: {poolSetting.key}");
             }
             else
             {

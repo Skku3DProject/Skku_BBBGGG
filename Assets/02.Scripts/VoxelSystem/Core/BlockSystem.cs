@@ -39,14 +39,12 @@ public class BlockSystem : MonoBehaviour
             BlockHealthController.SetHealth(worldPos, GetInitialHealth(type));
 
         int preHp = BlockHealthController.GetHealth(worldPos);
-        Debug.Log($"[BlockSystem] DamageBlock at {worldPos}, HP: {preHp} -> {preHp - dmg}");
 
         BlockEffectManager.Instance?.PlayDamageEffect(worldPos);
 
         if (BlockHealthController.Damage(worldPos, dmg))
         {
             BlockEffectManager.Instance?.PlayBreakEffect(worldPos);
-            Debug.Log($"[BlockSystem] Block broken at {worldPos}");
 
             if (TryGetChunk(worldPos, out var chunk, out var local))
             {

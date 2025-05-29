@@ -27,7 +27,6 @@ public class EnemyUIPoolManager : MonoBehaviour
                 );
 
                 _pools[poolSetting.key] = pool;
-                Debug.Log($"Pool created for key: {poolSetting.key}");
             }
             else
             {
