@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BowAttack : WeaponAttackBase
 {
+    public static BowAttack Instance;
+
     private Animator _playerAnimation;
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
@@ -19,14 +21,20 @@ public class BowAttack : WeaponAttackBase
 
 
 
-    [SerializeField] private BowFireSkill _fireArrow;//활 스킬
-    [SerializeField] private BowThreeArrowSkill _tripleArrow;//활 스킬2
+    public BowFireSkill FireArrow;//활 스킬
+    public BowThreeArrowSkill TripleArrow;//활 스킬2
+
 
     void Awake()
     {
         _playerAnimation = GetComponent<Animator>();
         _equipmentController = GetComponent<PlayerEquipmentController>();
         _player = GetComponent<ThirdPersonPlayer>();
+    }
+
+    private void Start()
+    {
+        Instance = this;
     }
 
     public override void Attack()
@@ -82,7 +90,15 @@ public class BowAttack : WeaponAttackBase
 
     public override void TryDamageEnemy(GameObject enemy, Vector3 dir)
     {
+        float power = _equipmentController.GetCurrentWeaponAttackPower();
 
+        IDamageAble damageAble = enemy.GetComponent<IDamageAble>();
+        if (damageAble != null)
+        {
+            Damage damage = new Damage(power, gameObject, 100f, dir);
+            damageAble.TakeDamage(damage);
+            Debug.Log($"일반 화살로 {enemy.name}에게 {power}데미지를 입혔다!");
+        }
     }
 
     public override void OnAttackEffectPlay()
@@ -147,25 +163,25 @@ public class BowAttack : WeaponAttackBase
         
 
 
-        if (Input.GetMouseButtonDown(0) && _tripleArrow.CurrentThreeArrowSkill == true)
+        if (Input.GetMouseButtonDown(0) && TripleArrow.CurrentThreeArrowSkill == true)
         {
-            _tripleArrow.ShootThreeArrow();
+            TripleArrow.ShootThreeArrow();
             //IsAttacking = true;
-            Debug.Log("화살 3개 발사 중중");
+           // Debug.Log("화살 3개 발사 중중");
         }
 
-        if (Input.GetMouseButtonDown(0) && _fireArrow.CurrentArrowFireSkill == true)
+        if (Input.GetMouseButtonDown(0) && FireArrow.CurrentArrowFireSkill == true)
         {
-            _fireArrow.ShootFireArrow();
+            FireArrow.ShootFireArrow();
             //IsAttacking = true;
-            Debug.Log("불화살 발사 중중");
+           // Debug.Log("불화살 발사 중중");
         }
 
 
         else if (!Input.GetMouseButtonDown(0) || !_canShootNext)
            // && _tripleArrow.IsUsingSkill == false && _fireArrow.IsUsingSkill == false)
         {
-            Debug.Log("가운데를 향해 화살 발사 시도");
+            //Debug.Log("가운데를 향해 화살 발사 시도");
             return;
         }
 
@@ -173,14 +189,14 @@ public class BowAttack : WeaponAttackBase
             //&& _tripleArrow.IsUsingSkill == false && _fireArrow.IsUsingSkill == false)
         {
             ShootArrow();
-            Debug.Log("가운데를 향해 화살을 쏜다");
+            //Debug.Log("가운데를 향해 화살을 쏜다");
         }
 
         else if (Input.GetMouseButtonDown(0) 
-            && _tripleArrow.CurrentThreeArrowSkill == false && _fireArrow.CurrentArrowFireSkill == false)
+            && TripleArrow.CurrentThreeArrowSkill == false && FireArrow.CurrentArrowFireSkill == false)
         {
             Attack();
-            Debug.Log("어택 애니메이션 실행");//일반이랑 불 화살도 이 코드 실행중
+            //Debug.Log("어택 애니메이션 실행");//일반이랑 불 화살도 이 코드 실행중
         }
 
 
@@ -213,14 +229,14 @@ public class BowAttack : WeaponAttackBase
         }
 
         //조준이 완료되면 쏠 수 있도록
-        if (_fireArrow != null)
+        if (FireArrow != null)
         {
-            _fireArrow.Tick();
+            FireArrow.Tick();
         }
 
-        if (_tripleArrow != null)
+        if (TripleArrow != null)
         {
-            _tripleArrow.Tick();
+            TripleArrow.Tick();
         }
 
 

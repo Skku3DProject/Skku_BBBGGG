@@ -7,6 +7,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
+
         SwitchWeaponAttack();
         PlayerEquipmentController.Instance.OnChangeEquipment += SwitchWeaponAttack;
     }

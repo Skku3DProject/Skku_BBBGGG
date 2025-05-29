@@ -63,7 +63,7 @@ public class BowThreeArrowSkill : WeaponSkillBase
         // 활 장착 확인
         if (_equipmentController.GetCurrentEquipType() != EquipmentType.Bow)
         {
-            Debug.Log("활을 장착해야 트리플 샷 스킬을 사용할 수 있습니다.");
+            //Debug.Log("활을 장착해야 트리플 샷 스킬을 사용할 수 있습니다.");
             return;
         }
 
@@ -87,7 +87,7 @@ public class BowThreeArrowSkill : WeaponSkillBase
         IsUsingSkill = false;
         _player.CharacterController.stepOffset = 1f;
 
-        Debug.Log("트리플 샷 유지시간 끝남");
+       // Debug.Log("트리플 샷 유지시간 끝남");
         CurrentThreeArrowSkill = false;
 
     }
@@ -97,7 +97,7 @@ public class BowThreeArrowSkill : WeaponSkillBase
        if (CurrentThreeArrowSkill == true && _isAttacking == false)
         {
             _playerAnimation.SetTrigger("ThreeArrowAttack");
-            Debug.Log("트리플 샷 공격");
+            //Debug.Log("트리플 샷 공격");
             _isAttacking = true;
 
         }
@@ -107,7 +107,7 @@ public class BowThreeArrowSkill : WeaponSkillBase
     public void FireTripleArrows()
     {
 
-        Debug.Log("애니메이션 중에 쏘는거 호출됨 - 트리플 샷");
+        //Debug.Log("애니메이션 중에 쏘는거 호출됨 - 트리플 샷");
 
         /*if (_arrowPrefab == null)
         {
@@ -171,8 +171,8 @@ public class BowThreeArrowSkill : WeaponSkillBase
             }
             else
             {
-                Debug.LogWarning("화살 프리팹에 Rigidbody 컴포넌트가 없습니다. 물리적 움직임을 위해 추가해주세요!");
-                StartCoroutine(DestroyArrowAfterDelay(arrowInstance, _arrowLifetime));
+               // Debug.LogWarning("화살 프리팹에 Rigidbody 컴포넌트가 없습니다. 물리적 움직임을 위해 추가해주세요!");
+               // StartCoroutine(DestroyArrowAfterDelay(arrowInstance, _arrowLifetime));
             }
 
            // CanShootNext = false;
@@ -196,12 +196,12 @@ public class BowThreeArrowSkill : WeaponSkillBase
 
         _isAttacking = false;
         // 화살 수명 관리
-        StartCoroutine(DestroyArrowAfterDelay(rb.gameObject, lifetime));
+      //  StartCoroutine(DestroyArrowAfterDelay(rb.gameObject, lifetime));
     }
 
     public override void OnSkillAnimationEnd()
     {
-        Debug.Log("3개 활 쏘는 애니메이션 하고 실행될 거");
+       // Debug.Log("3개 활 쏘는 애니메이션 하고 실행될 거");
 
         //CanShootNext = true;
         _isAttacking = false;
@@ -209,14 +209,14 @@ public class BowThreeArrowSkill : WeaponSkillBase
 
 
 
-    private IEnumerator DestroyArrowAfterDelay(GameObject arrow, float delay)
+   /* private IEnumerator DestroyArrowAfterDelay(GameObject arrow, float delay)
     {
         yield return new WaitForSeconds(delay);
         if (arrow != null)
         {
             Destroy(arrow);
         }
-    }
+    }*/
 
 
     public override void Tick()
