@@ -17,6 +17,12 @@ public class EnemyManager : MonoBehaviour
     private MoveTypeGroupingStrategy _moveTypeStrategy = new();
     private TargetBasedGroupingStrategy _targetStrategy = new();
 
+    private List<Vector3> _spawnPositionList;
+    public List<Vector3> SpawnPositionList => _spawnPositionList;
+
+    private List<Enemy> _firstActiveEnemies;
+    public List<Enemy> FirstActiveEnemies => _firstActiveEnemies;
+
     private void Awake()
     {
         if (Instance != null)
@@ -32,6 +38,14 @@ public class EnemyManager : MonoBehaviour
     {
         _activeEnemies = new List<Enemy>(capacity);
     }
+
+    public void SpawnerMonsterPositionList(List<Vector3> spawnPositionList)
+    {
+        _spawnPositionList = spawnPositionList;
+        _firstActiveEnemies = new List<Enemy>(_activeEnemies);
+        
+    }
+
     public void OnActivity(Enemy enemy)
     {
         if (!_activeEnemies.Contains(enemy))

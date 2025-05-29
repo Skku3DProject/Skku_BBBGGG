@@ -21,15 +21,12 @@ public class EnemyIdleState : IFSM
         if (_enemy.EnemyData.EnemyMoveType != EEnemyMoveType.Fly)
         {
             Gravity();
-        }
-        else
-        {
             if (_enemy.CharacterController.isGrounded == false)
             {
                 return EEnemyState.Idle;
             }
         }
-
+        
         _timer += Time.deltaTime;
         if (_timer >= _idleTime)
         {

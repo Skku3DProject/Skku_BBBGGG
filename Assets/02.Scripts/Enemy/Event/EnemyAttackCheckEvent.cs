@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAttackCheckEvent : MonoBehaviour
@@ -78,20 +80,27 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     // 병사 되살리기 공격
     public void Summon()
     {
-        //for(int i = EnemyManager.Instance.ActiveEnemies.Count; i < EnemyManager.Instance.CurrentStageSpawnCount; i ++)
-        //{
-        //    Vector3 randomPos = GetRandomPositionAround();
-        //    Vector3 spawnPosition = new Vector3(randomPos.x, transform.position.y + height, randomPos.z);
-        //    // 죽을때마다 담는다?
-        //    EnemyPoolManager.Instance.GetObject()
-        //}
-        //for (int i = 0; i < _enemy.EnemyData.PrefabSize; i++)
-        //{
-        //    Vector3 randomPos = GetRandomPositionAroundPlayer();
-        //    Vector3 spawnPosition = new Vector3(randomPos.x, transform.position.y + height, randomPos.z);
-        //    // 풀링 소환
-        //    //Instantiate(fallingObjectPrefab, spawnPosition, Quaternion.identity);
-        //}
+        int currentEnemisCount = EnemyManager.Instance.FirstActiveEnemies.Count - EnemyManager.Instance.ActiveEnemies.Count;
+        List<Vector3> positions = new List<Vector3>();
+        List<string> keys = new List<string>(currentEnemisCount);
+        foreach (var enemy in EnemyManager.Instance.FirstActiveEnemies)
+        {
+            if (!enemy.gameObject.activeSelf)
+            {
+                keys.Add(enemy.EnemyData.Key);
+                int index = EnemyManager.Instance.FirstActiveEnemies.IndexOf(enemy);
+                positions.Add(EnemyManager.Instance.SpawnPositionList[index]); // 일치 보장
+            }
+        }
+     
+        for (int i=0; i< currentEnemisCount; i++)
+        {
+            GameObject enemy = EnemyPoolManager.Instance.GetObject(keys[i]);
+            Vector3 position = positions[i] + transform.position;
+            position.y = transform.position.y;
+            enemy.transform.position = position;
+        }
+
     }
     public void MeleeAttackEvent()
     {

@@ -15,6 +15,15 @@ public class EnemySpawner : MonoBehaviour
 
     private List<Vector3> _positionList;
 
+    private So_EnemySpawner currentSo;
+
+    private float spawnTimer = 0f;
+    private int spawnIndex = 0;
+    private bool isSpawning = false;
+
+    private List<GameObject> spawnEnemyPrefabs = new List<GameObject>();
+
+
     private void Start()
     {
         MaxSpawnCount = EnemyPoolManager.Instance.MaxEnemyCount;
@@ -29,10 +38,59 @@ public class EnemySpawner : MonoBehaviour
     public void Spawn()
     {
         SetSpawnPosition();
-      
 
-        StartCoroutine(Spawn_Coroutine());
+        int currentStage = (int)StageManager.instance.GetCurrentStage();
+        currentSo = SpawnerSo[currentStage];
+
+        spawnEnemyPrefabs.Clear();
+        spawnIndex = 0;
+        spawnTimer = 0f;
+
+        // 몬스터 프리팹 풀링에서 미리 받아옴
+        foreach (EnemySpawnContainer container in currentSo.SpawnEneies)
+        {
+            for (int i = 0; i < container.SpawnCounts; i++)
+            {
+                GameObject enemy = EnemyPoolManager.Instance.GetObject(container.So_Enemy.Key);
+                enemy.SetActive(false); // 일단 꺼놓고, 위치만 배치
+                spawnEnemyPrefabs.Add(enemy);
+            }
+        }
+
+        isSpawning = true;
     }
+
+    public void Update()
+    {
+        if (!isSpawning)
+            return;
+
+        spawnTimer += Time.deltaTime;
+
+        if (spawnTimer >= SpawnTime && spawnIndex < spawnEnemyPrefabs.Count)
+        {
+            spawnTimer = 0f;
+
+            GameObject enemy = spawnEnemyPrefabs[spawnIndex];
+            enemy.transform.position = _positionList[spawnIndex];
+            enemy.SetActive(true);
+
+            spawnIndex++;
+
+            if (spawnIndex >= spawnEnemyPrefabs.Count)
+            {
+                FinishSpawn();
+            }
+        }
+    }
+    private void FinishSpawn()
+    {
+        isSpawning = false;
+        UI_Enemy.Instance.UpdateHealthBars();
+        UIManager.instance.CurrentCountRefresh();
+        EnemyManager.Instance.SpawnerMonsterPositionList(_positionList);
+    }
+
     private void SetSpawnPosition()
     {
         _positionList.Clear(); // 기존 위치 초기화
@@ -48,31 +106,6 @@ public class EnemySpawner : MonoBehaviour
                 _positionList.Add(GetValidSpawnPosition(_minDistance));
             }
         }
-    }
-
-    private IEnumerator Spawn_Coroutine()
-    {
-        int i = 0;
-        int currentStage = (int)StageManager.instance.GetCurrentStage();
-        // 현재 스테이지에 소환 데이터
-        So_EnemySpawner currentSo = SpawnerSo[currentStage];
-        
-        // 스폰할 몬스터 양 가져오기
-        foreach(EnemySpawnContainer enemySpawnContainer in currentSo.SpawnEneies)
-        {
-            // 소환중인 몬스터의 번호
-            for(int index=0; index< enemySpawnContainer.SpawnCounts; index++)
-            {
-                // 현재 소환 몬스터 인덱스
-                GameObject enemy = EnemyPoolManager.Instance.GetObject(enemySpawnContainer.So_Enemy.Key);
-                enemy.transform.position = _positionList[i++];
-                yield return new WaitForSeconds(SpawnTime);
-            }
-        }
-      
-        UI_Enemy.Instance.UpdateHealthBars();
-        UIManager.instance.CurrentCountRefresh();
-        yield break;
     }
 
     private Vector3 GetValidSpawnPosition(float minDistance)
@@ -110,9 +143,10 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector3 GetRandomSpawnPosition()
     {
-        float x = Random.Range(-10f, 10f);
+        float x = UnityEngine.Random.Range(-10f, 10f);
         float z = Random.Range(-10f, 10f);
         float y = transform.position.y; // 지면 높이
+
         return new Vector3(x, y, z);
     }
 
