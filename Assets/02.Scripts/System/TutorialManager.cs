@@ -42,12 +42,13 @@ public class TutorialManager : MonoBehaviour
             tutorialQueue.Enqueue(CreateStepFromData(data));
         }
 
-        LoadNextStep();
     }
 
     private void Start()
     {
         TutorialEvent.OnProgress += AddProgress;
+        
+        LoadNextStep();
     }
 
     private TutorialBase CreateStepFromData(SO_Tutorial data)
