@@ -24702,10 +24702,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 50
-  maxVisibleHealthBars: 30
-  maxVisibleText: 30
-  HealthBarKey: HealthBarKey
-  DamageTextKey: DamageTextKey
+  maxVisibleHealthBars: 500
+  maxVisibleText: 500
+  HealthBarKey: HealthBar
+  DamageTextKey: DamageText
 --- !u!114 &6651764002957075852
 MonoBehaviour:
   m_ObjectHideFlags: 0
