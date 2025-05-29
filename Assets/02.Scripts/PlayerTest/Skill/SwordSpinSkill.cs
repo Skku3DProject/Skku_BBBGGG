@@ -71,7 +71,7 @@ public class SwordSpinSkill : WeaponSkillBase
 
     public override void Tick()
     {
-        Debug.Log("스핀하는 스킬 발동" + "Q 안 누름");
+        //Debug.Log("스핀하는 스킬 발동" + "Q 안 누름");
 
         if (Input.GetKeyDown(KeyCode.Q))
         {

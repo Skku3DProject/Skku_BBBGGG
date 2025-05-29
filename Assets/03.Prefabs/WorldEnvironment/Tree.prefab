@@ -327,6 +327,7 @@ MonoBehaviour:
     Wood: 100
     Stone: 0
   _health: 30
+  HitPrefab: {fileID: 8227808811761709394, guid: 6687d8c9c710d7948ab5ddcb5034a1f2, type: 3}
 --- !u!54 &-5628879568149180400
 Rigidbody:
   m_ObjectHideFlags: 0
