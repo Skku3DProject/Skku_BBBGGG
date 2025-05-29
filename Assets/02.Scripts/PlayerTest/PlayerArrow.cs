@@ -59,7 +59,7 @@ public class PlayerArrow : MonoBehaviour
 
         else if (other.gameObject.CompareTag("Ground"))
         {
-            Debug.Log("¶¥°ú Ãæµ¹");
+            //Debug.Log("¶¥°ú Ãæµ¹");
             Destroy(gameObject);
 
         }

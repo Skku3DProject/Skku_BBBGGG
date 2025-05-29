@@ -137,7 +137,7 @@ public class BowFireSkill : WeaponSkillBase
         {
             Damage damage = new Damage(power, gameObject, 100f, hitDirection);
             damageAble.TakeDamage(damage);
-            Debug.Log($"불 화살 스킬로 {enemy.name}에게 {power} 데미지를 입힘!");
+            //Debug.Log($"불 화살 스킬로 {enemy.name}에게 {power} 데미지를 입힘!");
         }
     }
 }
