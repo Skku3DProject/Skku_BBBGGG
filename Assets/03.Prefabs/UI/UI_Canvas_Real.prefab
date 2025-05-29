@@ -505,10 +505,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7049807394979024265}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 30, y: 0}
+  m_SizeDelta: {x: 55, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4262198667011149915
 CanvasRenderer:
@@ -1465,7 +1465,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 1
   m_CellSize: {x: 90, y: 90}
-  m_Spacing: {x: -13, y: 0}
+  m_Spacing: {x: -15, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &4963755634649820254
@@ -2156,6 +2156,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 92237304f0da63e49937087090458a0b, type: 2}
   - {fileID: 11400000, guid: c931b38f908e3da49a0bd770c7397f07, type: 2}
   - {fileID: 11400000, guid: 4b4b9797da6da8e4588302ab5013c251, type: 2}
+  - {fileID: 11400000, guid: e8680e60dc48db3479f730e6df7359c7, type: 2}
   InventoryOpen: 0
   _inventoryBase: {fileID: 7764807820812432447}
   _gridSystem: {fileID: 4632783372589760302}
@@ -2511,6 +2512,7 @@ MonoBehaviour:
   Timer: {fileID: 3779910001768745081}
   Tutorial: {fileID: 4513801346052751797}
   TutorialCount: {fileID: 2961855652250896748}
+  CurrenciesObjects: []
   GameOverPanel: {fileID: 4963755634649820254}
   TimerObject: {fileID: 3801402270377205335}
   CountObject: {fileID: 6289509450023480986}

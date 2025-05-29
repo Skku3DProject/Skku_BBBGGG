@@ -56,7 +56,7 @@ public class TestUI : MonoBehaviour
             cooltimeHandler.StartCooldown(SkillManager.instance.SelectskillTory.SkillSlots[0]);
             
         }
-    }
+    }   
 
     public void TutorialTest()
     {

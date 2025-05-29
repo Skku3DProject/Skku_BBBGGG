@@ -10,17 +10,29 @@ public class SkillSet : MonoBehaviour
     public Image LineOn;
     public Image LineOff;
     public Button ChildButton;
-    private bool _open = false;
+    public Image Lock;
+    public bool Open = false;
    
     private void Start()
     {
         skillButton = GetComponent<Button>(); 
         SkillManager.instance.RegisterSkill(this);
+        Lock.gameObject.SetActive(!skillButton.interactable);
     }
     public void OnClickAppearLevelUp()
     {
-        _open = !_open;
-        ChildButton.gameObject.SetActive(_open);
+        SkillTreeMaker[] skillTree = SkillManager.instance.SkillTreeMakers;
+        foreach (SkillTreeMaker treeMaker in skillTree)
+        {
+            foreach (SkillSet skillSet in treeMaker.SkillPrefab)
+            {
+                skillSet.Open = false;
+                skillSet.ChildButton.gameObject.SetActive(false);
+            }
+        }
+
+        Open = !Open;
+        ChildButton.gameObject.SetActive(Open);
     }
     
     // 버튼 클릭으로 스킬 레벨 올리기.
@@ -30,13 +42,14 @@ public class SkillSet : MonoBehaviour
         {
             skillButton.interactable = false;
             ChildButton.gameObject.SetActive(false);
+            
         }
         else
         {
             skillButton.interactable = true;
             
             ChildButton.gameObject.SetActive(false);
-            _open = false;
+            Open = false;
         }
         
     }
@@ -45,5 +58,12 @@ public class SkillSet : MonoBehaviour
     {
         LineOn.gameObject.SetActive(true);
         LineOff.gameObject.SetActive(false);
+        Lock.gameObject.SetActive(!skillButton.interactable);
+    }
+
+    private void OnDisable()
+    {
+        Open = false;
+        ChildButton.gameObject.SetActive(false);
     }
 }

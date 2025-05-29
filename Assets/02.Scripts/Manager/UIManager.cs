@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEditor.Timeline;
 
 public class UIManager : MonoBehaviour  
 {
@@ -100,7 +101,6 @@ public class UIManager : MonoBehaviour
     public void UI_TutorialEnd(float readyTime, float timer)
     {
         UI_SetMaxTimer(readyTime);
-        UI_TimerRefresh(timer);
         TutorialCount.gameObject.SetActive(false);
         Tutorial.gameObject.SetActive(false);
     }
@@ -116,14 +116,14 @@ public class UIManager : MonoBehaviour
     public void UI_SetMaxTimer(float value) => SetSliderValue(CurrentTime, value);
     
     // 슬라이더 리프레시하는 메서드
-    public void UI_EXPSlider(float value) => RefreshSlider(EXPBar, value);
+    public void UI_TimerSlider(float value) => RefreshSlider(CurrentTime, value);
     public void UI_MpSlider(float value)=> RefreshSlider(Mpbar, value);
     public void UI_HpSlider(float value) => RefreshSlider(HpBar, value);
     //--------------------------------------------------------------------
     private void SetSliderValue(Slider slider, float value)
     {
         slider.maxValue = value;
-        RefreshSlider(slider, value);
+        SlowRefreshSlider(slider, value);
     }
     //슬라이더를 조절하는 함수 베이스
     private void RefreshSlider(Slider slider, float value)
@@ -133,6 +133,29 @@ public class UIManager : MonoBehaviour
     public void UI_TimerRefresh(float time)
     {
         Timer.text = $"{(int)time}";
+        UI_TimerSlider(time);
+    }
+
+    public void EnemyCountSlider(float value, float duration)
+    {
+        CurrentTime.maxValue = value;
+        EnemyRefreshSlider(value, duration);
     }
     
+    private void SlowRefreshSlider(Slider slider, float value)
+    {
+        // 현재 트윈이 있다면 종료
+        slider.DOKill();
+    
+        // 목표 값으로 부드럽게 이동 (0.3초 정도 추천)
+        slider.DOValue(value, 3).SetEase(Ease.OutQuad);
+    }
+    public void EnemyRefreshSlider(float value, float duration)
+    {
+        // 현재 트윈이 있다면 종료
+        CurrentTime.DOKill();
+    
+        // 목표 값으로 부드럽게 이동 (0.3초 정도 추천)
+        CurrentTime.DOValue(value, duration).SetEase(Ease.OutQuad);
+    }
 }

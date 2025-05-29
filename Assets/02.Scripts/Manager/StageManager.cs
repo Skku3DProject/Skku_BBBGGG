@@ -30,7 +30,9 @@ public enum EStageType
 public class StageManager : MonoBehaviour
 {
     public static StageManager instance;
-    
+    private float _resetTime = 2;
+    private float _reducedTime = 0.3f;
+    private float _settingTime;
     private float _timer;
     [SerializeField] private float _readyTime = 1f;
     
@@ -39,7 +41,8 @@ public class StageManager : MonoBehaviour
     
     [SerializeField]private EStageType _currentStage = EStageType.Tutorial;
     [SerializeField]private EPhaseType _currentPhase = EPhaseType.Tutorial;
-    
+
+    private float _enemyCount => EnemyManager.Instance.ActiveEnemies.Count;
     // 에너미 카운트 세기
     private bool _allEnemiesDead => EnemyManager.Instance.ActiveEnemies.Count <= 0;  
     
@@ -66,6 +69,13 @@ public class StageManager : MonoBehaviour
         
         switch (_currentPhase)
         {
+            case EPhaseType.None:
+                _settingTime -= Time.deltaTime;
+                if (_settingTime <= 0)
+                {
+                    SliderSetting();
+                }
+                break;
             case EPhaseType.Ready:
                 _timer -= Time.deltaTime;
                 UIManager.instance.UI_TimerRefresh(_timer);
@@ -77,6 +87,7 @@ public class StageManager : MonoBehaviour
             
             case EPhaseType.Combat:
                 UIManager.instance.CurrentCountRefresh();
+                UIManager.instance.EnemyRefreshSlider(_enemyCount, _reducedTime);
                 if (_allEnemiesDead) 
                 {
                     CombatEnd();
@@ -93,6 +104,10 @@ public class StageManager : MonoBehaviour
             TutorialEnd();
             TutorialManager.Instance.TutorialSkip();
         }
+        else if (Input.GetKeyDown(KeyCode.J) && _currentPhase != EPhaseType.Tutorial)
+        {
+            CombatStart();
+        }
     }
     public void TutorialEnd()
     {
@@ -102,12 +117,17 @@ public class StageManager : MonoBehaviour
         UIManager.instance.UI_TutorialEnd(_readyTime, _timer);
     }
 
+    private void SliderSetting()
+    {
+        _currentPhase = EPhaseType.Ready;
+        UIManager.instance.UI_ObjectOnOff(UIManager.instance.TimerObject);   
+    }
     public void CombatEnd()
     {
         _currentPhase = EPhaseType.End;
         _timer = _readyTime;
+        _settingTime = _resetTime;
         UIManager.instance.UI_SetMaxTimer(_readyTime);
-        UIManager.instance.UI_ObjectOnOff(UIManager.instance.TimerObject);
         
         OnCombatEnd?.Invoke();
         
@@ -120,6 +140,8 @@ public class StageManager : MonoBehaviour
         UIManager.instance.UI_ObjectOnOff(UIManager.instance.CountObject);
         
         OnCombatStart?.Invoke();
+        
+        UIManager.instance.EnemyCountSlider(_enemyCount, _resetTime);
     }
     // 다음 스테이지 전환
     private void NextStage()
@@ -128,13 +150,13 @@ public class StageManager : MonoBehaviour
         if (nextIndex < (int)EStageType.Count)
         {
             _currentStage = (EStageType)nextIndex;
-            _currentPhase = EPhaseType.Ready;
+            _currentPhase = EPhaseType.None;
         }
         else
         {
             Debug.Log("스테이지 끝");
         }
-        UIManager.instance.UI_TimerRefresh(_timer);
+        
     }
     
     public EStageType GetCurrentStage()

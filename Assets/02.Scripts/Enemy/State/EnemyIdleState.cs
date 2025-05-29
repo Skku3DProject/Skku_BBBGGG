@@ -16,7 +16,7 @@ public class EnemyIdleState : IFSM
         _timer = 0;
     }
 
-    public EEnemyState Update() // ¼­·Î °Å¸® Á¶Àı
+    public EEnemyState Update() // ì„œë¡œ ê±°ë¦¬ ì¡°ì ˆ
     {
         if (_enemy.EnemyData.EnemyMoveType != EEnemyMoveType.Fly)
         {
@@ -52,6 +52,6 @@ public class EnemyIdleState : IFSM
             _enemy.GravityVelocity.y = -2f;
         }
 
-        _enemy.CharacterController.Move(_enemy.GravityVelocity * Time.deltaTime);         // Áß·Â ÀÌµ¿ ¹İ¿µ
+        _enemy.CharacterController.Move(_enemy.GravityVelocity * Time.deltaTime);         // ì¤‘ë ¥ ì´ë™ ë°˜ì˜
     }
 }

@@ -7,19 +7,19 @@ public class PlayerGetHitTest : MonoBehaviour
     public CapsuleCollider _capsuleCollider;
 
     private float _lastHitTime = -999f;
-    private float _hitCooldown = 0.5f; // 0.5ÃÊ¸¶´Ù ÇÑ ¹ø¸¸ Ãæµ¹ Ã³¸®
+    private float _hitCooldown = 0.5f; // 0.5ì´ˆë§ˆë‹¤ í•œ ë²ˆë§Œ ì¶©ëŒ ì²˜ë¦¬
 
     private void OnTriggerEnter(Collider other)
     {
         if (Time.time - _lastHitTime < _hitCooldown)
-            return; // ÄğÅ¸ÀÓ ³»¿¡´Â Ãæµ¹ ¹«½Ã
+            return; // ì¿¨íƒ€ì„ ë‚´ì—ëŠ” ì¶©ëŒ ë¬´ì‹œ
 
-        Debug.Log("¿ÀÅ©ÀÇ ¹«±â°¡ ¹«¾ğ°¡¿¡ ´êÀ½: " + other.name);
+        Debug.Log("ì˜¤í¬ì˜ ë¬´ê¸°ê°€ ë¬´ì–¸ê°€ì— ë‹¿ìŒ: " + other.name);
 
         //if (other.TryGetComponent<IDamageAble>(out var dmg) && other.CompareTag("Player"))
         //{
         //    dmg.TakeDamage(new Damage(_enemy.EnemyData.Power, _enemy.gameObject, _enemy.EnemyData.KnockbackPower));
-        //    _lastHitTime = Time.time; // ¸¶Áö¸· Ãæµ¹ ½Ã°£ °»½Å
+        //    _lastHitTime = Time.time; // ë§ˆì§€ë§‰ ì¶©ëŒ ì‹œê°„ ê°±ì‹ 
         //}
     }
 

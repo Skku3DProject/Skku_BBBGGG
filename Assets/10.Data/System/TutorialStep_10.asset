@@ -20,4 +20,4 @@ MonoBehaviour:
     Wood: 0
     Stone: 0
   TutoType: 9
-  RequireAmount: 4
+  RequireAmount: 2
