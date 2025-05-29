@@ -86,6 +86,8 @@ public class SkillManager : MonoBehaviour
             if(_skillSetDict.TryGetValue(childNode.Name, out SkillSet childSkillSet))
             {
                 childSkillSet.skillButton.interactable = interactable;
+                Debug.Log($"{childSkillSet.LineOn.name}");
+                childSkillSet.SkillLineOn();
             }
         }
     }

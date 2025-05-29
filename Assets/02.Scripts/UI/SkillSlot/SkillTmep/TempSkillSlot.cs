@@ -28,6 +28,7 @@ public class TempSkillSlot : MonoBehaviour
     private void OnEnable()
     {
         _skillTory = GetComponentInParent<SkillTory>();
+        CooltimeHandler = GetComponentInParent<SkillCooltimeHandler>();
         _skillNode = FindSkills(SlotData.Name);
         Cooldown = _skillNode.Cooldown;
         ActivateCheck();

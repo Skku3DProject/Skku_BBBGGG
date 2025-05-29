@@ -1,8 +1,9 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour  
 {
     public static UIManager instance;
     [Header("슬라이더")]
@@ -17,6 +18,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI Tutorial;
     public TextMeshProUGUI TutorialCount;
     [Header("오브젝트")]
+    public Image[] CurrenciesObjects;
     public GameObject GameOverPanel;
     public GameObject TimerObject;
     public GameObject CountObject;
@@ -56,6 +58,32 @@ public class UIManager : MonoBehaviour
         CountObject.SetActive(false);
         
         ui.SetActive(true);
+    }
+    // tab할 때 재황 표시하기
+    public void UI_AppearCurrency()
+    {
+        foreach (Image cur in CurrenciesObjects)
+        {
+            cur.DOKill();
+        }
+        
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(CurrenciesObjects[0].rectTransform.DOAnchorPosX( -30f, 0.1f).SetEase(Ease.OutCirc));
+        sequence.Join(CurrenciesObjects[1].rectTransform.DOAnchorPosX(-30f, 0.2f).SetEase(Ease.OutCirc));
+        sequence.Join(CurrenciesObjects[2].rectTransform.DOAnchorPosX(-30f, 0.3f).SetEase(Ease.OutCirc));
+        
+    }
+
+    public void UI_DisappearCurrency()
+    {   
+        foreach (Image cur in CurrenciesObjects)
+        {
+            cur.DOKill();
+        }
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(CurrenciesObjects[0].rectTransform.DOAnchorPosX( 250f, 0.1f).SetEase(Ease.OutCirc));
+        sequence.Join(CurrenciesObjects[1].rectTransform.DOAnchorPosX(250f, 0.2f).SetEase(Ease.OutCirc));
+        sequence.Join(CurrenciesObjects[2].rectTransform.DOAnchorPosX(250f, 0.3f).SetEase(Ease.OutCirc));
     }
     //튜토리얼 전체 변경
     public void UI_TutorialRefresh(string tutorial,float current, int require )
