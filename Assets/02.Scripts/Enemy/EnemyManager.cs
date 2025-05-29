@@ -16,6 +16,7 @@ public class EnemyManager : MonoBehaviour
     private Dictionary<Enemy, IEnemyGroupingStrategy> _enemyStrategies = new();
     private MoveTypeGroupingStrategy _moveTypeStrategy = new();
     private TargetBasedGroupingStrategy _targetStrategy = new();
+
     private void Awake()
     {
         if (Instance != null)

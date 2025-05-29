@@ -22,7 +22,14 @@ public class EnemyIdleState : IFSM
         {
             Gravity();
         }
-       
+        else
+        {
+            if (_enemy.CharacterController.isGrounded == false)
+            {
+                return EEnemyState.Idle;
+            }
+        }
+
         _timer += Time.deltaTime;
         if (_timer >= _idleTime)
         {

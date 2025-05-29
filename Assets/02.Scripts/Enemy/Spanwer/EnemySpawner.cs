@@ -13,9 +13,7 @@ public class EnemySpawner : MonoBehaviour
 
     public int MaxSpawnCount = 10;
 
-    //private float _minDistance = 1.0f; // 최소 거리 설정 
-
-    private List<GameObject> _positionList;
+    private List<Vector3> _positionList;
 
     private void Start()
     {
@@ -25,16 +23,20 @@ public class EnemySpawner : MonoBehaviour
         UI_Enemy.Instance.SetHPBarMaxSize(MaxSpawnCount);
         StageManager.instance.OnCombatStart += Spawn;
 
-        _positionList = new List<GameObject>(MaxSpawnCount);
+        _positionList = new List<Vector3>(MaxSpawnCount);
     }
 
     public void Spawn()
     {
+        SetSpawnPosition();
+      
+
         StartCoroutine(Spawn_Coroutine());
     }
-
-    private IEnumerator Spawn_Coroutine()
+    private void SetSpawnPosition()
     {
+        _positionList.Clear(); // 기존 위치 초기화
+
         int currentStage = (int)StageManager.instance.GetCurrentStage();
         So_EnemySpawner currentSo = SpawnerSo[currentStage];
 
@@ -42,29 +44,38 @@ public class EnemySpawner : MonoBehaviour
         {
             for (int i = 0; i < enemySpawnContainer.SpawnCounts; i++)
             {
-                if (EnemyPoolManager.Instance.GetObject(enemySpawnContainer.So_Enemy.Key).TryGetComponent<Enemy>(out var enemy))
-                {
-                    if (enemy.CharacterController == null)
-                    {
-                        Debug.Log(enemy.name);
-                        continue;
-                    }
-                    float _minDistance = enemy.CharacterController.radius;
-                    _positionList.Add(enemy.gameObject);
-                    Vector3 spawnPos = GetValidSpawnPosition(_minDistance);
-                    enemy.transform.position = spawnPos;
-                }
+                float _minDistance = 2;
+                _positionList.Add(GetValidSpawnPosition(_minDistance));
+            }
+        }
+    }
+
+    private IEnumerator Spawn_Coroutine()
+    {
+        int i = 0;
+        int currentStage = (int)StageManager.instance.GetCurrentStage();
+        // 현재 스테이지에 소환 데이터
+        So_EnemySpawner currentSo = SpawnerSo[currentStage];
+        
+        // 스폰할 몬스터 양 가져오기
+        foreach(EnemySpawnContainer enemySpawnContainer in currentSo.SpawnEneies)
+        {
+            // 소환중인 몬스터의 번호
+            for(int index=0; index< enemySpawnContainer.SpawnCounts; index++)
+            {
+                // 현재 소환 몬스터 인덱스
+                GameObject enemy = EnemyPoolManager.Instance.GetObject(enemySpawnContainer.So_Enemy.Key);
+                enemy.transform.position = _positionList[i++];
                 yield return new WaitForSeconds(SpawnTime);
             }
         }
-
-        _positionList.Clear(); // 기존 위치 초기화
+      
         UI_Enemy.Instance.UpdateHealthBars();
         UIManager.instance.CurrentCountRefresh();
         yield break;
     }
 
-    private Vector3 GetValidSpawnPosition( float minDistance)
+    private Vector3 GetValidSpawnPosition(float minDistance)
     {
         Vector3 spawnOffset;
         int maxAttempts = 100;
@@ -80,16 +91,16 @@ public class EnemySpawner : MonoBehaviour
         if (attempts >= maxAttempts)
         {
             Debug.LogWarning("Spawn position could not be found after max attempts");
-            return Vector3.zero;
+            return Vector3.zero + spawnOffset;
         }
 
         return transform.position + spawnOffset;
     }
     private bool IsValidPosition(Vector3 position,float minDistance)
     {
-        foreach (GameObject obj in _positionList)
+        foreach (Vector3 obj in _positionList)
         {
-            if (Vector3.Distance(obj.transform.position, position) < minDistance)
+            if (Vector3.Distance(obj, position) < minDistance)
             {
                 return false;
             }

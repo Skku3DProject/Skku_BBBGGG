@@ -78,6 +78,13 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     // 병사 되살리기 공격
     public void Summon()
     {
+        //for(int i = EnemyManager.Instance.ActiveEnemies.Count; i < EnemyManager.Instance.CurrentStageSpawnCount; i ++)
+        //{
+        //    Vector3 randomPos = GetRandomPositionAround();
+        //    Vector3 spawnPosition = new Vector3(randomPos.x, transform.position.y + height, randomPos.z);
+        //    // 죽을때마다 담는다?
+        //    EnemyPoolManager.Instance.GetObject()
+        //}
         //for (int i = 0; i < _enemy.EnemyData.PrefabSize; i++)
         //{
         //    Vector3 randomPos = GetRandomPositionAroundPlayer();
@@ -153,7 +160,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
         _isAttack = false;
     }
 
-    private Vector3 GetRandomPositionAroundPlayer()
+    private Vector3 GetRandomPositionAround()
     {
         Vector3 result;
         do

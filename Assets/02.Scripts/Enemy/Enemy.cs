@@ -64,8 +64,6 @@ public class Enemy : MonoBehaviour
             _uI_EnemyHpbar.Initialized();
         }
 
-        EnemyManager.Instance.SetMoveTypeGrouping(this);
-        gameObject.SetActive(true);
 	}
 
     public void TakeDamage(Damage damage)
