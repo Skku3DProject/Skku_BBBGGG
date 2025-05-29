@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d50cf7a9f93b1724f82b47ad40252bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitVfxPrefab: {fileID: 413363037028580369, guid: 0b16f2a754c93a3489d2710cb137fdab, type: 3}
+  HitVfxPrefab: {fileID: 1594605583612471805, guid: 5d983e478683a6242b794c283f4ed206, type: 3}
   _groundMask:
     serializedVersion: 2
     m_Bits: 8

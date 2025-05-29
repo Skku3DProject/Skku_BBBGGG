@@ -25,7 +25,8 @@ public class WorldManager : MonoBehaviour
 {
     [Header("참조")]
     public GameObject ChunkPrefab;
-    public Transform PlayerTransform;
+    public GameObject Player;
+    public Vector3 StartPos;
     public Transform BaseCampTransform;
     public Transform SpawenrTransform;
     [Header("보물상자 프리팹")]
@@ -66,7 +67,7 @@ public class WorldManager : MonoBehaviour
     {
         StageManager.instance.OnCombatStart += BackupCentralChunks;
         StageManager.instance.OnCombatEnd += RestoreCentralChunks;
-
+        StageManager.instance.OnCombatEnd += ResetPlayer;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         BackupCentralChunks();
@@ -88,7 +89,7 @@ public class WorldManager : MonoBehaviour
             StageManager.instance.OnCombatStart += BackupCentralChunks;
             StageManager.instance.OnCombatEnd += RestoreCentralChunks;
 
-            PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            Player = GameObject.FindGameObjectWithTag("Player");
             BaseCampTransform = GameObject.FindGameObjectWithTag("BaseTower").transform;
             PositionPlayerAtCenter();
             SpawenrTransform = GameObject.FindGameObjectWithTag("EnemySpawner").transform;
@@ -99,7 +100,10 @@ public class WorldManager : MonoBehaviour
     }
     //-----------------------------------맵 로딩 용
 
-
+    private void ResetPlayer()
+    {
+        Player.transform.position = StartPos;
+    }
     public void GenerateInEditor()
     {
         GenerateGrid();
@@ -151,13 +155,13 @@ public class WorldManager : MonoBehaviour
         chunk.BuildMesh();
         SpawnEnvironmentObjects(chunk);
 
-       // BlockController.RegisterChunk(coord, chunk);
+        // BlockController.RegisterChunk(coord, chunk);
         _chunks.Add(coord, chunk);
     }
 
     void PositionPlayerAtCenter()
     {
-        if (PlayerTransform == null || _chunks.Count == 0)
+        if (Player == null || _chunks.Count == 0)
             return;
 
         int totalWidth = GridWidth * Chunk.CHUNK_WIDTH;
@@ -174,12 +178,13 @@ public class WorldManager : MonoBehaviour
 
         int surfaceY = FindSurfaceY(centerChunk, localX, localZ);
         Vector3 spawnPos = new Vector3(centerX + 0.5f, surfaceY + 2f, centerZ + 0.5f);
-        PlayerTransform.position = spawnPos;
+        StartPos = spawnPos;
+        Player.transform.position = spawnPos;
         BaseCampTransform.position = spawnPos;
     }
     void PositionSpawner()
     {
-        if (PlayerTransform == null || _chunks.Count == 0)
+        if (Player == null || _chunks.Count == 0)
             return;
 
         // 플레이어 기준 중심 좌표 계산
@@ -197,8 +202,8 @@ public class WorldManager : MonoBehaviour
 
         int surfaceY = FindSurfaceY(centerChunk, localX, localZ);
 
-        Vector3 playerPos = PlayerTransform.position;
-        Vector3 forward = PlayerTransform.forward;
+        Vector3 playerPos = Player.transform.position;
+        Vector3 forward = Player.transform.forward;
         Vector3 frontPos = playerPos + forward.normalized * Distance;
 
         int spawnerX = Mathf.FloorToInt(frontPos.x);

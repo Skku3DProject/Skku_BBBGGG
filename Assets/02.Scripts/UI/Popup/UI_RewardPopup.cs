@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class UI_RewardPopup : UI_Popup
 {
@@ -21,17 +21,17 @@ public class UI_RewardPopup : UI_Popup
         {
             case RewardType.Buff:
                 rewardText.text = "가호 버프를 획득했습니다!";
-                //rewardIcon.sprite = buffIcon;
+                rewardIcon.sprite = buffIcon;
                 break;
 
             case RewardType.Potion:
                 rewardText.text = "물약을 획득했습니다!";
-                //rewardIcon.sprite = potionIcon;
+                rewardIcon.sprite = potionIcon;
                 break;
 
             case RewardType.SkillPoint:
                 rewardText.text = "스킬 포인트를 획득했습니다!";
-                //rewardIcon.sprite = skillPointIcon;
+                rewardIcon.sprite = skillPointIcon;
                 break;
         }
     }
