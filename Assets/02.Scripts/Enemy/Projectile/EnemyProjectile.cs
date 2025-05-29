@@ -1,16 +1,11 @@
 using UnityEngine;
 
-public enum EnemyProjectileType
-{
-    Arrow,
-    Stone
-}
+
 public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
 {
     public So_EnemyProjectile ProjectileData;
 
-    public EnemyProjectileType type;
-
+    private TrailRenderer _trailRenderer;
     private Damage _damage;
     private Vector3 _startPosision = Vector3.zero;
     private Vector3 _targetPosision = Vector3.zero;
@@ -24,6 +19,8 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
     private bool _isFire = false;
     private bool _isPooled = false; // 풀 반환 상태 추적
 
+    private Collider[] hits = new Collider[100];
+
     public void OnSpawn()
     {
         _isPooled = false;
@@ -31,14 +28,16 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
     }
     public void OnDespawn()
     {
+        transform.SetParent(EnemyObjectPoolManger.Instance.gameObject.transform);
         _isPooled = true;
     }
-  
+
     private void Awake()
     {
         if (ProjectileData != null)
         {
             _damage = new Damage(ProjectileData.Damage, this.gameObject, ProjectileData.KnockbackPower);
+            _trailRenderer = GetComponentInChildren<TrailRenderer>();
         }
         else
         {
@@ -48,18 +47,25 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
 
     public void Initialize()
     {
+        _trailRenderer.Clear();
+        _trailRenderer.enabled = false;
         _isFire = false;
         _timer = 0;
         _isPooled = false;
+        if (transform.localScale != Vector3.one)
+        {
+            transform.localScale = Vector3.one;
+        }
     }
 
     public void Fire(Vector3 targetPos)
     {
         if (_isPooled) return; // 이미 풀에 반환된 객체라면 실행하지 않음
-
+        _trailRenderer.enabled = true;
+        transform.SetParent(null);
         _startPosision = transform.position;
         _targetPosision = targetPos;
-        
+
 
         if (transform.localScale != Vector3.one)
         {
@@ -84,7 +90,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
 
         _timer += Time.deltaTime;
 
-        if (_timer > 0.5f)
+        if (_timer > 0.5f && ProjectileData.Type == EnemyProjectileType.Area)
         {
             CheckGroundHit();
         }
@@ -138,35 +144,56 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
         if (_isPooled) return;
 
         Vector3Int blockPos = Vector3Int.FloorToInt(hit.point + hit.normal * -0.5f);
-
-        if(type == EnemyProjectileType.Stone)
-            BlockSystem.DamageBlocksInRadius(blockPos, 5f,10);
+        BlockSystem.DamageBlocksInRadius(blockPos, ProjectileData.AreaRange, (int)_damage.Value);
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (_isPooled || other == null) return;
+        if (_isPooled || other == null || other.CompareTag("Enemy")) return;
 
-        bool isValidTarget = other.CompareTag("Player") || other.CompareTag("Tower");
+        if (ProjectileData.Type == EnemyProjectileType.Area)
+        {
+            AreaAttack(other);
+        }
+        else if (ProjectileData.Type == EnemyProjectileType.Point)
+        {
+            PointAttack(other);
+        }
 
-        if (other.TryGetComponent<IDamageAble>(out IDamageAble damageAble) && isValidTarget)
+    }
+
+    private void AreaAttack(Collider other)
+    {
+        BlockSystem.DamageBlocksInRadius(other.transform.position, ProjectileData.AreaRange, (int)_damage.Value);
+
+        int cnt = Physics.OverlapSphereNonAlloc(
+            transform.position,
+            ProjectileData.AreaRange,
+            hits
+        );
+
+        for (int i = 0; i < cnt; i++)
+        {
+            if (hits[i].TryGetComponent<IDamageAble>(out var dmg))
+            {
+                dmg.TakeDamage(_damage);
+            }
+        }
+
+    }
+
+    private void PointAttack(Collider other)
+    {
+        if (other.TryGetComponent<IDamageAble>(out IDamageAble damageAble))
         {
             if (damageAble != null && _damage != null)
             {
                 damageAble.TakeDamage(_damage);
             }
-         
-
-            if (type == EnemyProjectileType.Stone)
-                BlockSystem.DamageBlocksInRadius(other.transform.position, 5f, 10);
-
-            UnEnable();
         }
-        else
-        {
-            Debug.Log("설마?");
-           UnEnable();
-        }
+
+        UnEnable();
     }
+
 
     private void UnEnable()
     {

@@ -21,6 +21,7 @@ public class EnemyDamageState : IFSM
         _damagedTimer = 0;
         _enemy.Animator.SetTrigger("Damage");
         _enemy.CharacterController.stepOffset = 0;
+        EnemyManager.Instance.ClearGrouping(_enemy);
     }
 
     public EEnemyState Update()

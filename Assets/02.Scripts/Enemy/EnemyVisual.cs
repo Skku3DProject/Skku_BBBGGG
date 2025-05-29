@@ -1,26 +1,31 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyVisual : MonoBehaviour
 {
     private Renderer[] _allRenderers;
     private MaterialPropertyBlock _propBlock;
-    private static readonly int EmissionColorID = Shader.PropertyToID("_EmissionColor"); // URP용 컬러 ID
-    private Color _originalColor = Color.white;
+    private static readonly int _ColorID = Shader.PropertyToID("_RimColor"); // URP용 컬러 ID
+    private Color _originalColor = Color.black;
+    private Color _hitColor = Color.white;
+    public string ColorHexadecimal;
 
     private void Awake()
     {
-        _allRenderers =  GetComponentsInChildren<Renderer>();
+        // FF5858
+        _allRenderers = GetComponentsInChildren<Renderer>();
         _propBlock = new MaterialPropertyBlock();
+
+        // 코드로 색가져오기
+        //  ColorUtility.TryParseHtmlString(ColorHexadecimal, out _hitColor);
         // 첫 번째 유효한 머티리얼에서 초기 색상 저장
         foreach (var r in _allRenderers)
         {
             r.GetPropertyBlock(_propBlock);
-            if (r.sharedMaterial.HasProperty(EmissionColorID))
+            if (r.sharedMaterial.HasProperty(_ColorID))
             {
-                _originalColor = r.sharedMaterial.GetColor(EmissionColorID);
-               
+                _originalColor = r.sharedMaterial.GetColor(_ColorID);
+
                 break;
             }
         }
@@ -36,9 +41,10 @@ public class EnemyVisual : MonoBehaviour
         foreach (var r in _allRenderers)
         {
             r.GetPropertyBlock(_propBlock);
-            if (r.sharedMaterial.HasProperty(EmissionColorID))
+            if (r.sharedMaterial.HasProperty(_ColorID))
             {
-                _propBlock.SetColor(EmissionColorID, Color.white);
+                Debug.Log("Hit");
+                _propBlock.SetColor(_ColorID, _hitColor);
                 r.SetPropertyBlock(_propBlock);
                 Debug.Log(_propBlock);
             }
@@ -49,9 +55,9 @@ public class EnemyVisual : MonoBehaviour
         foreach (var r in _allRenderers)
         {
             r.GetPropertyBlock(_propBlock);
-            if (r.sharedMaterial.HasProperty(EmissionColorID))
+            if (r.sharedMaterial.HasProperty(_ColorID))
             {
-                _propBlock.SetColor(EmissionColorID, _originalColor);
+                _propBlock.SetColor(_ColorID, _originalColor);
                 r.SetPropertyBlock(_propBlock);
             }
         }

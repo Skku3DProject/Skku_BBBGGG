@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class EnemyAttackCheckEvent : MonoBehaviour
@@ -51,6 +49,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
             Debug.LogError("ProjectilePrefabs가 null이거나 비어있습니다!");
             return;
         }
+        _projectile.transform.SetParent(_enemy.ProjectileTransfrom);
     }
 
     public void RangedAttackEvent()
@@ -66,7 +65,6 @@ public class EnemyAttackCheckEvent : MonoBehaviour
             Debug.LogError("타겟이 설정되지 않았습니다!");
             return;
         }
-
         Vector3 targetPosition = _enemy.Target.transform.position;
         targetPosition.y = _enemy.transform.position.y; // Y축 고정
         _enemy.transform.LookAt(targetPosition);
@@ -119,8 +117,6 @@ public class EnemyAttackCheckEvent : MonoBehaviour
         //    //Instantiate(fallingObjectPrefab, spawnPosition, Quaternion.identity);
         //}
     }
-
-
 
     public void AreaAttackEventStart()
     {

@@ -31,6 +31,7 @@ public class EnemyObjectPool
         _createCount++;
         return obj;
     }
+
     public GameObject Get(Vector3 position = default)
     {
         GameObject obj = null;
@@ -49,7 +50,12 @@ public class EnemyObjectPool
         {
             obj.TryGetComponent<IEnemyPoolable>(out var poolable);
             poolable?.OnSpawn();
-            obj.transform.position = position;
+
+            if(position != default)
+            {
+                obj.transform.position = position;
+            }
+
             obj.gameObject.SetActive(true);
         }
 

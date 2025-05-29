@@ -5,7 +5,7 @@ public class EnemyFlocking
 {
     public Vector3 CalculateSeparation(Vector3 pos, Enemy enemy)
     {
-        if (!EnemyManager.Instance.TryCheckMoveRegister(enemy))
+        if (!EnemyManager.Instance.TryCheckRegister(enemy))
         {
             return Vector3.zero;
         }
@@ -39,7 +39,7 @@ public class EnemyFlocking
 
     public Vector3 CalculateCohesion(Vector3 pos, Enemy enemy)
     {
-        if (!EnemyManager.Instance.TryCheckMoveRegister(enemy))
+        if (!EnemyManager.Instance.TryCheckRegister(enemy))
         {
             return Vector3.zero;
         }
@@ -65,7 +65,7 @@ public class EnemyFlocking
     }
     public Vector3 CalculateAlignment(Enemy enemy)
     {
-        if (!EnemyManager.Instance.TryCheckMoveRegister(enemy))
+        if (!EnemyManager.Instance.TryCheckRegister(enemy))
         {
             return Vector3.zero;
         }

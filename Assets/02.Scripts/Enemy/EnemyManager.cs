@@ -81,7 +81,7 @@ public class EnemyManager : MonoBehaviour
         _enemyStrategies[enemy] = newStrategy;
     }
 
-    public bool TryCheckMoveRegister(Enemy enemy)
+    public bool TryCheckRegister(Enemy enemy)
     {
         if (_enemyStrategies.TryGetValue(enemy, out var strategy))
         {

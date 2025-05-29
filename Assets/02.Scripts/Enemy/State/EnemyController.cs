@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
@@ -24,6 +25,7 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
     private EnemyVisual _enemyVisual;
 
     private EnemyAttackCheckEvent _enemyAttackCheckEvent;
+
     public void OnSpawn()
     {
         Initialize();// 활성화 시 호출
@@ -136,15 +138,13 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
         _stateMap[_currentState].End();
         // 새 상태 진입
         _currentState = nextState;
+        
         _stateMap[_currentState].Start();
     }
     
     public void TakeDamage(Damage damage)
     {
-        if(!EnemyManager.Instance.TryCheckMoveRegister(_enemy)) // 공격 그룹에 속해 있으면
-        {
-            EnemyManager.Instance.ClearGrouping(_enemy);
-        }
+        EnemyManager.Instance.ClearGrouping(_enemy);
 
         if (_currentState == EEnemyState.Damaged || _currentState == EEnemyState.Die)
         {
@@ -159,26 +159,40 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
             return;
         }
         
-        if(_enemyAttackCheckEvent.IsAttack)
-        {
-            return;
-        }
-        // 공격 중이면 리턴
-
         OnHit(damage);
         ChangeState(EEnemyState.Damaged);
     }
     private void OnHit(Damage damage)
     {
-        damage.Direction += Vector3.up * 0.5f; // 살짝 대각선 위로
-        damage.Direction.Normalize();
-
         Vector3 targetPosition = _enemy.Target.transform.position;
         targetPosition.y = _enemy.transform.position.y; // Y축 고정
         _enemy.transform.LookAt(targetPosition);
-        _enemy.CharacterController.Move(damage.Direction * damage.KnockbackPower * Time.deltaTime);
         _enemyVisual.PlayHitFeedback(_enemy.EnemyData.DamagedTime);
+        
+        ApplyKnockback(damage);
 
+    }
+    public void ApplyKnockback(Damage damage)
+    {
+        damage.Direction += Vector3.up * 1f; // 살짝 대각선 위로
+        damage.Direction.Normalize();
+        // 기존 넉백 중이면 중복 방지
+    
+        StartCoroutine(KnockbackCoroutine(damage));
+    }
+
+    private IEnumerator KnockbackCoroutine(Damage damage)
+    {
+        float elapsed = 0f;
+
+        while (elapsed <= 0.1)
+        {
+            // 프레임 단위로 일정 거리 이동
+            _enemy.CharacterController.Move(damage.Direction * damage.KnockbackPower * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        yield break;
     }
     public void EndAttackAnimEvent()
     {
