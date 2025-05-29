@@ -1,4 +1,148 @@
-﻿using Unity.VisualScripting;
+﻿using UnityEngine;
+using System.Collections;
+
+public class BowFireSkill : WeaponSkillBase
+{
+    public GameObject FireEffect;
+
+    public GameObject MyPlayer;
+    private Animator _playerAnimation;
+    private PlayerEquipmentController _equipmentController;
+    private ThirdPersonPlayer _player;
+
+    [Header("Skill Settings")]
+    [SerializeField] private GameObject _arrowPrefab;
+    [SerializeField] private float _skillDamageMultiplier = 2f;
+    [SerializeField] private float _arrowForce = 20f;
+    [SerializeField] private float _arrowLifetime = 5f;
+    [SerializeField] private float _skillDuration = 10f;
+
+    [Header("Arrow Spawn Point")]
+    [SerializeField] private Transform _bowArrowSpawnPoint;
+    [SerializeField] private Vector3 _arrowModelRotationOffset = new Vector3(90f, 0f, 0f);
+
+    private BowThreeArrowSkill _bowThreeArrowSkill;
+    public bool CurrentArrowFireSkill;
+    public override bool IsUsingSkill { get; protected set; }
+    private bool _isAttacking;
+
+    private void Awake()
+    {
+        MyPlayer = GameObject.FindGameObjectWithTag("Player");
+        _playerAnimation = GetComponent<Animator>();
+        _equipmentController = GetComponent<PlayerEquipmentController>();
+        _player = MyPlayer.GetComponent<ThirdPersonPlayer>();
+        _bowThreeArrowSkill = MyPlayer.GetComponent<BowThreeArrowSkill>();
+    }
+
+    public override void UseSkill()
+    {
+        FireEffect.SetActive(true);
+
+        if (_equipmentController.GetCurrentEquipType() != EquipmentType.Bow)
+        {
+            return;
+        }
+
+        IsUsingSkill = true;
+        _player.CharacterController.stepOffset = 0f;
+        StartCoroutine(EndSkillAfterDelay(_skillDuration));
+    }
+
+    private IEnumerator EndSkillAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _playerAnimation.SetTrigger("Idle");
+        IsUsingSkill = false;
+        _player.CharacterController.stepOffset = 1f;
+        CurrentArrowFireSkill = false;
+        FireEffect.SetActive(false);
+    }
+
+    public void ShootFireArrow()
+    {
+        if( CurrentArrowFireSkill && !_isAttacking)
+        {
+            _playerAnimation.SetTrigger("FireArrowAttack");
+            _isAttacking = true;
+        }
+    }
+
+    public void FireSingleArrow()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Vector3 targetPoint;
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f))
+        {
+            targetPoint = hitInfo.point;
+        }
+        else
+        {
+            targetPoint = ray.origin + ray.direction * 100f;
+        }
+
+        Vector3 shootDirection = (targetPoint - _bowArrowSpawnPoint.position).normalized;
+
+        GameObject arrowInstance = Instantiate(_arrowPrefab, _bowArrowSpawnPoint.position, Quaternion.LookRotation(shootDirection));
+        arrowInstance.transform.Rotate(_arrowModelRotationOffset, Space.Self);
+
+        Rigidbody rb = arrowInstance.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            StartCoroutine(ApplyForceToArrowAfterDelay(rb, shootDirection.normalized * _arrowForce, _arrowLifetime));
+        }
+    }
+
+    private IEnumerator ApplyForceToArrowAfterDelay(Rigidbody rb, Vector3 force, float lifetime)
+    {
+        yield return new WaitForFixedUpdate();
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.AddForce(force, ForceMode.VelocityChange);
+        }
+
+        _isAttacking = false;
+    }
+
+    public override void OnSkillAnimationEnd()
+    {
+        _isAttacking = false;
+    }
+
+    public override void Tick()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            UseSkill();
+            _bowThreeArrowSkill.CurrentThreeArrowSkill = false;
+            CurrentArrowFireSkill = true;
+        }
+    }
+
+    public override void OnSkillEffectPlay() { }
+
+    public override void TryDamageEnemy(GameObject enemy, Vector3 hitDirection)
+    {
+        if (!IsUsingSkill) return;
+
+        float power = _equipmentController.GetCurrentWeaponAttackPower() * _skillDamageMultiplier;
+
+        IDamageAble damageAble = enemy.GetComponent<IDamageAble>();
+        if (damageAble != null)
+        {
+            Damage damage = new Damage(power, gameObject, 100f, hitDirection);
+            damageAble.TakeDamage(damage);
+            Debug.Log($"불 화살 스킬로 {enemy.name}에게 {power} 데미지를 입힘!");
+        }
+    }
+}
+
+
+/*using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,11 +192,7 @@ public class BowFireSkill : WeaponSkillBase
 
     public override void UseSkill()
     {
-        /* if (!IsSkillAvailable())
-         {
-             Debug.Log("불 화살 공격 쿨타임 안참");
-             return;
-         }*/
+
 
         //장착하고 있는 게 검이 아니면 스킬 사용 불가
         if (_equipmentController.GetCurrentEquipType() != EquipmentType.Bow)
@@ -104,11 +244,12 @@ public class BowFireSkill : WeaponSkillBase
 
     public void ShootArrow()
     {
-        //Debug.Log("애니메이션 중에 쏘는거 호출됨 - 불화살");
+        Debug.Log("애니메이션 중에 쏘는거 호출됨 - 불화살");
 
         if (_arrowPrefab == null || _bowArrowSpawnPoint == null || Camera.main == null) return;
 
         PlayerArrow arrow = Instantiate(_arrowPrefab, _bowArrowSpawnPoint.position, Quaternion.identity).GetComponent<PlayerArrow>();
+        Debug.Log($"ShootArrow에서 생성된 화살 ID: {arrow.GetInstanceID()}");
         arrow.SetAttackPower(PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower());
 
         Rigidbody rb = arrow.GetComponent<Rigidbody>();
@@ -147,10 +288,6 @@ public class BowFireSkill : WeaponSkillBase
         //_lastAttackTime = Time.time;
     }
 
-    /* public override bool IsSkillAvailable()
-     {
-         return Time.time >= lastUseTime + cooltime;
-     }*/
 
     private IEnumerator ApplyForceToArrowAfterDelay(Rigidbody rb, Vector3 force, float lifetime)
     {
@@ -170,14 +307,7 @@ public class BowFireSkill : WeaponSkillBase
        // StartCoroutine(DestroyArrowAfterDelay(rb.gameObject, lifetime));
     }
 
-  /*  private IEnumerator DestroyArrowAfterDelay(GameObject arrow, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        if (arrow != null)
-        {
-            Destroy(arrow);
-        }
-    }*/
+
 
     public override void Tick()
     {
@@ -224,3 +354,4 @@ public class BowFireSkill : WeaponSkillBase
     }
 
 }
+*/

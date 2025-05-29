@@ -1,7 +1,17 @@
 using UnityEngine;
 
+public enum BowSkillState
+{
+    None,
+    FireArrow,
+    TripleArrow,
+    Normal
+}
+
 public class BowAttack : WeaponAttackBase
 {
+    private BowSkillState currentSkill = BowSkillState.None;
+
     public static BowAttack Instance;
 
     private Animator _playerAnimation;
@@ -160,48 +170,24 @@ public class BowAttack : WeaponAttackBase
 
     private void HandleFireInput()
     {
-
-
-
-        if (Input.GetMouseButtonDown(0) && TripleArrow.CurrentThreeArrowSkill == true)
+        if (Input.GetMouseButtonDown(0))
         {
-            TripleArrow.ShootThreeArrow();
-            //IsAttacking = true;
-            Debug.Log("화살 3개 발사 중중");
+            if (TripleArrow.CurrentThreeArrowSkill)
+            {
+                currentSkill = BowSkillState.TripleArrow;
+                TripleArrow.ShootThreeArrow();
+            }
+            else if (FireArrow.CurrentArrowFireSkill)
+            {
+                currentSkill = BowSkillState.FireArrow;
+                FireArrow.ShootFireArrow();
+            }
+            else
+            {
+                currentSkill = BowSkillState.Normal;
+                Attack(); // 일반 화살용 애니메이션
+            }
         }
-
-        if (Input.GetMouseButtonDown(0) && FireArrow.CurrentArrowFireSkill == true)
-        {
-            FireArrow.ShootFireArrow();
-            //IsAttacking = true;
-            Debug.Log("불화살 발사 중중");
-        }
-
-
-        else if (!Input.GetMouseButtonDown(0) || !_canShootNext)
-        //&& _tripleArrow.IsUsingSkill == false && _fireArrow.IsUsingSkill == false)
-        {
-            Debug.Log("가운데를 향해 화살 발사 시도");
-            return;
-        }
-
-        /*else if (isAiming)
-            //&& _tripleArrow.IsUsingSkill == false && _fireArrow.IsUsingSkill == false)
-        {
-            ShootArrow();
-            Debug.Log("가운데를 향해 화살을 쏜다");
-        }*/
-
-        else if (Input.GetMouseButtonDown(0)
-            && TripleArrow.CurrentThreeArrowSkill == false && FireArrow.CurrentArrowFireSkill == false)
-        {
-            Attack();
-            Debug.Log("어택 애니메이션 실행");//일반이랑 불 화살도 이 코드 실행중
-        }
-
-
-
-
     }
 
     private void UpdateAttackCooldown()

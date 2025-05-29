@@ -59104,7 +59104,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.8333333
-    functionName: ShootArrow
+    functionName: FireSingleArrow
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 04fadc818aaa43e4abec189fe7b8cc2e, type: 3}
     floatParameter: 0
