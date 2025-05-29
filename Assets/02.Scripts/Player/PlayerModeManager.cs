@@ -37,6 +37,5 @@ public class PlayerModeManager : MonoBehaviour
         OnModeChanged?.Invoke(mode);
 
 
-        Debug.Log(CurrentMode.ToString());
     }
 }

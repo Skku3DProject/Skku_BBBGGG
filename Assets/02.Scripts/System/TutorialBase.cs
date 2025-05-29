@@ -17,7 +17,6 @@ public abstract class TutorialBase
 
     public virtual void Start()
     {
-        Debug.Log($"튜토리얼 시작: {_tutorial.Discription}");
     }
 
     public abstract void OnProgress(TutorialType type, float amount);

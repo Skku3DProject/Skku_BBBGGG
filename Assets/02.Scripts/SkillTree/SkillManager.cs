@@ -48,8 +48,6 @@ public class SkillManager : MonoBehaviour
         _swordSkillTree = SkillTreeMakers[0].Skill;
         _bowSkillTree = SkillTreeMakers[1].Skill;
         _magicSkillTree = SkillTreeMakers[2].Skill;
-        Debug.Log("treeset start");
-
     }
 
     private void OnEnable()

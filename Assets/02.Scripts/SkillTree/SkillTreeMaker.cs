@@ -11,7 +11,6 @@ public class SkillTreeMaker : MonoBehaviour
         // 첫 번째 프리펩을 루트로 지정
         Skill = new SkillTree(SkillPrefab[0].skillNode);
         TreeSetting();
-        Debug.Log(Skill.StartNode.Children.Count);
     }
     
     // 스킬들 children으로 집어넣기

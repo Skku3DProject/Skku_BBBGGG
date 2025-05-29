@@ -37,11 +37,9 @@ public class TestUI : MonoBehaviour
     }
     public void CombatTest()
     {
-        Debug.Log("몬스터 소환");
     }
     public void ActionTest()
     {
-        Debug.Log("스테이지 종료");
     }
     // 2. 그 스킬칸의 isactive를 체크
     /// <summary>

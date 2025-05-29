@@ -403,7 +403,6 @@ public class WorldManager : MonoBehaviour
 
     public void BackupCentralChunks()
     {
-        Debug.Log("BackUpStart");
         _savedChunkData.Clear();
 
         int centerX = GridWidth / 2;

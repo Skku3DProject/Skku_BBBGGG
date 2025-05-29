@@ -60,7 +60,6 @@ public class BowAttack : WeaponAttackBase
 
     public void ShootArrow()
     {
-        Debug.Log("애니메이션 중에 쏘는거 호출됨");
 
         if (arrowPrefab == null || shootPoint == null || Camera.main == null) return;
 
@@ -107,7 +106,6 @@ public class BowAttack : WeaponAttackBase
         {
             Damage damage = new Damage(power, gameObject, 100f, dir);
             damageAble.TakeDamage(damage);
-            Debug.Log($"일반 화살로 {enemy.name}에게 {power}데미지를 입혔다!");
         }
     }
 

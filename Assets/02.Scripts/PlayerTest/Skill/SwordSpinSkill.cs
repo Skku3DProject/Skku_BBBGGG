@@ -31,7 +31,6 @@ public class SwordSpinSkill : WeaponSkillBase
 
     public override void UseSkill()
     {
-        Debug.Log("검 스핀 공격 시작");
 
         //쿨타임 조건 없애기
 

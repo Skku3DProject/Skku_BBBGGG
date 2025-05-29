@@ -28,7 +28,7 @@ MonoBehaviour:
   - So_Enemy: {fileID: 11400000, guid: 20d9bc0512b2ea54986cdf743e26f81c, type: 2}
     SpawnCounts: 5
   - So_Enemy: {fileID: 11400000, guid: 91b96d71a04d6cc4990216fbf4e37398, type: 2}
-    SpawnCounts: 1
+    SpawnCounts: 0
   - So_Enemy: {fileID: 11400000, guid: 24cb6054089f8d148a2dbdb719e0a2d8, type: 2}
     SpawnCounts: 1
   - So_Enemy: {fileID: 11400000, guid: e81b8da6a1f91724181557a555515093, type: 2}

@@ -124,7 +124,6 @@ public class PlayerBlockController : MonoBehaviour
                 return false;
             }
 
-            Debug.Log($"Hit object: {hit.collider.gameObject.name} at distance {distToHit}");
 
             if (hit.collider.TryGetComponent<WorldEnvironment>(out var mineable))
             {

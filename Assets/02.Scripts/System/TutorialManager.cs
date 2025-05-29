@@ -83,11 +83,9 @@ public class TutorialManager : MonoBehaviour
             currentStep = tutorialQueue.Dequeue();
             currentStep.Start();
             UIManager.instance.UI_TutorialRefresh(currentStep.Discription, CurrentCount, currentStep.RequiredAmount);
-            Debug.Log($"{tutorialQueue.Count} tutorial queued");
         }
         else
         {
-            Debug.Log("튜토리얼 완료!");
             StageManager.instance.TutorialEnd();
             gameObject.SetActive(false);
         }

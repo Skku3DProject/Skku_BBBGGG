@@ -30,7 +30,6 @@ public class SwordDashSkill : WeaponSkillBase
     {
         if(IsAttacking == false)
         {
-            Debug.Log("검 대쉬 공격 시작");
 
             if (_equipmentController.GetCurrentEquipType() != EquipmentType.Sword)
                 return;

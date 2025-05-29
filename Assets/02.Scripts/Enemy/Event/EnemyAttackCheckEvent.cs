@@ -58,7 +58,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     {
         if (_projectile == null)
         {
-            Debug.LogError("발사할 발사체가 없습니다! RangedAttackSpawn을 먼저 호출.");
+           // Debug.LogError("발사할 발사체가 없습니다! RangedAttackSpawn을 먼저 호출.");
             return;
         }
 

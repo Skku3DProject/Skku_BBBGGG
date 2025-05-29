@@ -87,8 +87,6 @@ public class TempSkillSlot : MonoBehaviour
 
     private SkillNode FindSkills(string skillName)
     {
-        Debug.Log(_skillTory);
-        
         SkillTree tree = SkillManager.instance.TreeCheck(_skillTory.InvenType);
 
         return tree.FindSkill(skillName);

@@ -43,7 +43,6 @@ public class EnemyVisual : MonoBehaviour
             r.GetPropertyBlock(_propBlock);
             if (r.sharedMaterial.HasProperty(_ColorID))
             {
-                Debug.Log("Hit");
                 _propBlock.SetColor(_ColorID, _hitColor);
                 r.SetPropertyBlock(_propBlock);
                 Debug.Log(_propBlock);

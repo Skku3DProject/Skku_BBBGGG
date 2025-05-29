@@ -85,7 +85,6 @@ public class SwordAttack : WeaponAttackBase
         {
             Damage damage = new Damage(attackPower, gameObject, 20f, dir);
             damageable.TakeDamage(damage);
-            Debug.Log($"검 공격 성공: {enemy.name}에게 {attackPower} 데미지를 줌");
         }
         else
         {
@@ -130,14 +129,12 @@ public class SwordAttack : WeaponAttackBase
         if (IsAttacking && Time.time - _lastAttackTime > _comboResetTime)
         {
             ResetCombo();
-            Debug.Log("검 공격콤보 관련");
         }
 
         // 공격 입력 처리 (예: 마우스 좌클릭)
         if (Input.GetMouseButtonDown(0))
         {
             Attack();
-            Debug.Log("검 공격");
         }
 
         if(SpinSkill !=null)
