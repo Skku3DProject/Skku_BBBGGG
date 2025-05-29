@@ -30,7 +30,7 @@ public class ThirdPersonCameraMode
         float mouseY = Input.GetAxis("Mouse Y");
 
         _rotationX += mouseX * _rotationSpeed * Time.deltaTime;
-        _rotationY = Mathf.Clamp(_rotationY + mouseY * _rotationSpeed * Time.deltaTime, -50f, 80f);
+        _rotationY = Mathf.Clamp(_rotationY + mouseY * _rotationSpeed * Time.deltaTime, -80f, 80f);
 
         // 카메라 위치
         cameraTransform.position = target.position + Quaternion.Euler(-_rotationY, _rotationX, 0f) * _offset.PositionOffset;

@@ -9,6 +9,7 @@ public enum EPopupType
     UI_OptionPopup,
     UI_BuildMenu,
     UI_SkillPopup,
+    UI_RewardPopup
 }
 public class PopUpManager : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class PopUpManager : MonoBehaviour
                     UI_Popup popup = _openPopups.Pop();
                     bool opened = popup.isActiveAndEnabled;
                     popup.Close();
+                    GameManager.instance.ChangeState(GameState.Run);
                     // Peek() 대신 그냥 break
                     if (opened)
                         break;
@@ -62,7 +64,19 @@ public class PopUpManager : MonoBehaviour
             }
         }
     }
-
+    public T OpenPopup<T>(EPopupType popupType, Action closeCallback = null) where T : UI_Popup
+    {
+        foreach (UI_Popup pop in Popups)
+        {
+            if (pop.name == popupType.ToString())
+            {
+                pop.Open(closeCallback);
+                _openPopups.Push(pop);
+                return pop as T;
+            }
+        }
+        return null;
+    }
     public void Open(EPopupType popupType, Action callBack = null)
     {
         PopUpOpen(popupType.ToString(), callBack);

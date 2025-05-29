@@ -63,6 +63,8 @@ public class TreasureChest : MonoBehaviour
                 PlayerRewardManager.Instance.AddSkillPoint();
                 break;
         }
+        var rewardPopup = PopUpManager.Instance.OpenPopup<UI_RewardPopup>(EPopupType.UI_RewardPopup);
+        rewardPopup.ShowReward(reward);
     }
     private void OnTriggerStay(Collider other)
     {

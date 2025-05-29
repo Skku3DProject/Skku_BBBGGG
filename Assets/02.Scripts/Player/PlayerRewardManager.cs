@@ -15,14 +15,21 @@ public class PlayerRewardManager : MonoBehaviour
         else
             Instance = this;
     }
-
+    private void Start()
+    {
+        StageManager.instance.OnCombatEnd += AddSkillPointAfterCombat;
+    }
     public void AddSkillPoint(int amount = 1)
     {
         skillPoints += amount;
         Debug.Log($"스킬 포인트 +{amount} (총: {skillPoints})");
         // UI 갱신 등 추가 처리
     }
-
+    public void AddSkillPointAfterCombat()
+    {
+        skillPoints += 2;
+        // UI 갱신 등 추가 처리
+    }
     public void AddPotion(int amount = 1)
     {
         potionCount += amount;
@@ -41,6 +48,36 @@ public class PlayerRewardManager : MonoBehaviour
         else
         {
             Debug.Log("이미 가호를 보유 중입니다.");
+        }
+    }
+
+    public bool UseSkillPoint(int amount = 1)
+    {
+        if (skillPoints >= amount)
+        {
+            skillPoints -= amount;
+            Debug.Log($"스킬 포인트 사용 -{amount} (남은: {skillPoints})");
+            return true;
+        }
+        else
+        {
+            Debug.Log("스킬 포인트가 부족합니다.");
+            return false;
+        }
+    }
+    public bool UsePotion()
+    {
+        if (potionCount > 0)
+        {
+            potionCount--;
+            Debug.Log($"물약 사용! (남은: {potionCount})");
+            // TODO: 체력 회복 등 실제 효과 추가
+            return true;
+        }
+        else
+        {
+            Debug.Log("물약이 없습니다.");
+            return false;
         }
     }
 }
