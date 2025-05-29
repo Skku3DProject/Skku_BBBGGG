@@ -35,6 +35,10 @@ public class EnemyObjectPoolManger : MonoBehaviour
                     poolSetting.initialSize
                 );
 
+                if(pool == null)
+                {
+                    Debug.Log("Pool Null");
+                }
                 _pools[poolSetting.key] = pool;
             }
             else

@@ -89,15 +89,18 @@ public class EnemyAttackCheckEvent : MonoBehaviour
             {
                 keys.Add(enemy.EnemyData.Key);
                 int index = EnemyManager.Instance.FirstActiveEnemies.IndexOf(enemy);
-                positions.Add(EnemyManager.Instance.SpawnPositionList[index]); // 일치 보장
+                if (index < EnemyManager.Instance.SpawnPositionList.Count)
+                    positions.Add(EnemyManager.Instance.SpawnPositionList[index]);
+                else
+                    Debug.LogWarning($"Index {index} out of bounds for SpawnPositionList");
             }
         }
-     
+
         for (int i=0; i< currentEnemisCount; i++)
         {
             GameObject enemy = EnemyPoolManager.Instance.GetObject(keys[i]);
-            Vector3 position = positions[i] + transform.position;
-            position.y = transform.position.y;
+            Vector3 position = positions[i];
+            position.y = transform.position.y + _enemy.ProjectileTransfrom.position.y; // 예: 머리 위 2미터
             enemy.transform.position = position;
         }
 
@@ -125,13 +128,13 @@ public class EnemyAttackCheckEvent : MonoBehaviour
 
     public void SpawnAreaAttack()
     {
-        //for (int i = 0; i < _enemy.EnemyData.PrefabSize; i++)
-        //{
-        //    Vector3 randomPos = GetRandomPositionAroundPlayer();
-        //    Vector3 spawnPosition = new Vector3(randomPos.x, transform.position.y + height, randomPos.z);
-        //    // 풀링 소환
-        //    //Instantiate(fallingObjectPrefab, spawnPosition, Quaternion.identity);
-        //}
+        for (int i = 0; i < _enemy.EnemyData.MaxAreaAttackCount; i++)
+        {
+            Vector3 randomPos = GetRandomPositionAround();
+            Vector3 spawnPosition = new Vector3(randomPos.x, transform.position.y + height, randomPos.z);
+            // 풀링 소환
+            EnemyObjectPoolManger.Instance.GetObject(_enemy.EnemyData.AreaObjectKey,spawnPosition);
+        }
     }
 
     public void AreaAttackEventStart()

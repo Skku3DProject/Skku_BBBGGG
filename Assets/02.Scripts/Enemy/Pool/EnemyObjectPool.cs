@@ -21,7 +21,6 @@ public class EnemyObjectPool
             CreateNewObject();
         }
     }
-
     private GameObject CreateNewObject()
     {
         GameObject obj = UnityEngine.Object.Instantiate(_prefab, _parent);
@@ -31,7 +30,6 @@ public class EnemyObjectPool
         _createCount++;
         return obj;
     }
-
     public GameObject Get(Vector3 position = default)
     {
         GameObject obj = null;
@@ -61,7 +59,6 @@ public class EnemyObjectPool
 
         return obj;
     }
-
     public void ReturnToPool(GameObject obj)
     {
         if (obj == null) return;
@@ -72,7 +69,6 @@ public class EnemyObjectPool
 
         _pool.Push(obj);
     }
-
     public int AvailableCount => _pool.Count;
     public int TotalCreated => _createCount;
 }

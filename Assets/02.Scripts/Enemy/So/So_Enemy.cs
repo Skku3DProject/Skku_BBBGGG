@@ -25,6 +25,8 @@ public class So_Enemy : ScriptableObject
     [Header("Key")]
     public string Key;
     public string ProjectileKey;
+    public string BreathKey;
+    public string AreaObjectKey;
 
     [Header("상태")]
     public EEnemyState[] AvailableStates;
@@ -39,6 +41,7 @@ public class So_Enemy : ScriptableObject
     public int MaxAttackPatternCount = 1;
     public float KnockbackPower = 100;
     public float DamageValue = 10;
+    public int MaxAreaAttackCount = 20;
 
     [Header("기본 스텟")]
     public float Health = 100;

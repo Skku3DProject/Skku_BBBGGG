@@ -25,3 +25,6 @@ MonoBehaviour:
   - key: Stone
     prefab: {fileID: 5737820991993077119, guid: c09db8c23cbc5ad48bbb096a0e5c2908, type: 3}
     initialSize: 100
+  - key: Meteor
+    prefab: {fileID: 5737820991993077119, guid: 3b5721317871e41449a363e94ea3cb60, type: 3}
+    initialSize: 100

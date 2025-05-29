@@ -1,21 +1,13 @@
 using UnityEngine;
 
-
-public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
+public class EnemyAreaAttackObject : MonoBehaviour, IEnemyPoolable
 {
     public So_EnemyProjectile ProjectileData;
 
     private TrailRenderer _trailRenderer;
     private Damage _damage;
-    private Vector3 _startPosision = Vector3.zero;
-    private Vector3 _targetPosision = Vector3.zero;
-
-    private const float GRAVITY = -9.81f;
-
-    private Vector3 _velocity;
-    private Vector3 _gravityVector;
-    private float _timer = 0;
-
+    private Rigidbody rb;
+    private int _timer = 0;
     private bool _isFire = false;
     private bool _isPooled = false; // 풀 반환 상태 추적
 
@@ -31,13 +23,13 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
         transform.SetParent(EnemyObjectPoolManger.Instance.gameObject.transform);
         _isPooled = true;
     }
-
     private void Awake()
     {
         if (ProjectileData != null)
         {
             _damage = new Damage(ProjectileData.Damage, this.gameObject, ProjectileData.KnockbackPower);
             _trailRenderer = GetComponentInChildren<TrailRenderer>();
+            rb = GetComponent<Rigidbody>();
         }
         else
         {
@@ -50,88 +42,40 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
         _trailRenderer.Clear();
         _trailRenderer.enabled = false;
         _isFire = false;
-        _timer = 0;
         _isPooled = false;
-        if (transform.localScale != Vector3.one)
-        {
-            transform.localScale = Vector3.one;
-        }
-    }
-
-    public void Fire(Vector3 targetPos)
-    {
-        if (_isPooled) return; // 이미 풀에 반환된 객체라면 실행하지 않음
-        _trailRenderer.enabled = true;
         transform.SetParent(null);
-        _startPosision = transform.position;
-        _targetPosision = targetPos;
-
-
         if (transform.localScale != Vector3.one)
         {
             transform.localScale = Vector3.one;
         }
-
-        _velocity = CalculateLaunchVelocity();
-        _gravityVector = Vector3.up * GRAVITY;
-
-        _isFire = true;
     }
 
     private void Update()
     {
-        if (!_isFire) return;
-
-        _velocity += _gravityVector * Time.deltaTime;
-        transform.position += _velocity * Time.deltaTime;
-
-        if (_velocity != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(_velocity);
-
-        _timer += Time.deltaTime;
-
-        if (_timer > 0.5f && ProjectileData.Type == EnemyProjectileType.Area)
-        {
-            CheckGroundHit();
-        }
-
-        // 검사 실패한 채로 너무 오래되면 삭제
-        if (ProjectileData != null && _timer > ProjectileData.LostTime)
-        {
-            UnEnable();
-        }
+        CheckGroundHit();
     }
-    private Vector3 CalculateLaunchVelocity()
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (ProjectileData == null)
+        if (_isPooled || other == null || other.CompareTag("Enemy")) return;
+
+        if (ProjectileData.Type == EnemyProjectileType.Area)
         {
-            Debug.LogError("ProjectileData is null in CalculateLaunchVelocity");
-            return Vector3.zero;
+            AreaAttack(other);
         }
-
-        Vector3 toTarget = _targetPosision - _startPosision;
-        Vector3 toTargetXZ = new Vector3(toTarget.x, 0, toTarget.z);
-
-        float y = toTarget.y;
-        float xzDistance = toTargetXZ.magnitude;
-
-        float vY = y / ProjectileData.FlightTime - 0.5f * GRAVITY * ProjectileData.FlightTime;
-        float vXZ = xzDistance / ProjectileData.FlightTime;
-
-        Vector3 result = toTargetXZ.normalized * vXZ;
-        result.y = vY;
-
-        return result;
+        else if (ProjectileData.Type == EnemyProjectileType.Point)
+        {
+            PointAttack(other);
+        }
     }
+
     private bool CheckGroundHit()
     {
         if (_isPooled || ProjectileData == null) return false;
 
-        Vector3 forward = transform.forward;
         Vector3 down = Vector3.down;
-        Vector3 midDirection = (forward + down).normalized;
-
-        if (Physics.Raycast(transform.position, midDirection, out RaycastHit hit, 0.5f, ProjectileData.GroundMask))
+    
+        if (Physics.Raycast(transform.position, down, out RaycastHit hit, 0.1f, ProjectileData.GroundMask))
         {
             OnGroundHit(hit);
             UnEnable();
@@ -146,21 +90,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
         Vector3Int blockPos = Vector3Int.FloorToInt(hit.point + hit.normal * -0.5f);
         BlockSystem.DamageBlocksInRadius(blockPos, ProjectileData.AreaRange, (int)_damage.Value);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (_isPooled || other == null || other.CompareTag("Enemy")) return;
-
-        if (ProjectileData.Type == EnemyProjectileType.Area)
-        {
-            AreaAttack(other);
-        }
-        else if (ProjectileData.Type == EnemyProjectileType.Point)
-        {
-            PointAttack(other);
-        }
-
-    }
-
+ 
     private void AreaAttack(Collider other)
     {
         BlockSystem.DamageBlocksInRadius(other.transform.position, ProjectileData.AreaRange, (int)_damage.Value);
