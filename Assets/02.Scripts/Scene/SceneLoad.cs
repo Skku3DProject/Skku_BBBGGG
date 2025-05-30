@@ -70,30 +70,45 @@ public class SceneLoad : MonoBehaviour
         }));
         yield return new WaitForSeconds(0.2f);
 
-
-        // 3) 씬 비동기 로딩
+        // 3) 씬 비동기 Additive 로딩
         statusText.text = "게임 세상속으로 접속중~";
-        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
-        op.allowSceneActivation = false;
-        while (op.progress < 0.9f)
+        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        while (!op.isDone)
         {
-            float overall = wPool + wMap + op.progress * wScene;
+            float overall = wPool + wMap + Mathf.Clamp01(op.progress / 0.9f) * wScene;
             loadingBar.value = overall;
             progressText.text = $"{Mathf.RoundToInt(overall * 100f)}%";
             yield return null;
         }
+
         loadingBar.value = 1f;
         progressText.text = "100%";
         yield return new WaitForSeconds(0.5f);
-        // ▶ 카메라를 먼저 부드럽게 아래로 이동시키고…
+
+        // 4) 카메라 이동
         yield return MoveCameraDown();
 
+        // 5) 게임 씬 활성화
+        Scene newScene = SceneManager.GetSceneByName(sceneName);
+        SceneManager.SetActiveScene(newScene);
+
+        // 6) 로딩 씬 카메라 제거
+        RemoveLoadingSceneCamera();
+
+        // 7) 로딩 씬 언로드
+        Scene currentScene = SceneManager.GetSceneByName("LoadingScene"); // 현재 씬 이름 정확히 적기
+        if (currentScene.IsValid())
+            yield return SceneManager.UnloadSceneAsync(currentScene);
+
+        // 8) 후처리 이벤트 연결
         SceneManager.sceneLoaded += OnSceneLoaded;
-        op.allowSceneActivation = true;
-
-
     }
-
+    void RemoveLoadingSceneCamera()
+    {
+        GameObject loadingCam = GameObject.FindWithTag("LoadingCamera");
+        if (loadingCam != null)
+            Destroy(loadingCam);
+    }
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;

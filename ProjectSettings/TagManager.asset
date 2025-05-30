@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - Tower
   - EnemySpawner
+  - LoadingCamera
   layers:
   - Default
   - TransparentFX

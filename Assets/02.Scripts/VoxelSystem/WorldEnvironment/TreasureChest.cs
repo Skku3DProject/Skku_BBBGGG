@@ -39,6 +39,8 @@ public class TreasureChest : MonoBehaviour
         if (isOpen) return; // 이미 열린 경우 다시 열리지 않음
         isOpen = true;
         GiveRandomReward();
+
+
     }
     void GiveRandomReward()
     {
@@ -68,13 +70,25 @@ public class TreasureChest : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
+
         if (other.gameObject.CompareTag("Player"))
         {
+            UIManager.instance.UI_Interaction("전투 시작하기");
             if (Input.GetKeyDown(KeyCode.F))
             {
                 Interact();
+
+
             }
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag("Player"))
+        {
+            return;
+        }
 
+        UIManager.instance.DiscriptionObject.SetActive(false);
+    }
 }

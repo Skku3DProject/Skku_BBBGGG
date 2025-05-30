@@ -289,7 +289,7 @@ MonoBehaviour:
   StartPos: {x: 0, y: 0, z: 0}
   BaseCampTransform: {fileID: 0}
   SpawenrTransform: {fileID: 0}
-  ChestPrefab: {fileID: 5786370049334567863, guid: 19ffd48077398244d9808b2466db625c, type: 3}
+  ChestPrefab: {fileID: 2868492944586623384, guid: b5c6bf2ec9d029a44840e4e060298544, type: 3}
   MaxChestCount: 10
   GridWidth: 50
   GridHeight: 50
@@ -897,7 +897,7 @@ GameObject:
   - component: {fileID: 1615112282}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: LoadingCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

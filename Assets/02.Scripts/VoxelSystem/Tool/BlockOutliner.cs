@@ -3,7 +3,7 @@
 public class BlockOutliner : MonoBehaviour
 {
     [Header("참조")]
-    public Camera playerCamera;
+    private Camera playerCamera;
     public LayerMask GroundLayer;
     private ThirdPersonPlayer _player;
 
@@ -12,14 +12,16 @@ public class BlockOutliner : MonoBehaviour
     public float lineWidth = 0.05f;
     public float MaxDistance = 5f;
 
-    private LineRenderer lr;
+    public LineRenderer lr;
 
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<ThirdPersonPlayer>();
 
-        var go = new GameObject("BlockHighlighterLine");
-        lr = go.AddComponent<LineRenderer>();
+        playerCamera = Camera.main;
+
+        //var go = new GameObject("BlockHighlighterLine");
+        //lr = go.AddComponent<LineRenderer>();
         lr.material = lineMaterial;
         lr.widthMultiplier = lineWidth;
         lr.positionCount = 5;
