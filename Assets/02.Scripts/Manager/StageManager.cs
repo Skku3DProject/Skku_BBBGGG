@@ -41,7 +41,7 @@ public class StageManager : MonoBehaviour
     
     [SerializeField]private EStageType _currentStage = EStageType.Tutorial;
     [SerializeField]private EPhaseType _currentPhase = EPhaseType.Tutorial;
-
+    public EPhaseType CurrentPhase => _currentPhase;
     private float _enemyCount => EnemyManager.Instance.ActiveEnemies.Count;
     // 에너미 카운트 세기
     private bool _allEnemiesDead => EnemyManager.Instance.ActiveEnemies.Count <= 0;  
@@ -134,7 +134,7 @@ public class StageManager : MonoBehaviour
         NextStage();
     }
 
-    private void CombatStart()
+    public void CombatStart()
     {
         _currentPhase = EPhaseType.Combat;
         UIManager.instance.UI_ObjectOnOff(UIManager.instance.CountObject);

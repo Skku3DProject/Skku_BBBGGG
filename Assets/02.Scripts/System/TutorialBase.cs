@@ -3,9 +3,8 @@ using UnityEngine;
 public abstract class TutorialBase
 {
     protected SO_Tutorial _tutorial;
-
-    public string TutorialID => _tutorial.TutorialID;
-    public string Discription => _tutorial.Discription;
+    public string MainTitle => _tutorial.MainTitle;
+    public string SubTitle => _tutorial.SubTitle;
     public TutorialType Type => _tutorial.TutoType;
     public Currency currency => _tutorial.currency;
     public bool IsCompleted => GetProgress() >= _tutorial.RequireAmount;

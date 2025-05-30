@@ -3,7 +3,7 @@ using UnityEngine;
 public class TutorialInput : MonoBehaviour
 {
     private float _moveTime;
-    
+    private EquipmentType _currentEquipmentType => PlayerEquipmentController.Instance.GetCurrentEquipType();
     private void Update()
     {
         if (StageManager.instance.GetCurrentStage() != EStageType.Tutorial)
@@ -33,7 +33,7 @@ public class TutorialInput : MonoBehaviour
                 }
                 break;
             case TutorialType.SwordEquipment :
-                if (Input.GetKeyDown(KeyCode.Alpha1))
+                if (Input.GetKeyDown(KeyCode.Alpha1) && _currentEquipmentType == EquipmentType.Sword)
                 {
                     TutorialEvent.OnProgress?.Invoke(TutorialType.SwordEquipment, 1);
                 }
@@ -51,7 +51,7 @@ public class TutorialInput : MonoBehaviour
                 }
                 break;
             case TutorialType.BowAttack:
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetMouseButtonDown(1) && _currentEquipmentType == EquipmentType.Bow)
                 {
                     TutorialEvent.OnProgress?.Invoke(TutorialType.BowAttack, 1);
                 }
@@ -63,7 +63,7 @@ public class TutorialInput : MonoBehaviour
                 }
                 break;
             case TutorialType.MagicAttack :
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && _currentEquipmentType == EquipmentType.Magic)
                 {
                     TutorialEvent.OnProgress?.Invoke(TutorialType.MagicAttack, 1);
                 }
@@ -78,6 +78,12 @@ public class TutorialInput : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Alpha5))
                 {
                     TutorialEvent.OnProgress?.Invoke(TutorialType.BlockEquipment, 1);
+                }
+                break;
+            case TutorialType.Tab :
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.Tab, 1);
                 }
                 break;
             case TutorialType.CreateBlock:

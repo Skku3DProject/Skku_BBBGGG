@@ -11,18 +11,24 @@ public class UIManager : MonoBehaviour
     public Slider CurrentTime;
     public Slider HpBar;
     public Slider Mpbar;
-    public Slider EXPBar;
+    public Slider RespawnBar;
     [Header("텍스트")]
     public TextMeshProUGUI[] Currencies;
     public TextMeshProUGUI CurrentEnemy;
     public TextMeshProUGUI Timer;
+    public TextMeshProUGUI SkillPoints;
     public TextMeshProUGUI Tutorial;
+    public TextMeshProUGUI SubTutorial;
     public TextMeshProUGUI TutorialCount;
+    public TextMeshProUGUI Discription;
     [Header("오브젝트")]
     public Image[] CurrenciesObjects;
+    public GameObject RespawnPanel;
+    public GameObject DiscriptionObject;
     public GameObject GameOverPanel;
     public GameObject TimerObject;
     public GameObject CountObject;
+    
     // 싱글톤
     public void Awake()
     {
@@ -87,9 +93,10 @@ public class UIManager : MonoBehaviour
         sequence.Join(CurrenciesObjects[2].rectTransform.DOAnchorPosX(250f, 0.3f).SetEase(Ease.OutCirc));
     }
     //튜토리얼 전체 변경
-    public void UI_TutorialRefresh(string tutorial,float current, int require )
+    public void UI_TutorialRefresh(string tutorial,string sub,float current, int require )
     {
         Tutorial.text = $"{tutorial}";
+        SubTutorial.text = $"{sub}";
         TutorialCount.text = $"{current} / {require}";
     }
 
@@ -102,6 +109,7 @@ public class UIManager : MonoBehaviour
     {
         UI_SetMaxTimer(readyTime);
         TutorialCount.gameObject.SetActive(false);
+        SubTutorial.gameObject.SetActive(false);
         Tutorial.gameObject.SetActive(false);
     }
     // hp, mp 한번에 세팅
@@ -109,6 +117,15 @@ public class UIManager : MonoBehaviour
     {
         UI_PlayerSetMaxHP(hp);
         UI_PlayerSetMaxMp(mp);
+    }
+
+    // 리스폰 타임 리프레시하기
+    public void UI_PlayerRespawn(float value, float maxValue)
+    {
+        RespawnPanel.SetActive(true);
+        RespawnBar.maxValue = maxValue;
+        RespawnBar.value = value;
+        
     }
     // 슬라이더 맥스 밸류 정하는 메서드
     public void UI_PlayerSetMaxMp(float value) =>SetSliderValue(Mpbar, value);
@@ -157,5 +174,16 @@ public class UIManager : MonoBehaviour
     
         // 목표 값으로 부드럽게 이동 (0.3초 정도 추천)
         CurrentTime.DOValue(value, duration).SetEase(Ease.OutQuad);
+    }
+
+    public void UI_SkillPointRefresh(float value)
+    {
+        SkillPoints.text = $"{(int)value}";
+    }
+
+    public void UI_Interaction(string discription)
+    {
+        DiscriptionObject.SetActive(true);
+        Discription.text = discription;
     }
 }

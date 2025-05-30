@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eecdad304d7c8e429bf7b219a1395ae, type: 3}
   m_Name: TutorialStep_10
   m_EditorClassIdentifier: 
-  TutorialID: Third
-  Discription: "\uB3CC\uB369\uC774\uB97C \uACF5\uACA9\uD574 \uB3CC \uC790\uC6D0\uC744
-    \uC5BB\uC73C\uC138\uC694"
+  MainTitle: "\uC7AC\uD654 \uC218\uC9D1"
+  SubTitle: "\uC8FC\uBCC0 \uB3CC\uC744 \uCC3E\uC544 \uACF5\uACA9\uD574 \uB3CC\uC744
+    \uC218\uC9D1\uD558\uC138\uC694!"
   currency:
     Gold: 0
     Wood: 0

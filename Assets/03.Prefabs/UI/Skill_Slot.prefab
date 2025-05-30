@@ -435,6 +435,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MyPlayer: {fileID: 0}
+  _skillDamageMultiplier: 2.5
+  CurrentSwordSpinSkill: 0
+  IsAttacking: 0
 --- !u!1 &4306049492085409569
 GameObject:
   m_ObjectHideFlags: 0

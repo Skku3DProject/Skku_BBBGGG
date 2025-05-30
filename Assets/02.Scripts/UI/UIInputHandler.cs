@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class UIInputHandler : MonoBehaviour
 {
-    private bool _canTab = true;
+    private bool _canTab = false;
     private void Update()
     {
         if(GameManager.instance.CurrentState == GameState.Pause)

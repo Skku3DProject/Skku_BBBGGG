@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3eecdad304d7c8e429bf7b219a1395ae, type: 3}
-  m_Name: TutorialStep_11
+  m_Name: TutorialStep_12-1
   m_EditorClassIdentifier: 
-  MainTitle: "\uAE30\uBCF8 \uC870\uC791"
-  SubTitle: "'5'\uBC88 \uBC84\uD2BC\uC744 \uB20C\uB7EC \uBE14\uB7ED\uC744 \uC7A5\uCC29\uD558\uC138\uC694!"
+  MainTitle: "\uC7AC\uD654 \uD655\uC778"
+  SubTitle: "Tab\uC744 \uB20C\uB7EC \uD604\uC7AC \uC7AC\uD654\uB97C \uD655\uC778\uD574\uBCF4\uC138\uC694!"
   currency:
     Gold: 0
     Wood: 0
     Stone: 0
-  TutoType: 10
+  TutoType: 14
   RequireAmount: 1

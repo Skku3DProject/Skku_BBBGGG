@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eecdad304d7c8e429bf7b219a1395ae, type: 3}
   m_Name: TutorialStep_14
   m_EditorClassIdentifier: 
-  TutorialID: Third
-  Discription: "'K'\uD0A4\uB97C \uC785\uB825\uD574 \uC2A4\uD0AC\uCC3D\uC744 \uC5F4\uC218\uC788\uC2B5\uB2C8\uB2E4."
+  MainTitle: "\uC2A4\uD0AC\uCC3D \uC5F4\uAE30"
+  SubTitle: "'K'\uBC84\uD2BC\uC744 \uB20C\uB7EC \uC2A4\uD0AC\uCC3D\uC744 \uC5F4\uC5B4\uBCF4\uC138\uC694!"
   currency:
     Gold: 0
     Wood: 0

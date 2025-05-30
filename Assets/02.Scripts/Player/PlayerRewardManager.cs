@@ -24,11 +24,13 @@ public class PlayerRewardManager : MonoBehaviour
         skillPoints += amount;
         Debug.Log($"스킬 포인트 +{amount} (총: {skillPoints})");
         // UI 갱신 등 추가 처리
+        UIManager.instance.UI_SkillPointRefresh(skillPoints);
     }
     public void AddSkillPointAfterCombat()
     {
         skillPoints += 2;
         // UI 갱신 등 추가 처리
+        UIManager.instance.UI_SkillPointRefresh(skillPoints);
     }
     public void AddPotion(int amount = 1)
     {

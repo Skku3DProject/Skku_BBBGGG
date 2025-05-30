@@ -12,7 +12,7 @@ public class SkillCooltimeHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             _currentSkillSlot = SkillManager.instance.SelectskillTory.SkillSlots[0];
-            // _currentSkillSlot.UseSkill();
+            _currentSkillSlot.UseSkill();
             Debug.Log($"{_currentSkillSlot.SlotData.Name} is used");
         }
 

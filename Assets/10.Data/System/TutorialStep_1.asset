@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eecdad304d7c8e429bf7b219a1395ae, type: 3}
   m_Name: TutorialStep_1
   m_EditorClassIdentifier: 
-  TutorialID: First
-  Discription: "WSAD\uB97C \uC774\uC6A9\uD558\uC5EC \uC6C0\uC9C1\uC774\uC138\uC694"
+  MainTitle: "\uAE30\uBCF8 \uC870\uC791"
+  SubTitle: "WSAD\uB97C \uC774\uC6A9\uD558\uC5EC \uC6C0\uC9C1\uC5EC\uBCF4\uC138\uC694!"
   currency:
     Gold: 100
     Wood: 100

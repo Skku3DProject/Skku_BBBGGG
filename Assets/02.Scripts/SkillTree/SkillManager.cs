@@ -26,7 +26,7 @@ public class SkillManager : MonoBehaviour
     public Action skillAction;
     public SkillTory SelectskillTory { get; private set; }
 
-    public int SkillPoint { get; private set; }
+    [SerializeField] private int _skillPoint => PlayerRewardManager.Instance.skillPoints;
 
     private void Awake()
     {
@@ -48,11 +48,6 @@ public class SkillManager : MonoBehaviour
         _swordSkillTree = SkillTreeMakers[0].Skill;
         _bowSkillTree = SkillTreeMakers[1].Skill;
         _magicSkillTree = SkillTreeMakers[2].Skill;
-    }
-
-    private void OnEnable()
-    {
-        SkillPoint = 10;
     }
 
     private void Start()
@@ -84,17 +79,10 @@ public class SkillManager : MonoBehaviour
             if(_skillSetDict.TryGetValue(childNode.Name, out SkillSet childSkillSet))
             {
                 childSkillSet.skillButton.interactable = interactable;
-                Debug.Log($"{childSkillSet.LineOn.name}");
                 childSkillSet.SkillLineOn();
             }
         }
     }
-    // 스킬 포인트 생성
-    public void GainSkillPoint(int amount)
-    {
-        SkillPoint += amount;
-    }
-    // 
     public bool CanLevelUp(SkillType type, string skillName)
     {
         SkillTree tree = TreeCheck(type);
@@ -113,27 +101,22 @@ public class SkillManager : MonoBehaviour
         SkillTree tree = TreeCheck(type);
         if (tree == null)
         {
-            Debug.LogError("SkillTree is null.");
             return false;
         }
         
-        Debug.Log(skillName);
         // 스킬 포인트 체크
-        if (SkillPoint <= 0)
+        if (_skillPoint <= 0)
         {
-            Debug.Log("Skill Point is 0");
             return false;   
         }
         // 스킬 레벨업 요소가 충족 되었는가?
         if (tree.LevelUpSkill(skillName))
         {
-            SkillPoint--;
+            PlayerRewardManager.Instance.UseSkillPoint();
             SetChildrenInteractable(skillName, true);
-            Debug.Log(SkillPoint);
         }
         else
         {
-            Debug.Log("Skill Not Found");
             return false;
         }
         // 맥스레벨에 달성하였는가?

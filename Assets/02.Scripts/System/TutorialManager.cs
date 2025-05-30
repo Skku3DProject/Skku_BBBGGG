@@ -19,6 +19,7 @@ public enum TutorialType
     CreateBlock,
     CreateTower,
     InputKeyCodeK,
+    Tab,
     
     count
 }
@@ -82,7 +83,7 @@ public class TutorialManager : MonoBehaviour
         {
             currentStep = tutorialQueue.Dequeue();
             currentStep.Start();
-            UIManager.instance.UI_TutorialRefresh(currentStep.Discription, CurrentCount, currentStep.RequiredAmount);
+            UIManager.instance.UI_TutorialRefresh(currentStep.MainTitle, currentStep.SubTitle, CurrentCount, currentStep.RequiredAmount);
         }
         else
         {
