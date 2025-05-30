@@ -96,6 +96,6 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
 
     private void DisableFragments()
     {
-        fracture.ReturnFragmentsToPool();
+        //fracture.ReturnFragmentsToPool();
     }
 }

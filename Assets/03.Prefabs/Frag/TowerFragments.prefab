@@ -975,6 +975,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6978680534518870735}
+  - component: {fileID: 877519050706392244}
   m_Layer: 0
   m_Name: TowerFragments
   m_TagString: Untagged
@@ -1007,6 +1008,19 @@ Transform:
   - {fileID: 6995981210851952982}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &877519050706392244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4989874286084197583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4d28cf6e78d1346af0c4d2a1e70a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shrinkDuration: 6
 --- !u!1 &5617146234832023367
 GameObject:
   m_ObjectHideFlags: 0

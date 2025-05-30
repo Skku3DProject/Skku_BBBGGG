@@ -31,6 +31,6 @@ public class WorldEnvironment : MonoBehaviour
     }
     private void DisableFragments()
     {
-        fracture.ReturnFragmentsToPool();
+      //  fracture.ReturnFragmentsToPool();
     }
 }

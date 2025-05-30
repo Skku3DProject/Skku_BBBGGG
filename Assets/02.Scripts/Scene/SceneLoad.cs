@@ -70,6 +70,9 @@ public class SceneLoad : MonoBehaviour
         }));
         yield return new WaitForSeconds(0.2f);
 
+        // 4) 카메라 이동
+        yield return MoveCameraDown();
+
         // 3) 씬 비동기 Additive 로딩
         statusText.text = "게임 세상속으로 접속중~";
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -84,9 +87,12 @@ public class SceneLoad : MonoBehaviour
         loadingBar.value = 1f;
         progressText.text = "100%";
         yield return new WaitForSeconds(0.5f);
+        // 로딩 UI 제거
+        if (loadingBar != null) loadingBar.gameObject.SetActive(false);
+        if (progressText != null) progressText.gameObject.SetActive(false);
+        if (statusText != null) statusText.gameObject.SetActive(false);
 
-        // 4) 카메라 이동
-        yield return MoveCameraDown();
+
 
         // 5) 게임 씬 활성화
         Scene newScene = SceneManager.GetSceneByName(sceneName);

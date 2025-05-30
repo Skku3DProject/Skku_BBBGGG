@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8108992118041679693}
+  - component: {fileID: 2135848605484367679}
   m_Layer: 0
   m_Name: TreeFragments
   m_TagString: Untagged
@@ -41,6 +42,19 @@ Transform:
   - {fileID: 879766145120970388}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2135848605484367679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204599766683211350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4d28cf6e78d1346af0c4d2a1e70a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shrinkDuration: 6
 --- !u!1 &423760082975691582
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 public class FragmentInfo
 {
@@ -18,11 +20,24 @@ public class FractureExplosion : MonoBehaviour
 
     public void Explode()
     {
+        //_frag = ObjectPool.Instance.GetObject(fragmentPrefabs, transform.position, transform.rotation);
+
+        //Rigidbody[] spawnRb = _frag.GetComponentsInChildren<Rigidbody>();
+
+        //foreach (var rb in spawnRb)
+        //{
+        //    rb.linearVelocity = Vector3.zero;
+        //    rb.angularVelocity = Vector3.zero;
+        //    rb.mass = 1f;
+        //    rb.useGravity = true;
+        //    rb.constraints = RigidbodyConstraints.None;
+        //    rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsModifier, ForceMode.Impulse);
+        //}
         _frag = ObjectPool.Instance.GetObject(fragmentPrefabs, transform.position, transform.rotation);
 
-        Rigidbody[] spawnedFragments = _frag.GetComponentsInChildren<Rigidbody>();
+        Rigidbody[] spawnRb = _frag.GetComponentsInChildren<Rigidbody>();
 
-        foreach (var rb in spawnedFragments)
+        foreach (var rb in spawnRb)
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
@@ -32,20 +47,8 @@ public class FractureExplosion : MonoBehaviour
             rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsModifier, ForceMode.Impulse);
         }
 
-    }
 
-    public void ReturnFragmentsToPool()
-    {
-        // 위치 초기화 (필요에 따라 원하는 기본 위치로)
-        _frag.transform.position = Vector3.zero;
-        _frag.transform.rotation = Quaternion.identity;
-
-        // 자식들 위치도 초기화
-        foreach (Transform child in _frag.transform)
-        {
-            child.localPosition = Vector3.zero;
-            child.localRotation = Quaternion.identity;
-        }
-        ObjectPool.Instance.ReturnToPool(_frag);
+        _frag.GetComponent<FragmentShrinkAndReturn>().StartShrink();
     }
+ 
 }
