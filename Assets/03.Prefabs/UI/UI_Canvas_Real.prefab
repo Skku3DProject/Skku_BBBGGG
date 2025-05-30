@@ -2616,7 +2616,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 92237304f0da63e49937087090458a0b, type: 2}
   - {fileID: 11400000, guid: c931b38f908e3da49a0bd770c7397f07, type: 2}
   - {fileID: 11400000, guid: 4b4b9797da6da8e4588302ab5013c251, type: 2}
-  - {fileID: 11400000, guid: e8680e60dc48db3479f730e6df7359c7, type: 2}
   InventoryOpen: 0
   _inventoryBase: {fileID: 7764807820812432447}
   _gridSystem: {fileID: 4632783372589760302}
@@ -5318,6 +5317,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 946619693680264664, guid: 3828977f647ac81438613d850eb39410, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2284808801898364176, guid: 3828977f647ac81438613d850eb39410, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5398,15 +5401,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2496792206922650688, guid: 3828977f647ac81438613d850eb39410, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5575906387219196748, guid: 3828977f647ac81438613d850eb39410, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.49000168
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528638241617783105, guid: 3828977f647ac81438613d850eb39410, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e37bb5aea78f83c4d8268f85811deefe, type: 3}
+    - target: {fileID: 6528638241617783105, guid: 3828977f647ac81438613d850eb39410, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7358301288020120927, guid: 3828977f647ac81438613d850eb39410, type: 3}
       propertyPath: m_Name
       value: Slot_Prefab (5)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9089716752461503713, guid: 3828977f647ac81438613d850eb39410, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9089716752461503713, guid: 3828977f647ac81438613d850eb39410, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

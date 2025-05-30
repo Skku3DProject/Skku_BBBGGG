@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UI_OptionPopup : UI_Popup
 {
-    public void OnClickRestart()
+    public void GoMainMenu()
     {
-        GameManager.instance.RestartGame();
+        SceneManager.LoadScene("TitleScene");
     }
 
     public void OnClickContinue()
