@@ -38,7 +38,7 @@ public class SwordHit : MonoBehaviour
             else
             {
                 SwordAttack.Instance.TryDamageEnemy(other.gameObject, directionToEnemy);
-               // Debug.Log("일반 검으로 적 공격");
+                //Debug.Log("일반 검으로 적 공격");
             }
         }
 

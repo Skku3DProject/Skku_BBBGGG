@@ -132,17 +132,19 @@ public class SwordAttack : WeaponAttackBase
         }
 
         // 공격 입력 처리 (예: 마우스 좌클릭)
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) 
+            && SpinSkill.IsAttacking == false && DashSkill.IsAttacking == false && IsAttacking == false)
         {
             Attack();
         }
 
-        if(SpinSkill !=null)
+        if(SpinSkill != null
+            && SpinSkill.IsAttacking == false && DashSkill.IsAttacking == false && IsAttacking == false)
         {
             SpinSkill.Tick();
         }
 
-        if(DashSkill != null)
+        if(DashSkill != null && SpinSkill.IsAttacking == false && DashSkill.IsAttacking == false && IsAttacking == false)
         {
             DashSkill.Tick();
         }
