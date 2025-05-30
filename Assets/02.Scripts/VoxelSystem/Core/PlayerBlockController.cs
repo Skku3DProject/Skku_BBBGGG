@@ -74,7 +74,7 @@ public class PlayerBlockController : MonoBehaviour
         if (!IsWithinReach(pos))
             return;
 
-        BlockSystem.DamageBlock(pos, 1);
+        BlockSystem.DamageBlock(pos, 10);
     }
 
     private Vector3Int GetTargetBlockPosition(bool placing)
