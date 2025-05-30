@@ -25,9 +25,9 @@ public class BowAttack : WeaponAttackBase
     public TrajectoryRenderer trajectoryRenderer;
 
     private bool isAiming = false;
-    private bool _canShootNext = true;
+    //private bool _canShootNext = true;
     private float _comboResetTime = 1.5f;
-    private float _lastAttackTime;
+   // private float _lastAttackTime;
 
 
 
@@ -49,11 +49,11 @@ public class BowAttack : WeaponAttackBase
 
     public override void Attack()
     {
-        if (!_canShootNext || IsAttacking) return;
+       // if (!_canShootNext || IsAttacking) return;
 
         IsAttacking = true;
-        _lastAttackTime = Time.time;
-        _canShootNext = false;
+      //  _lastAttackTime = Time.time;
+        //_canShootNext = false;
 
         _playerAnimation.SetTrigger("Attack");
     }
@@ -92,9 +92,9 @@ public class BowAttack : WeaponAttackBase
         // 화살 속도 설정
         rb.linearVelocity = shootDirection * shootForce;
 
-        _canShootNext = false;
+        //_canShootNext = false;
         IsAttacking = true;
-        _lastAttackTime = Time.time;
+        //_lastAttackTime = Time.time;
     }
 
     public override void TryDamageEnemy(GameObject enemy, Vector3 dir)
@@ -115,19 +115,19 @@ public class BowAttack : WeaponAttackBase
 
     public override void OnAttackAnimationEnd()
     {
-        _canShootNext = true;
+        //_canShootNext = true;
         IsAttacking = false;
     }
 
     public override void EnableComboInput()
     {
-        _canShootNext = true;
+        //_canShootNext = true;
     }
 
     private void ResetAttack()
     {
         IsAttacking = false;
-        _canShootNext = true;
+       // _canShootNext = true;
         if (isAiming) IsAttacking = true;
     }
 
@@ -135,7 +135,7 @@ public class BowAttack : WeaponAttackBase
     {
         HandleAimingInput();
         HandleFireInput();
-        UpdateAttackCooldown();
+       // UpdateAttackCooldown();
         UpdateTrajectory();
     }
 
@@ -149,8 +149,8 @@ public class BowAttack : WeaponAttackBase
         else if (Input.GetMouseButtonUp(1))
         {
             SetAiming(false);
-            IsAttacking = false;
-            _canShootNext = true;
+          //  IsAttacking = false;
+           // _canShootNext = true;
 
         }
     }
@@ -173,36 +173,70 @@ public class BowAttack : WeaponAttackBase
             if (TripleArrow.CurrentThreeArrowSkill)
             {
                 currentSkill = BowSkillState.TripleArrow;
-                TripleArrow.ShootThreeArrow();
+                
+                if (isAiming == true)
+                {
+                    //에임 중이라면
+                    //그냥 쏴
+                    TripleArrow.FireTripleArrows();
+                }
+
+                else
+                {
+                    TripleArrow.ShootThreeArrow();
+                }
             }
             else if (FireArrow.CurrentArrowFireSkill)
             {
                 currentSkill = BowSkillState.FireArrow;
-                FireArrow.ShootFireArrow();
+               
+                if (isAiming == true)
+                {
+                    //에임 중이라면
+                    //그냥 쏴
+                    FireArrow.FireSingleArrow();
+                }
+
+                else
+                {
+                    FireArrow.ShootFireArrow();
+                }
             }
             else
             {
                 currentSkill = BowSkillState.Normal;
-                Attack(); // 일반 화살용 애니메이션
+                if(isAiming == true)
+                {
+                    //에임 중이라면
+                    //그냥 쏴
+                    ShootArrow();
+                }
+
+                else
+                {
+                    Attack(); // 일반 화살용 애니메이션
+                }
+
+                    
             }
         }
     }
 
-    private void UpdateAttackCooldown()
+   /* private void UpdateAttackCooldown()
     {
         if (!IsAttacking)
             return;
 
         if (Time.time - _lastAttackTime > _comboResetTime)
             ResetAttack();
-    }
+    }*/
 
     private void UpdateTrajectory()
     {
         if (trajectoryRenderer == null)
             return;
 
-        if (isAiming && IsAttacking)
+        if (isAiming)// && IsAttacking)
         {
             Vector3 initVel = CalculateShootDirection() * shootForce;
             trajectoryRenderer.DrawTrajectory(shootPoint.position, initVel);

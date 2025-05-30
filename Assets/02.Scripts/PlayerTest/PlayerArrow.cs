@@ -76,6 +76,11 @@ public class PlayerArrow : MonoBehaviour
                 BowAttack.Instance.FireArrow.TryDamageEnemy(col.gameObject, hitDirection);
             }
         }
+
+        float power = PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
+//        Damage damage = new Damage(power, gameObject, 100f, hitDirection);
+
+        BlockSystem.DamageBlocksInRadius(transform.position, explosionRadius, (int)power);
     }
 
     public void SetAttackPower(float power)
