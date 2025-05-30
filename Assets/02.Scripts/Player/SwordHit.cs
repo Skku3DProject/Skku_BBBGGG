@@ -24,7 +24,7 @@ public class SwordHit : MonoBehaviour
             {
                 SwordAttack.Instance.SpinSkill.TryDamageEnemy(other.gameObject, directionToEnemy);
 
-               // Debug.Log("검 스핀으로 적 공격");
+                Debug.Log("검 스핀으로 적 공격");
             }
 
             else if (SwordAttack.Instance.DashSkill.CurrentSwordDashSkill == true
@@ -32,13 +32,13 @@ public class SwordHit : MonoBehaviour
             {
 
                 SwordAttack.Instance.DashSkill.TryDamageEnemy(other.gameObject, directionToEnemy);
-               // Debug.Log("검 대쉬로 적 공격");
+                Debug.Log("검 대쉬로 적 공격");
             }
 
             else
             {
                 SwordAttack.Instance.TryDamageEnemy(other.gameObject, directionToEnemy);
-                //Debug.Log("일반 검으로 적 공격");
+                Debug.Log("일반 검으로 적 공격");
             }
         }
 

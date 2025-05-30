@@ -8,9 +8,12 @@ public class SwordDashSkill : WeaponSkillBase
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
 
+
+    public CapsuleCollider ShieldCollider;
+
     [SerializeField] private float _skillDamageMultiplier = 1.7f;
-    [SerializeField] private float dashDistance = 10f;   // 몇 미터 이동할지
-    [SerializeField] private float dashSpeed = 20f;      // 초당 몇 미터 속도로 이동할지
+    [SerializeField] private float dashDistance = 10f;//거리
+    [SerializeField] private float dashSpeed = 50f;//속도
 
     private SwordSpinSkill _swordSpinSkill;
     public bool CurrentSwordDashSkill;
@@ -24,6 +27,8 @@ public class SwordDashSkill : WeaponSkillBase
         _equipmentController = MyPlayer.GetComponent<PlayerEquipmentController>();
         _player = MyPlayer.GetComponent<ThirdPersonPlayer>();
         _swordSpinSkill = MyPlayer.GetComponent<SwordSpinSkill>();
+
+        ShieldCollider.enabled = false;
     }
 
     public override void UseSkill()
@@ -36,6 +41,8 @@ public class SwordDashSkill : WeaponSkillBase
 
             IsUsingSkill = true;
             CurrentSwordDashSkill = true;
+
+            ShieldCollider.enabled = true;
 
             _playerAnimation.SetTrigger("DashAttack");
             _player.CharacterController.stepOffset = 0f;
@@ -74,6 +81,8 @@ public class SwordDashSkill : WeaponSkillBase
         IsUsingSkill = false;
         _player.CharacterController.stepOffset = 1f;
         CurrentSwordDashSkill = false;
+
+        ShieldCollider.enabled = false;
     }
 
     public override void Tick()
@@ -83,6 +92,7 @@ public class SwordDashSkill : WeaponSkillBase
             UseSkill();
             _swordSpinSkill.CurrentSwordSpinSkill = false;
             CurrentSwordDashSkill = true;
+
         }
     }
 
@@ -106,7 +116,7 @@ public class SwordDashSkill : WeaponSkillBase
         {
             Damage damage = new Damage(power, gameObject, 100f, hitDirection);
             damageAble.TakeDamage(damage);
-            //Debug.Log($"대쉬 스킬로 {enemy.name}에게 {power} 데미지를 입혔다!");
+            Debug.Log($"대쉬 스킬로 {enemy.name}에게 {power} 데미지를 입혔다!");
         }
     }
 }
