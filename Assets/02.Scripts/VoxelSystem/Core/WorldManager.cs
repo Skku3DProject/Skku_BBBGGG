@@ -86,15 +86,18 @@ public class WorldManager : MonoBehaviour
     {
         if (StageManager.instance != null)
         {
+            Debug.Log("씬로드 끝");
+
             StageManager.instance.OnCombatStart += BackupCentralChunks;
             StageManager.instance.OnCombatEnd += RestoreCentralChunks;
-            StageManager.instance.OnCombatEnd += ResetPlayer;
+            //StageManager.instance.OnCombatEnd += ResetPlayer;
 
             Player = GameObject.FindGameObjectWithTag("Player");
             BaseCampTransform = GameObject.FindGameObjectWithTag("BaseTower").transform;
-            PositionPlayerAtCenter();
             SpawenrTransform = GameObject.FindGameObjectWithTag("EnemySpawner").transform;
+            PositionPlayerAtCenter();
             PositionSpawner();
+            //StartCoroutine(DelayedPositioning());
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -105,6 +108,7 @@ public class WorldManager : MonoBehaviour
     {
         int totalChunks = GridWidth * GridHeight;
         int createdChunks = 0;
+        int yieldInterval = 10; // 5개마다 한 번씩 프레임 분산
 
         for (int x = 0; x < GridWidth; x++)
         {
@@ -113,14 +117,18 @@ public class WorldManager : MonoBehaviour
                 CreateChunk(new Vector2Int(x, z));
                 createdChunks++;
 
+                // 진행률 콜백
                 float progress = (float)createdChunks / totalChunks;
                 onProgressUpdated?.Invoke(progress);
 
-                yield return null; // 프레임 분산
+                // 묶음 단위로만 yield
+                if (createdChunks % yieldInterval == 0)
+                    yield return null;
             }
         }
 
         PlaceChests();
+        onProgressUpdated?.Invoke(1f);
     }
     public IEnumerator InitWorldAsync(System.Action<float> onProgressUpdated)
     {
@@ -186,7 +194,19 @@ public class WorldManager : MonoBehaviour
         // BlockController.RegisterChunk(coord, chunk);
         _chunks.Add(coord, chunk);
     }
+    //private IEnumerator DelayedPositioning()
+    //{
+    //    yield return new WaitForEndOfFrame();
 
+    //    // 이제 안전하게 중앙에 배치
+    //    PositionPlayerAtCenter();
+    //    PositionSpawner();
+
+    //    Cursor.lockState = CursorLockMode.Locked;
+    //    Cursor.visible = false;
+
+    //    Debug.Log("플레이어, 스포너 재배치 완료");
+    //}
     void PositionPlayerAtCenter()
     {
         if (Player == null || _chunks.Count == 0)
@@ -201,13 +221,18 @@ public class WorldManager : MonoBehaviour
         if (!_chunks.TryGetValue(centerCoord, out Chunk centerChunk))
             return;
 
+        Debug.Log("씬로드끝 플레이어 재배치");
+
+
         int localX = (centerX % Chunk.CHUNK_WIDTH) + 1;
         int localZ = (centerZ % Chunk.CHUNK_WIDTH) + 1;
 
         int surfaceY = FindSurfaceY(centerChunk, localX, localZ);
         Vector3 spawnPos = new Vector3(centerX + 0.5f, surfaceY + 2f, centerZ + 0.5f);
+
+        Debug.Log(spawnPos);
         StartPos = spawnPos;
-        Player.transform.position = spawnPos;
+        Player.transform.position = spawnPos+new Vector3(0, 10,0f);
         BaseCampTransform.position = spawnPos;
     }
     void PositionSpawner()

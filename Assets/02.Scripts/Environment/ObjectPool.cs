@@ -1,3 +1,5 @@
+using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,17 +26,62 @@ public class ObjectPool : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void Start()
+    // 씬로딩용 코루틴
+    public IEnumerator InitPoolAllAsync(Action<float> onProgress)
     {
+        // 총 생성할 오브젝트 개수 계산
+        int total = 0;
+        foreach (var entry in poolEntries)
+            if (entry.prefab != null)
+                total += Mathf.Max(1, entry.size);
+
+        int created = 0;
+
+        // 각 엔트리별로 큐 초기화
         foreach (var entry in poolEntries)
         {
-            if (entry.prefab == null) continue;
+            var prefab = entry.prefab;
+            if (prefab == null) continue;
 
-            objSizeDictionary[entry.prefab] = entry.size;
-            InitPool(entry.prefab);
+            int count = Mathf.Max(1, entry.size);
+            poolDictionary[prefab] = new Queue<GameObject>();
+
+            // 부모 트랜스폼 준비
+            string key = prefab.name;
+            if (!parentDictionary.ContainsKey(key))
+            {
+                var parent = new GameObject(key + "_Pool");
+                parent.transform.SetParent(transform);
+                parentDictionary[key] = parent.transform;
+            }
+
+            // 오브젝트 생성
+            for (int i = 0; i < count; i++)
+            {
+                var go = Instantiate(prefab);
+                go.transform.SetParent(parentDictionary[key]);
+                go.AddComponent<PooledObject>().OrginPrefab = prefab;
+                go.SetActive(false);
+                poolDictionary[prefab].Enqueue(go);
+
+                created++;
+                onProgress?.Invoke((float)created / total);
+                yield return null; // 프레임 분산
+            }
         }
+        // 완료 보정
+        onProgress?.Invoke(1f);
     }
+    //private void Start()
+    //{
+    //    foreach (var entry in poolEntries)
+    //    {
+    //        if (entry.prefab == null) continue;
+
+    //        objSizeDictionary[entry.prefab] = entry.size;
+    //        InitPool(entry.prefab);
+    //    }
+    //}
 
     private void InitPool(GameObject prefab)
     {

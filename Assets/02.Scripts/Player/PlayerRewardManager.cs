@@ -51,20 +51,8 @@ public class PlayerRewardManager : MonoBehaviour
         }
     }
 
-    public bool UseSkillPoint(int amount = 1)
-    {
-        if (skillPoints >= amount)
-        {
-            skillPoints -= amount;
-            Debug.Log($"스킬 포인트 사용 -{amount} (남은: {skillPoints})");
-            return true;
-        }
-        else
-        {
-            Debug.Log("스킬 포인트가 부족합니다.");
-            return false;
-        }
-    }
+    public void UseSkillPoint() => skillPoints -= 1;
+
     public bool UsePotion()
     {
         if (potionCount > 0)
