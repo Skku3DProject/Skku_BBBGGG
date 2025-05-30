@@ -1,8 +1,14 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using UnityEditor.Timeline;
+
+public enum InteractionType
+{
+    Chest,
+    Base
+}
 
 public class UIManager : MonoBehaviour  
 {
@@ -29,6 +35,8 @@ public class UIManager : MonoBehaviour
     public GameObject TimerObject;
     public GameObject CountObject;
     
+    private Dictionary<InteractionType, string> interactables = new Dictionary<InteractionType, string>();
+    
     // 싱글톤
     public void Awake()
     {
@@ -40,6 +48,9 @@ public class UIManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        
+        interactables.Add(InteractionType.Chest, "상자 열기");
+        interactables.Add(InteractionType.Base, "전투 시작하기");
     }
 
     public void CurrentCountRefresh()
@@ -181,9 +192,9 @@ public class UIManager : MonoBehaviour
         SkillPoints.text = $"{(int)value}";
     }
 
-    public void UI_Interaction(string discription)
+    public void UI_Interaction(InteractionType type)
     {
         DiscriptionObject.SetActive(true);
-        Discription.text = discription;
+        Discription.text = $"{interactables[type]}";
     }
 }

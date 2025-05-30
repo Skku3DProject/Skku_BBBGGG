@@ -24,7 +24,7 @@ public class BaseStat : MonoBehaviour, IDamageAble
 
         if (StageManager.instance.CurrentPhase != EPhaseType.Combat)
         { 
-            UIManager.instance.UI_Interaction("전투 시작하기");   
+            UIManager.instance.UI_Interaction(InteractionType.Base);   
         }
         else
         {
