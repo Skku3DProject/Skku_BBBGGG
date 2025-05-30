@@ -88,6 +88,7 @@ public class WorldManager : MonoBehaviour
         {
             StageManager.instance.OnCombatStart += BackupCentralChunks;
             StageManager.instance.OnCombatEnd += RestoreCentralChunks;
+            StageManager.instance.OnCombatEnd += ResetPlayer;
 
             Player = GameObject.FindGameObjectWithTag("Player");
             BaseCampTransform = GameObject.FindGameObjectWithTag("BaseTower").transform;
@@ -99,6 +100,33 @@ public class WorldManager : MonoBehaviour
         }
     }
     //-----------------------------------맵 로딩 용
+
+    public IEnumerator GenerateGridAsync(System.Action<float> onProgressUpdated = null)
+    {
+        int totalChunks = GridWidth * GridHeight;
+        int createdChunks = 0;
+
+        for (int x = 0; x < GridWidth; x++)
+        {
+            for (int z = 0; z < GridHeight; z++)
+            {
+                CreateChunk(new Vector2Int(x, z));
+                createdChunks++;
+
+                float progress = (float)createdChunks / totalChunks;
+                onProgressUpdated?.Invoke(progress);
+
+                yield return null; // 프레임 분산
+            }
+        }
+
+        PlaceChests();
+    }
+    public IEnumerator InitWorldAsync(System.Action<float> onProgressUpdated)
+    {
+        BackupCentralChunks();
+        yield return GenerateGridAsync(onProgressUpdated);
+    }
 
     private void ResetPlayer()
     {
