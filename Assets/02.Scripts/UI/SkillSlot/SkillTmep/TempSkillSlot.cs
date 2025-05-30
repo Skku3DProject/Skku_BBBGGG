@@ -65,6 +65,7 @@ public class TempSkillSlot : MonoBehaviour
         {
             
             StartCoroutine(UseSkillCoroutine());   
+            Skill.UseSkill();
         }
     }
     // 스킬 사용하면 쿨타임 적용하기

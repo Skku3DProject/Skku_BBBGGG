@@ -15,7 +15,7 @@ public class TestUI : MonoBehaviour
     void Update()
     {
         SkillSwitchingTest();
-        CooltimeTset();
+        // CooltimeTset();
     }
     private void SkillSwitchingTest()
     {
@@ -49,14 +49,14 @@ public class TestUI : MonoBehaviour
     /// 3. 만약 true라면 -> use스킬을 사용한다.
     /// 4. 
     /// </summary>
-    public void CooltimeTset()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            cooltimeHandler.StartCooldown(SkillManager.instance.SelectskillTory.SkillSlots[0]);
-            
-        }
-    }   
+    // public void CooltimeTset()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Q))
+    //     {
+    //         cooltimeHandler.StartCooldown(SkillManager.instance.SelectskillTory.SkillSlots[0]);
+    //         
+    //     }
+    // }   
 
     public void TutorialTest()
     {

@@ -930,7 +930,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6493292228040817496, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 8328313037983387831}
   m_SourcePrefab: {fileID: 100100000, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
 --- !u!114 &363383149365631532 stripped
 MonoBehaviour:
@@ -1003,6 +1006,34 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3466133413458536812, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
   m_PrefabInstance: {fileID: 447690772584572716}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6641202524297813108 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6493292228040817496, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
+  m_PrefabInstance: {fileID: 447690772584572716}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8328313037983387831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6641202524297813108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a42d0604c29c2a448031297a1e84c6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyPlayer: {fileID: 0}
+  _arrowPrefab: {fileID: 0}
+  _skillDamageMultiplier: 2.5
+  _numberOfArrows: 3
+  _arrowSpreadAngle: 10
+  _arrowForce: 20
+  _arrowLifetime: 5
+  _skillDuration: 15
+  _bowArrowSpawnPoint: {fileID: 0}
+  _arrowModelRotationOffset: {x: 90, y: 0, z: 0}
+  CurrentThreeArrowSkill: 0
 --- !u!114 &8084041256291266598 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8504710156096395018, guid: 81b1390fc09313d4d970cb99a2f36202, type: 3}
