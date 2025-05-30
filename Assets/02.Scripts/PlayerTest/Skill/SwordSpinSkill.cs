@@ -111,7 +111,7 @@ public class SwordSpinSkill : WeaponSkillBase
         {
             Damage damage = new Damage(power, gameObject, 100f, hitDirection);
             damageAble.TakeDamage(damage);
-            Debug.Log($"회전베기 스킬로 {enemy.name}에게 {power}데미지를 입혔다!");
+            //Debug.Log($"회전베기 스킬로 {enemy.name}에게 {power}데미지를 입혔다!");
         }
     }
 }

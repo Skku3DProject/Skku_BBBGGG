@@ -85,7 +85,7 @@ public class SwordAttack : WeaponAttackBase
         {
             Damage damage = new Damage(attackPower, gameObject, 20f, dir);
             damageable.TakeDamage(damage);
-            Debug.Log($"검 일반 스킬로 {enemy.name}에게 {attackPower}데미지를 입혔다!");
+            //Debug.Log($"검 일반 스킬로 {enemy.name}에게 {attackPower}데미지를 입혔다!");
         }
         else
         {

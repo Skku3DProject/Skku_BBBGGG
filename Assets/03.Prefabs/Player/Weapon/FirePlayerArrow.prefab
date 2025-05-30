@@ -150,6 +150,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deed7de6a90012944af17033c887f901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionRadius: 3
+  explosionDamage: 50
+  explosionEffectPrefab: {fileID: 495131363331272240, guid: 70bbd7c99a0c63642ad3a3736f97a277, type: 3}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1001 &377568431637563641
 PrefabInstance:
   m_ObjectHideFlags: 0

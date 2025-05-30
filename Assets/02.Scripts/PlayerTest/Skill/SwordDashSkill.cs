@@ -116,7 +116,7 @@ public class SwordDashSkill : WeaponSkillBase
         {
             Damage damage = new Damage(power, gameObject, 100f, hitDirection);
             damageAble.TakeDamage(damage);
-            Debug.Log($"대쉬 스킬로 {enemy.name}에게 {power} 데미지를 입혔다!");
+           // Debug.Log($"대쉬 스킬로 {enemy.name}에게 {power} 데미지를 입혔다!");
         }
     }
 }
