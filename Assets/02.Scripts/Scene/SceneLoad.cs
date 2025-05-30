@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class SceneLoad : MonoBehaviour
 {
     public WorldManager worldManager;
+    public Slider loadingBar;
+    public TextMeshProUGUI progressText;
 
     void Start()
     {
@@ -15,22 +17,29 @@ public class SceneLoad : MonoBehaviour
 
     IEnumerator InitializeAndLoadGameScene()
     {
-        yield return null;
-        worldManager.InitWorld(); // 맵 생성
+        float progress = 0f;
+        loadingBar.value = 0;
+        progressText.text = "0%";
 
-        yield return new WaitForSeconds(1f); // 생성 완료 후 잠깐 대기
+        yield return worldManager.InitWorldAsync(p =>
+        {
+            progress = p;
+            loadingBar.value = progress;
+            progressText.text = $"{Mathf.RoundToInt(progress * 100f)}%";
+        });
 
-        SceneManager.sceneLoaded += OnSceneLoaded; // 로드 콜백 등록
+        yield return new WaitForSeconds(0.5f);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene("JeonTeaJun");
     }
 
-    // 씬 전환 후 호출될 콜백
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "JeonTeaJun")
         {
-            worldManager.RegisterStageEvents(); // 이벤트 등록
-            SceneManager.sceneLoaded -= OnSceneLoaded; // 한 번만 실행되게 제거
+            worldManager.RegisterStageEvents();
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
     }
 }
