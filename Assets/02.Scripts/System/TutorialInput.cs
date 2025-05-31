@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TutorialInput : MonoBehaviour
 {
-    private float _moveTime;
+    private float _moveTime = 0.01f;
     private EquipmentType _currentEquipmentType => PlayerEquipmentController.Instance.GetCurrentEquipType();
     private void Update()
     {
@@ -28,7 +28,6 @@ public class TutorialInput : MonoBehaviour
             case TutorialType.Moving :
                 if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.D))
                 {
-                    _moveTime = 0.1f;
                     TutorialEvent.OnProgress?.Invoke(TutorialType.Moving, _moveTime);
                 }
                 break;
