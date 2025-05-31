@@ -690,7 +690,8 @@ GameObject:
   - component: {fileID: 2697860302316313766}
   - component: {fileID: 3018544198989064585}
   - component: {fileID: 8833915128033032065}
-  - component: {fileID: 4006477555121814016}
+  - component: {fileID: 5595734551079153989}
+  - component: {fileID: 8937440095439890952}
   m_Layer: 8
   m_Name: ThirdPersonPlayer
   m_TagString: Player
@@ -838,6 +839,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerStats: {fileID: 11400000, guid: edd38af94058eb84d8af69539de48251, type: 2}
+  IsAlive: 1
 --- !u!114 &8289242753557437244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -875,6 +877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68532376ab5ed96469c69804c9a2590d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsUsingJumpAnim: 1
 --- !u!114 &5575685804453311280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -889,7 +892,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsAttacking: 0
   SwordSlashEffect: {fileID: 3677927405232970025}
-  _spinSkill: {fileID: 3018544198989064585}
 --- !u!114 &2697860302316313766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,9 +908,8 @@ MonoBehaviour:
   arrowPrefab: {fileID: 5014901011304848109, guid: f49ce3859ae50fc4ba8d3f23fc9b1722, type: 3}
   shootPoint: {fileID: 7644727656459952772}
   shootForce: 30
+  Damage: 50
   trajectoryRenderer: {fileID: 8485597639066446118}
-  _fireArrow: {fileID: 8833915128033032065}
-  _TripleArrow: {fileID: 4006477555121814016}
 --- !u!114 &3018544198989064585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -922,6 +923,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MyPlayer: {fileID: 2042415629762981396}
+  _skillDamageMultiplier: 2.5
+  CurrentSwordSpinSkill: 0
+  IsAttacking: 0
 --- !u!114 &8833915128033032065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -934,11 +938,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fadc818aaa43e4abec189fe7b8cc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FireEffect: {fileID: 7057051775828160547}
   MyPlayer: {fileID: 2042415629762981396}
-  _fireEffect: {fileID: 7057051775828160547}
+  _arrowPrefab: {fileID: 5014901011304848109, guid: f49ce3859ae50fc4ba8d3f23fc9b1722, type: 3}
   _skillDamageMultiplier: 1.5
+  _arrowForce: 20
+  _arrowLifetime: 5
   _skillDuration: 15
---- !u!114 &4006477555121814016
+  _bowArrowSpawnPoint: {fileID: 7644727656459952772}
+  _arrowModelRotationOffset: {x: 90, y: 0, z: 0}
+  CurrentArrowFireSkill: 0
+--- !u!114 &5595734551079153989
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -947,19 +957,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 2042415629762981396}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a42d0604c29c2a448031297a1e84c6b, type: 3}
+  m_Script: {fileID: 11500000, guid: afb2d0d0457ac8b4b947be6248aa36da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyPlayer: {fileID: 2042415629762981396}
-  _arrowPrefab: {fileID: 5014901011304848109, guid: f49ce3859ae50fc4ba8d3f23fc9b1722, type: 3}
-  _skillDamageMultiplier: 1.5
-  _numberOfArrows: 3
-  _arrowSpreadAngle: 10
-  _arrowForce: 20
-  _arrowLifetime: 5
-  _skillDuration: 15
-  _bowArrowSpawnPoint: {fileID: 7644727656459952772}
-  _arrowModelRotationOffset: {x: 90, y: 0, z: 0}
+--- !u!114 &8937440095439890952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042415629762981396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97c6850b4d09374f9d63e3fc1ccae77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyPlayer: {fileID: 0}
+  _skillDamageMultiplier: 1.7
+  dashDistance: 10
+  dashSpeed: 20
+  CurrentSwordDashSkill: 0
+  IsAttacking: 0
 --- !u!1 &2157909812484209927
 GameObject:
   m_ObjectHideFlags: 0

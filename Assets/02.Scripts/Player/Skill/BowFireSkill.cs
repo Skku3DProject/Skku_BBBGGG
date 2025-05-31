@@ -6,7 +6,7 @@ public class BowFireSkill : WeaponSkillBase
     public GameObject FireEffect;
 
     public GameObject MyPlayer;
-    private Animator _playerAnimation;
+    private Animator _playerAnimator;
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
 
@@ -21,7 +21,6 @@ public class BowFireSkill : WeaponSkillBase
     [SerializeField] private Transform _bowArrowSpawnPoint;
     [SerializeField] private Vector3 _arrowModelRotationOffset = new Vector3(90f, 0f, 0f);
 
-    private BowThreeArrowSkill _bowThreeArrowSkill;
     public bool CurrentArrowFireSkill;
     public override bool IsUsingSkill { get; protected set; }
     private bool _isAttacking;
@@ -29,10 +28,9 @@ public class BowFireSkill : WeaponSkillBase
     private void Awake()
     {
         MyPlayer = GameObject.FindGameObjectWithTag("Player");
-        _playerAnimation = GetComponent<Animator>();
+        _playerAnimator = GetComponent<Animator>();
         _equipmentController = GetComponent<PlayerEquipmentController>();
         _player = MyPlayer.GetComponent<ThirdPersonPlayer>();
-        _bowThreeArrowSkill = MyPlayer.GetComponent<BowThreeArrowSkill>();
     }
 
     public override void UseSkill()
@@ -45,6 +43,7 @@ public class BowFireSkill : WeaponSkillBase
         }
 
         IsUsingSkill = true;
+        CurrentArrowFireSkill= true;
         _player.CharacterController.stepOffset = 0f;
         StartCoroutine(EndSkillAfterDelay(_skillDuration));
     }
@@ -52,7 +51,6 @@ public class BowFireSkill : WeaponSkillBase
     private IEnumerator EndSkillAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        _playerAnimation.SetTrigger("Idle");
         IsUsingSkill = false;
         _player.CharacterController.stepOffset = 1f;
         CurrentArrowFireSkill = false;
@@ -63,7 +61,7 @@ public class BowFireSkill : WeaponSkillBase
     {
         if( CurrentArrowFireSkill && !_isAttacking)
         {
-            _playerAnimation.SetTrigger("FireArrowAttack");
+            _playerAnimator.SetTrigger("FireArrowAttack");
             _isAttacking = true;
         }
     }
@@ -84,7 +82,10 @@ public class BowFireSkill : WeaponSkillBase
 
         Vector3 shootDirection = (targetPoint - _bowArrowSpawnPoint.position).normalized;
 
-        GameObject arrowInstance = Instantiate(_arrowPrefab, _bowArrowSpawnPoint.position, Quaternion.LookRotation(shootDirection));
+        float power = _equipmentController.GetCurrentWeaponAttackPower() * _skillDamageMultiplier;
+
+        PlayerArrow arrowInstance = Instantiate(_arrowPrefab, _bowArrowSpawnPoint.position, Quaternion.LookRotation(shootDirection)).GetComponent<PlayerArrow>();
+        arrowInstance.ArrowInit(power,ArrowType.Explosive,_player.gameObject);
         arrowInstance.transform.Rotate(_arrowModelRotationOffset, Space.Self);
 
         Rigidbody rb = arrowInstance.GetComponent<Rigidbody>();
@@ -116,11 +117,16 @@ public class BowFireSkill : WeaponSkillBase
 
     public override void Tick()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (!CurrentArrowFireSkill) return;
+
+        // 이건 스킬 안에서만 처리하는 Mouse0 입력
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            UseSkill();
-            _bowThreeArrowSkill.CurrentThreeArrowSkill = false;
-            CurrentArrowFireSkill = true;
+            if (!_isAttacking)
+            {
+                Debug.Log("FireARROW");
+                ShootFireArrow();
+            }
         }
     }
 
@@ -128,16 +134,16 @@ public class BowFireSkill : WeaponSkillBase
 
     public override void TryDamageEnemy(GameObject enemy, Vector3 hitDirection)
     {
-        if (!IsUsingSkill) return;
+        //if (!IsUsingSkill) return;
 
-        float power = _equipmentController.GetCurrentWeaponAttackPower() * _skillDamageMultiplier;
+        //float power = _equipmentController.GetCurrentWeaponAttackPower() * _skillDamageMultiplier;
 
-        IDamageAble damageAble = enemy.GetComponent<IDamageAble>();
-        if (damageAble != null)
-        {
-            Damage damage = new Damage(power, gameObject, 100f, hitDirection);
-            damageAble.TakeDamage(damage);
-            //Debug.Log($"불 화살 스킬로 {enemy.name}에게 {power} 데미지를 입힘!");
-        }
+        //IDamageAble damageAble = enemy.GetComponent<IDamageAble>();
+        //if (damageAble != null)
+        //{
+        //    Damage damage = new Damage(power, gameObject, 100f, hitDirection);
+        //    damageAble.TakeDamage(damage);
+        //    //Debug.Log($"불 화살 스킬로 {enemy.name}에게 {power} 데미지를 입힘!");
+        //}
     }
 }

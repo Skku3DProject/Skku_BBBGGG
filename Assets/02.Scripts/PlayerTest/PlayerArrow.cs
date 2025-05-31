@@ -1,157 +1,84 @@
 using UnityEngine;
-
+public enum ArrowType
+{
+    Normal,
+    Explosive,
+    Charging
+}
 public class PlayerArrow : MonoBehaviour
 {
     private float _damage;
     private Rigidbody _rb;
+    private ArrowType _arrowType;
+    private GameObject _owner;
 
-    [Header("Fire Arrow Explosion Settings")]
-    [SerializeField] private float explosionRadius = 3f;
-    [SerializeField] private float explosionDamage = 50f;
-    [SerializeField] private GameObject explosionEffectPrefab;
-    [SerializeField] private LayerMask enemyLayer;
+    [Header("Æø¹ß ÀÌÆåÆ®")]
+    public GameObject explosionEffect;
+    public float explosionRadius = 3f;
+    public float explosionForce = 500f;
+
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
     }
-
     private void FixedUpdate()
     {
         if (_rb.linearVelocity.sqrMagnitude > 0.1f)
         {
             transform.rotation = Quaternion.LookRotation(_rb.linearVelocity);
+
             transform.Rotate(90f, 0f, 0f, Space.Self);
         }
     }
-
-    private void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision collision)
     {
-        Vector3 directionToTarget = (other.transform.position - transform.position).normalized;
-
-        if (other.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Ground"))
         {
-            if (BowAttack.Instance.FireArrow.CurrentArrowFireSkill)
+
+            switch (_arrowType)
             {
-                Explode();
-                Debug.Log("Æø¹ß È­»ì Àû¿¡ ´ê¾Æ¼­ Æø¹ß");
-            }
-            else if (BowAttack.Instance.TripleArrow.CurrentThreeArrowSkill)
-            {
-                BowAttack.Instance.TripleArrow.TryDamageEnemy(other.gameObject, directionToTarget);
-            }
-            else
-            {
-                BowAttack.Instance.TryDamageEnemy(other.gameObject, directionToTarget);
+                case ArrowType.Normal:
+                    ApplyNormalDamage(collision);
+                    break;
+
+                case ArrowType.Explosive:
+                    Explode();
+                    break;
             }
 
             Destroy(gameObject);
-        }
-        else if (other.gameObject.CompareTag("Ground"))
-        {
-            if (BowAttack.Instance.FireArrow.CurrentArrowFireSkill)
-            {
-                Explode();
-            }
 
-            Destroy(gameObject);
         }
     }
-
+    private void ApplyNormalDamage(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent<IDamageAble>(out var d))
+        {
+            d.TakeDamage(new Damage(_damage, gameObject, 10f));
+        }
+    }
     private void Explode()
     {
-        // Æø¹ß ÀÌÆåÆ® »ý¼º
-        if (explosionEffectPrefab != null)
-        {
-            Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
-        }
+        if (explosionEffect != null)
+            Instantiate(explosionEffect, transform.position, Quaternion.identity);
 
-        // Æø¹ß ¹üÀ§ ³» Àû °¨Áö
-        Collider[] hitEnemies = Physics.OverlapSphere(transform.position, explosionRadius, enemyLayer);
-        foreach (Collider col in hitEnemies)
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (var hit in colliders)
         {
-            if (col.CompareTag("Enemy")) // Àû¸¸ Å¸°ÙÆÃ
+            if (hit.TryGetComponent<IDamageAble>(out var d))
             {
-                Vector3 hitDirection = (col.transform.position - transform.position).normalized;
-                BowAttack.Instance.FireArrow.TryDamageEnemy(col.gameObject, hitDirection);
+                d.TakeDamage(new Damage(_damage, gameObject, explosionForce));
             }
         }
+        BlockSystem.DamageBlocksInRadius(transform.position, explosionRadius, 10);
 
-        float power = PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
-//        Damage damage = new Damage(power, gameObject, 100f, hitDirection);
-
-        BlockSystem.DamageBlocksInRadius(transform.position, explosionRadius, (int)power);
     }
 
-    public void SetAttackPower(float power)
+    public void ArrowInit(float Damage, ArrowType type, GameObject owner)
     {
-        _damage = power;
+        _damage = Damage;
+        _arrowType = type;
+        _owner = owner;
     }
 }
-
-/*using Unity.VisualScripting;
-using UnityEngine;
-
-public class PlayerArrow : MonoBehaviour
-{
-    private float _damage;
-    private Rigidbody _rb;
-
-    private void Awake()
-    {
-        _rb = GetComponent<Rigidbody>();
-    }
-    private void FixedUpdate()
-    {
-        if (_rb.linearVelocity.sqrMagnitude > 0.1f)
-        {
-            transform.rotation = Quaternion.LookRotation(_rb.linearVelocity);
-
-            transform.Rotate(90f, 0f, 0f, Space.Self);
-        }
-    }
-    private void OnCollisionEnter(Collision other)
-    {
-
-
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            //Debug.Log("Àû°ú Ãæµ¹");
-            Vector3 directionToEnemy = (other.transform.position - transform.position).normalized;
-
-
-            if(BowAttack.Instance.TripleArrow.CurrentThreeArrowSkill == false 
-                && BowAttack.Instance.FireArrow.CurrentArrowFireSkill == false)
-             {
-                BowAttack.Instance.TryDamageEnemy(other.gameObject, directionToEnemy);
-            }
-
-            else if(BowAttack.Instance.TripleArrow.CurrentThreeArrowSkill == true)
-            {
-                BowAttack.Instance.TripleArrow.TryDamageEnemy(other.gameObject, directionToEnemy);
-            }
-
-            else if (BowAttack.Instance.FireArrow.CurrentArrowFireSkill == true)
-            {
-                BowAttack.Instance.FireArrow.TryDamageEnemy(other.gameObject, directionToEnemy);
-            }
-
-            Destroy(gameObject);
-
-        }
-
-        else if (other.gameObject.CompareTag("Ground"))
-        {
-            //Debug.Log("¶¥°ú Ãæµ¹");
-            Destroy(gameObject);
-
-        }
-
-    }
-
-    public void SetAttackPower(float power)
-    {
-        _damage = power;
-    }
-}
-*/

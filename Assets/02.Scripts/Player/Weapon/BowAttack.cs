@@ -1,5 +1,5 @@
-using UnityEngine;
-
+Ôªøusing UnityEngine;
+using System.Collections;
 public enum BowSkillState
 {
     None,
@@ -10,265 +10,157 @@ public enum BowSkillState
 
 public class BowAttack : WeaponAttackBase
 {
-    private BowSkillState currentSkill = BowSkillState.None;
-
-    public static BowAttack Instance;
-
     private Animator _playerAnimation;
-    private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
+    private BowFireSkill _fireSkill;
 
-    [Header("»∞ ºº∆√")]
+    [Header("ÌôîÏÇ¥ÏÑ∏ÌåÖ")]
     public GameObject arrowPrefab;
     public Transform shootPoint;
     public float shootForce = 30f;
+    public float Damage = 50f;
     public TrajectoryRenderer trajectoryRenderer;
 
     private bool isAiming = false;
-    //private bool _canShootNext = true;
-    private float _comboResetTime = 1.5f;
-   // private float _lastAttackTime;
-
-
-
-    public BowFireSkill FireArrow;//»∞ Ω∫≈≥
-    public BowThreeArrowSkill TripleArrow;//»∞ Ω∫≈≥2
-
+    private bool _canShootNext = true;
+    private float _lastAttackTime;
+    private float _comboResetTime = 1.0f;
 
     void Awake()
     {
         _playerAnimation = GetComponent<Animator>();
-        _equipmentController = GetComponent<PlayerEquipmentController>();
         _player = GetComponent<ThirdPersonPlayer>();
+        _fireSkill = GetComponent<BowFireSkill>();
     }
 
-    private void Start()
+    public override void Tick()
     {
-        Instance = this;
+        base.Tick();
+
+        // Ïö∞ÌÅ¥Î¶≠ Ï°∞Ï§Ä ÏãúÏûë
+        if (Input.GetMouseButtonDown(1))
+        {
+            BeginAiming();
+        }
+        // Ïö∞ÌÅ¥Î¶≠ Ìï¥Ï†ú Ïãú Ï°∞Ï§Ä Ï¢ÖÎ£å
+        else if (Input.GetMouseButtonUp(1))
+        {
+            EndAiming();
+        }
+
+        // Í≥µÍ≤© ÏÉÅÌÉú Ï¥àÍ∏∞Ìôî
+        if (!isAiming && IsAttacking && Time.time - _lastAttackTime > _comboResetTime)
+        {
+            ResetAttack();
+        }
+
+        // Í∂§Ï†Å Î†åÎçîÎßÅ
+        if (trajectoryRenderer != null)
+        {
+            if (isAiming)
+                DrawTrajectory();
+            else
+                trajectoryRenderer.ClearTrajectory();
+        }
     }
 
     public override void Attack()
     {
-       // if (!_canShootNext || IsAttacking) return;
+        if (_fireSkill?.CurrentArrowFireSkill == true) return;
 
-        IsAttacking = true;
-      //  _lastAttackTime = Time.time;
-        //_canShootNext = false;
+        if (!_canShootNext) return;
 
-        _playerAnimation.SetTrigger("Attack");
-    }
-
-    public void ShootArrow()
-    {
-
-        if (arrowPrefab == null || shootPoint == null || Camera.main == null) return;
-
-        PlayerArrow arrow = Instantiate(arrowPrefab, shootPoint.position, Quaternion.identity).GetComponent<PlayerArrow>();
-        arrow.SetAttackPower(PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower());
-
-        Rigidbody rb = arrow.GetComponent<Rigidbody>();
-        if (rb == null) return;
-
-        // ƒ´∏ﬁ∂Û »≠∏È ¡ﬂæ”ø°º≠ Raycast ΩÓ±‚
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        Vector3 targetPoint;
-
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f))
+        if (isAiming)
         {
-            targetPoint = hitInfo.point;
+            ShootArrow();
         }
         else
         {
-            // ∏¬¥¬ ¡ˆ¡° æ¯¿∏∏È ƒ´∏ﬁ∂Û æ’ 100πÃ≈Õ πÊ«‚¿∏∑Œ º≥¡§
-            targetPoint = ray.origin + ray.direction * 100f;
+            _playerAnimation.SetTrigger("Attack");
         }
 
-        // πﬂªÁ πÊ«‚ ∞ËªÍ (»≠ªÏ ¿ßƒ° °Ê ∏Ò«• ¡ˆ¡°)
-        Vector3 shootDirection = (targetPoint - shootPoint.position).normalized;
-
-        // »≠ªÏ »∏¿¸ º≥¡§ (πﬂªÁ πÊ«‚ ±‚¡ÿ)
-        arrow.transform.rotation = Quaternion.LookRotation(shootDirection);
-        arrow.transform.Rotate(90f, 0f, 0f, Space.Self);
-        // »≠ªÏ º”µµ º≥¡§
-        rb.linearVelocity = shootDirection * shootForce;
-
-        //_canShootNext = false;
         IsAttacking = true;
-        //_lastAttackTime = Time.time;
+        _canShootNext = false;
+        _lastAttackTime = Time.time;
+
+        // Ï°∞Ï§Ä Í≥µÍ≤©Ïù¥ÎùºÎ©¥ Ìï¥Ï†ú Ï≤òÎ¶¨
+        if (isAiming)
+            StartCoroutine(EndAimAfterDelay(0.05f));
     }
 
-    public override void TryDamageEnemy(GameObject enemy, Vector3 dir)
+    private void BeginAiming()
     {
-        float power = _equipmentController.GetCurrentWeaponAttackPower();
+        isAiming = true;
+        IsAttacking = true; // Ïù¥Îèô ÏÜçÎèÑ Ï°∞Ï†àÏö©ÏúºÎ°ú ÌïÑÏöî
+        _canShootNext = true;
 
-        IDamageAble damageAble = enemy.GetComponent<IDamageAble>();
-        if (damageAble != null)
-        {
-            Damage damage = new Damage(power, gameObject, 100f, dir);
-            damageAble.TakeDamage(damage);
-        }
+        _player.PlayerAnimator.SetTrigger("Aim");
+        _player.PlayerAnimator.SetBool("IsAiming", true);
     }
 
-    public override void OnAttackEffectPlay()
+    private void EndAiming()
     {
-    }
-
-    public override void OnAttackAnimationEnd()
-    {
-        //_canShootNext = true;
+        isAiming = false;
         IsAttacking = false;
+        _player.PlayerAnimator.SetBool("IsAiming", false);
     }
 
-    public override void EnableComboInput()
+    private IEnumerator EndAimAfterDelay(float delay)
     {
-        //_canShootNext = true;
+        yield return new WaitForSeconds(delay);
+        EndAiming();
+        ResetAttack();
     }
 
     private void ResetAttack()
     {
         IsAttacking = false;
-       // _canShootNext = true;
-        if (isAiming) IsAttacking = true;
+        _canShootNext = true;
     }
 
-    public override void Tick()
+    private void DrawTrajectory()
     {
-        HandleAimingInput();
-        HandleFireInput();
-       // UpdateAttackCooldown();
-        UpdateTrajectory();
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Vector3 target = Physics.Raycast(ray, out RaycastHit hit, 100f) ? hit.point : ray.origin + ray.direction * 100f;
+
+        Vector3 direction = (target - shootPoint.position).normalized;
+        Vector3 velocity = direction * shootForce;
+
+        trajectoryRenderer.DrawTrajectory(shootPoint.position, velocity);
     }
 
-    private void HandleAimingInput()
+    public void ShootArrow()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            SetAiming(true);
+        if (arrowPrefab == null || shootPoint == null || Camera.main == null) return;
 
-        }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            SetAiming(false);
-          //  IsAttacking = false;
-           // _canShootNext = true;
+        PlayerArrow arrow = Instantiate(arrowPrefab, shootPoint.position, Quaternion.identity).GetComponent<PlayerArrow>();
+        arrow.ArrowInit(30f, ArrowType.Normal, _player.gameObject);
 
-        }
-    }
-
-    private void SetAiming(bool aiming)
-    {
-        isAiming = aiming;
-        IsAttacking = aiming;
-        if (aiming)
-        {
-            _player.PlayerAnimator.SetTrigger("Aim");
-        }
-        _player.PlayerAnimator.SetBool("IsAiming", aiming);
-    }
-
-    private void HandleFireInput()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (TripleArrow.CurrentThreeArrowSkill)
-            {
-                currentSkill = BowSkillState.TripleArrow;
-                
-                if (isAiming == true)
-                {
-                    //ø°¿” ¡ﬂ¿Ã∂Û∏È
-                    //±◊≥… Ω˜
-                    TripleArrow.FireTripleArrows();
-                }
-
-                else
-                {
-                    TripleArrow.ShootThreeArrow();
-                }
-            }
-            else if (FireArrow.CurrentArrowFireSkill)
-            {
-                currentSkill = BowSkillState.FireArrow;
-               
-                if (isAiming == true)
-                {
-                    //ø°¿” ¡ﬂ¿Ã∂Û∏È
-                    //±◊≥… Ω˜
-                    FireArrow.FireSingleArrow();
-                }
-
-                else
-                {
-                    FireArrow.ShootFireArrow();
-                }
-            }
-            else
-            {
-                currentSkill = BowSkillState.Normal;
-                if(isAiming == true)
-                {
-                    //ø°¿” ¡ﬂ¿Ã∂Û∏È
-                    //±◊≥… Ω˜
-                    ShootArrow();
-                }
-
-                else
-                {
-                    Attack(); // ¿œπ› »≠ªÏøÎ æ÷¥œ∏ﬁ¿Ãº«
-                }
-
-                    
-            }
-        }
-    }
-
-   /* private void UpdateAttackCooldown()
-    {
-        if (!IsAttacking)
-            return;
-
-        if (Time.time - _lastAttackTime > _comboResetTime)
-            ResetAttack();
-    }*/
-
-    private void UpdateTrajectory()
-    {
-        if (trajectoryRenderer == null)
-            return;
-
-        if (isAiming)// && IsAttacking)
-        {
-            Vector3 initVel = CalculateShootDirection() * shootForce;
-            trajectoryRenderer.DrawTrajectory(shootPoint.position, initVel);
-        }
-        else
-        {
-            trajectoryRenderer.ClearTrajectory();
-        }
-
-        //¡∂¡ÿ¿Ã øœ∑·µ«∏È ΩÚ ºˆ ¿÷µµ∑œ
-        if (FireArrow != null)
-        {
-            FireArrow.Tick();
-        }
-
-        if (TripleArrow != null)
-        {
-            TripleArrow.Tick();
-        }
-
-
-    }
-
-    private Vector3 CalculateShootDirection()
-    {
-        if (Camera.main == null)
-            return shootPoint.forward;
+        Rigidbody rb = arrow.GetComponent<Rigidbody>();
+        if (rb == null) return;
 
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, 100f))
-            return (hitInfo.point - shootPoint.position).normalized;
+        Vector3 target = Physics.Raycast(ray, out RaycastHit hit, 100f) ? hit.point : ray.origin + ray.direction * 100f;
 
-        return ray.direction;
+        Vector3 direction = (target - shootPoint.position).normalized;
+        rb.linearVelocity = direction * shootForce;
+
+        arrow.transform.rotation = Quaternion.LookRotation(direction);
+        arrow.transform.Rotate(90f, 0f, 0f, Space.Self);
     }
+
+    public override void OnAttackAnimationEnd()
+    {
+        ResetAttack();
+    }
+
+    public override void EnableComboInput()
+    {
+        _canShootNext = true;
+    }
+
+    public override void TryDamageEnemy(GameObject enemy, Vector3 dir) { }
+
+    public override void OnAttackEffectPlay() { }
+
 }
