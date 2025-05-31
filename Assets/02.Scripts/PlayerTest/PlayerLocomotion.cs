@@ -120,7 +120,9 @@ public class PlayerLocomotion : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _yVelocity = _player.PlayerStats.JumpPower;
-            _player.PlayerAnimator.SetTrigger("Jump");
+
+            if(_playerAttack.IsUsingJumpAnim)
+                _player.PlayerAnimator.SetTrigger("Jump");
         }
         //bool canJump = _jumpCount < _player.MaxJumpCount && !_isClimbing;
 
