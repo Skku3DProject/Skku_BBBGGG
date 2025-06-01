@@ -39,8 +39,7 @@ public class SwordSpinSkill : WeaponSkillBase
 
     public override void UseSkill()
     {
-        if (_equipmentController.GetCurrentEquipType() != EquipmentType.Sword)
-            return;
+        if (IsCooldown) return;
 
         if (!IsAttacking && !IsUsingSkill && !CurrentSwordSpinSkill)
         {
@@ -83,22 +82,20 @@ public class SwordSpinSkill : WeaponSkillBase
         _playerAttack.IsUsingJumpAnim = true;
         SpinVfx?.SetActive(false);
 
+
+        //쿨타임 초기화
+        cooldownTimer = cooldownTime;
+
         Debug.Log("스핀 종료");
     }
 
     public override void Tick()
     {
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    UseSkill();
-        //    _swordDashSkill.CurrentSwordDashSkill = false;
-        //    // CurrentSwordSpinSkill = true; // UseSkill 내에서 처리하므로 중복 제거 가능
-        //}
+        base.Tick();
     }
 
     public override void OnSkillEffectPlay()
     {
-        // 필요시 확장 가능
     }
 
     public override void OnSkillAnimationEnd()

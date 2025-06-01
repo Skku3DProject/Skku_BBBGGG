@@ -29,7 +29,7 @@ public class ChainLightningSkill : WeaponSkillBase
 
     public override void UseSkill()
     {
-        if (IsUsingSkill) return;
+        if (IsUsingSkill || IsCooldown) return;
 
 
         _playerAnimator.SetTrigger("Skill1");
@@ -50,6 +50,9 @@ public class ChainLightningSkill : WeaponSkillBase
         IsUsingSkill = false;
         _playerAttack.IsMoveSlow = false;
         _playerAttack.IsUsingJumpAnim = true;
+
+        //쿨타임 초기화
+        cooldownTimer = cooldownTime;
     }
 
     private IEnumerator ChainLightningRoutine()

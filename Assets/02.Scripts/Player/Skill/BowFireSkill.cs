@@ -36,6 +36,9 @@ public class BowFireSkill : WeaponSkillBase
 
     public override void UseSkill()
     {
+        if (IsCooldown) return;
+
+
         FireEffect.SetActive(true);
 
         if (_equipmentController.GetCurrentEquipType() != EquipmentType.Bow)
@@ -56,6 +59,9 @@ public class BowFireSkill : WeaponSkillBase
         _player.CharacterController.stepOffset = 1f;
         CurrentArrowFireSkill = false;
         FireEffect.SetActive(false);
+
+        //쿨타임 초기화
+        cooldownTimer = cooldownTime;
     }
 
     public void ShootFireArrow()
@@ -122,6 +128,8 @@ public class BowFireSkill : WeaponSkillBase
 
     public override void Tick()
     {
+        base.Tick();
+
         if (!CurrentArrowFireSkill) return;
 
         // 이건 스킬 안에서만 처리하는 Mouse0 입력
