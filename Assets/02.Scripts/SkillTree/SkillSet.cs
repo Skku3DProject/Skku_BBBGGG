@@ -47,9 +47,6 @@ public class SkillSet : MonoBehaviour
         else
         {
             skillButton.interactable = true;
-            
-            ChildButton.gameObject.SetActive(false);
-            Open = false;
         }
         
     }
