@@ -67,8 +67,9 @@ public class PlayerAttack : MonoBehaviour
                 _skill2 = GetComponent<BowChargingSkill>();
                 break;
 
-            default:
-                _currentWeaponAttack = GetComponent<SwordAttack>();
+            case EquipmentType.Magic:
+                _currentWeaponAttack = GetComponent<WandAttack>();
+                _skill1 = GetComponent<ChainLightningSkill>();
                 _currentWeaponAttack.IsAttacking = false;
                 break;
         }
