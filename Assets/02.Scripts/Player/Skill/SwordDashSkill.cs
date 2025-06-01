@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class SwordDashSkill : WeaponSkillBase
 {
@@ -32,7 +33,10 @@ public class SwordDashSkill : WeaponSkillBase
 
     public override void UseSkill()
     {
-        if(IsAttacking == false)
+        if (IsCooldown) return;
+
+
+        if (IsAttacking == false)
         {
 
             if (_equipmentController.GetCurrentEquipType() != EquipmentType.Sword)
@@ -48,9 +52,13 @@ public class SwordDashSkill : WeaponSkillBase
             // 대쉬 이동 시작
             StartCoroutine(DashForward());
             IsAttacking = true;
+
+
+            //쿨타임 초기화
+            cooldownTimer = cooldownTime;
         }
 
-        
+
     }
 
     private IEnumerator DashForward()
@@ -100,6 +108,7 @@ public class SwordDashSkill : WeaponSkillBase
 
     public override void Tick()
     {
+        base.Tick();
     }
 
     public override void OnSkillEffectPlay() { }

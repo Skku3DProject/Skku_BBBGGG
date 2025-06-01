@@ -20,6 +20,10 @@ public abstract class MeleeTowerBase : MonoBehaviour
 
     protected virtual void Update()
     {
+        _targets.RemoveAll(t => t == null); // 죽은 적 제거
+
+        if (_targets.Count == 0) return;
+
         _attackTimer -= Time.deltaTime;
 
         if (_attackTimer <= 0f)

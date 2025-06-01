@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WeaponAttackSO_Magic
   m_EditorClassIdentifier: 
   WeaponName: Magic
-  AttackPower: 15
+  AttackPower: 25

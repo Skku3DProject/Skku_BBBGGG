@@ -693,6 +693,8 @@ GameObject:
   - component: {fileID: 5595734551079153989}
   - component: {fileID: 8937440095439890952}
   - component: {fileID: 1992782865872570930}
+  - component: {fileID: 6384879615961568503}
+  - component: {fileID: 997840918372080812}
   m_Layer: 8
   m_Name: ThirdPersonPlayer
   m_TagString: Player
@@ -716,6 +718,7 @@ Transform:
   - {fileID: 5267939569926964268}
   - {fileID: 9111073938548298819}
   - {fileID: 109148239228766916}
+  - {fileID: 7320264080844816084}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6004033578867130890
@@ -928,6 +931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea699a439b93d545bad8a8f7151700d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTime: 5
   MyPlayer: {fileID: 2042415629762981396}
   _skillDamageMultiplier: 2.5
   CurrentSwordSpinSkill: 0
@@ -945,6 +949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fadc818aaa43e4abec189fe7b8cc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTime: 5
   FireEffect: {fileID: 7057051775828160547}
   MyPlayer: {fileID: 2042415629762981396}
   _arrowPrefab: {fileID: 5014901011304848109, guid: f49ce3859ae50fc4ba8d3f23fc9b1722, type: 3}
@@ -979,6 +984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97c6850b4d09374f9d63e3fc1ccae77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTime: 5
   MyPlayer: {fileID: 0}
   DashVfx: {fileID: 7858797915550500245}
   _skillDamageMultiplier: 1.7
@@ -998,6 +1004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fd439be412d194398ec9098c185cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTime: 5
   arrowPrefab: {fileID: 5014901011304848109, guid: f49ce3859ae50fc4ba8d3f23fc9b1722, type: 3}
   shootPoint: {fileID: 7644727656459952772}
   maxChargeTime: 2
@@ -1006,6 +1013,45 @@ MonoBehaviour:
   damageMultiplier: 1
   fullChargeMultiplier: 2
   chargeEffect: {fileID: 7224161509211331347}
+--- !u!114 &6384879615961568503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042415629762981396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7488321ed7b474a839ecc14e5ebd3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsAttacking: 0
+  magicProjectilePrefab: {fileID: 7569710657154703407, guid: 70f68fb05e68dc8418112d9a91feb24e, type: 3}
+  shootPoint: {fileID: 7320264080844816084}
+  projectileForce: 25
+  attackCooldown: 0.5
+--- !u!114 &997840918372080812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042415629762981396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1aa17901932dcd49b9df0c525d2db8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownTime: 5
+  damagePerHit: 40
+  maxChains: 10
+  chainRange: 6
+  delayBetweenChains: 0.1
+  lightningEffectHitPrefab: {fileID: 0}
+  lightningEffectPrefab: {fileID: 7868826235802648128, guid: da1ee69202fc7ed4687d9f3b44946297, type: 3}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &2157909812484209927
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,6 +1478,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3646131312195610525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7320264080844816084}
+  m_Layer: 8
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7320264080844816084
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3646131312195610525}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0.84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1072637427109573353}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3822155417044545519
 GameObject:
   m_ObjectHideFlags: 0
@@ -3905,7 +3982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 112984, guid: c898eb4f8b909cd45926f72ce858fbca, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 476756, guid: c898eb4f8b909cd45926f72ce858fbca, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4050,7 +4127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 115832, guid: 397f6f572306f984aac6cf61d2361268, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 407594, guid: 397f6f572306f984aac6cf61d2361268, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4132,7 +4209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 103410, guid: 3f0d7a0f7d525454eb522dc56efe605d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 429248, guid: 3f0d7a0f7d525454eb522dc56efe605d, type: 3}
       propertyPath: m_LocalPosition.x

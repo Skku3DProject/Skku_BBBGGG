@@ -34,7 +34,9 @@ public class BowChargingSkill : WeaponSkillBase
     }
     public override void Tick()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !IsUsingSkill)
+        base.Tick();
+
+        if (Input.GetKeyDown(KeyCode.E) && !IsUsingSkill && !IsCooldown)
         {
             StartCharge();
         }
@@ -90,6 +92,9 @@ public class BowChargingSkill : WeaponSkillBase
         IsUsingSkill = false;
         _playerAttack.IsUsingJumpAnim = true;
         _playerAttack.IsMoveSlow = false;
+
+        //쿨타임 초기화
+        cooldownTimer = cooldownTime;
     }
 
     private void FireChargedArrow(float force, float damageMult)
