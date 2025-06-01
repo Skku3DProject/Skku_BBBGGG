@@ -931,6 +931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea699a439b93d545bad8a8f7151700d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTime: 5
   MyPlayer: {fileID: 2042415629762981396}
   _skillDamageMultiplier: 2.5
   CurrentSwordSpinSkill: 0
@@ -948,6 +949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fadc818aaa43e4abec189fe7b8cc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTime: 5
   FireEffect: {fileID: 7057051775828160547}
   MyPlayer: {fileID: 2042415629762981396}
   _arrowPrefab: {fileID: 5014901011304848109, guid: f49ce3859ae50fc4ba8d3f23fc9b1722, type: 3}
@@ -982,6 +984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97c6850b4d09374f9d63e3fc1ccae77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTime: 5
   MyPlayer: {fileID: 0}
   DashVfx: {fileID: 7858797915550500245}
   _skillDamageMultiplier: 1.7
@@ -1001,6 +1004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11fd439be412d194398ec9098c185cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTime: 5
   arrowPrefab: {fileID: 5014901011304848109, guid: f49ce3859ae50fc4ba8d3f23fc9b1722, type: 3}
   shootPoint: {fileID: 7644727656459952772}
   maxChargeTime: 2
@@ -1038,8 +1042,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aa17901932dcd49b9df0c525d2db8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTime: 5
   damagePerHit: 40
-  maxChains: 4
+  maxChains: 10
   chainRange: 6
   delayBetweenChains: 0.1
   lightningEffectHitPrefab: {fileID: 0}
@@ -1047,8 +1052,6 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  lightningProjectilePrefab: {fileID: 6601884436916474890, guid: 3994033e7cc24f040a58c69c8c4b3c59, type: 3}
-  shootPoint: {fileID: 7320264080844816084}
 --- !u!1 &2157909812484209927
 GameObject:
   m_ObjectHideFlags: 0
