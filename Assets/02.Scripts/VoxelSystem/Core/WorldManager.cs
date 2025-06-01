@@ -32,7 +32,7 @@ public class WorldManager : MonoBehaviour
     [Header("보물상자 프리팹")]
     public GameObject ChestPrefab;
     public int MaxChestCount = 10;
-    private List<Vector3> _cavePositions = new(); // 동굴 후보 위치
+    private List<Vector3> _hillPositions = new(); // 언덕 꼭대기 후보지
     [Header("그리드 세팅")]
     public int GridWidth = 5;
     public int GridHeight = 5;
@@ -55,6 +55,9 @@ public class WorldManager : MonoBehaviour
     [Header("지형 노이즈")]
     public float NoiseScale = 0.1f;
 
+    private int _worldSeed = 0;
+    private float _randomOffsetX;
+    private float _randomOffsetZ;
 
 
     private Dictionary<Vector2Int, TempChunkData> _savedChunkData = new();
@@ -70,6 +73,8 @@ public class WorldManager : MonoBehaviour
         StageManager.instance.OnCombatEnd += ResetPlayer;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        SetWorldSeed(Random.Range(0, int.MaxValue));
         BackupCentralChunks();
         GenerateGrid();
         PositionPlayerAtCenter();
@@ -79,6 +84,7 @@ public class WorldManager : MonoBehaviour
     //--------------------------------------- 맵로딩용
     public void InitWorld()
     {
+        SetWorldSeed(Random.Range(0, int.MaxValue));
         BackupCentralChunks();
         GenerateGrid();
     }
@@ -103,6 +109,15 @@ public class WorldManager : MonoBehaviour
         }
     }
     //-----------------------------------맵 로딩 용
+
+
+    public void SetWorldSeed(int seed)
+    {
+        _worldSeed = seed;
+        System.Random rnd = new System.Random(_worldSeed);
+        _randomOffsetX = (float)rnd.NextDouble() * 10000f;
+        _randomOffsetZ = (float)rnd.NextDouble() * 10000f;
+    }
 
     public IEnumerator GenerateGridAsync(System.Action<float> onProgressUpdated = null)
     {
@@ -160,10 +175,10 @@ public class WorldManager : MonoBehaviour
     }
     void PlaceChests()
     {
-        int chestCount = Mathf.Min(MaxChestCount, _cavePositions.Count);
+        int chestCount = Mathf.Min(MaxChestCount, _hillPositions.Count);
         if (chestCount == 0) return;
 
-        List<Vector3> shuffled = new List<Vector3>(_cavePositions);
+        List<Vector3> shuffled = new List<Vector3>(_hillPositions);
         ShuffleList(shuffled); // 랜덤 섞기
 
         for (int i = 0; i < chestCount; i++)
@@ -194,19 +209,6 @@ public class WorldManager : MonoBehaviour
         // BlockController.RegisterChunk(coord, chunk);
         _chunks.Add(coord, chunk);
     }
-    //private IEnumerator DelayedPositioning()
-    //{
-    //    yield return new WaitForEndOfFrame();
-
-    //    // 이제 안전하게 중앙에 배치
-    //    PositionPlayerAtCenter();
-    //    PositionSpawner();
-
-    //    Cursor.lockState = CursorLockMode.Locked;
-    //    Cursor.visible = false;
-
-    //    Debug.Log("플레이어, 스포너 재배치 완료");
-    //}
     void PositionPlayerAtCenter()
     {
         if (Player == null || _chunks.Count == 0)
@@ -324,14 +326,10 @@ public class WorldManager : MonoBehaviour
                 float targetHeight = Mathf.Lerp(totalHeight, 10f, flatness); // 중심은 높이 10으로
                 int maxHeight = Mathf.Clamp(Mathf.FloorToInt(targetHeight), 0, Chunk.CHUNK_HEIGHT - 1);
 
-                // ==== 6. 동굴 노이즈 (단순 제거형 동굴) ====
                 for (int y = 0; y < Chunk.CHUNK_HEIGHT; y++)
                 {
-                    //float caveNoise = Mathf.PerlinNoise(globalX * 0.1f + 4000f, globalZ * 0.1f + 4000f + y * 0.05f);
-                    //bool isCave = (y < maxHeight - 3 && caveNoise > 0.65f); // 듬성듬성 구멍
-
                     float caveNoise = CaveNoise3D(globalX * 0.02f, y * 0.02f, globalZ * 0.02f);
-                    bool isCave = (y < maxHeight - 3 && caveNoise > 0.58f);
+                    bool isCave = false;
 
                     if (y > maxHeight || isCave)
                     {
@@ -342,13 +340,18 @@ public class WorldManager : MonoBehaviour
                             if (below == VoxelType.Stone || below == VoxelType.Dirt || below == VoxelType.Grass)
                             {
                                 Vector3 pos = chunk.transform.position + new Vector3(x - 1 + 0.5f, y + 0.5f, z - 1 + 0.5f);
-                                _cavePositions.Add(pos);
                             }
                         }
                     }
                     else if (y == maxHeight)
                     {
                         chunk.Blocks[x, y, z] = VoxelType.Grass;
+                        float heightThreshold = 18f; // 언덕으로 간주할 최소 높이
+                        if (maxHeight >= heightThreshold)
+                        {
+                            Vector3 pos = chunk.transform.position + new Vector3(x - 1 + 0.5f, y + 1f, z - 1 + 0.5f);
+                            _hillPositions.Add(pos);
+                        }
                     }
                     else if (y >= maxHeight - 3)
                     {
@@ -380,15 +383,15 @@ public class WorldManager : MonoBehaviour
                 int globalZ = coord.y * Chunk.CHUNK_WIDTH + (z - 1);
 
                 // ==== 1. 평지 베이스 ====
-                float baseNoise = Mathf.PerlinNoise(globalX * NoiseScale, globalZ * NoiseScale);
+                float baseNoise = Mathf.PerlinNoise((globalX + _randomOffsetX) * NoiseScale, (globalZ + _randomOffsetZ) * NoiseScale);
                 float baseHeight = baseNoise * 2f + 2f; // 낮고 완만한 평야
 
                 // ==== 2. 언덕 노이즈 (높고 부드러운 변화) ====
-                float hillNoise = Mathf.PerlinNoise(globalX * 0.03f + 2000f, globalZ * 0.03f + 2000f);
+                float hillNoise = Mathf.PerlinNoise((globalX + _randomOffsetX) * 0.03f + 2000f, (globalZ + _randomOffsetZ) * 0.03f + 2000f);
                 float hillHeight = Mathf.SmoothStep(0f, 1f, hillNoise) * 8f;
 
                 // ==== 3. 언덕이 나올 위치 마스킹 ====
-                float hillMask = Mathf.PerlinNoise(globalX * 0.01f + 1234f, globalZ * 0.01f + 5678f);
+                float hillMask = Mathf.PerlinNoise((globalX + _randomOffsetX) * 0.01f + 1234f, (globalZ + _randomOffsetZ) * 0.01f + 5678f);
                 hillMask = Mathf.SmoothStep(0.5f, 0.7f, hillMask); // 언덕 확률 조절
 
                 // ==== 4. 중심 평탄화 보정 ====

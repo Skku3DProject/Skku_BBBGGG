@@ -646,7 +646,7 @@ MonoBehaviour:
   StartPos: {x: 0, y: 0, z: 0}
   BaseCampTransform: {fileID: 1412508635}
   SpawenrTransform: {fileID: 192076119}
-  ChestPrefab: {fileID: 5786370049334567863, guid: 19ffd48077398244d9808b2466db625c, type: 3}
+  ChestPrefab: {fileID: 2868492944586623384, guid: b5c6bf2ec9d029a44840e4e060298544, type: 3}
   MaxChestCount: 10
   GridWidth: 50
   GridHeight: 50
@@ -794,6 +794,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 709128383352732524, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
+      propertyPath: BlockOverrideController
+      value: 
+      objectReference: {fileID: 9100000, guid: c05bd5df6d7ded542b5229013e06923e, type: 2}
     - target: {fileID: 1072637427109573353, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
       propertyPath: m_LocalPosition.x
       value: 400.5
