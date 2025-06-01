@@ -9,7 +9,10 @@ public class SwordDashSkill : WeaponSkillBase
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
 
-    [SerializeField] private float _skillDamageMultiplier = 1.7f;
+
+    public GameObject DashVfx;
+
+    [SerializeField] private float _skillDamageMultiplier = 0.7f;
     [SerializeField] private float dashDistance = 10f;//거리
     [SerializeField] private float dashSpeed = 50f;//속도
 
@@ -39,6 +42,7 @@ public class SwordDashSkill : WeaponSkillBase
             CurrentSwordDashSkill = true;
 
             _playerAnimation.SetTrigger("DashAttack");
+            DashVfx?.SetActive(true);
             _player.CharacterController.stepOffset = 0f;
 
             // 대쉬 이동 시작
@@ -88,7 +92,7 @@ public class SwordDashSkill : WeaponSkillBase
         yield return new WaitForSeconds(delay);
 
         _playerAnimation.SetTrigger("Idle");
-
+        DashVfx?.SetActive(false);
         IsUsingSkill = false;
         CurrentSwordDashSkill = false;
         _player.CharacterController.stepOffset = 1f;
@@ -130,6 +134,32 @@ public class SwordDashSkill : WeaponSkillBase
             Vector3 center = MyPlayer.transform.position + MyPlayer.transform.forward * 2.0f + Vector3.up * 0.5f; 
             Gizmos.DrawWireSphere(center, 1f);
         }
+    }
+
+    public override void ResetState()
+    {
+        // 스킬 상태 리셋
+        IsUsingSkill = false;
+        IsAttacking = false;
+        CurrentSwordDashSkill = false;
+
+        // VFX 비활성화
+        if (DashVfx != null)
+            DashVfx.SetActive(false);
+
+        // 캐릭터 stepOffset 복구
+        if (_player != null)
+            _player.CharacterController.stepOffset = 1f;
+
+        // 애니메이션 상태 복구
+        if (_playerAnimation != null)
+        {
+            _playerAnimation.ResetTrigger("DashAttack");
+            _playerAnimation.SetTrigger("Idle");
+        }
+
+        // 코루틴이 돌고 있었다면 종료
+        StopAllCoroutines(); // 단일 코루틴 변수로 바꾸는 것도 가능
     }
 }
 

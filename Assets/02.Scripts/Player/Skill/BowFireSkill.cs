@@ -9,7 +9,7 @@ public class BowFireSkill : WeaponSkillBase
     private Animator _playerAnimator;
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
-
+    private PlayerAttack _playerAttack;
     [Header("Skill Settings")]
     [SerializeField] private GameObject _arrowPrefab;
     [SerializeField] private float _skillDamageMultiplier = 2f;
@@ -31,6 +31,7 @@ public class BowFireSkill : WeaponSkillBase
         _playerAnimator = GetComponent<Animator>();
         _equipmentController = GetComponent<PlayerEquipmentController>();
         _player = MyPlayer.GetComponent<ThirdPersonPlayer>();
+        _playerAttack = GetComponent<PlayerAttack>();
     }
 
     public override void UseSkill()
@@ -62,7 +63,10 @@ public class BowFireSkill : WeaponSkillBase
         if( CurrentArrowFireSkill && !_isAttacking)
         {
             _playerAnimator.SetTrigger("FireArrowAttack");
+            _playerAttack.IsUsingJumpAnim = false;
+            _playerAttack.IsMoveSlow = true;
             _isAttacking = true;
+            
         }
     }
 
@@ -107,12 +111,13 @@ public class BowFireSkill : WeaponSkillBase
         }
 
         _isAttacking = false;
+        _playerAttack.IsUsingJumpAnim = true;
+        _playerAttack.IsMoveSlow = false;
+        _player.CharacterController.stepOffset = 1f;
     }
 
     public override void OnSkillAnimationEnd()
-    {
-        _isAttacking = false;
-        _player.CharacterController.stepOffset = 1f;
+    { 
     }
 
     public override void Tick()
@@ -134,16 +139,40 @@ public class BowFireSkill : WeaponSkillBase
 
     public override void TryDamageEnemy(GameObject enemy, Vector3 hitDirection)
     {
-        //if (!IsUsingSkill) return;
+    }
 
-        //float power = _equipmentController.GetCurrentWeaponAttackPower() * _skillDamageMultiplier;
+    public override void ResetState()
+    {
+        // 상태 플래그 초기화
+        IsUsingSkill = false;
+        CurrentArrowFireSkill = false;
+        _isAttacking = false;
 
-        //IDamageAble damageAble = enemy.GetComponent<IDamageAble>();
-        //if (damageAble != null)
-        //{
-        //    Damage damage = new Damage(power, gameObject, 100f, hitDirection);
-        //    damageAble.TakeDamage(damage);
-        //    //Debug.Log($"불 화살 스킬로 {enemy.name}에게 {power} 데미지를 입힘!");
-        //}
+        // 캐릭터 이동 특성 복구
+        if (_player != null && _player.CharacterController != null)
+            _player.CharacterController.stepOffset = 1f;
+
+        // 이펙트 비활성화
+        if (FireEffect != null)
+            FireEffect.SetActive(false);
+
+        // 점프 애니메이션 & 이동 속도 제한 복원
+        if (_playerAttack != null)
+        {
+            _playerAttack.IsUsingJumpAnim = true;
+            _playerAttack.IsMoveSlow = false;
+        }
+
+        // 애니메이션 상태 초기화
+        if (_playerAnimator != null)
+        {
+            _playerAnimator.ResetTrigger("FireArrowAttack");
+            _playerAnimator.SetTrigger("Idle");
+        }
+
+        //// 코루틴이 있다면 StopAllCoroutines() 고려 (불필요한 force 적용 방지)
+        //StopAllCoroutines();
+
+        Debug.Log("BowFireSkill 상태 초기화 완료");
     }
 }

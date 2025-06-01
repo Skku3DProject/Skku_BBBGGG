@@ -14,6 +14,8 @@ public class BowAttack : WeaponAttackBase
     private ThirdPersonPlayer _player;
     private BowFireSkill _fireSkill;
 
+    [SerializeField] private LayerMask targetLayerMask;
+
     [Header("화살세팅")]
     public GameObject arrowPrefab;
     public Transform shootPoint;
@@ -121,7 +123,12 @@ public class BowAttack : WeaponAttackBase
     private void DrawTrajectory()
     {
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        Vector3 target = Physics.Raycast(ray, out RaycastHit hit, 100f) ? hit.point : ray.origin + ray.direction * 100f;
+        Vector3 target;
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, targetLayerMask))
+            target = hit.point;
+        else
+            target = ray.origin + ray.direction * 100f;
 
         Vector3 direction = (target - shootPoint.position).normalized;
         Vector3 velocity = direction * shootForce;

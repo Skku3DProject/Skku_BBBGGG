@@ -3,39 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 
-public class BowThreeArrowSkill : WeaponSkillBase
+public class BowChargingSkill : WeaponSkillBase
 {
     [Header("차지 화살 세팅")]
     public GameObject arrowPrefab;
     public Transform shootPoint;
-    public float maxChargeTime = 2f;
+    public float maxChargeTime = 6f;
     public float minShootForce = 20f;
     public float maxShootForce = 60f;
     public float damageMultiplier = 1f;
     public float fullChargeMultiplier = 2f;
 
     [Header("이펙트")]
-    public GameObject chargeEffectGO;
-    private ParticleSystem[] chargeEffects;
-    public GameObject fullChargeEffect;
+    public GameObject chargeEffect;
+    //public GameObject fullChargeEffect;
 
     private float chargeTime = 0f;
     private bool isCharging = false;
     private bool isFullyCharged = false;
     private Animator _playerAnimator;
+    private PlayerAttack _playerAttack;
+
     public override bool IsUsingSkill { get; protected set; }
 
     private void Awake()
     {
         _playerAnimator = GetComponent<Animator>();
-
-        chargeEffects = chargeEffectGO.GetComponents<ParticleSystem>();
-        foreach (var effect in chargeEffects)
-        {
-            effect.Stop();
-        }
+        chargeEffect.SetActive(false);
+        _playerAttack = GetComponent<PlayerAttack>();
     }
-    void Update()
+    public override void Tick()
     {
         if (Input.GetKeyDown(KeyCode.E) && !IsUsingSkill)
         {
@@ -49,7 +46,7 @@ public class BowThreeArrowSkill : WeaponSkillBase
             if (chargeTime >= maxChargeTime && !isFullyCharged)
             {
                 isFullyCharged = true;
-                fullChargeEffect?.SetActive(true);
+                //fullChargeEffect?.SetActive(true);
             }
         }
 
@@ -70,12 +67,11 @@ public class BowThreeArrowSkill : WeaponSkillBase
         chargeTime = 0f;
         isFullyCharged = false;
         IsUsingSkill = true;
+        _playerAttack.IsUsingJumpAnim = false;
+        _playerAttack.IsMoveSlow = true;
 
         _playerAnimator.SetTrigger("Charging");
-        foreach (var effect in chargeEffects)
-        {
-            effect.Play();
-        }
+        chargeEffect.SetActive(true);
     }
 
     private void ReleaseCharge()
@@ -89,12 +85,11 @@ public class BowThreeArrowSkill : WeaponSkillBase
         float damageMult = isFullyCharged ? fullChargeMultiplier : damageMultiplier;
 
         FireChargedArrow(force, damageMult);
-        foreach (var effect in chargeEffects)
-        {
-            effect.Stop();
-        }
+        chargeEffect.SetActive(false);
         _playerAnimator.SetTrigger("Idle");
         IsUsingSkill = false;
+        _playerAttack.IsUsingJumpAnim = true;
+        _playerAttack.IsMoveSlow = false;
     }
 
     private void FireChargedArrow(float force, float damageMult)
@@ -131,9 +126,35 @@ public class BowThreeArrowSkill : WeaponSkillBase
 
     public override void OnSkillAnimationEnd() { }
 
-    public override void Tick()
+
+    public override void ResetState()
     {
-        // 필요 시 쿨타임 처리
+        // 스킬 상태 초기화
+        IsUsingSkill = false;
+        isCharging = false;
+        isFullyCharged = false;
+        chargeTime = 0f;
+
+        // 이펙트 끄기
+        if (chargeEffect != null)
+            chargeEffect.SetActive(false);
+        // fullChargeEffect?.SetActive(false); // 필요 시
+
+        // 애니메이션 리셋
+        if (_playerAnimator != null)
+        {
+            _playerAnimator.ResetTrigger("Charging");
+            _playerAnimator.SetTrigger("Idle");
+        }
+
+        // 이동 제한 및 점프 가능 복구
+        if (_playerAttack != null)
+        {
+            _playerAttack.IsUsingJumpAnim = true;
+            _playerAttack.IsMoveSlow = false;
+        }
+
+        Debug.Log("BowChargingSkill 상태 초기화 완료");
     }
 }
 

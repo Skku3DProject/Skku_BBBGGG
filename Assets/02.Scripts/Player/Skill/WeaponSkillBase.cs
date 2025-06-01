@@ -21,4 +21,6 @@ public abstract class WeaponSkillBase : MonoBehaviour
 
     //스킬 쿨타임 관리
     public virtual void Tick() { }
+
+    public virtual void ResetState() { }
 }

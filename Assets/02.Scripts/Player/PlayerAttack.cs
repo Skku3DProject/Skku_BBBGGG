@@ -6,9 +6,13 @@ public class PlayerAttack : MonoBehaviour
     public WeaponAttackBase CurrentWeaponAttack => _currentWeaponAttack;
 
     private WeaponSkillBase _skill1;
+    public WeaponSkillBase Skill1 => _skill1;
     private WeaponSkillBase _skill2;
 
+
     public bool IsUsingJumpAnim = true;
+    public bool IsMoveSlow = false;
+
     private EquipmentType _equipmentType;
 
     void Start()
@@ -41,6 +45,10 @@ public class PlayerAttack : MonoBehaviour
 
     public void SwitchWeaponAttack()
     {
+
+        _skill1?.ResetState();
+        _skill2?.ResetState();
+
         _equipmentType = PlayerEquipmentController.Instance.GetCurrentEquipType();
 
         switch (_equipmentType)
@@ -48,15 +56,15 @@ public class PlayerAttack : MonoBehaviour
             case EquipmentType.Sword:
                 _currentWeaponAttack = GetComponent<SwordAttack>();
                 _currentWeaponAttack.IsAttacking = false;
-                _skill1 = GetComponent<SwordDashSkill>();
-                _skill2 = GetComponent<SwordSpinSkill>();
+                _skill1 = GetComponent<SwordSpinSkill>();
+                _skill2 = GetComponent<SwordDashSkill>();
                 break;
 
             case EquipmentType.Bow:
                 _currentWeaponAttack = GetComponent<BowAttack>();
                 _currentWeaponAttack.IsAttacking = false;
                 _skill1 = GetComponent<BowFireSkill>();
-                _skill2 = GetComponent<BowThreeArrowSkill>();
+                _skill2 = GetComponent<BowChargingSkill>();
                 break;
 
             default:
@@ -64,15 +72,25 @@ public class PlayerAttack : MonoBehaviour
                 _currentWeaponAttack.IsAttacking = false;
                 break;
         }
+
+        _skill1?.ResetState();
+        _skill2?.ResetState();
     }
 
     public void TryDamageEnemy(GameObject enemy, Vector3 dir)
     {
-        _currentWeaponAttack?.TryDamageEnemy(enemy, dir);
 
         if (_skill1?.IsUsingSkill == true)
+        {
             _skill1.TryDamageEnemy(enemy, dir);
+            return;
+        }
         if (_skill2?.IsUsingSkill == true)
+        {
             _skill2.TryDamageEnemy(enemy, dir);
+            return;
+        }
+
+        _currentWeaponAttack?.TryDamageEnemy(enemy, dir);
     }
 }

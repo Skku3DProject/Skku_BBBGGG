@@ -9,7 +9,7 @@ public class SwordSpinSkill : WeaponSkillBase
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
     private PlayerAttack _playerAttack;
-    [SerializeField] private float _skillDamageMultiplier = 2.5f;
+    [SerializeField] private float _skillDamageMultiplier = 0.4f;
 
     private SwordDashSkill _swordDashSkill;
     public bool CurrentSwordSpinSkill;
@@ -22,6 +22,8 @@ public class SwordSpinSkill : WeaponSkillBase
     private float _animationSpeed = 1.0f;         // 애니메이션 재생 속도
     private int _repeatCount = 15;                  // 반복 재생 횟수
 
+
+    public GameObject SpinVfx;
     private void Awake()
     {
         MyPlayer = GameObject.FindGameObjectWithTag("Player");
@@ -54,6 +56,8 @@ public class SwordSpinSkill : WeaponSkillBase
             _spinCoroutine = StartCoroutine(PlaySpinAnimationMultipleTimes(_repeatCount, _baseAnimationDuration, _animationSpeed));
 
             _playerAttack.IsUsingJumpAnim = false;
+
+            SpinVfx?.SetActive(true);
             Debug.Log("스핀 시작");
 
         }
@@ -77,6 +81,8 @@ public class SwordSpinSkill : WeaponSkillBase
         IsAttacking = false;
         CurrentSwordSpinSkill = false;
         _playerAttack.IsUsingJumpAnim = true;
+        SpinVfx?.SetActive(false);
+
         Debug.Log("스핀 종료");
     }
 
@@ -111,9 +117,38 @@ public class SwordSpinSkill : WeaponSkillBase
         IDamageAble damageAble = enemy.GetComponent<IDamageAble>();
         if (damageAble != null)
         {
-            Damage damage = new Damage(power, gameObject, 100f, hitDirection);
+            Damage damage = new Damage(power, gameObject, 20f, hitDirection);
             damageAble.TakeDamage(damage);
-            //Debug.Log($"회전베기 스킬로 {enemy.name}에게 {power}데미지를 입혔다!");
         }
+    }
+
+    public override void ResetState()
+    {
+        if (_spinCoroutine != null)
+        {
+            StopCoroutine(_spinCoroutine);
+            _spinCoroutine = null;
+        }
+
+        IsUsingSkill = false;
+        IsAttacking = false;
+        CurrentSwordSpinSkill = false;
+
+        if (_player != null)
+            _player.CharacterController.stepOffset = 1f;
+
+        if (_playerAttack != null)
+            _playerAttack.IsUsingJumpAnim = true;
+
+        if (SpinVfx != null)
+            SpinVfx.SetActive(false);
+
+        if (_playerAnimation != null)
+        {
+            _playerAnimation.ResetTrigger("SpinAttack");
+            _playerAnimation.SetTrigger("Idle");
+        }
+
+        Debug.Log("SwordSpinSkill 상태 초기화");
     }
 }
