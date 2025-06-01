@@ -4787,6 +4787,7 @@ ParticleSystemRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9628,6 +9629,7 @@ ParticleSystemRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -9751,6 +9753,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 37a83384387fa0d4288db348d8e2a4dc, type: 3}
       propertyPath: m_Name
       value: Shuriken
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 37a83384387fa0d4288db348d8e2a4dc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1904065403831906568, guid: 37a83384387fa0d4288db348d8e2a4dc, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

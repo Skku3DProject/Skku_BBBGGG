@@ -19,10 +19,6 @@ public class SwordAttack : WeaponAttackBase
 
     private int _currentAttackIndex;
 
-    public SwordSpinSkill SpinSkill;//검 스킬
-    public SwordDashSkill DashSkill;//대쉬 스킬
-
-
     void Awake()
     {
         _player = GetComponent<ThirdPersonPlayer>();
@@ -131,27 +127,5 @@ public class SwordAttack : WeaponAttackBase
         {
             ResetCombo();
         }
-
-        // 공격 입력 처리 (예: 마우스 좌클릭)
-        if (Input.GetMouseButtonDown(0) 
-            && SpinSkill.IsAttacking == false && DashSkill.IsAttacking == false && IsAttacking == false)
-        {
-            Attack();
-            DashSkill.ShieldCollider.enabled = false;
-        }
-
-        if(SpinSkill != null
-            && SpinSkill.IsAttacking == false && DashSkill.IsAttacking == false && IsAttacking == false)
-        {
-            SpinSkill.Tick();
-        }
-
-        if(DashSkill != null && SpinSkill.IsAttacking == false && DashSkill.IsAttacking == false && IsAttacking == false)
-        {
-            DashSkill.Tick();
-        }
-        //SpinSkill?.Tick();
-        //DashSkill?.Tick();
-
     }
 }

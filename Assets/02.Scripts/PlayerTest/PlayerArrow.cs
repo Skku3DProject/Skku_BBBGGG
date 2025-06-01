@@ -1,157 +1,164 @@
 using UnityEngine;
-
+public enum ArrowType
+{
+    Normal,
+    Explosive,
+    Charging
+}
 public class PlayerArrow : MonoBehaviour
 {
     private float _damage;
     private Rigidbody _rb;
+    private ArrowType _arrowType;
+    private GameObject _owner;
 
-    [Header("Fire Arrow Explosion Settings")]
-    [SerializeField] private float explosionRadius = 3f;
-    [SerializeField] private float explosionDamage = 50f;
-    [SerializeField] private GameObject explosionEffectPrefab;
-    [SerializeField] private LayerMask enemyLayer;
+    public GameObject[] ArrowVfx;
+    [Header("일반화살")]
+    public GameObject HitVfx;
+
+    [Header("폭발 화살")]
+    public GameObject explosionEffect;
+    public float explosionRadius = 3f;
+    public float explosionForce = 50f;
+    [Header("차징 화살")]
+    public GameObject chargeImpactEffect;
+    public float chargeImpactRadius = 1.5f;
+    public float chargeImpactForce = 25f;
+    [Header("관통 설정")]
+    public int maxPierceCount = 10; // 최대 관통 가능 횟수
+    private int currentPierceCount = 0;
+    private bool isPiercing = false;
+
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
     }
-
     private void FixedUpdate()
     {
         if (_rb.linearVelocity.sqrMagnitude > 0.1f)
         {
             transform.rotation = Quaternion.LookRotation(_rb.linearVelocity);
+
             transform.Rotate(90f, 0f, 0f, Space.Self);
         }
     }
-
-    private void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision collision)
     {
-        Vector3 directionToTarget = (other.transform.position - transform.position).normalized;
+        bool hitEnemy = collision.gameObject.CompareTag("Enemy");
+        bool hitGround = collision.gameObject.CompareTag("Ground");
 
-        if (other.gameObject.CompareTag("Enemy"))
+        if (_arrowType == ArrowType.Charging && isPiercing)
         {
-            if (BowAttack.Instance.FireArrow.CurrentArrowFireSkill)
+            if (hitEnemy)
             {
-                Explode();
-                Debug.Log("폭발 화살 적에 닿아서 폭발");
-            }
-            else if (BowAttack.Instance.TripleArrow.CurrentThreeArrowSkill)
-            {
-                BowAttack.Instance.TripleArrow.TryDamageEnemy(other.gameObject, directionToTarget);
-            }
-            else
-            {
-                BowAttack.Instance.TryDamageEnemy(other.gameObject, directionToTarget);
-            }
+                ApplyChargingDamage(collision);
+                currentPierceCount++;
 
-            Destroy(gameObject);
+                if (currentPierceCount >= maxPierceCount)
+                {
+                    Destroy(gameObject); // 관통 횟수 초과 시 제거
+                }
+
+                return; // 적을 관통하므로 파괴하지 않음
+            }
+            else if (hitGround)
+            {
+                if (chargeImpactEffect != null)
+                    Instantiate(chargeImpactEffect, transform.position, Quaternion.identity);
+
+                BlockSystem.DamageBlocksInRadius(transform.position, chargeImpactRadius, 10);
+                Destroy(gameObject); // 벽이나 땅에 부딪히면 파괴
+            }
         }
-        else if (other.gameObject.CompareTag("Ground"))
+        else
         {
-            if (BowAttack.Instance.FireArrow.CurrentArrowFireSkill)
+            switch (_arrowType)
             {
-                Explode();
+                case ArrowType.Normal:
+                    ApplyNormalDamage(collision);
+                    break;
+                case ArrowType.Explosive:
+                    Explode();
+                    break;
+                case ArrowType.Charging:
+                    ApplyChargingDamage(collision); // 관통 꺼졌을 경우
+                    break;
             }
 
             Destroy(gameObject);
         }
     }
+    private void ApplyChargingDamage(Collision collision)
+    {
+        // 이펙트 재생
+        if (chargeImpactEffect != null)
+            Instantiate(chargeImpactEffect, transform.position, Quaternion.identity);
 
+        Collider[] colliders = Physics.OverlapSphere(transform.position, chargeImpactRadius);
+
+        foreach (var hit in colliders)
+        {
+            if (hit.TryGetComponent<IDamageAble>(out var d))
+            {
+                Vector3 hitDirection = (hit.transform.position - transform.position).normalized;
+                d.TakeDamage(new Damage(_damage, _owner, chargeImpactForce));
+            }
+        }
+
+        // 블럭에도 충격 줄 수 있다면 (선택)
+        BlockSystem.DamageBlocksInRadius(transform.position, chargeImpactRadius, 10);
+    }
+
+    private void ApplyNormalDamage(Collision collision)
+    {
+        if (HitVfx != null)
+            Instantiate(HitVfx, transform.position, Quaternion.identity);
+
+
+        if (collision.gameObject.TryGetComponent<IDamageAble>(out var d))
+        {
+            d.TakeDamage(new Damage(_damage, gameObject, 10f));
+        }
+    }
     private void Explode()
     {
-        // 폭발 이펙트 생성
-        if (explosionEffectPrefab != null)
-        {
-            Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
-        }
+        if (explosionEffect != null)
+            Instantiate(explosionEffect, transform.position, Quaternion.identity);
 
-        // 폭발 범위 내 적 감지
-        Collider[] hitEnemies = Physics.OverlapSphere(transform.position, explosionRadius, enemyLayer);
-        foreach (Collider col in hitEnemies)
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (var hit in colliders)
         {
-            if (col.CompareTag("Enemy")) // 적만 타겟팅
+            if (hit.TryGetComponent<IDamageAble>(out var d))
             {
-                Vector3 hitDirection = (col.transform.position - transform.position).normalized;
-                BowAttack.Instance.FireArrow.TryDamageEnemy(col.gameObject, hitDirection);
+                d.TakeDamage(new Damage(_damage, gameObject, explosionForce));
             }
         }
+        BlockSystem.DamageBlocksInRadius(transform.position, explosionRadius, 10);
 
-        float power = PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
-//        Damage damage = new Damage(power, gameObject, 100f, hitDirection);
-
-        BlockSystem.DamageBlocksInRadius(transform.position, explosionRadius, (int)power);
     }
 
-    public void SetAttackPower(float power)
+    public void ArrowInit(float Damage, ArrowType type, GameObject owner)
     {
-        _damage = power;
+        _damage = Damage;
+        _arrowType = type;
+        _owner = owner;
+
+        if (type == ArrowType.Charging)
+        {
+            isPiercing = true;
+            currentPierceCount = 0;
+            _rb.useGravity = false;
+
+            ArrowVfx[(int)type].SetActive(true);
+        }
+        else if(type == ArrowType.Explosive)
+        {
+            ArrowVfx[(int)type].SetActive(true);
+        }
+        else if(type == ArrowType.Normal)
+        {
+            ArrowVfx[(int)type].SetActive(true);
+        }
     }
 }
-
-/*using Unity.VisualScripting;
-using UnityEngine;
-
-public class PlayerArrow : MonoBehaviour
-{
-    private float _damage;
-    private Rigidbody _rb;
-
-    private void Awake()
-    {
-        _rb = GetComponent<Rigidbody>();
-    }
-    private void FixedUpdate()
-    {
-        if (_rb.linearVelocity.sqrMagnitude > 0.1f)
-        {
-            transform.rotation = Quaternion.LookRotation(_rb.linearVelocity);
-
-            transform.Rotate(90f, 0f, 0f, Space.Self);
-        }
-    }
-    private void OnCollisionEnter(Collision other)
-    {
-
-
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            //Debug.Log("적과 충돌");
-            Vector3 directionToEnemy = (other.transform.position - transform.position).normalized;
-
-
-            if(BowAttack.Instance.TripleArrow.CurrentThreeArrowSkill == false 
-                && BowAttack.Instance.FireArrow.CurrentArrowFireSkill == false)
-             {
-                BowAttack.Instance.TryDamageEnemy(other.gameObject, directionToEnemy);
-            }
-
-            else if(BowAttack.Instance.TripleArrow.CurrentThreeArrowSkill == true)
-            {
-                BowAttack.Instance.TripleArrow.TryDamageEnemy(other.gameObject, directionToEnemy);
-            }
-
-            else if (BowAttack.Instance.FireArrow.CurrentArrowFireSkill == true)
-            {
-                BowAttack.Instance.FireArrow.TryDamageEnemy(other.gameObject, directionToEnemy);
-            }
-
-            Destroy(gameObject);
-
-        }
-
-        else if (other.gameObject.CompareTag("Ground"))
-        {
-            //Debug.Log("땅과 충돌");
-            Destroy(gameObject);
-
-        }
-
-    }
-
-    public void SetAttackPower(float power)
-    {
-        _damage = power;
-    }
-}
-*/
