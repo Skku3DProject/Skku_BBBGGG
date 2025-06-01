@@ -66,6 +66,10 @@ public class EnemyAttackState : IFSM
         _enemy.Animator.SetBool("IsAttack",true);
         EnemyManager.Instance.ClearGrouping(_enemy);
 
+        Vector3 targetPosition = _enemy.Target.transform.position;
+        targetPosition.y = _enemy.transform.position.y; // Y√‡ ∞Ì¡§
+        _enemy.transform.LookAt(targetPosition);
+
         if(_isAttackPattern)
         {
             _randomAttackCount = RandomAttackCount();

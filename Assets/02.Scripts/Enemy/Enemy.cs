@@ -77,8 +77,9 @@ public class Enemy : MonoBehaviour
         {
             _target = damage.From.gameObject;
         }
-
+        
         _uI_EnemyHpbar.UpdateHealth(_health / _maxHealth);
+        UI_Enemy.Instance.UpdateDamageText(damage.Value,this);
     }
 
     public bool TryAttack()

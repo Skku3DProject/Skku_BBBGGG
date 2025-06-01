@@ -65,6 +65,20 @@ public class UI_Enemy : MonoBehaviour
             }
         }
     }
+
+    public void UpdateDamageText(float damageValue, Enemy enemy)
+    {
+        UI_EnemyDamageText damageText = _enemyUIPoolManager.GetObject(DamageTextKey).GetComponent<UI_EnemyDamageText>();
+        damageText.gameObject.SetActive(false);
+        if (damageText == null) return;
+        damageText.UpdateText(damageValue, enemy);
+    }
+
+    public void CreaDamageText(GameObject damageText)
+    {
+        _enemyUIPoolManager.ReturnObject(DamageTextKey, damageText);
+    }
+
     private void UpdateAllHealthBars()
     {
         _healthBarInfos.Clear();

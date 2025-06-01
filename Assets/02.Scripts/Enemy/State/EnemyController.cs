@@ -26,6 +26,8 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
 
     private EnemyAttackCheckEvent _enemyAttackCheckEvent;
 
+    public bool IsAttack = false;
+
     public void OnSpawn()
     {
         Initialize();// 활성화 시 호출
@@ -152,14 +154,19 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
         }
         // 실제 데미지 
         _enemy.TakeDamage(damage);
-
+        OnHit(damage);
         if (_enemy.Health <= 0)
         {
             ChangeState(EEnemyState.Die);
             return;
         }
         
-        OnHit(damage);
+        if(IsAttack)
+        {
+            return;
+        }
+
+      
         ChangeState(EEnemyState.Damaged);
     }
     private void OnHit(Damage damage)
@@ -198,6 +205,7 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
     {
         ChangeState(EEnemyState.Move);
         _enemyAttackCheckEvent.EndAttackEnvet();
+        IsAttack = false;
         // 어택 종료
     }
 

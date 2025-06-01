@@ -9,10 +9,8 @@ public class EnemyAttackCheckEvent : MonoBehaviour
 
     private EnemyProjectile _projectile;
     private Enemy _enemy;
+    private EnemyController _enemyController;
     private Damage _damage;
-
-    private bool _isAttack = false;
-    public bool IsAttack => _isAttack;
 
     // 랜덤 소환
     public float radius = 10f;
@@ -22,6 +20,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     private void Awake()
     {
         _enemy = GetComponentInParent<Enemy>();
+        _enemyController = GetComponentInParent<EnemyController>();
         _damage = new Damage(_enemy.EnemyData.DamageValue, _enemy.gameObject);
     }
 
@@ -44,7 +43,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     public void RangedAttackSpawn()
     {
         GameObject poolObject = EnemyObjectPoolManger.Instance.GetObject(_enemy.EnemyData.ProjectileKey, _enemy.ProjectileTransfrom.position);
-        _isAttack = true;
+        _enemyController.IsAttack = true;
         poolObject.TryGetComponent<EnemyProjectile>(out _projectile);
         if (_projectile == null)
         {
@@ -75,7 +74,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
                          _enemy.Target.transform.position + Vector3.up * 0.5f
                         );
 
-        _isAttack = false;
+        _enemyController.IsAttack = false;
     }
     // 병사 되살리기 공격
     public void Summon()
@@ -107,7 +106,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     }
     public void MeleeAttackEvent()
     {
-        _isAttack = true;
+       
         int cnt = Physics.OverlapSphereNonAlloc(
             _enemy.transform.position, _enemy.EnemyData.AttackDistance,
             _hits,
@@ -169,7 +168,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
 
     public void EndAttackEnvet()
     {
-        _isAttack = false;
+        _enemyController.IsAttack = false;
     }
 
     private Vector3 GetRandomPositionAround()
