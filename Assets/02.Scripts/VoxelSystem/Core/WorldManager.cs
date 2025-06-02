@@ -68,17 +68,17 @@ public class WorldManager : MonoBehaviour
 
     void Start()
     {
-        //StageManager.instance.OnCombatStart += BackupCentralChunks;
-        //StageManager.instance.OnCombatEnd += RestoreCentralChunks;
-        //StageManager.instance.OnCombatEnd += ResetPlayer;
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        StageManager.instance.OnCombatStart += BackupCentralChunks;
+        StageManager.instance.OnCombatEnd += RestoreCentralChunks;
+        StageManager.instance.OnCombatEnd += ResetPlayer;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
-        //SetWorldSeed(Random.Range(0, int.MaxValue));
-        //BackupCentralChunks();
-        //GenerateGrid();
-        //PositionPlayerAtCenter();
-        //PositionSpawner();
+        SetWorldSeed(Random.Range(0, int.MaxValue));
+        BackupCentralChunks();
+        GenerateGrid();
+        PositionPlayerAtCenter();
+        PositionSpawner();
     }
 
     //--------------------------------------- 맵로딩용
