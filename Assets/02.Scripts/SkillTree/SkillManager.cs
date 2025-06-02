@@ -15,7 +15,7 @@ public class SkillManager : MonoBehaviour
     public static SkillManager instance;
     public SkillTreeMaker[] SkillTreeMakers;
     public SkillTory[] SkillTories;
-    public SkillType TreeType;
+    public SkillType SkillType;
 
     // 스킬 트리 생성
     public SkillTree _swordSkillTree;
@@ -162,6 +162,11 @@ public class SkillManager : MonoBehaviour
         
         SelectskillTory.gameObject.SetActive(true);
         
+    }
+
+    public bool CanUseSkill(int index)
+    {
+        return SelectskillTory.SkillSlots[index].IsActive;
     }
 
 }

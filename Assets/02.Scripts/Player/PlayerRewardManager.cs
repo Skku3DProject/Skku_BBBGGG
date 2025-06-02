@@ -4,7 +4,7 @@ public class PlayerRewardManager : MonoBehaviour
 {
     public static PlayerRewardManager Instance { get; private set; }
 
-    public int skillPoints { get; private set; } = 0;
+    public int skillPoints { get; private set; } = 110;
     public int potionCount { get; private set; } = 0;
     public bool hasBlessingBuff { get; private set; } = false;  // 가호 버프
 
@@ -62,6 +62,7 @@ public class PlayerRewardManager : MonoBehaviour
             potionCount--;
             Debug.Log($"물약 사용! (남은: {potionCount})");
             // TODO: 체력 회복 등 실제 효과 추가
+            UIManager.instance.UI_PotionCountRefresh(potionCount);
             return true;
         }
         else

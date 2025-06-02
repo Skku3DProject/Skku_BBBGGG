@@ -6,6 +6,7 @@
     <file url="file://$PROJECT_DIR$/Assets/02.Scripts/Enemy/State/EnemyController.cs" charset="EUC-KR" />
     <file url="file://$PROJECT_DIR$/Assets/02.Scripts/Player/Player.cs" charset="EUC-KR" />
     <file url="file://$PROJECT_DIR$/Assets/02.Scripts/Player/PlayerRewardManager.cs" charset="EUC-KR" />
+    <file url="file://$PROJECT_DIR$/Assets/02.Scripts/Player/Skill/WeaponSkillBase.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/02.Scripts/PlayerTest/Skill/SwordDashSkill.cs" charset="EUC-KR" />
     <file url="file://$PROJECT_DIR$/Assets/02.Scripts/PlayerTest/Skill/SwordSpinSkill.cs" charset="EUC-KR" />
     <file url="file://$PROJECT_DIR$/Assets/02.Scripts/PlayerTest/Skill/WeaponSkillBase.cs" charset="EUC-KR" />

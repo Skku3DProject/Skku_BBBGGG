@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using NUnit.Framework.Internal;
 
 public enum InteractionType
 {
@@ -27,6 +28,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI SubTutorial;
     public TextMeshProUGUI TutorialCount;
     public TextMeshProUGUI Discription;
+    public TextMeshProUGUI PotionCount;
     [Header("오브젝트")]
     public Image[] CurrenciesObjects;
     public GameObject RespawnPanel;
@@ -34,6 +36,7 @@ public class UIManager : MonoBehaviour
     public GameObject GameOverPanel;
     public GameObject TimerObject;
     public GameObject CountObject;
+    
     
     private Dictionary<InteractionType, string> interactables = new Dictionary<InteractionType, string>();
     
@@ -138,6 +141,9 @@ public class UIManager : MonoBehaviour
         RespawnBar.value = value;
         
     }
+    // 텍스트 리프레시 함수
+    public void UI_SkillPointRefresh(float value) => UI_TextRefresh(SkillPoints, value);
+    public void UI_PotionCountRefresh(float value) => UI_TextRefresh(PotionCount, value);
     // 슬라이더 맥스 밸류 정하는 메서드
     public void UI_PlayerSetMaxMp(float value) =>SetSliderValue(Mpbar, value);
     public void UI_PlayerSetMaxHP(float value) => SetSliderValue(HpBar, value);
@@ -146,12 +152,16 @@ public class UIManager : MonoBehaviour
     // 슬라이더 리프레시하는 메서드
     public void UI_TimerSlider(float value) => RefreshSlider(CurrentTime, value);
     public void UI_MpSlider(float value)=> RefreshSlider(Mpbar, value);
-    public void UI_HpSlider(float value) => RefreshSlider(HpBar, value);
+    public void UI_HpSlider(float value) => UI_HPSlowRefreshSlider(HpBar, value);
     //--------------------------------------------------------------------
     private void SetSliderValue(Slider slider, float value)
     {
         slider.maxValue = value;
         SlowRefreshSlider(slider, value);
+    }
+    private void UI_HPSlowRefreshSlider(Slider slider, float value)
+    {
+        slider.maxValue = value;
     }
     //슬라이더를 조절하는 함수 베이스
     private void RefreshSlider(Slider slider, float value)
@@ -187,9 +197,9 @@ public class UIManager : MonoBehaviour
         CurrentTime.DOValue(value, duration).SetEase(Ease.OutQuad);
     }
 
-    public void UI_SkillPointRefresh(float value)
+    private void UI_TextRefresh(TextMeshProUGUI text, float value)
     {
-        SkillPoints.text = $"{(int)value}";
+        text.text = $"{(int)value}";
     }
 
     public void UI_Interaction(InteractionType type)

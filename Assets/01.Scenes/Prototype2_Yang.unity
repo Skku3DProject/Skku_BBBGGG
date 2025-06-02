@@ -1478,6 +1478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fadc818aaa43e4abec189fe7b8cc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTime: 5
   FireEffect: {fileID: 0}
   MyPlayer: {fileID: 0}
   _arrowPrefab: {fileID: 0}
@@ -1521,8 +1522,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97c6850b4d09374f9d63e3fc1ccae77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTime: 5
   MyPlayer: {fileID: 1161810687}
-  ShieldCollider: {fileID: 0}
+  DashVfx: {fileID: 0}
   _skillDamageMultiplier: 1.7
   dashDistance: 10
   dashSpeed: 50
