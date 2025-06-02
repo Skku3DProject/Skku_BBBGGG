@@ -15,5 +15,5 @@ MonoBehaviour:
   ItemName: Pickaxe
   ItemType: 0
   EquipmentType: 3
-  ItemImage: {fileID: 21300000, guid: 5791e7bf0b35b834280927ac459392a2, type: 3}
+  ItemImage: {fileID: 21300000, guid: c3b059cac287a7d408ee352d40f50b0f, type: 3}
   ItemPrefab: {fileID: 7469388892282306674, guid: 9ad3446b4f1a64847a05ed76177f39d0, type: 3}

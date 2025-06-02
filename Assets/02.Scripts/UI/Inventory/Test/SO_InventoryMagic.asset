@@ -15,5 +15,5 @@ MonoBehaviour:
   ItemName: Magic
   ItemType: 0
   EquipmentType: 2
-  ItemImage: {fileID: 21300000, guid: 871b7c6f8eb40094c93452291a7837fb, type: 3}
+  ItemImage: {fileID: 21300000, guid: e84e2317d2ffe4c4e96a25e216b4c2cc, type: 3}
   ItemPrefab: {fileID: 7469388892282306674, guid: 9ad3446b4f1a64847a05ed76177f39d0, type: 3}

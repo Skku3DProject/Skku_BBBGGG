@@ -15,5 +15,5 @@ MonoBehaviour:
   ItemName: Potion
   ItemType: 0
   EquipmentType: 4
-  ItemImage: {fileID: 21300000, guid: e37bb5aea78f83c4d8268f85811deefe, type: 3}
+  ItemImage: {fileID: 21300000, guid: 8895a47f4d5ad0743b67e6b143ddbabf, type: 3}
   ItemPrefab: {fileID: 7469388892282306674, guid: 9ad3446b4f1a64847a05ed76177f39d0, type: 3}

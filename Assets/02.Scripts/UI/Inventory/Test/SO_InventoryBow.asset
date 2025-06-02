@@ -15,5 +15,5 @@ MonoBehaviour:
   ItemName: Bow
   ItemType: 0
   EquipmentType: 1
-  ItemImage: {fileID: 21300000, guid: a28d3302fab1dba44b70cbb5caf24542, type: 3}
+  ItemImage: {fileID: 21300000, guid: 9ec8be7035cad6f44b7fdeae61b188bc, type: 3}
   ItemPrefab: {fileID: 7469388892282306674, guid: 9ad3446b4f1a64847a05ed76177f39d0, type: 3}
