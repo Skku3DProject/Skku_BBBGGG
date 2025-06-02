@@ -2007,6 +2007,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 17299189513080618}
     m_Modifications:
+    - target: {fileID: 231668356442759584, guid: dc336e505cf6fc64788b71139d60515f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 611084534747451227, guid: dc336e505cf6fc64788b71139d60515f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2054,6 +2058,26 @@ PrefabInstance:
     - target: {fileID: 1100356453993454930, guid: dc336e505cf6fc64788b71139d60515f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1113291369985184824, guid: dc336e505cf6fc64788b71139d60515f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1574284778709632858, guid: dc336e505cf6fc64788b71139d60515f, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1574284778709632858, guid: dc336e505cf6fc64788b71139d60515f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 934a6c404978f4df09a022a04222f339, type: 3}
+    - target: {fileID: 1574284778709632858, guid: dc336e505cf6fc64788b71139d60515f, type: 3}
+      propertyPath: m_FillCenter
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1574284778709632858, guid: dc336e505cf6fc64788b71139d60515f, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 5.62
       objectReference: {fileID: 0}
     - target: {fileID: 1942188175573669258, guid: dc336e505cf6fc64788b71139d60515f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2170,6 +2194,10 @@ PrefabInstance:
     - target: {fileID: 2770601419580379963, guid: dc336e505cf6fc64788b71139d60515f, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840600665125141369, guid: dc336e505cf6fc64788b71139d60515f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3049699815761886124, guid: dc336e505cf6fc64788b71139d60515f, type: 3}
       propertyPath: m_Pivot.x
