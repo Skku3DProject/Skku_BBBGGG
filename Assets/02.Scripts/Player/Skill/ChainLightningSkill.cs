@@ -43,6 +43,8 @@ public class ChainLightningSkill : WeaponSkillBase
         IsUsingSkill = true;
         Instantiate(lightningEffectPrefab, transform.position + Vector3.up * 1f, Quaternion.identity);
 
+        PlayerSoundController.Instance.PlaySound(PlayerSoundType.WandSkill1);
+
         StartCoroutine(ChainLightningRoutine());
     }
     private void SkillAnimEnd()
@@ -67,6 +69,8 @@ public class ChainLightningSkill : WeaponSkillBase
                 TryDamageEnemy(currentTarget, currentTarget.transform.position - _player.transform.position);
                 hitEnemies.Add(currentTarget);
                 OnSkillEffectPlay(currentTarget.transform.position);
+                PlayerSoundController.Instance.PlaySoundAtPosition(PlayerSoundType.WandSkill1, transform.position);
+
             }
 
             yield return new WaitForSeconds(delayBetweenChains);

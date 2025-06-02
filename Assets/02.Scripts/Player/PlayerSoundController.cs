@@ -8,11 +8,14 @@ public enum PlayerSoundType
     BowSkill1,
     BowSkill2Charge,
     BowSkill2Shoot,
-    Attack, 
+    WandAttack,
+    WandSkill1,
+    WandSKill2,
+    Block,
+    FootStep,
     Jump,
-    Footstep,
-    UsePotion,
-    Return
+    JumpLanding,
+    Hit
 }
 public class PlayerSoundController : MonoBehaviour
 {

@@ -36,6 +36,8 @@ public class WandAttack : WeaponAttackBase
 
     private void FireProjectile()
     {
+        PlayerSoundController.Instance.PlaySound(PlayerSoundType.WandAttack);
+
         GameObject projectile = Instantiate(magicProjectilePrefab, shootPoint.position, shootPoint.rotation);
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
 

@@ -173,7 +173,7 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
 
         CameraShakeManager.Instance.Shake(0.1f, 0.05f);
         _playerAnimator.SetTrigger("Hit");
-
+        PlayerSoundController.Instance.PlaySound(PlayerSoundType.Hit);
 
         if (_currentHealth <= 0)
         {

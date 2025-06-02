@@ -13,6 +13,12 @@ public class PlayerLocomotion : MonoBehaviour
     public float VerticalVelocity => _yVelocity;
     public bool IsRunning => _isRunning;
 
+    [SerializeField] private float walkStepDelay = 0.1f;
+    [SerializeField] private float runStepDelay = 0.05f;
+
+    private float _stepTimer = 0f;
+    private bool _wasGrounded = true;
+
     private void Awake()
     {
         _player = GetComponent<ThirdPersonPlayer>();
@@ -33,6 +39,17 @@ public class PlayerLocomotion : MonoBehaviour
             _player.RecoverStamina();
         }
         _player.PlayerAnimator.SetBool("OnGround", _player.CharacterController.isGrounded);
+
+        HandleFootstepSound();
+
+        bool isGrounded = _player.CharacterController.isGrounded;
+
+        if (isGrounded && !_wasGrounded)
+        {
+            PlayerSoundController.Instance.PlaySound(PlayerSoundType.FootStep); // 착지음을 발소리로 재사용하거나 JumpLanding 타입 추가
+        }
+
+        _wasGrounded = isGrounded;
     }
     private void UpdateMoveAnimation_Directional(Vector3 inputDir)
     {
@@ -126,7 +143,10 @@ public class PlayerLocomotion : MonoBehaviour
             _yVelocity = _player.PlayerStats.JumpPower;
 
             if(_playerAttack.IsUsingJumpAnim)
+            {
                 _player.PlayerAnimator.SetTrigger("Jump");
+                PlayerSoundController.Instance.PlaySound(PlayerSoundType.Jump);
+            }
         }
         //bool canJump = _jumpCount < _player.MaxJumpCount && !_isClimbing;
 
@@ -143,5 +163,23 @@ public class PlayerLocomotion : MonoBehaviour
         //        _yVelocity = -1f; // 살짝 눌러서 붙게 하기
         //}
     }
+    private void HandleFootstepSound()
+    {
+        // 조건: 땅에 있고, 이동 중이며, 공격 중 아님
+        if (!_player.CharacterController.isGrounded) return;
 
+        Vector3 inputDir = GetInputDirection();
+        if (inputDir.magnitude < 0.1f) return;
+
+        if (_playerAttack.CurrentWeaponAttack.IsAttacking) return;
+
+        float stepDelay = _isRunning ? runStepDelay : walkStepDelay;
+
+        _stepTimer -= Time.deltaTime;
+        if (_stepTimer <= 0f)
+        {
+            PlayerSoundController.Instance.PlaySound(PlayerSoundType.FootStep);
+            _stepTimer = stepDelay;
+        }
+    }
 }
