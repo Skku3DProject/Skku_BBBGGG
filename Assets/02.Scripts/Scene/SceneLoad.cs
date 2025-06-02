@@ -48,27 +48,28 @@ public class SceneLoad : MonoBehaviour
         // 가중치: 풀 20%, 월드 70%, 씬 10%
         const float wPool = 0.2f, wMap = 0.7f, wScene = 0.1f;
 
-        // 1) 풀 초기화
+        // 1) 월드 생성
+        statusText.text = "월드 생성 중...";
+        yield return StartCoroutine(worldManager.InitWorldAsync(p =>
+        {
+            float overall =  p * wMap;
+            loadingBar.value = overall;
+            progressText.text = $"{Mathf.RoundToInt(overall * 100f)}%";
+        }));
+        yield return new WaitForSeconds(0.2f);
+
+        // 2) 풀 초기화
         statusText.text = "풀 초기화 중...";
         loadingBar.value = 0;
         progressText.text = "0%";
         yield return StartCoroutine(ObjectPool.Instance.InitPoolAllAsync(p =>
         {
-            float overall = p * wPool;
+            float overall = p * wPool + wMap;
             loadingBar.value = overall;
             progressText.text = $"{Mathf.RoundToInt(overall * 100f)}%";
         }));
         yield return null;
 
-        // 2) 월드 생성
-        statusText.text = "월드 생성 중...";
-        yield return StartCoroutine(worldManager.InitWorldAsync(p =>
-        {
-            float overall = wPool + p * wMap;
-            loadingBar.value = overall;
-            progressText.text = $"{Mathf.RoundToInt(overall * 100f)}%";
-        }));
-        yield return new WaitForSeconds(0.2f);
 
         // 4) 카메라 이동
         yield return MoveCameraDown();

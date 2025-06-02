@@ -23,6 +23,8 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void Update()
     {
+        if (!_player.IsAlive || _player.IsReturning) return;
+
         HandleInput();
         ApplyMovement();
         UpdateMoveAnimation();

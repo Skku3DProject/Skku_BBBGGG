@@ -96,7 +96,7 @@ public class WorldManager : MonoBehaviour
 
             StageManager.instance.OnCombatStart += BackupCentralChunks;
             StageManager.instance.OnCombatEnd += RestoreCentralChunks;
-            //StageManager.instance.OnCombatEnd += ResetPlayer;
+            StageManager.instance.OnCombatEnd += ResetPlayer;
 
             Player = GameObject.FindGameObjectWithTag("Player");
             BaseCampTransform = GameObject.FindGameObjectWithTag("BaseTower").transform;
@@ -153,7 +153,9 @@ public class WorldManager : MonoBehaviour
 
     private void ResetPlayer()
     {
+        Player.GetComponent<ThirdPersonPlayer>().CharacterController.enabled = false;
         Player.transform.position = StartPos;
+        Player.GetComponent<ThirdPersonPlayer>().CharacterController.enabled = true;
     }
     public void GenerateInEditor()
     {

@@ -2,6 +2,8 @@
 
 public class PlayerAttack : MonoBehaviour
 {
+    private ThirdPersonPlayer _player;
+
     private WeaponAttackBase _currentWeaponAttack;
     public WeaponAttackBase CurrentWeaponAttack => _currentWeaponAttack;
 
@@ -15,6 +17,10 @@ public class PlayerAttack : MonoBehaviour
 
     private EquipmentType _equipmentType;
 
+    private void Awake()
+    {
+        _player = GetComponent<ThirdPersonPlayer>();
+    }
     void Start()
     {
 
@@ -24,6 +30,8 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        if (!_player.IsAlive || _player.IsReturning) return;
+
         if (PlayerModeManager.Instance.CurrentMode != EPlayerMode.Weapon) return;
 
         // 각 스킬들의 쿨타임이나 여러가지 업데이트할것들처리 인풋은 아래서 따로 빼서처리
