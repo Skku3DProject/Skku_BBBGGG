@@ -282,6 +282,8 @@ GameObject:
   - component: {fileID: 2929327902439737243}
   - component: {fileID: 7074910121363038734}
   - component: {fileID: 761160857198686982}
+  - component: {fileID: 4820783477094920441}
+  - component: {fileID: 7136780348010265988}
   m_Layer: 10
   m_Name: Mushroom_03
   m_TagString: Untagged
@@ -467,6 +469,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalRenderers:
   - {fileID: 2623797858732799952}
+--- !u!114 &4820783477094920441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4569295655211456005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca9fd31892917e42b6b9e28599eccfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  _currency:
+    Gold: 0
+    Wood: 0
+    Stone: 0
+  _health: 1
+  HitPrefab: {fileID: 8227808811761709394, guid: 6687d8c9c710d7948ab5ddcb5034a1f2, type: 3}
+--- !u!65 &7136780348010265988
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4569295655211456005}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 896
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.76343524, y: 0.9478303, z: 0.7654179}
+  m_Center: {x: -0.00000013411045, y: 0.47391516, z: 0.0009916127}
 --- !u!1 &4980070396959093913
 GameObject:
   m_ObjectHideFlags: 0

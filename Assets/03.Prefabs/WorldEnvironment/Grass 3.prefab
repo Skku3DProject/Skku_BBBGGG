@@ -161,10 +161,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 550749511122384726}
-  - component: {fileID: 220088562704894617}
   - component: {fileID: 6309097371138046997}
   - component: {fileID: 575047502489949963}
   - component: {fileID: 6428681048659856755}
+  - component: {fileID: 1063676573953956020}
+  - component: {fileID: 1432639376205094475}
   m_Layer: 10
   m_Name: Grass 3
   m_TagString: Untagged
@@ -189,28 +190,6 @@ Transform:
   - {fileID: 7709240438168281836}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &220088562704894617
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4375382654496483180}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!114 &6309097371138046997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,6 +299,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalRenderers:
   - {fileID: 8338384123450791452}
+--- !u!114 &1063676573953956020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4375382654496483180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca9fd31892917e42b6b9e28599eccfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  _currency:
+    Gold: 0
+    Wood: 0
+    Stone: 0
+  _health: 1
+  HitPrefab: {fileID: 8227808811761709394, guid: 6687d8c9c710d7948ab5ddcb5034a1f2, type: 3}
+--- !u!65 &1432639376205094475
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4375382654496483180}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 896
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.57197964, y: 0.47126704, z: 0.50418717}
+  m_Center: {x: -0.08934724, y: 0.26436642, z: 0.10782168}
 --- !u!1 &5107272121545811407
 GameObject:
   m_ObjectHideFlags: 0

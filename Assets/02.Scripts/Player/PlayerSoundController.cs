@@ -15,7 +15,9 @@ public enum PlayerSoundType
     FootStep,
     Jump,
     JumpLanding,
-    Hit
+    Hit,
+    TreeSound,
+    StoneSound,
 }
 public class PlayerSoundController : MonoBehaviour
 {

@@ -484,6 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca9fd31892917e42b6b9e28599eccfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
   _currency:
     Gold: 0
     Wood: 0

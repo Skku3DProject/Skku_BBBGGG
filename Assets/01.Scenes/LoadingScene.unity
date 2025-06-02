@@ -297,8 +297,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   Distance: 30
-  GrassPrefab: {fileID: 4375382654496483180, guid: fe4ddc300bb879c4f860a9a1954689fb, type: 3}
-  MushroomPrefab: {fileID: 4569295655211456005, guid: 403a5055922ec0e4eb2f6ed427208efc, type: 3}
+  GrassPrefab: {fileID: 4375382654496483180, guid: 4d8cde95c08e1794f94ca247a291c1ce, type: 3}
+  MushroomPrefab: {fileID: 4569295655211456005, guid: 189f9f09eb7dcdd48ad8ec5c8e2be81e, type: 3}
   TreePrefab: {fileID: 3086538645063425187, guid: 17a7eacbeefbb2443868f4ebe1bfb9f6, type: 3}
   IronstonePrefab: {fileID: 3277944643622535537, guid: 8580aac6a440f3d4d8f5eb5b24dcf094, type: 3}
   GrassDensity: 0.05
@@ -490,6 +490,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 11f37d53d5020b94eac34a3ce66ad9c3, type: 3}
   - {fileID: 8300000, guid: 1041691e5da0c414f9af1a16fef92184, type: 3}
   - {fileID: 8300000, guid: 5e6aac75536d6b144b0e96247cfa7a2a, type: 3}
+  - {fileID: 8300000, guid: c9763c0192a704e4092a352bb3c31751, type: 3}
+  - {fileID: 8300000, guid: ffec962dbb701804e841c6f986a93bc5, type: 3}
 --- !u!114 &731903316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -629,8 +631,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -747,8 +749,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

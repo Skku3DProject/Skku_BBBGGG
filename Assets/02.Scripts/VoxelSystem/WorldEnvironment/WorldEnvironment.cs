@@ -1,8 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class WorldEnvironment : MonoBehaviour
 {
+    private enum EnvirormentType
+    {
+        Tree,
+        Stone,
+        Grass,
+        Mashroom
+    }
+
+    [SerializeField] private EnvirormentType type;
     [SerializeField] private Currency _currency;
     [SerializeField] private float _health = 30;
     [SerializeField] private GameObject HitPrefab;
@@ -22,15 +33,30 @@ public class WorldEnvironment : MonoBehaviour
         ObjectPool.Instance.GetObject(HitPrefab, gameObject.transform.position, Quaternion.identity);
         if (_health <= 0)
         {
-            CurrencyManager.instance.Add(_currency);
-            // 气惯 角青
-            fracture.Explode();
-            Invoke(nameof(DisableFragments), 6f);
+            PlaySound();
+
+            if (type == EnvirormentType.Tree || type == EnvirormentType.Stone)
+            {
+                CurrencyManager.instance.Add(_currency);
+                // 气惯 角青
+                fracture?.Explode();
+            }
             gameObject.SetActive(false);
         }
     }
-    private void DisableFragments()
+
+    private void PlaySound()
     {
-      //  fracture.ReturnFragmentsToPool();
+        switch (type)
+        {
+            case EnvirormentType.Tree:
+                PlayerSoundController.Instance.PlaySoundAtPosition(PlayerSoundType.TreeSound, gameObject.transform.position);
+                break;
+            case EnvirormentType.Stone:
+                PlayerSoundController.Instance.PlaySoundAtPosition(PlayerSoundType.StoneSound, gameObject.transform.position);
+                break;
+        }
+
     }
+
 }
