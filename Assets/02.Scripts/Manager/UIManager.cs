@@ -11,6 +11,15 @@ public enum InteractionType
     Base
 }
 
+public enum ESkillButton
+{
+    SwordQ,
+    SwordE,
+    WandQ,
+    WandE,
+    BowQ,
+    BowE
+}
 public class UIManager : MonoBehaviour  
 {
     public static UIManager instance;
@@ -37,7 +46,7 @@ public class UIManager : MonoBehaviour
     public GameObject TimerObject;
     public GameObject CountObject;
     
-    
+    public List<Image> CooltimeImages = new List<Image>();
     private Dictionary<InteractionType, string> interactables = new Dictionary<InteractionType, string>();
     
     // 싱글톤
@@ -206,5 +215,10 @@ public class UIManager : MonoBehaviour
     {
         DiscriptionObject.SetActive(true);
         Discription.text = $"{interactables[type]}";
+    }
+
+    public void UI_CooltimeRefresh(ESkillButton cooltime, float time)
+    {
+        CooltimeImages[(int)cooltime].fillAmount = time;
     }
 }

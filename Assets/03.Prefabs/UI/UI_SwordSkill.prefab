@@ -52,7 +52,6 @@ MonoBehaviour:
   SkillSlots:
   - {fileID: 1964760965128514103}
   - {fileID: 3100227881600287303}
-  - {fileID: 3349532632642383106}
   InvenType: 0
 --- !u!1 &4395233570025025196
 GameObject:
@@ -162,7 +161,6 @@ RectTransform:
   m_Children:
   - {fileID: 1138225739169853326}
   - {fileID: 4578411646210869246}
-  - {fileID: 4248055367908419771}
   m_Father: {fileID: 6239392568618851590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -543,157 +541,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97c6850b4d09374f9d63e3fc1ccae77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownTime: 5
   MyPlayer: {fileID: 0}
-  ShieldCollider: {fileID: 0}
-  _skillDamageMultiplier: 1.7
-  dashDistance: 10
-  dashSpeed: 50
-  CurrentSwordDashSkill: 0
-  IsAttacking: 0
---- !u!1001 &7342321043823054892
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8215279229702632138}
-    m_Modifications:
-    - target: {fileID: 4093149606666392738, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_Name
-      value: Sword_F_Slot
-      objectReference: {fileID: 0}
-    - target: {fileID: 5449008345166429486, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: SlotData
-      value: 
-      objectReference: {fileID: 11400000, guid: b669a97dd1656604ab7474b40d519aac, type: 2}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8840307056366139359, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      propertyPath: m_Name
-      value: Skill_Slot (2)
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4390112550208402650, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4093149606666392738, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2784903347046849562}
-  m_SourcePrefab: {fileID: 100100000, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
---- !u!114 &3349532632642383106 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5449008345166429486, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-  m_PrefabInstance: {fileID: 7342321043823054892}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6712865898720625806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &4248055367908419771 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-  m_PrefabInstance: {fileID: 7342321043823054892}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6712865898720625806 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4093149606666392738, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-  m_PrefabInstance: {fileID: 7342321043823054892}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2784903347046849562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6712865898720625806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f97c6850b4d09374f9d63e3fc1ccae77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MyPlayer: {fileID: 0}
-  ShieldCollider: {fileID: 0}
+  DashVfx: {fileID: 0}
   _skillDamageMultiplier: 1.7
   dashDistance: 10
   dashSpeed: 50
