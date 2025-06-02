@@ -23,8 +23,11 @@ public class PlayerSoundController : MonoBehaviour
 
     [Header("사운드 클립들 (enum 순서에 맞게)")]
     public AudioClip[] soundClips;
+    public AudioClip[] bgmClips;
 
     private AudioSource _audioSource;
+    private AudioSource _bgmSource;
+
     private Transform _listener;
 
     private void Awake()
@@ -47,7 +50,22 @@ public class PlayerSoundController : MonoBehaviour
         _audioSource.playOnAwake = false;
         _audioSource.loop = false;
 
+        // BGM용 AudioSource 추가
+        GameObject bgmObj = new GameObject("BGM Audio");
+        bgmObj.transform.SetParent(transform);
+        _bgmSource = bgmObj.AddComponent<AudioSource>();
+        _bgmSource.spatialBlend = 0f; // 2D 사운드
+        _bgmSource.loop = true;
+        _bgmSource.playOnAwake = false;
+        _bgmSource.volume = 0.5f; // 필요시 조정
+
+
         _listener = Camera.main?.transform;
+    }
+    private void Start()
+    {
+        PlayerSoundController.Instance.PlayBGM(bgmClips[0], 0.6f);
+
     }
 
     private void Update()
@@ -109,5 +127,40 @@ public class PlayerSoundController : MonoBehaviour
             _audioSource.clip = null;
             _audioSource.loop = false;
         }
+    }
+
+    /// <summary>
+    /// BGM 재생
+    /// </summary>
+    public void PlayBGM(AudioClip clip, float volume = 0.2f)
+    {
+        if (clip == null) return;
+
+        _bgmSource.clip = clip;
+        _bgmSource.volume = volume;
+        _bgmSource.Play();
+    }
+
+    /// <summary>
+    /// BGM 정지
+    /// </summary>
+    public void StopBGM()
+    {
+        _bgmSource.Stop();
+    }
+
+    /// <summary>
+    /// 즉시 BGM 교체 및 재생
+    /// </summary>
+    public void ChangeBGM(AudioClip newClip, float volume = 0.2f)
+    {
+        if (newClip == null || _bgmSource == null) return;
+
+        if (_bgmSource.isPlaying)
+            _bgmSource.Stop();
+
+        _bgmSource.clip = newClip;
+        _bgmSource.volume = volume;
+        _bgmSource.Play();
     }
 }
