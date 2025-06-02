@@ -2,9 +2,10 @@ using UnityEngine;
 using System.Collections.Generic;
 public enum TowerSoundType
 {
-    Place,
-    Attack,
-    Destroy
+    ArrowShoot,
+    FireballShoot,
+    IceballShoot,
+    Collapse
 }
 public class TowerSoundController : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class TowerSoundController : MonoBehaviour
         _audioSource.dopplerLevel = 0f;           // 도플러 제거
         _audioSource.playOnAwake = false;
         _audioSource.loop = false;
-        // AudioListener 찾기
+        //AudioListener 찾기
         _listener = Camera.main?.transform;
     }
     private void Update()
@@ -49,7 +50,14 @@ public class TowerSoundController : MonoBehaviour
         float dist = Vector3.Distance(transform.position, _listener.position);
         _audioSource.priority = Mathf.Clamp((int)(dist * 8), 0, 256);
     }
-
+    public void PlaySoundAt(TowerSoundType type, Vector3 worldPosition)
+    {
+        int index = (int)type;
+        if (index >= 0 && index < soundClips.Length && soundClips[index] != null)
+        {
+            AudioSource.PlayClipAtPoint(soundClips[index], worldPosition, 1f);
+        }
+    }
     public void PlaySound(TowerSoundType type)
     {
         int index = (int)type;

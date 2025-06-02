@@ -34,6 +34,7 @@ public abstract class WeaponSkillBase : MonoBehaviour
         if (cooldownTimer > 0f)
             cooldownTimer -= Time.deltaTime;
 
+
         // UI 연동 위치 예시
         // UpdateSkillCooldownUI(CooldownRemaining);
     }

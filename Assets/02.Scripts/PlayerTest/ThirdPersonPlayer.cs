@@ -34,6 +34,10 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
     private float _returnCooldownTimer = 0f;   // 현재 쿨타임 경과 시간
     private bool _isReturnCooldown = false;    // 쿨타임 중 여부
 
+
+    private float _hitCooldown = 0.1f;     // 피격 쿨타임
+    private float _lastHitTime = -999f;   // 마지막 피격 시간
+
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
@@ -156,8 +160,20 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
 
     public void TakeDamage(Damage damage)
     {
+
+        // 현재 시간과 마지막 피격 시간 비교
+        if (Time.time - _lastHitTime < _hitCooldown)
+            return;
+
+        _lastHitTime = Time.time; // 피격 시간 갱신
+
+
         _currentHealth -= damage.Value;
         UIManager.instance.UI_HpSlider(_currentHealth);
+
+        CameraShakeManager.Instance.Shake(0.1f, 0.05f);
+        _playerAnimator.SetTrigger("Hit");
+
 
         if (_currentHealth <= 0)
         {

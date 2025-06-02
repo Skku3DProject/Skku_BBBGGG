@@ -50,6 +50,8 @@ public class SwordAttack : WeaponAttackBase
 
     private void PlayComboAttack(int index)
     {
+        PlayerSoundController.Instance.PlaySound(PlayerSoundType.SwoardAttack);
+
         _playerAnimation.SetFloat("AttackIndex", index);
         _playerAnimation.SetTrigger("Attack");
 

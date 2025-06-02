@@ -169,11 +169,13 @@ public class TowerPlacer : MonoBehaviour
                 return;
             }
 
+            TowerSoundController.Instance.PlaySoundAt(TowerSoundType.Collapse, _previewInstance.transform.position); // 건설소리
             ObjectPool.Instance.GetObject(TowerPlaceVfxPrefab, _previewInstance.transform.position, _previewInstance.transform.rotation);
             ObjectPool.Instance.GetObject(_selectedBuilding.Prefab, _previewInstance.transform.position, _previewInstance.transform.rotation);
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon); // 건설 후 무기 모드 복귀
             DestroyPreview();
             _selectedBuilding = null;
+
         }
     }
 

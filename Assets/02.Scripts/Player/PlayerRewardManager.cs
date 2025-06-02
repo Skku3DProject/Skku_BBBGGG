@@ -18,6 +18,8 @@ public class PlayerRewardManager : MonoBehaviour
     private void Start()
     {
         StageManager.instance.OnCombatEnd += AddSkillPointAfterCombat;
+
+        UIManager.instance.UI_SkillPointRefresh(skillPoints);
     }
     public void AddSkillPoint(int amount = 1)
     {

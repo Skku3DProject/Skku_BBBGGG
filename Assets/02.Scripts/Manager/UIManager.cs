@@ -15,10 +15,11 @@ public enum ESkillButton
 {
     SwordQ,
     SwordE,
+    BowQ,
+    BowE,
     WandQ,
     WandE,
-    BowQ,
-    BowE
+
 }
 public class UIManager : MonoBehaviour  
 {

@@ -15,7 +15,7 @@ public class BowFireSkill : WeaponSkillBase
     [SerializeField] private float _skillDamageMultiplier = 2f;
     [SerializeField] private float _arrowForce = 20f;
     [SerializeField] private float _arrowLifetime = 5f;
-    [SerializeField] private float _skillDuration = 10f;
+    [SerializeField] private float _skillDuration = 5f;
 
     [Header("Arrow Spawn Point")]
     [SerializeField] private Transform _bowArrowSpawnPoint;
@@ -94,6 +94,9 @@ public class BowFireSkill : WeaponSkillBase
 
         float power = _equipmentController.GetCurrentWeaponAttackPower() * _skillDamageMultiplier;
 
+        PlayerSoundController.Instance.PlaySound(PlayerSoundType.BowSkill1);
+
+
         PlayerArrow arrowInstance = Instantiate(_arrowPrefab, _bowArrowSpawnPoint.position, Quaternion.LookRotation(shootDirection)).GetComponent<PlayerArrow>();
         arrowInstance.ArrowInit(power,ArrowType.Explosive,_player.gameObject);
         arrowInstance.transform.Rotate(_arrowModelRotationOffset, Space.Self);
@@ -129,7 +132,7 @@ public class BowFireSkill : WeaponSkillBase
     public override void Tick()
     {
         base.Tick();
-
+        UIManager.instance.UI_CooltimeRefresh(ESkillButton.BowQ, CooldownRemaining);
         if (!CurrentArrowFireSkill) return;
 
         // 이건 스킬 안에서만 처리하는 Mouse0 입력
@@ -138,9 +141,11 @@ public class BowFireSkill : WeaponSkillBase
             if (!_isAttacking)
             {
                 Debug.Log("FireARROW");
+
                 ShootFireArrow();
             }
         }
+
     }
 
     public override void OnSkillEffectPlay() { }

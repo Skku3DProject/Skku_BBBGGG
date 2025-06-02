@@ -32,13 +32,16 @@ public class ThirdPersonCameraMode
         _rotationX += mouseX * _rotationSpeed * Time.deltaTime;
         _rotationY = Mathf.Clamp(_rotationY + mouseY * _rotationSpeed * Time.deltaTime, -80f, 80f);
 
-        // 카메라 위치
-        cameraTransform.position = target.position + Quaternion.Euler(-_rotationY, _rotationX, 0f) * _offset.PositionOffset;
-
-        // 회전 쿼터니언으로 적용
         Quaternion rotation = Quaternion.Euler(-_rotationY, _rotationX, 0f);
-        cameraTransform.rotation = rotation;
 
+        // 💡 기본 카메라 위치 계산
+        Vector3 basePosition = target.position + rotation * _offset.PositionOffset;
+
+        // 💡 쉐이크 오프셋이 있다면 적용
+        Vector3 shakeOffset = CameraShakeManager.Instance?.GetShakeOffset() ?? Vector3.zero;
+
+        cameraTransform.position = basePosition + shakeOffset;
+        cameraTransform.rotation = rotation;
 
     }
 }

@@ -39,10 +39,13 @@ public class SwordSpinSkill : WeaponSkillBase
 
     public override void UseSkill()
     {
+
         if (IsCooldown) return;
 
         if (!IsAttacking && !IsUsingSkill && !CurrentSwordSpinSkill)
         {
+
+
             IsAttacking = true;
             IsUsingSkill = true;
             CurrentSwordSpinSkill = true;
@@ -57,6 +60,8 @@ public class SwordSpinSkill : WeaponSkillBase
             _playerAttack.IsUsingJumpAnim = false;
 
             SpinVfx?.SetActive(true);
+            PlayerSoundController.Instance.PlayLoopSound(PlayerSoundType.SwoardSKill1);
+
             Debug.Log("스핀 시작");
 
         }
@@ -83,8 +88,9 @@ public class SwordSpinSkill : WeaponSkillBase
         SpinVfx?.SetActive(false);
 
 
-        //쿨타임 초기화
+        ////쿨타임 초기화
         cooldownTimer = cooldownTime;
+        PlayerSoundController.Instance.StopLoopSound();
 
         Debug.Log("스핀 종료");
     }
@@ -92,7 +98,10 @@ public class SwordSpinSkill : WeaponSkillBase
     public override void Tick()
     {
         base.Tick();
+        Debug.Log(CooldownRemaining);
+        UIManager.instance.UI_CooltimeRefresh(ESkillButton.SwordQ, CooldownRemaining);
     }
+
 
     public override void OnSkillEffectPlay()
     {

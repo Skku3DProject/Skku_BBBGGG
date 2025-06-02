@@ -140,6 +140,9 @@ public class BowAttack : WeaponAttackBase
     {
         if (arrowPrefab == null || shootPoint == null || Camera.main == null) return;
 
+        PlayerSoundController.Instance.PlaySound(PlayerSoundType.BowAttack);
+
+
         PlayerArrow arrow = Instantiate(arrowPrefab, shootPoint.position, Quaternion.identity).GetComponent<PlayerArrow>();
         arrow.ArrowInit(30f, ArrowType.Normal, _player.gameObject);
 

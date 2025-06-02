@@ -36,17 +36,19 @@ public class PlayerAttack : MonoBehaviour
 
         // 각 스킬들의 쿨타임이나 여러가지 업데이트할것들처리 인풋은 아래서 따로 빼서처리
         _currentWeaponAttack?.Tick();
-        _skill1?.Tick();
-        _skill2?.Tick();
+        if(SkillManager.instance.CanUseSkill(0))
+            _skill1?.Tick();
+        if (SkillManager.instance.CanUseSkill(1))
+            _skill2?.Tick();
 
         //평타 공격은 스킬이 사용중이면 안나가게
         if (Input.GetKeyDown(KeyCode.Mouse0) && _skill1.IsUsingSkill == false && _skill2.IsUsingSkill == false)
             _currentWeaponAttack?.Attack();
 
         //각 스킬들은 평타중에 나갈수있지만 다른 스킬사용중에는 못나가게
-        if (Input.GetKeyDown(KeyCode.Q) && _skill2.IsUsingSkill == false)
+        if (Input.GetKeyDown(KeyCode.Q) && _skill2.IsUsingSkill == false && SkillManager.instance.CanUseSkill(0))
             _skill1?.UseSkill();
-        if (Input.GetKeyDown(KeyCode.E) && _skill1.IsUsingSkill == false)
+        if (Input.GetKeyDown(KeyCode.E) && _skill1.IsUsingSkill == false && SkillManager.instance.CanUseSkill(1))
             _skill2?.UseSkill();
 
     }

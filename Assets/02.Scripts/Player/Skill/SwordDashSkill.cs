@@ -45,6 +45,9 @@ public class SwordDashSkill : WeaponSkillBase
             IsUsingSkill = true;
             CurrentSwordDashSkill = true;
 
+            PlayerSoundController.Instance.PlaySound(PlayerSoundType.SwoardSkill2);
+
+
             _playerAnimation.SetTrigger("DashAttack");
             DashVfx?.SetActive(true);
             _player.CharacterController.stepOffset = 0f;
@@ -109,6 +112,7 @@ public class SwordDashSkill : WeaponSkillBase
     public override void Tick()
     {
         base.Tick();
+        UIManager.instance.UI_CooltimeRefresh(ESkillButton.SwordE, CooldownRemaining);
     }
 
     public override void OnSkillEffectPlay() { }

@@ -151,5 +151,6 @@ public class ChainLightningSkill : WeaponSkillBase
     public override void Tick()
     {
         base.Tick();
+        UIManager.instance.UI_CooltimeRefresh(ESkillButton.WandQ, CooldownRemaining);
     }
 }

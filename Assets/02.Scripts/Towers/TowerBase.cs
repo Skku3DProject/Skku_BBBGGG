@@ -1,13 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ETowerType
+{
+    ArrowTower,
+    FireTower,
+    IceTower
+}
+
 public abstract class TowerBase : MonoBehaviour, IDamageAble
 {
 
     [Header("데이타")]
     [SerializeField] protected SO_TowerData _data;
     public SO_TowerData Data => _data;
-
+    public ETowerType TowerType;
 
     [Header("참조")]
     [SerializeField] protected Transform _topTowerTransform;
@@ -75,6 +82,7 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
 
     protected virtual void Attack()
     {
+        ShootSound();
     }
 
     public void TakeDamage(Damage damage)
@@ -83,6 +91,8 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
 
         if (_currentHealth <= 0)
         {
+            TowerSoundController.Instance.PlaySoundAt(TowerSoundType.Collapse, gameObject.transform.position);
+
             Instantiate(_destroyVfxPrefab).transform.position = _destroyVfxPos.position;
             // 폭발 실행
             fracture.Explode();
@@ -93,6 +103,23 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
             ObjectPool.Instance.ReturnToPool(gameObject);
         }
     }
+
+    private void ShootSound()
+    {
+        switch(TowerType)
+        {
+            case ETowerType.ArrowTower:
+                TowerSoundController.Instance.PlaySoundAt(TowerSoundType.ArrowShoot, gameObject.transform.position);
+                break;
+            case ETowerType.FireTower:
+                TowerSoundController.Instance.PlaySoundAt(TowerSoundType.FireballShoot, gameObject.transform.position);
+                break;
+            case ETowerType.IceTower:
+                TowerSoundController.Instance.PlaySoundAt(TowerSoundType.IceballShoot, gameObject.transform.position);
+                break;
+        }
+    }
+
 
     private void DisableFragments()
     {

@@ -56,6 +56,8 @@ public class BowChargingSkill : WeaponSkillBase
         {
             ReleaseCharge();
         }
+
+        UIManager.instance.UI_CooltimeRefresh(ESkillButton.BowE, CooldownRemaining);
     }
 
     public override void UseSkill()
@@ -72,6 +74,8 @@ public class BowChargingSkill : WeaponSkillBase
         _playerAttack.IsUsingJumpAnim = false;
         _playerAttack.IsMoveSlow = true;
 
+        PlayerSoundController.Instance.PlayLoopSound(PlayerSoundType.BowSkill2Charge);
+
         _playerAnimator.SetTrigger("Charging");
         chargeEffect.SetActive(true);
     }
@@ -80,7 +84,10 @@ public class BowChargingSkill : WeaponSkillBase
     {
         isCharging = false;
         //chargeEffectGO?.SetActive(false);
-       // fullChargeEffect?.SetActive(false);
+        // fullChargeEffect?.SetActive(false);
+
+        PlayerSoundController.Instance.StopLoopSound();
+        PlayerSoundController.Instance.PlaySound(PlayerSoundType.BowSkill2Shoot);
 
         float t = Mathf.Clamp01(chargeTime / maxChargeTime);
         float force = Mathf.Lerp(minShootForce, maxShootForce, t);

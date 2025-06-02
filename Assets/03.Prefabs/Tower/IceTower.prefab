@@ -345,6 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: d35ebccae63ec4e40b07f00e1bbe9bf4, type: 2}
+  TowerType: 2
   _topTowerTransform: {fileID: 5824293260331309914}
   _bulletPrefab: {fileID: 8762545296013883577, guid: 48abb01ae3edc5f4eb1fe4a84e7646b2, type: 3}
   _sphereCollider: {fileID: 6938944643603860181}

@@ -14,6 +14,8 @@ public class FireTower : TowerBase
             owner: gameObject,
             data: _data
         );
+
+
     }
 
     protected override void Awake()
