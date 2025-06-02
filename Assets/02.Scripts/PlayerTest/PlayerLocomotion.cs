@@ -13,8 +13,8 @@ public class PlayerLocomotion : MonoBehaviour
     public float VerticalVelocity => _yVelocity;
     public bool IsRunning => _isRunning;
 
-    [SerializeField] private float walkStepDelay = 0.1f;
-    [SerializeField] private float runStepDelay = 0.05f;
+    [SerializeField] private float walkStepDelay = 0.2f;
+    [SerializeField] private float runStepDelay = 0.1f;
 
     private float _stepTimer = 0f;
     private bool _wasGrounded = true;

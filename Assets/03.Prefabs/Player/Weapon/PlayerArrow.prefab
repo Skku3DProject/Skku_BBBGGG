@@ -158,7 +158,7 @@ MonoBehaviour:
   explosionEffect: {fileID: 6049483333715797154, guid: d788b28129ca3804f9d3a9787a250885, type: 3}
   explosionRadius: 3
   explosionForce: 50
-  chargeImpactEffect: {fileID: 954046842203140319, guid: 23af9e4dc02e01849a7977a1e64f9a5f, type: 3}
+  chargeImpactEffect: {fileID: 6791079942520075316, guid: 730f87884058cc941a265b3d704704be, type: 3}
   chargeImpactRadius: 1.5
   chargeImpactForce: 25
   maxPierceCount: 10

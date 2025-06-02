@@ -64,7 +64,7 @@ public class PlayerSoundController : MonoBehaviour
     }
     private void Start()
     {
-        PlayerSoundController.Instance.PlayBGM(bgmClips[0], 0.6f);
+        PlayerSoundController.Instance.PlayBGM(bgmClips[0], 0.4f);
 
     }
 

@@ -40,6 +40,7 @@ public class PlayerBlockController : MonoBehaviour
         {
             if (Input.GetMouseButton(0) && _isDig==false) // 좌클릭 → 블럭 파괴 or 나무나 철광석 캐기
             {
+                PlayerSoundController.Instance.PlaySound(PlayerSoundType.Block);
                 _player.PlayerAnimator.SetTrigger("Attack");
                 _isDig = true;
             }
@@ -49,7 +50,7 @@ public class PlayerBlockController : MonoBehaviour
             if (Input.GetMouseButtonDown(0)) // 우클릭 → 블럭 설치
             {
                 //_player.PlayerAnimator.SetTrigger("BlockPlace"); //-- 나중에 블럭설치모션
-
+                PlayerSoundController.Instance.PlaySound(PlayerSoundType.Block);
                 TryPlaceBlock();
             }
         }
