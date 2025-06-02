@@ -18,15 +18,4 @@ public class SkillTory : MonoBehaviour
         }
     }
 
-    public SkillNode FindSkillData(string skillName)
-    {
-        SkillTree tree = SkillManager.instance.TreeCheck(this.InvenType);
-        Debug.Log(this.InvenType);
-        Debug.Log(skillName);
-        
-        Debug.Log(tree);
-        
-        Debug.Log("findSkilldat skill start");
-        return tree.FindSkill(skillName);
-    }
 }

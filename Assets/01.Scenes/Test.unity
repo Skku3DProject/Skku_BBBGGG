@@ -838,6 +838,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1888149037333922677, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
+      propertyPath: bgmClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888149037333922677, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
+      propertyPath: 'bgmClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 21ebf937e2759ec4f80c28b605f3669b, type: 3}
     - target: {fileID: 2042415629762981396, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
       propertyPath: m_Name
       value: ThirdPersonPlayer
@@ -1463,6 +1471,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9097874111033830361, guid: 7cfe6a3acdc79c040a808a8630d4a541, type: 3}
+      propertyPath: 'SkillSlots.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2035550134}
+    - target: {fileID: 9097874111033830361, guid: 7cfe6a3acdc79c040a808a8630d4a541, type: 3}
+      propertyPath: 'SkillSlots.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1947413616}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2102181287067018515, guid: 7cfe6a3acdc79c040a808a8630d4a541, type: 3}
@@ -1478,6 +1494,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bcddb1270bf6fa44cb159c86cd959be9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1947413616 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7430065817598375, guid: 7cfe6a3acdc79c040a808a8630d4a541, type: 3}
+  m_PrefabInstance: {fileID: 1924540815}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1953611993
@@ -1639,6 +1666,17 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &2035550134 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 836273661229976632, guid: 7cfe6a3acdc79c040a808a8630d4a541, type: 3}
+  m_PrefabInstance: {fileID: 1924540815}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2079329042
 PrefabInstance:
   m_ObjectHideFlags: 0

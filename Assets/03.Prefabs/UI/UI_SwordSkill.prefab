@@ -50,8 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillSlots:
-  - {fileID: 1964760965128514103}
-  - {fileID: 3100227881600287303}
+  - {fileID: 7741149660788106166}
+  - {fileID: 6569650141973498822}
   InvenType: 0
 --- !u!1 &4395233570025025196
 GameObject:
@@ -388,9 +388,9 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
   m_PrefabInstance: {fileID: 5826250029228185369}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1964760965128514103 stripped
+--- !u!114 &7741149660788106166 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5449008345166429486, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4302319808649131183, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
   m_PrefabInstance: {fileID: 5826250029228185369}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -411,6 +411,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sword_E_Slot
       objectReference: {fileID: 0}
+    - target: {fileID: 4302319808649131183, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
+      propertyPath: SlotData
+      value: 
+      objectReference: {fileID: 11400000, guid: 722601ad756d448429ae1794ca80afcd, type: 2}
     - target: {fileID: 5449008345166429486, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
       propertyPath: SlotData
       value: 
@@ -503,49 +507,21 @@ PrefabInstance:
     - {fileID: 4390112550208402650, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4093149606666392738, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4410520489288853954}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
---- !u!114 &3100227881600287303 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5449008345166429486, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
-  m_PrefabInstance: {fileID: 6960591320587222889}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6365051974544911307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &4578411646210869246 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6850315671879661719, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
   m_PrefabInstance: {fileID: 6960591320587222889}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6365051974544911307 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4093149606666392738, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
+--- !u!114 &6569650141973498822 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4302319808649131183, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
   m_PrefabInstance: {fileID: 6960591320587222889}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4410520489288853954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6365051974544911307}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f97c6850b4d09374f9d63e3fc1ccae77, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c31cc78bf500834898dba846519fc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownTime: 5
-  MyPlayer: {fileID: 0}
-  DashVfx: {fileID: 0}
-  _skillDamageMultiplier: 1.7
-  dashDistance: 10
-  dashSpeed: 50
-  CurrentSwordDashSkill: 0
-  IsAttacking: 0

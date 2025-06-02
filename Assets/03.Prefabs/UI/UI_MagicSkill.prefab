@@ -189,8 +189,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SkillSlots:
-  - {fileID: 7436830652963146254}
-  - {fileID: 7833310056908930961}
+  - {fileID: 1665983564639503247}
+  - {fileID: 2062557182954436112}
   InvenType: 2
 --- !u!1 &8974307665928206347
 GameObject:
@@ -294,6 +294,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Magic_E_Slot
       objectReference: {fileID: 0}
+    - target: {fileID: 4302319808649131183, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
+      propertyPath: SlotData
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f9a7050bb2297e4bb6609432280524f, type: 2}
     - target: {fileID: 5449008345166429486, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
       propertyPath: SlotData
       value: 
@@ -387,9 +391,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
---- !u!114 &7833310056908930961 stripped
+--- !u!114 &2062557182954436112 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5449008345166429486, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4302319808649131183, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
   m_PrefabInstance: {fileID: 2822426309161222847}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -415,6 +419,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Magic_Q_Slot
       objectReference: {fileID: 0}
+    - target: {fileID: 4302319808649131183, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
+      propertyPath: SlotData
+      value: 
+      objectReference: {fileID: 11400000, guid: 41759e7731976664f957050d1d9ec4b8, type: 2}
     - target: {fileID: 5449008345166429486, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
       propertyPath: SlotData
       value: 
@@ -508,9 +516,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
---- !u!114 &7436830652963146254 stripped
+--- !u!114 &1665983564639503247 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5449008345166429486, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4302319808649131183, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
   m_PrefabInstance: {fileID: 3218431251829651232}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
