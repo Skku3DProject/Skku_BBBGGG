@@ -35,7 +35,7 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
     private bool _isReturnCooldown = false;    // 쿨타임 중 여부
 
 
-    private float _hitCooldown = 0.1f;     // 피격 쿨타임
+    private float _hitCooldown = 0.2f;     // 피격 쿨타임
     private float _lastHitTime = -999f;   // 마지막 피격 시간
 
     private void Awake()
@@ -169,6 +169,8 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
 
 
         _currentHealth -= damage.Value;
+
+        Debug.Log(_currentHealth);
         UIManager.instance.UI_HpSlider(_currentHealth);
 
         CameraShakeManager.Instance.Shake(0.1f, 0.05f);

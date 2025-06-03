@@ -1287,10 +1287,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThirdPersonPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 4694204078756373757, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
-      propertyPath: castEffectPrefab
-      value: 
-      objectReference: {fileID: 769094304862705024, guid: c3b9c5816eaf82e4d860ede69cfbdc27, type: 3}
     - target: {fileID: 5313562734726173250, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
       propertyPath: PlayerCamera
       value: 

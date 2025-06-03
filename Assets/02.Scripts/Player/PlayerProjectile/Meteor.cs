@@ -14,6 +14,10 @@ public class Meteor : MonoBehaviour
     public float trackingSpeed = 30f;
     public float turnSpeed = 5f;
 
+    [Header("사운드")]
+    public AudioClip explosionSound;
+    public AudioSource audioSource;
+
     private Rigidbody _rb;
     private bool _exploded = false;
 
@@ -21,6 +25,16 @@ public class Meteor : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         Destroy(gameObject, lifetime); // 일정 시간 후 파괴
+
+        if (audioSource != null)
+        {
+            audioSource.spatialBlend = 1f;                // 3D 사운드
+            audioSource.minDistance = 5f;
+            audioSource.maxDistance = 30f;
+            audioSource.rolloffMode = AudioRolloffMode.Linear;
+            audioSource.playOnAwake = false;
+            audioSource.loop = false;
+        }
     }
 
     public void Init(float damage, GameObject owner, Transform target = null)
@@ -80,7 +94,11 @@ public class Meteor : MonoBehaviour
         {
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
         }
-
+        if (explosionSound != null)
+        {
+            audioSource.clip = explosionSound;
+            audioSource.Play();
+        }
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (var col in colliders)
         {
@@ -91,8 +109,7 @@ public class Meteor : MonoBehaviour
                 target.TakeDamage(dmg);
             }
         }
-
-        Destroy(gameObject);
+        Destroy(gameObject, explosionSound.length); 
     }
 }
 

@@ -32,9 +32,22 @@ public class PlayerArrow : MonoBehaviour
     private int currentPierceCount = 0;
     private bool isPiercing = false;
 
+    [Header("사운드")]
+    [SerializeField] private AudioClip normalHitSound;
+    [SerializeField] private AudioClip explosiveHitSound;
+    [SerializeField] private AudioClip chargingHitSound;
+
+    [SerializeField] private AudioSource _audioSource;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+
+        _audioSource.spatialBlend = 1f;
+        _audioSource.minDistance = 5f;
+        _audioSource.maxDistance = 100f;
+        _audioSource.rolloffMode = AudioRolloffMode.Linear;
+        _audioSource.playOnAwake = false;
+        _audioSource.loop = false;
     }
 
     private void FixedUpdate()
@@ -105,6 +118,7 @@ public class PlayerArrow : MonoBehaviour
         {
             d.TakeDamage(new Damage(_damage, _owner, 10f));
         }
+        PlayHitSound();
     }
 
     private void ApplyChargingDamage()
@@ -123,6 +137,7 @@ public class PlayerArrow : MonoBehaviour
         }
 
         BlockSystem.DamageBlocksInRadius(transform.position, chargeImpactRadius, 10);
+        PlayHitSound();
     }
 
     private void Explode()
@@ -141,11 +156,20 @@ public class PlayerArrow : MonoBehaviour
         }
 
         BlockSystem.DamageBlocksInRadius(transform.position, explosionRadius, 10);
+        PlayHitSound();
     }
 
     private bool CheckGroundHit()
     {
-        return Physics.Raycast(transform.position, Vector3.down, 0.5f, LayerMask.GetMask("Ground"));
+        if (_rb == null || _rb.linearVelocity.sqrMagnitude < 0.1f) return false;
+
+        Vector3 forwardDir = _rb.linearVelocity.normalized;
+
+        Vector3 downForward = (forwardDir + Vector3.down).normalized;
+
+        float rayLength = 0.7f;
+
+        return Physics.Raycast(transform.position, downForward, rayLength, LayerMask.GetMask("Ground"));
     }
 
     private void HandleGroundImpact()
@@ -164,7 +188,8 @@ public class PlayerArrow : MonoBehaviour
                 break;
         }
 
-        Destroy(gameObject);
+        //사운드 재생할때 사운드 길이만큼 기다리고 파괴되도록함
+        //Destroy(gameObject);
     }
 
     public void ArrowInit(float damage, ArrowType type, GameObject owner)
@@ -185,5 +210,59 @@ public class PlayerArrow : MonoBehaviour
         }
 
         ArrowVfx[(int)type].SetActive(true);
+    }
+
+
+    private void PlayHitSound()
+    {
+        if (_audioSource == null) return;
+
+        AudioClip clipToPlay = null;
+
+        switch (_arrowType)
+        {
+            case ArrowType.Normal:
+                clipToPlay = normalHitSound;
+                break;
+            case ArrowType.Explosive:
+                clipToPlay = explosiveHitSound;
+                break;
+            case ArrowType.Charging:
+                clipToPlay = chargingHitSound;
+                break;
+        }
+
+        if (clipToPlay != null)
+        {
+            //_audioSource.transform.position = transform.position; // 위치 지정
+            _audioSource.clip = clipToPlay;
+            _audioSource.Play();
+
+            DestroyWithSound(clipToPlay);
+        }
+    }
+
+    private void DestroyWithSound(AudioClip clipToPlay)
+    {
+        // 기능 비활성화 (데미지 중복 방지)
+        GetComponent<Collider>().enabled = false;
+        _rb.linearVelocity = Vector3.zero;
+        _rb.isKinematic = true;
+        enabled = false;
+
+        
+        // 렌더링도 비활성화
+        if (TryGetComponent<Renderer>(out var renderer))
+        {
+            renderer.enabled = false;
+        }
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+
+
+        // 클립 길이만큼 기다림
+        Destroy(gameObject, clipToPlay.length);
     }
 }
