@@ -187,8 +187,6 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
 
 
         _currentHealth -= damage.Value;
-
-        Debug.Log(_currentHealth);
         UIManager.instance.UI_HpSlider(_currentHealth);
 
         CameraShakeManager.Instance.Shake(0.1f, 0.05f);
