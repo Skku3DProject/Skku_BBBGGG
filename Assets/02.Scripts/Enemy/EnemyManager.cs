@@ -20,8 +20,8 @@ public class EnemyManager : MonoBehaviour
     private List<Vector3> _spawnPositionList;
     public List<Vector3> SpawnPositionList => _spawnPositionList;
 
-    private List<Enemy> _firstActiveEnemies;
-    public List<Enemy> FirstActiveEnemies => _firstActiveEnemies;
+    private List<Enemy> _summonEnemies;
+    public List<Enemy> SummonEnemies => _summonEnemies;
 
     private void Awake()
     {
@@ -37,13 +37,12 @@ public class EnemyManager : MonoBehaviour
     public void SetEnemiesList(int capacity)
     {
         _activeEnemies = new List<Enemy>(capacity);
+        _summonEnemies = new List<Enemy>(capacity);
     }
 
     public void SpawnerMonsterPositionList(List<Vector3> spawnPositionList)
     {
         _spawnPositionList = spawnPositionList;
-        _firstActiveEnemies = new List<Enemy>(_activeEnemies);
-        
     }
 
     public void OnActivity(Enemy enemy)
@@ -63,10 +62,18 @@ public class EnemyManager : MonoBehaviour
             _enemyStrategies.Remove(enemy);
         }
 
-        UIManager.instance.CurrentCountRefresh();
+        _summonEnemies.Add(enemy);
+
+		UIManager.instance.CurrentCountRefresh();
     }
 
-    public void SetMoveTypeGrouping(Enemy enemy)
+    public void SummonEnemiesClear()
+    {
+        _summonEnemies.Clear();
+    }
+
+
+	public void SetMoveTypeGrouping(Enemy enemy)
     {
         SetGrouping(enemy, _moveTypeStrategy);
     }

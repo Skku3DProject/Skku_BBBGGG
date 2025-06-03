@@ -5,9 +5,9 @@ public enum EEnemyType
     Normal,
     Boss,
     Elite,
+	Self_Destruct,
 
-
-    Count,
+	Count,
 }
 public enum EEnemyMoveType
 {
@@ -36,8 +36,9 @@ public class So_Enemy : ScriptableObject
 
     [Header("시간")]
     public float DamagedTime = 0.5f;
+    public float Self_DestructTime = 1f;
 
-    [Header("공격")]
+	[Header("공격")]
     public int MaxAttackPatternCount = 1;
     public float KnockbackPower = 100;
     public float DamageValue = 10;

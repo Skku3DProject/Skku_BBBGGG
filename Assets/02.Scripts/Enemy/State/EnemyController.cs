@@ -24,7 +24,6 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
 
     private EnemyVisual _enemyVisual;
 
-    private EnemyAttackCheckEvent _enemyAttackCheckEvent;
 
     public bool IsAttack = false;
 
@@ -52,7 +51,6 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
     {
         _enemy = GetComponent<Enemy>();
         _enemyVisual = GetComponent<EnemyVisual>();
-        _enemyAttackCheckEvent = GetComponent<EnemyAttackCheckEvent>();
         SetState();
         Initialize();
     }
@@ -157,6 +155,12 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
         OnHit(damage);
         if (_enemy.Health <= 0)
         {
+            if(_enemy.EnemyData.EnemyType == EEnemyType.Self_Destruct)
+            {
+				ChangeState(EEnemyState.Attack);
+                return;
+			}
+
             ChangeState(EEnemyState.Die);
             return;
         }
@@ -204,7 +208,6 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
     public void EndAttackAnimEvent()
     {
         ChangeState(EEnemyState.Move);
-        _enemyAttackCheckEvent.EndAttackEnvet();
         IsAttack = false;
         // 어택 종료
     }

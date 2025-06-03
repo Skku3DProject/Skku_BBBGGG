@@ -37,7 +37,9 @@ public class EnemySpawner : MonoBehaviour
 
     public void Spawn()
     {
-        SetSpawnPosition();
+        EnemyManager.Instance.SummonEnemiesClear();
+
+		SetSpawnPosition();
 
         int currentStage = (int)StageManager.instance.GetCurrentStage();
         currentSo = SpawnerSo[currentStage];

@@ -48,11 +48,11 @@ public class EnemyPoolManager : MonoBehaviour
     }
 
     // Key를 통한 오브젝트 가져오기
-    public GameObject GetObject(string key)
+    public GameObject GetObject(string key, Vector3 position = default)
     {
         if (_pools.TryGetValue(key, out EnemyObjectPool pool))
         {
-            return pool.Get();
+            return pool.Get(position);
         }
 
         Debug.LogWarning($"Pool with key '{key}' not found!");

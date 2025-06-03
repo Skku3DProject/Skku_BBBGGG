@@ -37,6 +37,9 @@ MonoBehaviour:
   - key: Fly2
     prefab: {fileID: 1467277096911013437, guid: 69c6ba670499d6347a89ee86ee131772, type: 3}
     initialSize: 30
+  - key: Self_Destruct1
+    prefab: {fileID: 6143643343095581565, guid: a4e89bbba588bf547bb8b1281890cc29, type: 3}
+    initialSize: 5
   - key: Elite1
     prefab: {fileID: 1919701108089533735, guid: 31f70267f6d6411458186a29d3e3b1a8, type: 3}
     initialSize: 10
