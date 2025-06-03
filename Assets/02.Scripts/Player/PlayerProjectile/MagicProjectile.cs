@@ -6,43 +6,37 @@ public class MagicProjectile : MonoBehaviour
     private GameObject _owner;
 
     [Header("이펙트 및 설정")]
-    public GameObject hitEffect;
-    public float lifetime = 5f;
-    public float knockbackForce = 15f;
-
+    public GameObject explosionEffect;
+    public float lifetime = 10f;
+    public float knockbackForce = 30f;
+    public float explosionRadius = 3f;
 
     private Rigidbody _rb;
+
     private void Awake()
     {
-        Destroy(gameObject, lifetime); // 일정 시간 뒤 자동 삭제
+        _rb = GetComponent<Rigidbody>();
+        Destroy(gameObject, lifetime); // 일정 시간 후 파괴
     }
 
     /// <summary>
-    /// WandAttack에서 발사 시 호출됨
+    /// 외부에서 데미지와 소유자 정보를 받아 초기화
     /// </summary>
     public void Init(float damage, GameObject owner)
     {
         _damage = damage;
         _owner = owner;
 
-        if (_rb != null)
-        {
-            _rb.useGravity = false;                  // 중력 무시
-            _rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic; // 고속 충돌 안정화
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // 히트 이펙트 재생
-        if (hitEffect != null)
+        if (explosionEffect != null)
         {
-            Instantiate(hitEffect, transform.position, Quaternion.identity);
+            Instantiate(explosionEffect, transform.position, Quaternion.identity);
         }
 
-        // 범위 데미지
-        float radius = 1f;
-        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (var col in colliders)
         {
             if (col.TryGetComponent<IDamageAble>(out var target))
@@ -53,6 +47,6 @@ public class MagicProjectile : MonoBehaviour
             }
         }
 
-        Destroy(gameObject); // 투사체 제거
+        Destroy(gameObject);
     }
 }

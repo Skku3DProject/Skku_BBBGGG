@@ -79,8 +79,9 @@ public class PlayerAttack : MonoBehaviour
 
             case EquipmentType.Magic:
                 _currentWeaponAttack = GetComponent<WandAttack>();
-                _skill1 = GetComponent<ChainLightningSkill>();
                 _currentWeaponAttack.IsAttacking = false;
+                _skill1 = GetComponent<ChainLightningSkill>();
+                _skill2 = GetComponent<MeteorFallSkill>();
                 break;
         }
 

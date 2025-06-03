@@ -13,6 +13,7 @@ public class PlayerArrow : MonoBehaviour
     private GameObject _owner;
 
     public GameObject[] ArrowVfx;
+
     [Header("일반화살")]
     public GameObject HitVfx;
 
@@ -20,107 +21,110 @@ public class PlayerArrow : MonoBehaviour
     public GameObject explosionEffect;
     public float explosionRadius = 3f;
     public float explosionForce = 50f;
+
     [Header("차징 화살")]
     public GameObject chargeImpactEffect;
     public float chargeImpactRadius = 1.5f;
     public float chargeImpactForce = 25f;
+
     [Header("관통 설정")]
-    public int maxPierceCount = 10; // 최대 관통 가능 횟수
+    public int maxPierceCount = 10;
     private int currentPierceCount = 0;
     private bool isPiercing = false;
-
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
     }
+
     private void FixedUpdate()
     {
         if (_rb.linearVelocity.sqrMagnitude > 0.1f)
         {
             transform.rotation = Quaternion.LookRotation(_rb.linearVelocity);
-
             transform.Rotate(90f, 0f, 0f, Space.Self);
         }
+
+        // 바닥 충돌 감지
+        if (CheckGroundHit())
+        {
+            HandleGroundImpact();
+        }
     }
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-        bool hitEnemy = collision.gameObject.CompareTag("Enemy");
-        bool hitGround = collision.gameObject.CompareTag("Ground");
+        bool isEnemy = other.CompareTag("Enemy");
 
         if (_arrowType == ArrowType.Charging && isPiercing)
         {
-            if (hitEnemy)
+            if (isEnemy)
             {
-                ApplyChargingDamage(collision);
+                ApplyChargingDamage();
                 currentPierceCount++;
 
                 if (currentPierceCount >= maxPierceCount)
-                {
-                    Destroy(gameObject); // 관통 횟수 초과 시 제거
-                }
+                    Destroy(gameObject);
 
-                return; // 적을 관통하므로 파괴하지 않음
+                return;
             }
-            else if (hitGround)
+            else if (CheckGroundHit())
             {
-                if (chargeImpactEffect != null)
-                    Instantiate(chargeImpactEffect, transform.position, Quaternion.identity);
-
-                BlockSystem.DamageBlocksInRadius(transform.position, chargeImpactRadius, 10);
-                Destroy(gameObject); // 벽이나 땅에 부딪히면 파괴
+                HandleGroundImpact();
+                Destroy(gameObject);
             }
         }
         else
         {
-            switch (_arrowType)
+            if (isEnemy || CheckGroundHit())
             {
-                case ArrowType.Normal:
-                    ApplyNormalDamage(collision);
-                    break;
-                case ArrowType.Explosive:
-                    Explode();
-                    break;
-                case ArrowType.Charging:
-                    ApplyChargingDamage(collision); // 관통 꺼졌을 경우
-                    break;
-            }
+                switch (_arrowType)
+                {
+                    case ArrowType.Normal:
+                        ApplyNormalDamage(other);
+                        break;
+                    case ArrowType.Explosive:
+                        Explode();
+                        break;
+                    case ArrowType.Charging:
+                        ApplyChargingDamage();
+                        break;
+                }
 
-            Destroy(gameObject);
-        }
-    }
-    private void ApplyChargingDamage(Collision collision)
-    {
-        // 이펙트 재생
-        if (chargeImpactEffect != null)
-            Instantiate(chargeImpactEffect, transform.position, Quaternion.identity);
-
-        Collider[] colliders = Physics.OverlapSphere(transform.position, chargeImpactRadius);
-
-        foreach (var hit in colliders)
-        {
-            if (hit.TryGetComponent<IDamageAble>(out var d))
-            {
-                Vector3 hitDirection = (hit.transform.position - transform.position).normalized;
-                d.TakeDamage(new Damage(_damage, _owner, chargeImpactForce));
+                Destroy(gameObject);
             }
         }
-
-        // 블럭에도 충격 줄 수 있다면 (선택)
-        BlockSystem.DamageBlocksInRadius(transform.position, chargeImpactRadius, 10);
     }
 
-    private void ApplyNormalDamage(Collision collision)
+    private void ApplyNormalDamage(Collider target)
     {
         if (HitVfx != null)
             Instantiate(HitVfx, transform.position, Quaternion.identity);
 
-
-        if (collision.gameObject.TryGetComponent<IDamageAble>(out var d))
+        if (target.TryGetComponent<IDamageAble>(out var d))
         {
-            d.TakeDamage(new Damage(_damage, gameObject, 10f));
+            d.TakeDamage(new Damage(_damage, _owner, 10f));
         }
     }
+
+    private void ApplyChargingDamage()
+    {
+        if (chargeImpactEffect != null)
+            Instantiate(chargeImpactEffect, transform.position, Quaternion.identity);
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, chargeImpactRadius);
+        foreach (var hit in colliders)
+        {
+            if (hit.TryGetComponent<IDamageAble>(out var d))
+            {
+                Vector3 hitDir = (hit.transform.position - transform.position).normalized;
+                d.TakeDamage(new Damage(_damage, _owner, chargeImpactForce, hitDir));
+            }
+        }
+
+        BlockSystem.DamageBlocksInRadius(transform.position, chargeImpactRadius, 10);
+    }
+
     private void Explode()
     {
         if (explosionEffect != null)
@@ -131,16 +135,41 @@ public class PlayerArrow : MonoBehaviour
         {
             if (hit.TryGetComponent<IDamageAble>(out var d))
             {
-                d.TakeDamage(new Damage(_damage, gameObject, explosionForce));
+                Vector3 hitDir = (hit.transform.position - transform.position).normalized;
+                d.TakeDamage(new Damage(_damage, _owner, explosionForce, hitDir));
             }
         }
-        BlockSystem.DamageBlocksInRadius(transform.position, explosionRadius, 10);
 
+        BlockSystem.DamageBlocksInRadius(transform.position, explosionRadius, 10);
     }
 
-    public void ArrowInit(float Damage, ArrowType type, GameObject owner)
+    private bool CheckGroundHit()
     {
-        _damage = Damage;
+        return Physics.Raycast(transform.position, Vector3.down, 0.5f, LayerMask.GetMask("Ground"));
+    }
+
+    private void HandleGroundImpact()
+    {
+        switch (_arrowType)
+        {
+            case ArrowType.Normal:
+                if (HitVfx != null)
+                    Instantiate(HitVfx, transform.position, Quaternion.identity);
+                break;
+            case ArrowType.Charging:
+                ApplyChargingDamage();
+                break;
+            case ArrowType.Explosive:
+                Explode();
+                break;
+        }
+
+        Destroy(gameObject);
+    }
+
+    public void ArrowInit(float damage, ArrowType type, GameObject owner)
+    {
+        _damage = damage;
         _arrowType = type;
         _owner = owner;
 
@@ -149,16 +178,12 @@ public class PlayerArrow : MonoBehaviour
             isPiercing = true;
             currentPierceCount = 0;
             _rb.useGravity = false;
+        }
+        else
+        {
+            _rb.useGravity = true;
+        }
 
-            ArrowVfx[(int)type].SetActive(true);
-        }
-        else if(type == ArrowType.Explosive)
-        {
-            ArrowVfx[(int)type].SetActive(true);
-        }
-        else if(type == ArrowType.Normal)
-        {
-            ArrowVfx[(int)type].SetActive(true);
-        }
+        ArrowVfx[(int)type].SetActive(true);
     }
 }
