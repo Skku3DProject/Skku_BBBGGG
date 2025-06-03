@@ -6,12 +6,16 @@ using UnityEngine.UI;
 public class UI_SkillButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public GameObject SelectVFX;
+    public AudioClip EnterSound;
+    
     private Button _button;
+    private AudioSource _audio;
     private bool _canSelected => _button.interactable;
     
     private void OnEnable()
     {
         _button = GetComponent<Button>();
+        _audio = GetComponent<AudioSource>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -29,6 +33,7 @@ public class UI_SkillButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             return;
         }
+        _audio.PlayOneShot(EnterSound);
         SelectVFX.SetActive(true);
     }
 

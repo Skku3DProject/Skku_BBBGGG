@@ -4249,6 +4249,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4095136893818185477, guid: 7e287f0cc30beea49be0f11133c61640, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4095136893818185477, guid: 7e287f0cc30beea49be0f11133c61640, type: 3}
+      propertyPath: BypassReverbZones
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4191201986271629531, guid: 7e287f0cc30beea49be0f11133c61640, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
