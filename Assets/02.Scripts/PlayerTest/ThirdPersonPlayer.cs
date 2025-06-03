@@ -64,7 +64,8 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
         gameObject.transform.position = _basePosition;
         _characterController.enabled = true; ;
         _currentHealth = PlayerStats.MaxHealth;
-        Debug.Log(gameObject.transform.position);
+
+        PlayerAnimator.SetTrigger("Idle");
         UIManager.instance.RespawnPanel.SetActive(false);
     }
     private void Update()
@@ -116,6 +117,17 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
             StartReturnToBase();
         }
     }
+
+    private void DieSet()
+    {
+        IsAlive = false;
+        // 애니메이션 이동 파라미터 초기화
+        PlayerAnimator.SetFloat("MoveX", 0);
+        PlayerAnimator.SetFloat("MoveY", 0);
+        PlayerAnimator.SetFloat("MoveSpeed", 0);
+        PlayerAnimator.SetTrigger("Die");
+    }
+
     private void StartReturnToBase()
     {
         if (IsReturning || !IsAlive || _isReturnCooldown) return;
@@ -126,6 +138,11 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
         UIManager.instance.RespawnPanel.SetActive(true); 
 
         ReturnVfx.SetActive(true);
+        PlayerAnimator.SetTrigger("Idle");
+        // 애니메이션 이동 파라미터 초기화
+        PlayerAnimator.SetFloat("MoveX", 0);
+        PlayerAnimator.SetFloat("MoveY", 0);
+        PlayerAnimator.SetFloat("MoveSpeed", 0);
         Debug.Log("귀환 시작!");
     }
 
@@ -160,6 +177,7 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
 
     public void TakeDamage(Damage damage)
     {
+        if (!IsAlive) return;
 
         // 현재 시간과 마지막 피격 시간 비교
         if (Time.time - _lastHitTime < _hitCooldown)
@@ -179,8 +197,7 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
 
         if (_currentHealth <= 0)
         {
-            IsAlive = false;
-            Debug.Log(" DIE");
+            DieSet();
         }
     }
 
