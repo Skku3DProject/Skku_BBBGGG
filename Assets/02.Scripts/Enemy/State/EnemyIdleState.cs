@@ -30,7 +30,9 @@ public class EnemyIdleState : IFSM
         _timer += Time.deltaTime;
         if (_timer >= _idleTime)
         {
-            return EEnemyState.Move;
+		    _enemy.UI_EnemyHpbar.BillBoarding();
+		    _enemy.UI_EnemyHpbar.gameObject.SetActive(true);
+			return EEnemyState.Move;
         }
 
         return EEnemyState.Idle;

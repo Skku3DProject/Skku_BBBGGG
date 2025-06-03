@@ -119,6 +119,7 @@ public class Enemy : MonoBehaviour
     public void SetUi(UI_EnemyHpbar uI_EnemyHpbar)
     {
         _uI_EnemyHpbar = uI_EnemyHpbar;
+        _uI_EnemyHpbar.BillBoarding();
     }
     private void OnDrawGizmosSelected()
     {

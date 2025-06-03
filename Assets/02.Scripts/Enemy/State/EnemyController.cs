@@ -32,8 +32,8 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
         Initialize();// 활성화 시 호출
 
         UI_EnemyHpbar ui_EnemyHpbar = UI_Enemy.Instance.SetHpBarToEnemy(_enemy);
-        _enemy.SetUi(ui_EnemyHpbar);
-
+        ui_EnemyHpbar.gameObject.SetActive(false);
+		_enemy.SetUi(ui_EnemyHpbar);
         _enemy.Initialize();
         EnemyManager.Instance.OnActivity(_enemy);
     }

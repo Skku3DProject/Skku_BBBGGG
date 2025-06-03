@@ -24,7 +24,7 @@ public class UI_EnemyHpbar : MonoBehaviour
         }
     }
 
-    private void BillBoarding()
+    public void BillBoarding()
     {
         // 1) 월드 포인트 → 스크린 포인트
         Vector3 screenPos = RectTransformUtility.WorldToScreenPoint(_mainCamera,
@@ -61,7 +61,6 @@ public class UI_EnemyHpbar : MonoBehaviour
     public void Initialized()
     {
         Slider.value = 1;
-		gameObject.SetActive(true);
 	}
   
 }
