@@ -17,7 +17,7 @@ MonoBehaviour:
   Damage: 10
   KnockbackPower: 100
   LostTime: 5
-  AreaRange: 5
+  AreaRange: 1
   Type: 1
   HitVfxPrefab: {fileID: 0}
   GroundMask:

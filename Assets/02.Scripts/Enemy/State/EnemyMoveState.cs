@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class EnemyMoveState : IFSM
 {
     private Enemy _enemy;
@@ -42,7 +44,17 @@ public class EnemyMoveState : IFSM
 
         _behaviorStrategy.Move(_enemy, _enemy.EnemyData.Speed);
 
-        return EEnemyState.Move;
+        // 갇힌 애들 어떻게 할것인지.
+        // 1, 발판 같은거 설치
+        // 2. 점프 해서 날아가기
+        // 3. 머리 위 블럭 부시기
+		/*RaycastHit hit;
+
+		if (Physics.Raycast(_enemy.UI_offset.position,Vector3.forward))
+        {
+
+        }*/
+			return EEnemyState.Move;
     }
 
     public void End()
