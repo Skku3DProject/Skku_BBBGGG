@@ -778,7 +778,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cdc48602eb5acde4083b76914351cdfe, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2e9594b2b062870489f9cb8f7b7f69e4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1234,7 +1234,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 50}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1147002853
 MonoBehaviour:
@@ -1256,7 +1256,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\uD584\uBC84\uAC70\uB294 \uAC1C\uB9DB\uC788\uB294\uAC8C \uB9DE\uB294\uB370
+    \uC5B4\uCA4C\uB77C\uB294\uAC70\uC57C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7e8bd427658293243ba526a68084cec8, type: 2}
   m_sharedMaterial: {fileID: 8158749227765098957, guid: 7e8bd427658293243ba526a68084cec8, type: 2}
@@ -1657,7 +1658,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f3bc979876203d946b3573c93b4ea1bb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 970920999961547468d34c3c81e0a2ae, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1728,9 +1729,13 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1888149037333922677, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
+      propertyPath: 'bgmClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e1d4d4ff14f534b438218a4f3642bb7f, type: 3}
+    - target: {fileID: 1888149037333922677, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
       propertyPath: 'bgmClips.Array.data[1]'
       value: 
-      objectReference: {fileID: 8300000, guid: d4ff59d746d7b6f46997917603f80b5f, type: 3}
+      objectReference: {fileID: 8300000, guid: bd7a22cc21d79e64086ee0e10ac1d72d, type: 3}
     - target: {fileID: 2042415629762981396, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
       propertyPath: m_Name
       value: ThirdPersonPlayer
@@ -4940,7 +4945,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 613d7e113dbc58a48aef93d5429fd86c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 02dd277a019067e4499eb5506a2f7184, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
