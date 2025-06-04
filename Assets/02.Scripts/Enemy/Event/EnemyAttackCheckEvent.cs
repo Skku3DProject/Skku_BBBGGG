@@ -11,6 +11,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     private EnemyController _enemyController;
     private Damage _damage;
     private EnemyVisual _enemyVisual;
+    private EnemySoundManager _soundManager;
 
     // 랜덤 소환
     public float radius = 10f;
@@ -22,6 +23,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
         _enemy = GetComponentInParent<Enemy>();
         _enemyController = GetComponentInParent<EnemyController>();
         _enemyVisual = GetComponentInParent<EnemyVisual>();
+        _soundManager = GetComponentInParent<EnemySoundManager>();
         _damage = new Damage(_enemy.EnemyData.DamageValue, _enemy.gameObject);
     }
 
@@ -74,12 +76,13 @@ public class EnemyAttackCheckEvent : MonoBehaviour
 
         _projectile.Fire(_enemy.Target.transform.position + Vector3.up * 0.5f);
         _enemyController.IsAttack = false;
+        _soundManager?.PlaySound("Ranged");
     }
     // 병사 되살리기 공격
     public void Summon()
     {
-        _enemyController.IsAttack = true;
         _enemy.Summon.gameObject.GetComponent<ParticleSystem>().Play();
+        _enemyController.IsAttack = true;
         List<Vector3> positions = new List<Vector3>(EnemyManager.Instance.SpawnPositionList);
         List<Enemy> enemies = new List<Enemy>(EnemyManager.Instance.SummonEnemies);
         int index = 0;
@@ -90,7 +93,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
             EnemyPoolManager.Instance.GetObject(enemy.EnemyData.Key, position);
 
         }
-
+        _soundManager?.PlaySound("Summon");
         EnemyManager.Instance.SummonEnemiesClear();
     }
     public void MeleeAttackEvent()
@@ -101,7 +104,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
             _enemy.EnemyData.AttackLayerMask,
             QueryTriggerInteraction.Ignore
         );
-
+        _soundManager?.PlaySound("Melee");
         for (int i = 0; i < cnt; i++)
         {
             var col = _hits[i];
@@ -116,6 +119,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
 
     public void SpawnAreaAttack()
     {
+        _soundManager?.PlaySound("Area");
         _enemyController.IsAttack = true;
         for (int i = 0; i < _enemy.EnemyData.MaxAreaAttackCount; i++)
         {
@@ -168,12 +172,14 @@ public class EnemyAttackCheckEvent : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             _enemyVisual.PlayHitFeedback(_enemy.EnemyData.DamagedTime);
+            _soundManager?.PlaySound("Self_Destruct_Count");
             yield return new WaitForSeconds(_enemy.EnemyData.Self_DestructTime);
         }
         EnemyParticlePoolManger.Instance.GetObject(_enemy.EnemyData.AttackVFXKey,_enemy.transform.position);
         BlockSystem.DamageBlocksInRadius(_enemy.transform.position, _enemy.EnemyData.AreaRange, (int)_damage.Value);
         _enemyController.EndDieAnimEvent();
 
+        _soundManager?.PlaySound("Self_Destruct");
         Collider[] hits = new Collider[8];
         int cnt = Physics.OverlapSphereNonAlloc(
             transform.position, _enemy.EnemyData.AreaRange,
@@ -194,10 +200,9 @@ public class EnemyAttackCheckEvent : MonoBehaviour
         yield break;
     }
 
-
-    public void EndAttackEnvet()
+    public void DieSound()
     {
-        _enemyController.IsAttack = false;
+        _soundManager.PlaySound("Die");
     }
 
     private Vector3 GetRandomPositionAround()

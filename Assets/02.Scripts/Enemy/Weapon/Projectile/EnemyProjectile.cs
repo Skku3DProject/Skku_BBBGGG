@@ -9,6 +9,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
     private Damage _damage;
     private Vector3 _startPosision = Vector3.zero;
     private Vector3 _targetPosision = Vector3.zero;
+    //private EnemySoundManager _soundManager;
 
     private const float GRAVITY = -9.81f;
 
@@ -37,7 +38,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
         {
             _damage = new Damage(ProjectileData.Damage, this.gameObject, ProjectileData.KnockbackPower);
 
-
+            //_soundManager = GetComponent<EnemySoundManager>();
             _trailRenderer = GetComponentInChildren<TrailRenderer>();
         }
         else
@@ -170,6 +171,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
             PointAttack(other);
         }
         EnemyParticlePoolManger.Instance.GetObject(ProjectileData.HitVfxKey, transform.position);
+        //_soundManager.PlaySound("Effect");
     }
 
     private void AreaAttack(Collider other)
@@ -214,6 +216,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
         {
             _isPooled = true;
             EnemyObjectPoolManger.Instance.ReturnObject(ProjectileData.Key, gameObject);
+            //_soundManager.PlaySound("Effect");
         }
         else
         {

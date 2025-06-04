@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour
     private CharacterController _characterController;
     public CharacterController CharacterController => _characterController;
 
+    private EnemySoundManager _soundManager;
+
     private Animator _animator;
     public Animator Animator => _animator;
 
@@ -52,6 +54,7 @@ public class Enemy : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player");
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
+        _soundManager = GetComponent<EnemySoundManager>();
         _findDistance = EnemyData.FindDistance * EnemyData.FindDistance;
         _attackDistance = EnemyData.AttackDistance * EnemyData.AttackDistance;
         _stepOffset = _characterController.stepOffset;
@@ -65,6 +68,7 @@ public class Enemy : MonoBehaviour
         _health = EnemyData.Health;
         _maxHealth = _health;
         _characterController.enabled = true;
+        _soundManager.PlaySound("Spawn");
         if (_uI_EnemyHpbar != null)
         {
             _uI_EnemyHpbar.Initialized();
@@ -75,15 +79,20 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(Damage damage)
     {
         _health -= damage.Value;
-        if (damage.From.CompareTag("Player"))
+
+        if(damage.From != null)
         {
-            GoOnPlayer();
+            if (damage.From.CompareTag("Player"))
+            {
+                GoOnPlayer();
+            }
+            else
+            {
+                _target = damage.From.gameObject;
+            }
         }
-        else
-        {
-            _target = damage.From.gameObject;
-        }
-        
+
+        _soundManager.PlaySound("Hit");
         _uI_EnemyHpbar.UpdateHealth(_health / _maxHealth);
         UI_Enemy.Instance.UpdateDamageText(damage.Value,this);
     }

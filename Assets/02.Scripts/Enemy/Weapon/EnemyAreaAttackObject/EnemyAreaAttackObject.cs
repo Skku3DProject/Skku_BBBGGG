@@ -6,7 +6,7 @@ public class EnemyAreaAttackObject : MonoBehaviour, IEnemyPoolable
     private Damage _damage;
 
     private Collider[] hits = new Collider[100];
-
+  //  private EnemySoundManager _soundManager;
     public void OnSpawn()
     {
         CheckGroundHit();
@@ -25,6 +25,7 @@ public class EnemyAreaAttackObject : MonoBehaviour, IEnemyPoolable
         if (ProjectileData != null)
         {
             _damage = new Damage(ProjectileData.Damage, this.gameObject, ProjectileData.KnockbackPower);
+            //_soundManager = GetComponent<EnemySoundManager>();
         }
         else
         {
@@ -49,6 +50,7 @@ public class EnemyAreaAttackObject : MonoBehaviour, IEnemyPoolable
             BlockSystem.DamageBlocksInRadius(blockPos, ProjectileData.AreaRange, (int)_damage.Value);
             EnemyParticlePoolManger.Instance.GetObject(ProjectileData.HitVfxKey, blockPos);
             EnemyObjectPoolManger.Instance.ReturnObject(ProjectileData.Key, gameObject);
+            //_soundManager.PlaySound("Effect");
         }
     }
 }
