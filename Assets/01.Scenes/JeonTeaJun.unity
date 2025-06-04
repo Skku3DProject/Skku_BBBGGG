@@ -1352,7 +1352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1191994406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1391,7 +1391,7 @@ MonoBehaviour:
   ChunkLayer:
     serializedVersion: 2
     m_Bits: 8
-  Distance: 30
+  Distance: 80
   GrassPrefab: {fileID: 4375382654496483180, guid: 4d8cde95c08e1794f94ca247a291c1ce, type: 3}
   MushroomPrefab: {fileID: 4569295655211456005, guid: 189f9f09eb7dcdd48ad8ec5c8e2be81e, type: 3}
   TreePrefab: {fileID: 3086538645063425187, guid: 17a7eacbeefbb2443868f4ebe1bfb9f6, type: 3}
@@ -4586,7 +4586,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1859621792
 MonoBehaviour:
   m_ObjectHideFlags: 0

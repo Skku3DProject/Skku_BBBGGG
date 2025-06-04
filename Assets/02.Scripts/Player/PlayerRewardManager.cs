@@ -64,23 +64,24 @@ public class PlayerRewardManager : MonoBehaviour
             case BuffType.Speed:
                 buffAmount = 0.5f;
                 _player.BuffSpeed += buffAmount;
+                UIManager.instance.UI_BuffRefresh(selected, _player.BuffSpeed); // 총 누적치 전달
                 buffName = "이동 속도";
                 break;
             case BuffType.Defense:
                 buffAmount = 3f;
                 _player.BuffDefense += buffAmount;
+                UIManager.instance.UI_BuffRefresh(selected, _player.BuffDefense); // 총 누적치 전달
                 buffName = "방어력";
                 break;
             case BuffType.Damage:
                 buffAmount = 5f;
                 _player.BuffDamage += buffAmount;
+                UIManager.instance.UI_BuffRefresh(selected, _player.BuffDamage); // 총 누적치 전달
                 buffName = "공격력";
                 break;
         }
 
-        UIManager.instance.UI_BuffRefresh(selected, buffAmount); // enum 기반 UI 호출
-
-        return buffName; // 기존 string 반환 유지
+        return buffName;
     }
 
     public void UseSkillPoint() => skillPoints -= 1;
