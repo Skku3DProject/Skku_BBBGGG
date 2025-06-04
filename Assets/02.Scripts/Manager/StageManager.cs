@@ -32,8 +32,8 @@ public class StageManager : MonoBehaviour
     public static StageManager instance;
     private float _resetTime = 2;
     private float _reducedTime = 0.3f;
-    private float _settingTime;
-    private float _timer;
+    private float _settingTime = 2;
+    private float _timer = 30f;
     [SerializeField] private float _readyTime = 1f;
     
     public Action OnCombatStart;
@@ -58,11 +58,6 @@ public class StageManager : MonoBehaviour
         }
 
     }
-
-    private void Start()
-    {
-    }
-
     private void Update()
     {
         TutorialSkip();
@@ -99,27 +94,27 @@ public class StageManager : MonoBehaviour
 
     public void TutorialSkip()
     {
-        if (Input.GetKeyDown(KeyCode.J) && _currentPhase == EPhaseType.Tutorial)
+        if (Input.GetKeyDown(KeyCode.F1) && _currentPhase == EPhaseType.Tutorial)
         {
             TutorialEnd();
             TutorialManager.Instance.TutorialSkip();
         }
-        else if (Input.GetKeyDown(KeyCode.J) && _currentPhase != EPhaseType.Tutorial)
-        {
-            CombatStart();
-        }
+        // else if (Input.GetKeyDown(KeyCode.J) && _currentPhase != EPhaseType.Tutorial)
+        // {
+        //     CombatStart();
+        // }
     }
     public void TutorialEnd()
     {
-        _currentStage = EStageType.Stage1;
-        _currentPhase = EPhaseType.Ready;
-        _timer = _readyTime;
-        UIManager.instance.UI_TutorialEnd(_readyTime, _timer);
+        _currentPhase = EPhaseType.None;
+        UIManager.instance.UI_TutorialEnd();
     }
 
     private void SliderSetting()
     {
         _currentPhase = EPhaseType.Ready;
+        
+        UIManager.instance.UI_StageStartMention(1);
         UIManager.instance.UI_ObjectOnOff(UIManager.instance.TimerObject);   
     }
     public void CombatEnd()
@@ -137,6 +132,7 @@ public class StageManager : MonoBehaviour
     public void CombatStart()
     {
         _currentPhase = EPhaseType.Combat;
+        UIManager.instance.UI_StageStartMention(0);
         UIManager.instance.UI_ObjectOnOff(UIManager.instance.CountObject);
         
         OnCombatStart?.Invoke();

@@ -145,7 +145,10 @@ public class SkillManager : MonoBehaviour
 
     public void SwitchSkilltory(EquipmentType type)
     {
-        SelectskillTory.gameObject.SetActive(false);
+        if (SelectskillTory != null)
+        {
+            SelectskillTory.gameObject.SetActive(false);
+        }
         
         switch(type)
         {
@@ -158,15 +161,26 @@ public class SkillManager : MonoBehaviour
             case EquipmentType.Magic:
                 SelectskillTory = SkillTories[2];
                 break;
+            default:
+                SelectskillTory = null;
+                break;
         }
-        
-        SelectskillTory.gameObject.SetActive(true);
+
+        if (SelectskillTory != null)
+        {
+            SelectskillTory.gameObject.SetActive(true);
+        }
         
     }
 
     public bool CanUseSkill(int index)
     {
-        return SelectskillTory.SkillSlots[index].IsActive;
+        if(SelectskillTory != null)
+        {
+            return SelectskillTory.SkillSlots[index].IsActive;
+        }
+        
+        return false;
     }
 
 }

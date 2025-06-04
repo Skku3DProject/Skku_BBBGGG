@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using NUnit.Framework.Internal;
 
 public enum InteractionType
 {
@@ -39,14 +38,16 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI TutorialCount;
     public TextMeshProUGUI Discription;
     public TextMeshProUGUI PotionCount;
+    public TextMeshProUGUI TutorialSkip;
+    public TextMeshProUGUI[] GameoverText;
     [Header("오브젝트")]
     public Image[] CurrenciesObjects;
+    public Image GameOverPanel;
+
     public GameObject RespawnPanel;
     public GameObject DiscriptionObject;
-    public GameObject GameOverPanel;
     public GameObject TimerObject;
     public GameObject CountObject;
-
     [Header("버프 UI")]
     public TextMeshProUGUI SpeedBuffText;
     public TextMeshProUGUI DefenseBuffText;
@@ -55,9 +56,9 @@ public class UIManager : MonoBehaviour
 
 
     public List<Image> CooltimeImages = new List<Image>();
+    public List<TextMeshProUGUI> Mention;
     private Dictionary<InteractionType, string> interactables = new Dictionary<InteractionType, string>();
-    
-    // 싱글톤
+
     public void Awake()
     {
         if (instance == null)
@@ -71,7 +72,7 @@ public class UIManager : MonoBehaviour
         
         interactables.Add(InteractionType.Chest, "상자 열기");
         interactables.Add(InteractionType.Base, "전투 시작하기");
-
+;
         _buffTextMap = new Dictionary<BuffType, TextMeshProUGUI>
     {
         { BuffType.Speed, SpeedBuffText },
@@ -95,7 +96,14 @@ public class UIManager : MonoBehaviour
     // 게임오버
     public void UI_GameOver()
     {
-      GameOverPanel.SetActive(true);
+        GameOverPanel.gameObject.SetActive(true);
+        
+        DOTween.KillAll();
+        
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(GameOverPanel.DOFade(0.9f, 1f));
+        sequence.Insert(0.7f ,GameoverText[0].DOFade(1f, 2f));
+        sequence.Insert(1.5f ,GameoverText[1].DOFade(1f, 2f));
     }
 
     public void UI_ObjectOnOff(GameObject ui)
@@ -144,9 +152,9 @@ public class UIManager : MonoBehaviour
         TutorialCount.text = $"{(int)current} / {require}";
     }
     // 튜토리얼 끝 튜토리얼 확인 창 사라지게 하기
-    public void UI_TutorialEnd(float readyTime, float timer)
+    public void UI_TutorialEnd()
     {
-        UI_SetMaxTimer(readyTime);
+        TutorialSkip.gameObject.SetActive(false);
         TutorialCount.gameObject.SetActive(false);
         SubTutorial.gameObject.SetActive(false);
         Tutorial.gameObject.SetActive(false);
@@ -244,5 +252,12 @@ public class UIManager : MonoBehaviour
             return;
 
         text.text = $"{amount:F1}"; // 무조건 마지막 증가 수치만 표시
+    }
+
+    public void UI_StageStartMention(int index)
+    {
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(Mention[index].DOFade(1, 0.5f));
+        sequence.Append(Mention[index].DOFade(0, 3f));
     }
 }

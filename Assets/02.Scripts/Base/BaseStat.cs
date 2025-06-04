@@ -45,19 +45,23 @@ public class BaseStat : MonoBehaviour, IDamageAble
         {
             return;
         }
-
-        if (StageManager.instance.CurrentPhase != EPhaseType.Combat)
+        
+        if (StageManager.instance.CurrentPhase == EPhaseType.Combat)
         { 
-            UIManager.instance.UI_Interaction(InteractionType.Base);   
-        }
-        else
-        {
             UIManager.instance.DiscriptionObject.SetActive(false);
+            return;
         }
+        
+        UIManager.instance.UI_Interaction(InteractionType.Base);
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (TutorialManager.Instance.CurrentTutorial.Type == TutorialType.Combat && StageManager.instance.CurrentPhase == EPhaseType.Tutorial && Input.GetKeyDown(KeyCode.F))
         {
-            StageManager.instance.CombatStart();
+            TutorialEvent.OnProgress?.Invoke(TutorialType.Combat, 1);
+            StageManager.instance.TutorialEnd();
+        }
+        else if(StageManager.instance.CurrentPhase != EPhaseType.Tutorial && Input.GetKeyDown(KeyCode.F))
+        {
+            StageManager.instance.CombatStart();   
         }
     }
 

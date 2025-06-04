@@ -20,6 +20,8 @@ public enum TutorialType
     CreateTower,
     InputKeyCodeK,
     Tab,
+    Return,
+    Combat,
     
     count
 }

@@ -97,6 +97,12 @@ public class TutorialInput : MonoBehaviour
                     TutorialEvent.OnProgress?.Invoke(TutorialType.InputKeyCodeK, 1);
                 }
                 break;
+            case TutorialType.Return :
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    TutorialEvent.OnProgress?.Invoke(TutorialType.Return, 1);
+                }
+                break;
         }
     }
 }
