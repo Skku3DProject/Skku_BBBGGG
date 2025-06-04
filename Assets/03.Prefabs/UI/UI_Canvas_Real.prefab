@@ -1870,7 +1870,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2395839238468102624
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3132,12 +3132,12 @@ RectTransform:
   - {fileID: 6106680085763445682}
   - {fileID: 5061067523151780993}
   - {fileID: 8868099630204364976}
-  - {fileID: 2395839238468102624}
   - {fileID: 3482141467230248944}
   - {fileID: 3751020061512427509}
   - {fileID: 6514169505853169169}
   - {fileID: 3998702988088831469}
   - {fileID: 2591047943133809691}
+  - {fileID: 2395839238468102624}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3245,6 +3245,9 @@ MonoBehaviour:
   GameOverPanel: {fileID: 4963755634649820254}
   TimerObject: {fileID: 3801402270377205335}
   CountObject: {fileID: 6289509450023480986}
+  SpeedBuffText: {fileID: 0}
+  DefenseBuffText: {fileID: 0}
+  DamageBuffText: {fileID: 0}
   CooltimeImages:
   - {fileID: 4161673671531178733}
   - {fileID: 685461123544367773}
