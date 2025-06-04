@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private List<Enemy> _enemys;
-    public List<Enemy> enemy => _enemys;
-
     public List<So_EnemySpawner> SpawnerSo;
 
     public float SpawnTime = 0.3f;
@@ -39,10 +36,10 @@ public class EnemySpawner : MonoBehaviour
     {
         EnemyManager.Instance.SummonEnemiesClear();
 
-		SetSpawnPosition();
-
         int currentStage = (int)StageManager.instance.GetCurrentStage();
         currentSo = SpawnerSo[currentStage];
+
+		SetSpawnPosition();
 
         spawnEnemyPrefabs.Clear();
         spawnIndex = 0;
@@ -97,9 +94,6 @@ public class EnemySpawner : MonoBehaviour
     {
         _positionList.Clear(); // 기존 위치 초기화
 
-        int currentStage = (int)StageManager.instance.GetCurrentStage();
-        So_EnemySpawner currentSo = SpawnerSo[currentStage];
-
         foreach (EnemySpawnContainer enemySpawnContainer in currentSo.SpawnEneies)
         {
             for (int i = 0; i < enemySpawnContainer.SpawnCounts; i++)
@@ -126,7 +120,7 @@ public class EnemySpawner : MonoBehaviour
         if (attempts >= maxAttempts)
         {
             Debug.LogWarning("Spawn position could not be found after max attempts");
-            return Vector3.zero + spawnOffset;
+            return transform.position + Vector3.zero;
         }
 
         return transform.position + spawnOffset;

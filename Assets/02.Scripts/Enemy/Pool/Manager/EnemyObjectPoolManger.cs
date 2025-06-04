@@ -32,7 +32,8 @@ public class EnemyObjectPoolManger : MonoBehaviour
                 // Key별로 풀 생성 및 등록
                 var pool = new EnemyObjectPool(
                     poolSetting.prefab,
-                    poolSetting.initialSize
+                    poolSetting.initialSize,
+                    transform
                 );
 
                 if(pool == null)

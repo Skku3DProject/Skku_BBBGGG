@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public So_Enemy EnemyData;
 
     public Transform ProjectileTransfrom;
+    public GameObject Projectile;
 
     private GameObject _target;
     public GameObject Target => _target;
@@ -42,6 +43,8 @@ public class Enemy : MonoBehaviour
     private float _stepOffset = 0;
     public float StepOffset => _stepOffset;
 
+    private ThirdPersonPlayer _thirdPersonPlayer;
+
     private void Awake()
     {
         _gaol = GameObject.FindGameObjectWithTag("BaseTower");
@@ -51,14 +54,16 @@ public class Enemy : MonoBehaviour
         _findDistance = EnemyData.FindDistance * EnemyData.FindDistance;
         _attackDistance = EnemyData.AttackDistance * EnemyData.AttackDistance;
         _stepOffset = _characterController.stepOffset;
+        _player.TryGetComponent<ThirdPersonPlayer>(out _thirdPersonPlayer);
+
     }
-    
+
     public void Initialize()
     {
         _target = _gaol;
         _health = EnemyData.Health;
         _maxHealth = _health;
-
+        _characterController.enabled = true;
         if (_uI_EnemyHpbar != null)
         {
             _uI_EnemyHpbar.Initialized();
@@ -84,7 +89,7 @@ public class Enemy : MonoBehaviour
 
     public bool TryAttack()
     {
-        if(_target.gameObject.activeSelf == false)
+        if(_target.gameObject.activeSelf == false || TryDiePlayer())
         {
             _target = _gaol;
             return false;
@@ -98,7 +103,7 @@ public class Enemy : MonoBehaviour
     }
     public void TargetOnPlayer()
     {
-        if(_target == _player)
+        if(_target == _player || !TryDiePlayer())
         {
             return;
         }
@@ -114,6 +119,18 @@ public class Enemy : MonoBehaviour
     {
         EnemyManager.Instance.SetTargetGrouping(this);
         _target = _player;
+    }
+
+    private bool TryDiePlayer()
+    {
+        if (_thirdPersonPlayer.IsAlive)
+        {
+            return false;
+        }
+
+        EnemyManager.Instance.SetMoveTypeGrouping(this);
+        _target = _gaol;
+        return true;
     }
   
     public void SetUi(UI_EnemyHpbar uI_EnemyHpbar)

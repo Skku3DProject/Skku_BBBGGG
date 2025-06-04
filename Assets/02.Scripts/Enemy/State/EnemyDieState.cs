@@ -10,6 +10,7 @@ public class EnemyDieState : IFSM
     public void Start()
     {
         _enemy.Animator.SetTrigger("Die");
+        _enemy.CharacterController.enabled = false;
     }
 
     public EEnemyState Update()

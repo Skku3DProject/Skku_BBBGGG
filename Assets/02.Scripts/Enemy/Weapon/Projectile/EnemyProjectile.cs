@@ -60,11 +60,10 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
     public void Fire(Vector3 targetPos)
     {
         if (_isPooled) return; // 이미 풀에 반환된 객체라면 실행하지 않음
+        gameObject.SetActive(true);
         _trailRenderer.enabled = true;
-        transform.SetParent(null);
         _startPosision = transform.position;
         _targetPosision = targetPos;
-
 
         if (transform.localScale != Vector3.one)
         {
@@ -79,6 +78,12 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
 
     private void Update()
     {
+        _timer += Time.deltaTime;
+        if (ProjectileData != null && _timer > ProjectileData.LostTime)
+        {
+            UnEnable();
+        }
+
         if (!_isFire) return;
 
         _velocity += _gravityVector * Time.deltaTime;
@@ -87,7 +92,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
         if (_velocity != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(_velocity);
 
-        _timer += Time.deltaTime;
+        
 
         if (_timer > 0.5f && ProjectileData.Type == EnemyProjectileType.Area)
         {
@@ -95,10 +100,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
         }
 
         // 검사 실패한 채로 너무 오래되면 삭제
-        if (ProjectileData != null && _timer > ProjectileData.LostTime)
-        {
-            UnEnable();
-        }
+       
     }
     private Vector3 CalculateLaunchVelocity()
     {

@@ -7,8 +7,7 @@ public class EnemyAreaAttackObject : MonoBehaviour, IEnemyPoolable
     private TrailRenderer _trailRenderer;
     private Damage _damage;
     private Rigidbody rb;
-    private int _timer = 0;
-    private bool _isFire = false;
+    private float _timer = 0;
     private bool _isPooled = false; // 풀 반환 상태 추적
 
     private Collider[] hits = new Collider[100];
@@ -41,7 +40,6 @@ public class EnemyAreaAttackObject : MonoBehaviour, IEnemyPoolable
     {
         _trailRenderer.Clear();
         _trailRenderer.enabled = false;
-        _isFire = false;
         _isPooled = false;
         transform.SetParent(null);
         if (transform.localScale != Vector3.one)
@@ -52,6 +50,13 @@ public class EnemyAreaAttackObject : MonoBehaviour, IEnemyPoolable
 
     private void Update()
     {
+        _timer += Time.deltaTime;
+        if (_timer >= ProjectileData.LostTime)
+        {
+            UnEnable();
+            _timer = 0;
+        }
+
         CheckGroundHit();
     }
 
@@ -74,7 +79,7 @@ public class EnemyAreaAttackObject : MonoBehaviour, IEnemyPoolable
         if (_isPooled || ProjectileData == null) return false;
 
         Vector3 down = Vector3.down;
-    
+
         if (Physics.Raycast(transform.position, down, out RaycastHit hit, 0.1f, ProjectileData.GroundMask))
         {
             OnGroundHit(hit);
@@ -90,7 +95,7 @@ public class EnemyAreaAttackObject : MonoBehaviour, IEnemyPoolable
         Vector3Int blockPos = Vector3Int.FloorToInt(hit.point + hit.normal * -0.5f);
         BlockSystem.DamageBlocksInRadius(blockPos, ProjectileData.AreaRange, (int)_damage.Value);
     }
- 
+
     private void AreaAttack(Collider other)
     {
         BlockSystem.DamageBlocksInRadius(other.transform.position, ProjectileData.AreaRange, (int)_damage.Value);
