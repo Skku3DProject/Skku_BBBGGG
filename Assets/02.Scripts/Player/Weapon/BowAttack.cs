@@ -174,4 +174,9 @@ public class BowAttack : WeaponAttackBase
 
     public override void OnAttackEffectPlay() { }
 
+    public void BowPulled()
+    {
+        
+        PlayerSoundController.Instance.PlaySound(PlayerSoundType.BowPulled);
+    }
 }

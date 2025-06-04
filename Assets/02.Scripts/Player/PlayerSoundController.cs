@@ -18,6 +18,7 @@ public enum PlayerSoundType
     Hit,
     TreeSound,
     StoneSound,
+    BowPulled,
 }
 public class PlayerSoundController : MonoBehaviour
 {
