@@ -198,6 +198,7 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
 
         while (elapsed <= 0.1)
         {
+
             // 프레임 단위로 일정 거리 이동
             _enemy.CharacterController.Move(damage.Direction * damage.KnockbackPower * Time.deltaTime);
             elapsed += Time.deltaTime;

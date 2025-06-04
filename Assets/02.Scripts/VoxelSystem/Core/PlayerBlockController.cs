@@ -62,7 +62,27 @@ public class PlayerBlockController : MonoBehaviour
         Vector3Int pos = GetTargetBlockPosition(true);
         if (!IsWithinReach(pos))
             return;
+
+        // 플레이어나 적과 겹치는 위치라면 설치 금지
+        Vector3 blockCenter = pos + new Vector3(0.5f, 0.5f, 0.5f);
+        float blockSize = 0.9f;
+
+        Collider[] hits = Physics.OverlapBox(blockCenter, Vector3.one * blockSize * 0.5f);
+        foreach (var hit in hits)
+        {
+            if (hit.CompareTag("Player") || hit.CompareTag("Enemy"))
+            {
+                Debug.Log("해당 위치에 캐릭터가 있어 블럭을 설치할 수 없습니다.");
+                return;
+            }
+        }
+
         BlockSystem.PlaceBlock(pos, PlaceType);
+
+        //Vector3Int pos = GetTargetBlockPosition(true);
+        //if (!IsWithinReach(pos))
+        //    return;
+        //BlockSystem.PlaceBlock(pos, PlaceType);
     }
     //애님 이벤트용
     public void TryDestroyBlockOrMineObject()

@@ -1723,6 +1723,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1888149037333922677, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
+      propertyPath: bgmClips.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888149037333922677, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
+      propertyPath: 'bgmClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d4ff59d746d7b6f46997917603f80b5f, type: 3}
     - target: {fileID: 2042415629762981396, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
       propertyPath: m_Name
       value: ThirdPersonPlayer

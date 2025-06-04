@@ -66,8 +66,17 @@ public class PlayerSoundController : MonoBehaviour
     }
     private void Start()
     {
-        PlayerSoundController.Instance.PlayBGM(bgmClips[0], 0.4f);
+        PlayerSoundController.Instance.PlayBGM(bgmClips[0], 0.3f);
 
+        StageManager.instance.OnCombatStart += () =>
+        {
+            ChangeBGM(bgmClips[1], 0.3f); // 전투 BGM
+        };
+
+        StageManager.instance.OnCombatEnd += () =>
+        {
+            ChangeBGM(bgmClips[0], 0.3f); // 비전투 BGM
+        };
     }
 
     private void Update()
