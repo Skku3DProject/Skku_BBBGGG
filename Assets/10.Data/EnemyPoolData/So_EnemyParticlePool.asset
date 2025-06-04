@@ -31,3 +31,6 @@ MonoBehaviour:
   - key: Noaml
     prefab: {fileID: 6159091409587469690, guid: b3976778563ec454a93e86d5893337e4, type: 3}
     initialSize: 500
+  - key: Lightning
+    prefab: {fileID: 1434301070520155160, guid: 4f9ad2d9a43e72a4eb3086c8f2b41dbd, type: 3}
+    initialSize: 150

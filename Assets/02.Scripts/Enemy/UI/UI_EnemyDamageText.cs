@@ -26,7 +26,6 @@ public class UI_EnemyDamageText : MonoBehaviour
 		_textMeshProUGUI = GetComponent<TextMeshProUGUI>();
 		_canvas = GetComponentInParent<Canvas>();
 	}
-
 	public void UpdateText(float damageValue, Enemy enemy)
 	{
 		_enemy = enemy;
@@ -74,9 +73,13 @@ public class UI_EnemyDamageText : MonoBehaviour
 		DG.Tweening.Sequence seq = DOTween.Sequence();
 		seq.Join(DOTween.To(() => _floatYOffset, x => _floatYOffset = x, floatDistance, duration).SetEase(Ease.OutCubic));
 		seq.Join(_textMeshProUGUI.DOFade(0f, duration).SetDelay(fadeOutDelay));
-		seq.OnComplete(() =>
+        _rectTransform.localScale = Vector3.one;
+        seq.Join(_rectTransform.DOScale(1.5f, duration ).SetEase(Ease.OutBack));
+      //.Append(_rectTransform.DOScale(1f, duration * 0.5f).SetEase(Ease.InBack));
+        seq.OnComplete(() =>
 		{
 			_isPlaying = false;
+			
 			UI_Enemy.Instance.CreaDamageText(gameObject);
 		});
 	}

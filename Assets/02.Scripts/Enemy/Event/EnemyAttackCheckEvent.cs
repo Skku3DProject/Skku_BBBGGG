@@ -79,7 +79,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     public void Summon()
     {
         _enemyController.IsAttack = true;
-        _enemy.Summon.gameObject.SetActive(true);
+        _enemy.Summon.gameObject.GetComponent<ParticleSystem>().Play();
         List<Vector3> positions = new List<Vector3>(EnemyManager.Instance.SpawnPositionList);
         List<Enemy> enemies = new List<Enemy>(EnemyManager.Instance.SummonEnemies);
         int index = 0;

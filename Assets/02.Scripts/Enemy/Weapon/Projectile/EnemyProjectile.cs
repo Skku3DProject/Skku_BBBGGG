@@ -45,7 +45,6 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
             Debug.LogError($"ProjectileData is null on {gameObject.name}");
         }
     }
-
     public void Initialize()
     {
         if (_trailRenderer != null)
