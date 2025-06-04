@@ -26,6 +26,7 @@ public class ThirdPersonCameraMode
 
     public void UpdateCamera(Transform cameraTransform, Transform target)
     {
+
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 

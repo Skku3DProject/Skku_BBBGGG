@@ -20,7 +20,7 @@ public class BowAttack : WeaponAttackBase
     [Header("화살세팅")]
     public GameObject arrowPrefab;
     public Transform shootPoint;
-    public float shootForce = 30f;
+    public float shootForce = 60f;
     public TrajectoryRenderer trajectoryRenderer;
 
     private bool isAiming = false;

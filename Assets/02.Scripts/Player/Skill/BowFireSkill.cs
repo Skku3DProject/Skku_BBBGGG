@@ -13,7 +13,7 @@ public class BowFireSkill : WeaponSkillBase
     [Header("Skill Settings")]
     [SerializeField] private GameObject _arrowPrefab;
     [SerializeField] private float _skillDamageMultiplier = 2f;
-    [SerializeField] private float _arrowForce = 20f;
+    [SerializeField] private float _arrowForce = 100f;
     [SerializeField] private float _arrowLifetime = 5f;
     [SerializeField] private float _skillDuration = 5f;
 
