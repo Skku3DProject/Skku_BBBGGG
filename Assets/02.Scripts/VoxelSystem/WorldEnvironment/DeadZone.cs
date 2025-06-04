@@ -8,11 +8,8 @@ public class DeadZone : MonoBehaviour
     {
         if (other.TryGetComponent(out IDamageAble damageTarget))
         {
-            damageTarget.TakeDamage(new Damage(damageAmount,null));
+            damageTarget.TakeDamage(new Damage(damageAmount,gameObject));
         }
-        else
-        {
-            Destroy(other.gameObject);
-        }
+
     }
 }

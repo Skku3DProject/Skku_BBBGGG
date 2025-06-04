@@ -4,7 +4,6 @@ public enum Tile
     Grass,
     GrassSide, 
     Stone, 
-    TreeSide, 
-    TreeCX, 
-    Leaves 
+    SnowSide,
+    Snow
 }

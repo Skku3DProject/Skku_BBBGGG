@@ -209,8 +209,8 @@ public class WorldManager : MonoBehaviour
         GameObject chunkObj = Instantiate(ChunkPrefab, worldPos, Quaternion.identity, transform);
         Chunk chunk = chunkObj.GetComponent<Chunk>();
 
-        PopulateBlocksPerilnNoise(chunk, coord);
-        //PopulateBlocksCustomNoise(chunk, coord);
+        //PopulateBlocksPerilnNoise(chunk, coord);
+        PopulateBlocksCustomNoise(chunk, coord);
 
         chunk.BuildMesh();
         SpawnEnvironmentObjects(chunk);
@@ -287,9 +287,16 @@ public class WorldManager : MonoBehaviour
 
     private int FindSurfaceY(Chunk chunk, int x, int z)
     {
+        //for (int y = Chunk.CHUNK_HEIGHT - 1; y >= 0; y--)
+        //{
+        //    if (chunk.Blocks[x, y, z] == VoxelType.Grass)
+        //        return y;
+        //}
+        //return 0;
         for (int y = Chunk.CHUNK_HEIGHT - 1; y >= 0; y--)
         {
-            if (chunk.Blocks[x, y, z] == VoxelType.Grass)
+            VoxelType type = chunk.Blocks[x, y, z];
+            if (type == VoxelType.Grass || type == VoxelType.Snow)
                 return y;
         }
         return 0;
@@ -392,24 +399,24 @@ public class WorldManager : MonoBehaviour
                 int globalZ = coord.y * Chunk.CHUNK_WIDTH + (z - 1);
 
                 // ==== 1. 평지 베이스 ====
-                float baseNoise = Mathf.PerlinNoise((globalX + _randomOffsetX) * NoiseScale, (globalZ + _randomOffsetZ) * NoiseScale);
-                float baseHeight = baseNoise * 2f + 2f; // 낮고 완만한 평야
+                float baseNoise = Mathf.PerlinNoise(globalX * NoiseScale, globalZ * NoiseScale);
+                float baseHeight = baseNoise * 4f + 6f; // 2~4 사이의 낮은 평지
 
-                // ==== 2. 언덕 노이즈 (높고 부드러운 변화) ====
-                float hillNoise = Mathf.PerlinNoise((globalX + _randomOffsetX) * 0.03f + 2000f, (globalZ + _randomOffsetZ) * 0.03f + 2000f);
-                float hillHeight = Mathf.SmoothStep(0f, 1f, hillNoise) * 8f;
+                // ==== 2. 언덕 노이즈 ====
+                float hillNoise = Mathf.PerlinNoise(globalX * 0.03f + 2000f, globalZ * 0.03f + 2000f);
+                float hillHeight = Mathf.SmoothStep(0f, 1f, hillNoise) * 25f; // 최대 15
 
-                // ==== 3. 언덕이 나올 위치 마스킹 ====
-                float hillMask = Mathf.PerlinNoise((globalX + _randomOffsetX) * 0.01f + 1234f, (globalZ + _randomOffsetZ) * 0.01f + 5678f);
-                hillMask = Mathf.SmoothStep(0.5f, 0.7f, hillMask); // 언덕 확률 조절
+                // ==== 3. 언덕 마스크 ====
+                float hillMask = Mathf.PerlinNoise(globalX * 0.01f + 1234f, globalZ * 0.01f + 5678f);
+                hillMask = Mathf.SmoothStep(0.4f, 0.65f, hillMask); // 언덕 위치 마스킹
 
-                // ==== 4. 중심 평탄화 보정 ====
+                // ==== 4. 중심 평탄화 영역 설정 ====
                 float mapCenterX = GridWidth * Chunk.CHUNK_WIDTH / 2f;
                 float mapCenterZ = GridHeight * Chunk.CHUNK_WIDTH / 2f;
                 float distToCenter = Vector2.Distance(new Vector2(globalX, globalZ), new Vector2(mapCenterX, mapCenterZ));
 
-                float flatRadius = 20f;
-                float fadeRadius = 10f;
+                float flatRadius = 48f; // 약 6청크 반지름
+                float fadeRadius = 32f; // 경계 흐리기 범위
                 float flatness = 0f;
 
                 if (distToCenter < flatRadius)
@@ -417,21 +424,51 @@ public class WorldManager : MonoBehaviour
                 else if (distToCenter < flatRadius + fadeRadius)
                     flatness = Mathf.SmoothStep(1f, 0f, (distToCenter - flatRadius) / fadeRadius);
 
-                // ==== 5. 최종 높이 조합 ====
+                // ==== 5. 최종 높이 계산 ====
                 float totalHeight = baseHeight + hillHeight * hillMask;
-                float finalHeight = Mathf.Lerp(totalHeight, 4f, flatness); // 중심부는 평탄하게
-                int maxHeight = Mathf.Clamp(Mathf.FloorToInt(finalHeight), 0, Chunk.CHUNK_HEIGHT - 1);
+                float targetHeight = Mathf.Lerp(totalHeight, 10f, flatness); // 중심은 높이 10으로
+                int maxHeight = Mathf.Clamp(Mathf.FloorToInt(targetHeight), 0, Chunk.CHUNK_HEIGHT - 1);
 
-                // ==== 6. 블럭 채움 ====
                 for (int y = 0; y < Chunk.CHUNK_HEIGHT; y++)
                 {
-                    chunk.Blocks[x, y, z] = y <= maxHeight
-                        ? (y == maxHeight
-                            ? VoxelType.Grass
-                            : (y >= maxHeight - 3
-                                ? VoxelType.Dirt
-                                : VoxelType.Stone))
-                        : VoxelType.Air;
+                    float caveNoise = CaveNoise3D(globalX * 0.02f, y * 0.02f, globalZ * 0.02f);
+                    bool isCave = false;
+
+                    if (y > maxHeight || isCave)
+                    {
+                        chunk.Blocks[x, y, z] = VoxelType.Air;
+                        if (y > 3 && y + 1 < Chunk.CHUNK_HEIGHT)
+                        {
+                            VoxelType below = chunk.Blocks[x, y - 1, z];
+                            if (below == VoxelType.Stone || below == VoxelType.Dirt || below == VoxelType.Grass)
+                            {
+                                Vector3 pos = chunk.transform.position + new Vector3(x - 1 + 0.5f, y + 0.5f, z - 1 + 0.5f);
+                            }
+                        }
+                    }
+                    else if (y == maxHeight)
+                    {
+                        // 중심에서 먼 위치이면 snow, 아니면 grass
+                        chunk.Blocks[x, y, z] = (Vector2.Distance(
+                            new Vector2(globalX, globalZ),
+                            new Vector2(GridWidth * Chunk.CHUNK_WIDTH / 2f, GridHeight * Chunk.CHUNK_WIDTH / 2f)
+                        ) >= 240f) ? VoxelType.Snow : VoxelType.Grass;
+
+                        float heightThreshold = 18f; // 언덕으로 간주할 최소 높이
+                        if (maxHeight >= heightThreshold)
+                        {
+                            Vector3 pos = chunk.transform.position + new Vector3(x - 1 + 0.5f, y + 1f, z - 1 + 0.5f);
+                            _hillPositions.Add(pos);
+                        }
+                    }
+                    else if (y >= maxHeight - 3)
+                    {
+                        chunk.Blocks[x, y, z] = VoxelType.Dirt;
+                    }
+                    else
+                    {
+                        chunk.Blocks[x, y, z] = VoxelType.Stone;
+                    }
                 }
             }
         }

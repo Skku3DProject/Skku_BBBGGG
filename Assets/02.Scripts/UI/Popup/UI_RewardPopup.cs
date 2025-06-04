@@ -20,7 +20,7 @@ public class UI_RewardPopup : UI_Popup
         switch (rewardType)
         {
             case RewardType.Buff:
-                rewardText.text = $"°¡È£ ¹öÇÁ¸¦ È¹µæÇß½À´Ï´Ù!\n<color=#FFD700>{detail}</color> »ó½Â!";
+                rewardText.text = $"°¡È£ ¹öÇÁ¸¦ È¹µæÇß½À´Ï´Ù!\n<color=#FF0000>{detail}</color> »ó½Â!";
                 rewardIcon.sprite = buffIcon;
                 break;
 

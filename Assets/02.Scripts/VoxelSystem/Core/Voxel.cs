@@ -38,5 +38,6 @@ public class Voxel
         {VoxelType.Grass, new Voxel(Tile.Grass, Tile.GrassSide, Tile.Dirt)},
         {VoxelType.Dirt, new Voxel(Tile.Dirt)},
         {VoxelType.Stone, new Voxel(Tile.Stone)},
+        {VoxelType.Snow, new Voxel(Tile.Snow, Tile.SnowSide, Tile.Dirt) }
     };
 }
