@@ -155,6 +155,8 @@ public class SwordSpinSkill : WeaponSkillBase
             _playerAnimation.SetTrigger("Idle");
         }
 
+        PlayerSoundController.Instance.StopLoopSound();
+
         Debug.Log("SwordSpinSkill 상태 초기화");
     }
 }

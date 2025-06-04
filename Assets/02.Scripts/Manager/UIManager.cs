@@ -162,7 +162,7 @@ public class UIManager : MonoBehaviour
     // 슬라이더 리프레시하는 메서드
     public void UI_TimerSlider(float value) => RefreshSlider(CurrentTime, value);
     public void UI_MpSlider(float value)=> RefreshSlider(Mpbar, value);
-    public void UI_HpSlider(float value) => UI_HPSlowRefreshSlider(HpBar, value);
+    public void UI_HpSlider(float value) => RefreshSlider(HpBar, value);
     //--------------------------------------------------------------------
     private void SetSliderValue(Slider slider, float value)
     {

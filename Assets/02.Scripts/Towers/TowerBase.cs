@@ -29,6 +29,9 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
     protected Vector3 _faceToEnemyDir;
     protected float _attackTimer;
 
+    private Vector3 StartPos;
+    private Quaternion StartRot;
+
     protected virtual void Awake()
     {
         _attackRange = GetComponentInChildren<TowerAttackRange>();
@@ -38,10 +41,15 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
     {
         _currentHealth = _data.Health;
         _attackTimer = _data.AttackRate;
+
+        StartPos = transform.position;
+        StartRot = transform.rotation;
     }
 
     protected virtual void Start()
     {
+        StageManager.instance.OnCombatEnd += RestPos;
+
         _sphereCollider.radius = _data.MaxRange;
     }
     protected virtual void Update()
@@ -120,6 +128,11 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
         }
     }
 
+    private void RestPos()
+    {
+        transform.position = StartPos;
+        transform.rotation = StartRot;
+    }
 
     private void DisableFragments()
     {
