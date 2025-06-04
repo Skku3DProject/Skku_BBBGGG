@@ -11,43 +11,47 @@ public class Iceball : ProjectileBase
         //데미지 추가기능
 
         // 주변 데미지 처리
-        Collider[] targets = Physics.OverlapSphere(hit.point, _data.SplashRadius, targetMask);
-        foreach (var col in targets)
-        {
-            if (col.TryGetComponent<IDamageAble>(out var target))
+        Collider[] hits = Physics.OverlapSphere(hit.point, _data.SplashRadius, targetMask);
+        Debug.Log(_data.SplashRadius);
+        if (hits.Length > 0)
+            foreach (var col in hits)
             {
-                //target.TakeDamage(damage);
-                // 데미지말고 빙결처리
+                Debug.Log("GroundHit SplashDamage");
+                if (col.TryGetComponent<IDamageAble>(out var target))
+                {
+                    Debug.Log("GroundHit SplashDamage");
+                    target.TakeDamage(new Damage(_data.Damage, _owner, 5));
+                }
             }
-        }
-
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
 
-        if (other.CompareTag("Player")) // 트리거 시작점 확인용
+        if (other.CompareTag("Enemy")) // 트리거 시작점 확인용
         {
 
             // 주변 범위 내 대상 탐색
-            Collider[] hits = Physics.OverlapSphere(transform.position, _data.SplashRadius, targetMask);
+            Collider[] hits = Physics.OverlapSphere(other.transform.position, _data.SplashRadius, targetMask);
+
             foreach (var hit in hits)
             {
+                Debug.Log(hit.gameObject.name);
                 if (hit.TryGetComponent<IDamageAble>(out var d))
                 {
-                    //d.TakeDamage(damage);
+                    d.TakeDamage(new Damage(_data.Damage, _owner, 5));
                 }
             }
+
         }
 
         if (HitVfxPrefab)
         {
             ObjectPool.Instance.GetObject(HitVfxPrefab, other.transform.position, other.transform.rotation);
-            //Instantiate(HitVfxPrefab, other.transform);
         }
 
         ObjectPool.Instance.ReturnToPool(gameObject);
-        //Destroy(gameObject);
     }
+
 }

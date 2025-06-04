@@ -19,6 +19,10 @@ public class PlayerLocomotion : MonoBehaviour
     private float _stepTimer = 0f;
     private bool _wasGrounded = true;
 
+
+    private bool _isExhausted = false; // 지침 상태
+    private float _exhaustedTime = 3f; // 지침 유지 시간
+    private float _exhaustedTimer = 0f;
     private void Awake()
     {
         _player = GetComponent<ThirdPersonPlayer>();
@@ -85,7 +89,8 @@ public class PlayerLocomotion : MonoBehaviour
         float speedMultiplier = (isAttacking || isMoveSlow) ? 0.2f : 1f;
 
 
-        Vector3 move = inputDir * _currentSpeed * speedMultiplier;
+        float finalSpeed = _currentSpeed + _player.BuffSpeed;
+        Vector3 move = inputDir * finalSpeed * speedMultiplier;
 
         // 중력 적용
         if (_player.CharacterController.isGrounded && _yVelocity < 0f)
@@ -116,23 +121,46 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void Run()
     {
-        if (_playerAttack.CurrentWeaponAttack.IsAttacking == true) return;
+        if (_playerAttack.CurrentWeaponAttack.IsAttacking)
+            return;
 
+        bool isTryingToRun = Input.GetKey(KeyCode.LeftShift);
+        bool isMoving = GetInputDirection().magnitude > 0.1f;
+        bool hasStamina = _player.CurrentStamina > 0f;
 
-        if (Input.GetKey(KeyCode.LeftShift) && _player.CurrentStamina > 0f)
+        // 지침 상태 유지 중이면 달리기 불가
+        if (_isExhausted)
         {
+            _exhaustedTimer += Time.deltaTime;
+            if (_exhaustedTimer >= _exhaustedTime)
+            {
+                _isExhausted = false; // 회복됨
+                _exhaustedTimer = 0f;
+            }
 
-            _currentSpeed = _player.PlayerStats.MoveSpeed *1.5f;
-            _isRunning = true;
-            _player.UseStamina(20f);
-            _player.PlayerAnimator.SetBool("IsRunning", _isRunning);
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            _currentSpeed = _player.PlayerStats.MoveSpeed;
             _isRunning = false;
-            _player.PlayerAnimator.SetBool("IsRunning", _isRunning);
+            _currentSpeed = _player.PlayerStats.MoveSpeed;
         }
+        else if (isTryingToRun && isMoving && hasStamina)
+        {
+            _isRunning = true;
+            _currentSpeed = _player.PlayerStats.MoveSpeed * 1.5f;
+            _player.UseStamina(10f * Time.deltaTime);
+
+            // 스태미너가 0이 되면 지침 상태로 전환
+            if (_player.CurrentStamina <= 0f)
+            {
+                _isExhausted = true;
+                _exhaustedTimer = 0f;
+            }
+        }
+        else
+        {
+            _isRunning = false;
+            _currentSpeed = _player.PlayerStats.MoveSpeed;
+        }
+
+        _player.PlayerAnimator.SetBool("IsRunning", _isRunning);
     }
 
     private void Jump()

@@ -7,6 +7,7 @@ public class SwordAttack : WeaponAttackBase
     private ThirdPersonPlayer _player;
     private Animator _playerAnimation;
     private PlayerEquipmentController _equipmentController;
+    private PlayerAttack _playerAttack;
 
     private int _comboStep = 0;
     private bool _canNextCombo = true;
@@ -25,6 +26,7 @@ public class SwordAttack : WeaponAttackBase
         _playerAnimation = GetComponent<Animator>();
         _equipmentController = GetComponent<PlayerEquipmentController>();
         _equipmentController.OnChangeEquipment += OnAttackAnimationEnd;
+        _playerAttack = GetComponent<PlayerAttack>();
     }
 
     private void Start()
@@ -76,12 +78,11 @@ public class SwordAttack : WeaponAttackBase
 
         var currentEquipType = _equipmentController.GetCurrentEquipType();
 
-        float attackPower = _equipmentController.GetCurrentWeaponAttackPower();
 
         IDamageAble damageable = enemy.GetComponent<IDamageAble>();
         if (damageable != null)
         {
-            Damage damage = new Damage(attackPower, gameObject, 20f, dir);
+            Damage damage = new Damage(_playerAttack.CurrentDamage, gameObject, 20f, dir);
             damageable.TakeDamage(damage);
             //Debug.Log($"검 일반 스킬로 {enemy.name}에게 {attackPower}데미지를 입혔다!");
         }

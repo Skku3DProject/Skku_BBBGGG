@@ -46,7 +46,14 @@ public class UIManager : MonoBehaviour
     public GameObject GameOverPanel;
     public GameObject TimerObject;
     public GameObject CountObject;
-    
+
+    [Header("버프 UI")]
+    public TextMeshProUGUI SpeedBuffText;
+    public TextMeshProUGUI DefenseBuffText;
+    public TextMeshProUGUI DamageBuffText;
+    private Dictionary<BuffType, TextMeshProUGUI> _buffTextMap;
+
+
     public List<Image> CooltimeImages = new List<Image>();
     private Dictionary<InteractionType, string> interactables = new Dictionary<InteractionType, string>();
     
@@ -64,6 +71,14 @@ public class UIManager : MonoBehaviour
         
         interactables.Add(InteractionType.Chest, "상자 열기");
         interactables.Add(InteractionType.Base, "전투 시작하기");
+
+        _buffTextMap = new Dictionary<BuffType, TextMeshProUGUI>
+    {
+        { BuffType.Speed, SpeedBuffText },
+        { BuffType.Defense, DefenseBuffText },
+        { BuffType.Damage, DamageBuffText }
+    };
+
     }
 
     public void CurrentCountRefresh()
@@ -221,5 +236,13 @@ public class UIManager : MonoBehaviour
     public void UI_CooltimeRefresh(ESkillButton cooltime, float time)
     {
         CooltimeImages[(int)cooltime].fillAmount = time;
+    }
+
+    public void UI_BuffRefresh(BuffType type, float amount)
+    {
+        if (!_buffTextMap.TryGetValue(type, out var text) || text == null)
+            return;
+
+        text.text = $"{amount:F1}"; // 무조건 마지막 증가 수치만 표시
     }
 }

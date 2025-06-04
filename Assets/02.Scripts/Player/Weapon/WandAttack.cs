@@ -30,7 +30,7 @@ public class WandAttack : WeaponAttackBase
 
         _playerAttack.IsUsingJumpAnim = false;
 
-        _animator.SetTrigger("Attack"); // �ִϸ��̼ǿ��� �߻� Ÿ�̹� ���߷��� Delay ���
+        _animator.SetTrigger("Attack"); 
         Invoke(nameof(ResetAttackCooldown), attackCooldown);
     }
 
@@ -62,7 +62,7 @@ public class WandAttack : WeaponAttackBase
 
         float power = PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
         MagicProjectile proj = projectile.GetComponent<MagicProjectile>();
-        proj?.Init(power, gameObject);
+        proj?.Init(_playerAttack.CurrentDamage, gameObject);
 
         projectile.transform.rotation = Quaternion.LookRotation(shootDirection); // 시각 방향 정렬
     }

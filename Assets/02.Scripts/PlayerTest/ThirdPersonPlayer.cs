@@ -38,6 +38,13 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
     private float _hitCooldown = 0.2f;     // 피격 쿨타임
     private float _lastHitTime = -999f;   // 마지막 피격 시간
 
+
+    // 플레이어 버프
+    public float BuffSpeed;
+    public float BuffDefense;
+    public float BuffDamage;
+
+
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
@@ -179,14 +186,16 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
     {
         if (!IsAlive) return;
 
-        // 현재 시간과 마지막 피격 시간 비교
         if (Time.time - _lastHitTime < _hitCooldown)
             return;
 
-        _lastHitTime = Time.time; // 피격 시간 갱신
+        _lastHitTime = Time.time;
 
+        // 방어력 버프 적용
+        float reducedDamage = damage.Value - BuffDefense;
+        reducedDamage = Mathf.Max(reducedDamage, 1f); // 최소 데미지
 
-        _currentHealth -= damage.Value;
+        _currentHealth -= reducedDamage;
         UIManager.instance.UI_HpSlider(_currentHealth);
 
         CameraShakeManager.Instance.Shake(0.1f, 0.05f);
@@ -201,7 +210,7 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
 
     public void UseStamina(float amount)
     {
-        CurrentStamina = Mathf.Clamp(CurrentStamina - Time.deltaTime * amount, 0f, PlayerStats.Stamina);
+        CurrentStamina = Mathf.Clamp(CurrentStamina -  amount, 0f, PlayerStats.Stamina);
         UIManager.instance.UI_MpSlider(CurrentStamina);
     }
 

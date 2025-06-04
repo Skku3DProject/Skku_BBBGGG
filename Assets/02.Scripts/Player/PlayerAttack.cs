@@ -17,6 +17,8 @@ public class PlayerAttack : MonoBehaviour
 
     private EquipmentType _equipmentType;
 
+
+    public float CurrentDamage;
     private void Awake()
     {
         _player = GetComponent<ThirdPersonPlayer>();
@@ -68,6 +70,7 @@ public class PlayerAttack : MonoBehaviour
                 _currentWeaponAttack.IsAttacking = false;
                 _skill1 = GetComponent<SwordSpinSkill>();
                 _skill2 = GetComponent<SwordDashSkill>();
+                CurrentDamage = _player.BuffDamage + PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
                 break;
 
             case EquipmentType.Bow:
@@ -75,6 +78,7 @@ public class PlayerAttack : MonoBehaviour
                 _currentWeaponAttack.IsAttacking = false;
                 _skill1 = GetComponent<BowFireSkill>();
                 _skill2 = GetComponent<BowChargingSkill>();
+                CurrentDamage = _player.BuffDamage + PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
                 break;
 
             case EquipmentType.Magic:
@@ -82,6 +86,7 @@ public class PlayerAttack : MonoBehaviour
                 _currentWeaponAttack.IsAttacking = false;
                 _skill1 = GetComponent<ChainLightningSkill>();
                 _skill2 = GetComponent<MeteorFallSkill>();
+                CurrentDamage = _player.BuffDamage + PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
                 break;
         }
 

@@ -1,8 +1,10 @@
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerRewardManager : MonoBehaviour
 {
     public static PlayerRewardManager Instance { get; private set; }
+    private ThirdPersonPlayer _player; // 캐싱 변수
 
     public int skillPoints { get; private set; } = 110;
     public int potionCount { get; private set; } = 0;
@@ -20,6 +22,13 @@ public class PlayerRewardManager : MonoBehaviour
         StageManager.instance.OnCombatEnd += AddSkillPointAfterCombat;
 
         UIManager.instance.UI_SkillPointRefresh(skillPoints);
+
+        // 시작 시 플레이어 캐싱
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj != null)
+        {
+            _player = playerObj.GetComponent<ThirdPersonPlayer>();
+        }
     }
     public void AddSkillPoint(int amount = 1)
     {
@@ -41,18 +50,37 @@ public class PlayerRewardManager : MonoBehaviour
         // 인벤토리 연동 등
     }
 
-    public void ApplyBlessingBuff()
+    public string ApplyBlessingBuff()
     {
-        if (!hasBlessingBuff)
+        if (_player == null) return "";
+
+        int randomIndex = Random.Range(0, 3);
+        string buffName = "";
+        BuffType selected = (BuffType)randomIndex;
+        float buffAmount = 0f;
+
+        switch (selected)
         {
-            hasBlessingBuff = true;
-            Debug.Log("가호 버프 획득! (영구 지속)");
-            // 예: 방어력 증가, 체력 회복량 증가 등 효과 적용
+            case BuffType.Speed:
+                buffAmount = 0.5f;
+                _player.BuffSpeed += buffAmount;
+                buffName = "이동 속도";
+                break;
+            case BuffType.Defense:
+                buffAmount = 3f;
+                _player.BuffDefense += buffAmount;
+                buffName = "방어력";
+                break;
+            case BuffType.Damage:
+                buffAmount = 5f;
+                _player.BuffDamage += buffAmount;
+                buffName = "공격력";
+                break;
         }
-        else
-        {
-            Debug.Log("이미 가호를 보유 중입니다.");
-        }
+
+        UIManager.instance.UI_BuffRefresh(selected, buffAmount); // enum 기반 UI 호출
+
+        return buffName; // 기존 string 반환 유지
     }
 
     public void UseSkillPoint() => skillPoints -= 1;

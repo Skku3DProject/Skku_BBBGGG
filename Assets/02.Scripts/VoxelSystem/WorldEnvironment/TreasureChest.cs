@@ -5,6 +5,12 @@ public enum RewardType
     Potion,
     SkillPoint
 }
+public enum BuffType
+{
+    Speed,
+    Defense,
+    Damage
+}
 public class TreasureChest : MonoBehaviour
 {
     public Transform lid;                // 뚜껑 오브젝트
@@ -15,6 +21,11 @@ public class TreasureChest : MonoBehaviour
     private Quaternion openRot;          // 열린 회전값
     private bool hasGivenReward = false; // 보상은 한 번만 지급
 
+
+    private bool isRemoved = false; // 중복 제거 방지용
+    [Header("이펙트")]
+    public GameObject destroyEffect;
+    public GameObject LoopEffect;
     void Start()
     {
         // 초기 회전값 저장
@@ -27,6 +38,13 @@ public class TreasureChest : MonoBehaviour
         if (isOpen)
         {
             lid.localRotation = Quaternion.Slerp(lid.localRotation, openRot, Time.deltaTime * openSpeed);
+
+            // 뚜껑이 거의 다 열렸는지 확인 (각도 차이 비교)
+            if (!isRemoved && Quaternion.Angle(lid.localRotation, openRot) < 1f)
+            {
+                isRemoved = true;
+                Invoke(nameof(RemoveChest), 1f); // 열림 완료 후 1초 뒤 삭제
+            }
         }
         else
         {
@@ -48,25 +66,30 @@ public class TreasureChest : MonoBehaviour
         hasGivenReward = true;
 
         RewardType reward = (RewardType)Random.Range(0, System.Enum.GetValues(typeof(RewardType)).Length);
-        HandleReward(reward);
+        HandleReward(RewardType.Buff);
     }
 
     void HandleReward(RewardType reward)
     {
+        var rewardPopup = PopUpManager.Instance.OpenPopup<UI_RewardPopup>(EPopupType.UI_RewardPopup);
+
         switch (reward)
         {
             case RewardType.Buff:
-                PlayerRewardManager.Instance.ApplyBlessingBuff();
+                string buffName = PlayerRewardManager.Instance.ApplyBlessingBuff();
+                rewardPopup.ShowReward(reward, buffName); // 버프 이름 전달
                 break;
+
             case RewardType.Potion:
                 PlayerRewardManager.Instance.AddPotion();
+                rewardPopup.ShowReward(reward); // 디테일 없음
                 break;
+
             case RewardType.SkillPoint:
                 PlayerRewardManager.Instance.AddSkillPoint();
+                rewardPopup.ShowReward(reward); // 디테일 없음
                 break;
         }
-        var rewardPopup = PopUpManager.Instance.OpenPopup<UI_RewardPopup>(EPopupType.UI_RewardPopup);
-        rewardPopup.ShowReward(reward);
     }
     private void OnTriggerStay(Collider other)
     {
@@ -77,7 +100,6 @@ public class TreasureChest : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 Interact();
-
 
             }
         }
@@ -91,4 +113,15 @@ public class TreasureChest : MonoBehaviour
 
         UIManager.instance.DiscriptionObject.SetActive(false);
     }
+
+void RemoveChest()
+{
+    if (destroyEffect != null)
+    {
+       Instantiate(destroyEffect, transform.position, Quaternion.identity);
+
+    }
+
+    Destroy(gameObject);
+}
 }

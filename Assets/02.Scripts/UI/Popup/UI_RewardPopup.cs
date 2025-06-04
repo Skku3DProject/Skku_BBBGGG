@@ -13,14 +13,14 @@ public class UI_RewardPopup : UI_Popup
     public Sprite potionIcon;
     public Sprite skillPointIcon;
 
-    public void ShowReward(RewardType rewardType, System.Action callback = null)
+    public void ShowReward(RewardType rewardType, string detail = "", System.Action callback = null)
     {
         Open(callback);
 
         switch (rewardType)
         {
             case RewardType.Buff:
-                rewardText.text = "°¡È£ ¹öÇÁ¸¦ È¹µæÇß½À´Ï´Ù!";
+                rewardText.text = $"°¡È£ ¹öÇÁ¸¦ È¹µæÇß½À´Ï´Ù!\n<color=#FFD700>{detail}</color> »ó½Â!";
                 rewardIcon.sprite = buffIcon;
                 break;
 

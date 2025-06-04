@@ -13,6 +13,7 @@ public class BowAttack : WeaponAttackBase
     private Animator _playerAnimation;
     private ThirdPersonPlayer _player;
     private BowFireSkill _fireSkill;
+    private PlayerAttack _playerAttack;
 
     [SerializeField] private LayerMask targetLayerMask;
 
@@ -20,7 +21,6 @@ public class BowAttack : WeaponAttackBase
     public GameObject arrowPrefab;
     public Transform shootPoint;
     public float shootForce = 30f;
-    public float Damage = 50f;
     public TrajectoryRenderer trajectoryRenderer;
 
     private bool isAiming = false;
@@ -33,6 +33,7 @@ public class BowAttack : WeaponAttackBase
         _playerAnimation = GetComponent<Animator>();
         _player = GetComponent<ThirdPersonPlayer>();
         _fireSkill = GetComponent<BowFireSkill>();
+        _playerAttack = GetComponent<PlayerAttack>();
     }
 
     public override void Tick()
@@ -144,7 +145,7 @@ public class BowAttack : WeaponAttackBase
 
 
         PlayerArrow arrow = Instantiate(arrowPrefab, shootPoint.position, Quaternion.identity).GetComponent<PlayerArrow>();
-        arrow.ArrowInit(30f, ArrowType.Normal, _player.gameObject);
+        arrow.ArrowInit(_playerAttack.CurrentDamage, ArrowType.Normal, _player.gameObject);
 
         Rigidbody rb = arrow.GetComponent<Rigidbody>();
         if (rb == null) return;
