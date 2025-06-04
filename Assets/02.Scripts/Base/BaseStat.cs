@@ -32,6 +32,7 @@ public class BaseStat : MonoBehaviour, IDamageAble
     {
         BaseHP -= damage.Value;
 
+        Debug.Log("basecamep" + BaseHP);
         if (BaseHP <= 0)
         {
             GameManager.instance.ChangeState(GameState.GameOver);

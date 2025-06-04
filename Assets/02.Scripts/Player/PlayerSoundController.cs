@@ -19,6 +19,9 @@ public enum PlayerSoundType
     TreeSound,
     StoneSound,
     BowPulled,
+    ChestSound,
+    PosionSound
+
 }
 public class PlayerSoundController : MonoBehaviour
 {

@@ -179,6 +179,7 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
             _currentHealth = Mathf.Clamp(_currentHealth + pluseHealth, 0, PlayerStats.MaxHealth);
 
             UIManager.instance.UI_HpSlider(_currentHealth);
+            PlayerSoundController.Instance.PlaySound(PlayerSoundType.PosionSound);
         }
     }
 
@@ -223,6 +224,11 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
     public void RecoverStamina()
     {
         CurrentStamina = Mathf.Clamp(CurrentStamina + Time.deltaTime * 5, 0f, PlayerStats.Stamina);
+        UIManager.instance.UI_MpSlider(CurrentStamina);
+    }
+    public void RecoveryStamina(float value)
+    {
+        CurrentStamina = Mathf.Clamp(CurrentStamina + value, 0f, PlayerStats.Stamina);
         UIManager.instance.UI_MpSlider(CurrentStamina);
     }
 }

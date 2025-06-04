@@ -431,12 +431,22 @@ public class WorldManager : MonoBehaviour
     }
     private void SpawnEnvironmentObjects(Chunk chunk)
     {
+        // 캠프 중심 좌표 (X,Z 기준)
+        float centerX = GridWidth * Chunk.CHUNK_WIDTH / 2f;
+        float centerZ = GridHeight * Chunk.CHUNK_WIDTH / 2f;
+        float blockRadius = 15f; // 캠프 주변 오브젝트 제거 반경 (원형)
+
         for (int x = 1; x <= Chunk.CHUNK_WIDTH; x++)
         {
             for (int z = 1; z <= Chunk.CHUNK_WIDTH; z++)
             {
                 int surfaceY = FindSurfaceY(chunk, x, z);
                 Vector3 basePos = chunk.transform.position + new Vector3(x - 1 + 0.5f, surfaceY + 1.001f, z - 1 + 0.5f);
+
+                // 캠프 중심에서 거리 계산
+                float distToCenter = Vector2.Distance(new Vector2(basePos.x, basePos.z), new Vector2(centerX, centerZ));
+                if (distToCenter < blockRadius)
+                    continue; // 캠프 주변이면 생성 생략
 
                 float r = Random.value;
                 if (r < GrassDensity)

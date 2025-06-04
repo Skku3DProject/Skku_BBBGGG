@@ -65,8 +65,20 @@ public class TreasureChest : MonoBehaviour
         if (hasGivenReward) return;
         hasGivenReward = true;
 
-        RewardType reward = (RewardType)Random.Range(0, System.Enum.GetValues(typeof(RewardType)).Length);
-        HandleReward(RewardType.Buff);
+        PlayerSoundController.Instance.PlaySound(PlayerSoundType.ChestSound);
+
+        // 확률 기반 리워드 선택
+        float rand = Random.value; // 0.0 ~ 1.0 사이의 값
+
+        RewardType reward;
+        if (rand < 0.5f)
+            reward = RewardType.Buff;
+        else if (rand < 0.75f)
+            reward = RewardType.Potion;
+        else
+            reward = RewardType.SkillPoint;
+
+        HandleReward(RewardType.Potion);
     }
 
     void HandleReward(RewardType reward)

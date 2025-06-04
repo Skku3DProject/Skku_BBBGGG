@@ -47,6 +47,7 @@ public class PlayerRewardManager : MonoBehaviour
     {
         potionCount += amount;
         Debug.Log($"물약 +{amount} (총: {potionCount})");
+        UIManager.instance.UI_PotionCountRefresh(potionCount);
         // 인벤토리 연동 등
     }
 

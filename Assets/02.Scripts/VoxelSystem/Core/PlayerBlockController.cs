@@ -50,7 +50,7 @@ public class PlayerBlockController : MonoBehaviour
             if (Input.GetMouseButtonDown(0)) // 우클릭 → 블럭 설치
             {
                 //_player.PlayerAnimator.SetTrigger("BlockPlace"); //-- 나중에 블럭설치모션
-                PlayerSoundController.Instance.PlaySound(PlayerSoundType.Block);
+
                 TryPlaceBlock();
             }
         }
@@ -78,7 +78,7 @@ public class PlayerBlockController : MonoBehaviour
         }
 
         BlockSystem.PlaceBlock(pos, PlaceType);
-
+        PlayerSoundController.Instance.PlaySound(PlayerSoundType.Block);
         //Vector3Int pos = GetTargetBlockPosition(true);
         //if (!IsWithinReach(pos))
         //    return;

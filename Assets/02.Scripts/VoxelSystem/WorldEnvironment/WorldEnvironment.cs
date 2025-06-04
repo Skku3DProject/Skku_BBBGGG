@@ -41,6 +41,23 @@ public class WorldEnvironment : MonoBehaviour
                 // 폭발 실행
                 fracture?.Explode();
             }
+            if(type == EnvirormentType.Grass)
+            {
+                GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+                if (playerObj != null && playerObj.TryGetComponent(out ThirdPersonPlayer player))
+                {
+                    player.RecoveryStamina(10f); // 회복량은 원하는 값으로 조절
+                }
+            }
+            if(type == EnvirormentType.Mashroom)
+            {
+                GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+                if (playerObj != null && playerObj.TryGetComponent(out ThirdPersonPlayer player))
+                {
+                    player.RecoveryStamina(30f); // 회복량은 원하는 값으로 조절
+                }
+            }
+
             gameObject.SetActive(false);
         }
     }
