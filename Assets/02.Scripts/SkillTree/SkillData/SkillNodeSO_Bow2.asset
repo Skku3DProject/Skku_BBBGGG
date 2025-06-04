@@ -16,4 +16,4 @@ MonoBehaviour:
   Name: Bow2
   MaxLevel: 4
   Cooldown: 15
-  Icon: {fileID: 21300000, guid: d0288729c20d1f14b802c2ffc3efd403, type: 3}
+  Icon: {fileID: -99748640, guid: 7a8955a492a9cc844aee4a98d06ec64d, type: 3}

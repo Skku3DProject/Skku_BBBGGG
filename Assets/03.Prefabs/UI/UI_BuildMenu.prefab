@@ -377,23 +377,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttons:
-  - {fileID: 5364941902736874699}
   - {fileID: 6765159601105663392}
   - {fileID: 985051979213266092}
+  - {fileID: 5364941902736874699}
   - {fileID: 7561026646950289101}
-  - {fileID: 0}
   - {fileID: 6234873842626253642}
   buildingTypes:
-  - DisplayName: ArrowTower
-    Prefab: {fileID: 634377025880031044, guid: 764b9e4879abdb143872fe11a3900d14, type: 3}
-    PreviewPrefab: {fileID: 634377025880031044, guid: b41b359f5e0cee5428377c5c12694996, type: 3}
-    PreviewMaterial: {fileID: 2100000, guid: 42686453fd10be94596308afe274de6d, type: 2}
-    Size: 2
-    YOffset: 0.5
-    cost:
-      Gold: 100
-      Wood: 100
-      Stone: 100
   - DisplayName: FireTower
     Prefab: {fileID: 9166186074018161065, guid: 78dc8f41cee61a141a2f556bff02ef4b, type: 3}
     PreviewPrefab: {fileID: 9166186074018161065, guid: 001773a9c6266f746ba65b4c72691138, type: 3}
@@ -414,22 +403,22 @@ MonoBehaviour:
       Gold: 0
       Wood: 200
       Stone: 0
+  - DisplayName: ArrowTower
+    Prefab: {fileID: 634377025880031044, guid: 764b9e4879abdb143872fe11a3900d14, type: 3}
+    PreviewPrefab: {fileID: 634377025880031044, guid: b41b359f5e0cee5428377c5c12694996, type: 3}
+    PreviewMaterial: {fileID: 2100000, guid: 42686453fd10be94596308afe274de6d, type: 2}
+    Size: 2
+    YOffset: 0.5
+    cost:
+      Gold: 100
+      Wood: 100
+      Stone: 100
   - DisplayName: SpikeTower
     Prefab: {fileID: 6292268103419620999, guid: 4e13dd478990b3c4e927358dbfadcaf8, type: 3}
     PreviewPrefab: {fileID: 6292268103419620999, guid: 46ac8c2bd4fb90c4b9220368191229ac, type: 3}
     PreviewMaterial: {fileID: 2100000, guid: 42686453fd10be94596308afe274de6d, type: 2}
     Size: 2
     YOffset: -0.6
-    cost:
-      Gold: 500
-      Wood: 0
-      Stone: 0
-  - DisplayName: JumpTower
-    Prefab: {fileID: 3044035691608477855, guid: 193f3f388edf3114b912e3f8286f2d4a, type: 3}
-    PreviewPrefab: {fileID: 3044035691608477855, guid: d9435691d883b424eb07bf0cff6f3827, type: 3}
-    PreviewMaterial: {fileID: 2100000, guid: 42686453fd10be94596308afe274de6d, type: 2}
-    Size: 2
-    YOffset: 0
     cost:
       Gold: 500
       Wood: 0

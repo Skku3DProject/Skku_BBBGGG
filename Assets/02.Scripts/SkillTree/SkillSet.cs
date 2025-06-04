@@ -7,6 +7,7 @@ public class SkillSet : MonoBehaviour
 {
     public SkillNodeSO skillNode;
     public Button skillButton;
+    public Image SkillIcon;
     public Image LineOn;
     public Image LineOff;
     public Button ChildButton;
@@ -17,6 +18,7 @@ public class SkillSet : MonoBehaviour
     {
         skillButton = GetComponent<Button>(); 
         SkillManager.instance.RegisterSkill(this);
+        SkillIcon.sprite = skillNode.Icon;
         Lock.gameObject.SetActive(!skillButton.interactable);
     }
     public void OnClickAppearLevelUp()

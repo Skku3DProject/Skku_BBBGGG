@@ -244,7 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SlotData: {fileID: 11400000, guid: 403eb867e3ec3ab40b432ae8c7a96cb0, type: 2}
   _skillTory: {fileID: 0}
-  SkillIcon: {fileID: 2860643335010576549}
+  SkillIcon: {fileID: 1155113058749462107}
   IsActive: 1
   LockedImage: {fileID: 1818698496044179983}
 --- !u!1 &863520129095559597

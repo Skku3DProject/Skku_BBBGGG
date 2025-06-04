@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Sword2
   EEquipmentType: 0
   CoolDown: 5
-  Icon: {fileID: -1944115293, guid: ac283963041aea647b6285990bb472ea, type: 3}
+  Icon: {fileID: 921438442, guid: 40792ed22a386b14faf1dcc854e6a2cc, type: 3}

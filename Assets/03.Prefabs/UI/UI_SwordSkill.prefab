@@ -290,6 +290,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8215279229702632138}
     m_Modifications:
+    - target: {fileID: 863520129095559597, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860643335010576549, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -99748640, guid: 7a8955a492a9cc844aee4a98d06ec64d, type: 3}
     - target: {fileID: 4093149606666392738, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
       propertyPath: m_Name
       value: Sword_Q_Slot
@@ -415,6 +423,10 @@ PrefabInstance:
       propertyPath: SlotData
       value: 
       objectReference: {fileID: 11400000, guid: 722601ad756d448429ae1794ca80afcd, type: 2}
+    - target: {fileID: 4791649305575476725, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
+      propertyPath: m_text
+      value: E
+      objectReference: {fileID: 0}
     - target: {fileID: 5449008345166429486, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
       propertyPath: SlotData
       value: 

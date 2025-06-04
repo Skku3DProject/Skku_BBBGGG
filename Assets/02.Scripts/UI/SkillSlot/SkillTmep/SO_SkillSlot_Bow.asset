@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Bow1
   EEquipmentType: 1
   CoolDown: 5
-  Icon: {fileID: -1944115293, guid: ac283963041aea647b6285990bb472ea, type: 3}
+  Icon: {fileID: 197762478, guid: 809ec6b1425bc42428fedc397a953523, type: 3}

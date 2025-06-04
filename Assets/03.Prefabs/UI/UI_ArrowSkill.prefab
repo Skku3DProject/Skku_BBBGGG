@@ -427,6 +427,10 @@ PrefabInstance:
       propertyPath: SlotData
       value: 
       objectReference: {fileID: 11400000, guid: 16daa50d3a5d54145b204f2929e16188, type: 2}
+    - target: {fileID: 4791649305575476725, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
+      propertyPath: m_text
+      value: E
+      objectReference: {fileID: 0}
     - target: {fileID: 5449008345166429486, guid: a3217086efe69cc4f81cb8bd93c3b9d8, type: 3}
       propertyPath: SlotData
       value: 
