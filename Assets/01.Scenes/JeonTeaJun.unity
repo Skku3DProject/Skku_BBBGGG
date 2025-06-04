@@ -585,7 +585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &628179542
 RectTransform:
   m_ObjectHideFlags: 0
@@ -621,7 +621,7 @@ MonoBehaviour:
   rewardText: {fileID: 1147002853}
   rewardIcon: {fileID: 1433177086}
   buffIcon: {fileID: 21300000, guid: 4878d170b0890eb44971ca1ba15891e0, type: 3}
-  potionIcon: {fileID: 21300000, guid: 16611e67942e96f44aea297b19a95e07, type: 3}
+  potionIcon: {fileID: 21300000, guid: 6c07e1c7f13faa74eaf979365ec8bddb, type: 3}
   skillPointIcon: {fileID: 21300000, guid: e5a50953a894f9b4c96fc830fe591562, type: 3}
 --- !u!1 &784096909
 GameObject:

@@ -78,7 +78,7 @@ public class TreasureChest : MonoBehaviour
         else
             reward = RewardType.SkillPoint;
 
-        HandleReward(RewardType.Potion);
+        HandleReward(reward);
     }
 
     void HandleReward(RewardType reward)
