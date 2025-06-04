@@ -14,7 +14,6 @@ public class EnemyVisual : MonoBehaviour
 
     private void Awake()
     {
-        // FF5858
         _allRenderers = GetComponentsInChildren<Renderer>();
         _propBlock = new MaterialPropertyBlock();
 
@@ -35,8 +34,20 @@ public class EnemyVisual : MonoBehaviour
 
     public void PlayHitFeedback(float waitTime)
     {
-        if (_coroutine != null) return;
-
+        if (_coroutine != null)
+        {
+            foreach (var r in _allRenderers)
+            {
+                r.GetPropertyBlock(_propBlock);
+                if (r.sharedMaterial.HasProperty(_ColorID))
+                {
+                    _propBlock.SetColor(_ColorID, _originalColor);
+                    r.SetPropertyBlock(_propBlock);
+                }
+            }
+            _coroutine = null;
+            return;
+        }
 		_coroutine = StartCoroutine(HitColorFeedback(waitTime));
     }
 
@@ -63,7 +74,6 @@ public class EnemyVisual : MonoBehaviour
                 r.SetPropertyBlock(_propBlock);
             }
         }
-
         _coroutine = null;
 		yield break;
     }

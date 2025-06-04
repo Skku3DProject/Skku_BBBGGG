@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: So_EnemyProjectile_Meteor
   m_EditorClassIdentifier: 
   Key: Meteor
-  FlightTime: 1.5
-  Damage: 10
+  HitVfxKey: Meteor
+  FlightTime: 2
+  Damage: 25
   KnockbackPower: 100
   LostTime: 5
-  AreaRange: 1
+  AreaRange: 3
   Type: 1
-  HitVfxPrefab: {fileID: 0}
   GroundMask:
     serializedVersion: 2
     m_Bits: 8

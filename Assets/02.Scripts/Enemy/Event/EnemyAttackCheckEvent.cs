@@ -44,13 +44,21 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     public void RangedAttackSpawn()
     {
         _enemy.Projectile.SetActive(true);
+        _enemyController.IsAttack = true;
     }
 
     public void RangedAttackEvent()
     {
-        _enemy.Projectile.SetActive(false);
+        if(_enemy.Projectile == null)
+        {
+            return;
+        }
+
+        if (_enemy.Projectile.activeSelf)
+        {
+            _enemy.Projectile.SetActive(false);
+        }
         GameObject poolObject = EnemyObjectPoolManger.Instance.GetObject(_enemy.EnemyData.ProjectileKey, _enemy.ProjectileTransfrom.position);
-        poolObject.SetActive(false);
 
         poolObject.TryGetComponent<EnemyProjectile>(out EnemyProjectile _projectile);
         if (_projectile == null || _enemy.Target == null)
@@ -59,16 +67,19 @@ public class EnemyAttackCheckEvent : MonoBehaviour
             Debug.LogError("타겟이 설정되지 않았습니다!");
             return;
         }
-        
+
         Vector3 targetPosition = _enemy.Target.transform.position;
         targetPosition.y = _enemy.transform.position.y; // Y축 고정
         _enemy.transform.LookAt(targetPosition);
 
         _projectile.Fire(_enemy.Target.transform.position + Vector3.up * 0.5f);
+        _enemyController.IsAttack = false;
     }
     // 병사 되살리기 공격
     public void Summon()
     {
+        _enemyController.IsAttack = true;
+        _enemy.Summon.gameObject.SetActive(true);
         List<Vector3> positions = new List<Vector3>(EnemyManager.Instance.SpawnPositionList);
         List<Enemy> enemies = new List<Enemy>(EnemyManager.Instance.SummonEnemies);
         int index = 0;
@@ -84,7 +95,6 @@ public class EnemyAttackCheckEvent : MonoBehaviour
     }
     public void MeleeAttackEvent()
     {
-
         int cnt = Physics.OverlapSphereNonAlloc(
             _enemy.transform.position, _enemy.EnemyData.AttackDistance,
             _hits,
@@ -99,12 +109,14 @@ public class EnemyAttackCheckEvent : MonoBehaviour
             if (col.TryGetComponent<IDamageAble>(out var dmg))
             {
                 dmg.TakeDamage(_damage);
+                EnemyParticlePoolManger.Instance.GetObject(_enemy.EnemyData.AttackVFXKey, col.transform.position);
             }
         }
     }
 
     public void SpawnAreaAttack()
     {
+        _enemyController.IsAttack = true;
         for (int i = 0; i < _enemy.EnemyData.MaxAreaAttackCount; i++)
         {
             Vector3 randomPos = GetRandomPositionAround();
@@ -139,6 +151,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
             if (hits[i].TryGetComponent<IDamageAble>(out var dmg))
             {
                 dmg.TakeDamage(_damage);
+                EnemyParticlePoolManger.Instance.GetObject(_enemy.EnemyData.AttackVFXKey, _enemy.transform.position);
             }
         }
         yield return null;
@@ -157,6 +170,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
             _enemyVisual.PlayHitFeedback(_enemy.EnemyData.DamagedTime);
             yield return new WaitForSeconds(_enemy.EnemyData.Self_DestructTime);
         }
+        EnemyParticlePoolManger.Instance.GetObject(_enemy.EnemyData.AttackVFXKey,_enemy.transform.position);
         BlockSystem.DamageBlocksInRadius(_enemy.transform.position, _enemy.EnemyData.AreaRange, (int)_damage.Value);
         _enemyController.EndDieAnimEvent();
 

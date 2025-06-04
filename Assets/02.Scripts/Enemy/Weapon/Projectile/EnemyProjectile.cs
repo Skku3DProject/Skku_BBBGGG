@@ -36,6 +36,8 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
         if (ProjectileData != null)
         {
             _damage = new Damage(ProjectileData.Damage, this.gameObject, ProjectileData.KnockbackPower);
+
+
             _trailRenderer = GetComponentInChildren<TrailRenderer>();
         }
         else
@@ -46,8 +48,11 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
 
     public void Initialize()
     {
-        _trailRenderer.Clear();
-        _trailRenderer.enabled = false;
+        if (_trailRenderer != null)
+        {
+            _trailRenderer.Clear();
+            _trailRenderer.enabled = false;
+        }
         _isFire = false;
         _timer = 0;
         _isPooled = false;
@@ -59,9 +64,16 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
 
     public void Fire(Vector3 targetPos)
     {
-        if (_isPooled) return; // 이미 풀에 반환된 객체라면 실행하지 않음
-        gameObject.SetActive(true);
-        _trailRenderer.enabled = true;
+        if (_isPooled)
+        {
+            UnEnable();
+            return; // 이미 풀에 반환된 객체라면 실행하지 않음
+        }
+        //   gameObject.SetActive(true);
+        if (_trailRenderer != null)
+        {
+            _trailRenderer.enabled = true;
+        }
         _startPosision = transform.position;
         _targetPosision = targetPos;
 
@@ -78,13 +90,13 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
 
     private void Update()
     {
+        if (!_isFire) return;
+
         _timer += Time.deltaTime;
         if (ProjectileData != null && _timer > ProjectileData.LostTime)
         {
             UnEnable();
         }
-
-        if (!_isFire) return;
 
         _velocity += _gravityVector * Time.deltaTime;
         transform.position += _velocity * Time.deltaTime;
@@ -92,15 +104,13 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
         if (_velocity != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(_velocity);
 
-        
-
         if (_timer > 0.5f && ProjectileData.Type == EnemyProjectileType.Area)
         {
             CheckGroundHit();
         }
 
         // 검사 실패한 채로 너무 오래되면 삭제
-       
+
     }
     private Vector3 CalculateLaunchVelocity()
     {
@@ -146,6 +156,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
 
         Vector3Int blockPos = Vector3Int.FloorToInt(hit.point + hit.normal * -0.5f);
         BlockSystem.DamageBlocksInRadius(blockPos, ProjectileData.AreaRange, (int)_damage.Value);
+        EnemyParticlePoolManger.Instance.GetObject(ProjectileData.HitVfxKey, blockPos);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -159,7 +170,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
         {
             PointAttack(other);
         }
-
+        EnemyParticlePoolManger.Instance.GetObject(ProjectileData.HitVfxKey, transform.position);
     }
 
     private void AreaAttack(Collider other)
@@ -180,6 +191,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
             }
         }
 
+        UnEnable();
     }
 
     private void PointAttack(Collider other)
@@ -198,8 +210,6 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
 
     private void UnEnable()
     {
-        if (_isPooled) return;
-
         // EnemyObjectPoolManger 인스턴스 확인
         if (EnemyObjectPoolManger.Instance != null && ProjectileData != null)
         {

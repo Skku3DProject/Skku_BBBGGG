@@ -14,14 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Key: Elite2
   ProjectileKey: 
+  BreathKey: 
+  AreaObjectKey: 
+  AttackVFXKey: Noaml
   AvailableStates: 0000000001000000020000000300000004000000
   EnemyType: 2
   EnemyMoveType: 0
   EEnemyAttackTypes: 
   DamagedTime: 0.5
+  Self_DestructTime: 1
   MaxAttackPatternCount: 3
   KnockbackPower: 100
   DamageValue: 10
+  MaxAreaAttackCount: 20
   Health: 1000
   FindDistance: 5
   AttackDistance: 5

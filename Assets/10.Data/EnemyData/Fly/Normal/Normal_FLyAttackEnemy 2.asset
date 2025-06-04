@@ -16,11 +16,13 @@ MonoBehaviour:
   ProjectileKey: 
   BreathKey: 
   AreaObjectKey: 
+  AttackVFXKey: Nomal
   AvailableStates: 0000000001000000020000000300000004000000
   EnemyType: 0
   EnemyMoveType: 1
   EEnemyAttackTypes: 
   DamagedTime: 0.5
+  Self_DestructTime: 1
   MaxAttackPatternCount: 1
   KnockbackPower: 100
   DamageValue: 10

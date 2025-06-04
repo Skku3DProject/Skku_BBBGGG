@@ -72,6 +72,7 @@ public class EnemySpawner : MonoBehaviour
 
             GameObject enemy = spawnEnemyPrefabs[spawnIndex];
             enemy.transform.position = _positionList[spawnIndex];
+            EnemyObjectPoolManger.Instance.GetObject("Spawn", _positionList[spawnIndex]);
             enemy.SetActive(true);
 
             spawnIndex++;

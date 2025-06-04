@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: So_EnemyProjectile_MagicBall_Fire
   m_EditorClassIdentifier: 
   Key: MagicBall_Fire
+  HitVfxKey: MagicBall_Fire
   FlightTime: 1.5
   Damage: 10
   KnockbackPower: 0
   LostTime: 5
-  HitVfxPrefab: {fileID: 0}
+  AreaRange: 5
+  Type: 0
   GroundMask:
     serializedVersion: 2
     m_Bits: 8

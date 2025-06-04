@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e98dabad56bbd14a8c3cd759b02ca75, type: 3}
+  m_Name: So_EnemyParticlePool
+  m_EditorClassIdentifier: 
+  PoolSettings:
+  - key: MagicBall_Fire
+    prefab: {fileID: 5014765796387773116, guid: 4e9839240f228514e901712707be2d72, type: 3}
+    initialSize: 200
+  - key: MagicBall
+    prefab: {fileID: 7006482142709041865, guid: 6aaa1638ca176c344a82a13e8b97d07d, type: 3}
+    initialSize: 200
+  - key: Stone
+    prefab: {fileID: 3338625685004852036, guid: 0a49a6fa734293b458d0ae3f75d7c307, type: 3}
+    initialSize: 200
+  - key: Meteor
+    prefab: {fileID: 8323609874569099655, guid: 705381d92e7df4e40b1167ae83edd491, type: 3}
+    initialSize: 200
+  - key: Self_Destruct
+    prefab: {fileID: 7077324322225130286, guid: 666977309f351f640a959da9fec7d247, type: 3}
+    initialSize: 200
+  - key: Noaml
+    prefab: {fileID: 6159091409587469690, guid: b3976778563ec454a93e86d5893337e4, type: 3}
+    initialSize: 500

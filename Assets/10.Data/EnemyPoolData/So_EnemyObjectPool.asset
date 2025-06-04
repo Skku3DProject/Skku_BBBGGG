@@ -26,5 +26,11 @@ MonoBehaviour:
     prefab: {fileID: 5737820991993077119, guid: c09db8c23cbc5ad48bbb096a0e5c2908, type: 3}
     initialSize: 100
   - key: Meteor
+    prefab: {fileID: 5737820991993077119, guid: 70fe090dd9826704e8c7ccc55b92a26c, type: 3}
+    initialSize: 100
+  - key: Lightning
     prefab: {fileID: 5737820991993077119, guid: 3b5721317871e41449a363e94ea3cb60, type: 3}
+    initialSize: 100
+  - key: Spawn
+    prefab: {fileID: 417564319802218645, guid: 3cd9a448a942d84469a718e96bf12781, type: 3}
     initialSize: 100

@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
 
         UI_EnemyHpbar ui_EnemyHpbar = UI_Enemy.Instance.SetHpBarToEnemy(_enemy);
         ui_EnemyHpbar.gameObject.SetActive(false);
-		_enemy.SetUi(ui_EnemyHpbar);
+        _enemy.SetUi(ui_EnemyHpbar);
         _enemy.Initialize();
         EnemyManager.Instance.OnActivity(_enemy);
     }
@@ -74,7 +74,7 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
             _stateMap.Add(EEnemyState.Move, new EnemyMoveState(_enemy));
         }
 
-        if(!_stateMap.ContainsKey(EEnemyState.Attack))
+        if (!_stateMap.ContainsKey(EEnemyState.Attack))
         {
             _stateMap.Add(EEnemyState.Attack, new EnemyAttackState(_enemy));
         }
@@ -138,10 +138,10 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
         _stateMap[_currentState].End();
         // 새 상태 진입
         _currentState = nextState;
-        
+
         _stateMap[_currentState].Start();
     }
-    
+
     public void TakeDamage(Damage damage)
     {
         EnemyManager.Instance.ClearGrouping(_enemy);
@@ -155,22 +155,22 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
         OnHit(damage);
         if (_enemy.Health <= 0)
         {
-            if(_enemy.EnemyData.EnemyType == EEnemyType.Self_Destruct)
+            if (_enemy.EnemyData.EnemyType == EEnemyType.Self_Destruct)
             {
-				ChangeState(EEnemyState.Attack);
+                ChangeState(EEnemyState.Attack);
                 return;
-			}
+            }
 
             ChangeState(EEnemyState.Die);
             return;
         }
-        
-        if(IsAttack)
+
+        if (IsAttack)
         {
             return;
         }
 
-      
+
         ChangeState(EEnemyState.Damaged);
     }
     private void OnHit(Damage damage)
@@ -179,7 +179,7 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
         targetPosition.y = _enemy.transform.position.y; // Y축 고정
         _enemy.transform.LookAt(targetPosition);
         _enemyVisual.PlayHitFeedback(_enemy.EnemyData.DamagedTime);
-        
+
         ApplyKnockback(damage);
 
     }
@@ -188,7 +188,7 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
         damage.Direction += Vector3.up * 1f; // 살짝 대각선 위로
         damage.Direction.Normalize();
         // 기존 넉백 중이면 중복 방지
-    
+
         StartCoroutine(KnockbackCoroutine(damage));
     }
 
@@ -198,7 +198,10 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
 
         while (elapsed <= 0.1)
         {
-
+            if (_enemy.CharacterController == null)
+            {
+                yield break;
+            }
             // 프레임 단위로 일정 거리 이동
             _enemy.CharacterController.Move(damage.Direction * damage.KnockbackPower * Time.deltaTime);
             elapsed += Time.deltaTime;
@@ -210,12 +213,11 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
     {
         ChangeState(EEnemyState.Move);
         IsAttack = false;
-        // 어택 종료
     }
 
     // 죽었을때 해야하는 행동
     public void EndDieAnimEvent()
     {
-        EnemyPoolManager.Instance.ReturnObject(_enemy.EnemyData.Key,_enemy.gameObject);
+        EnemyPoolManager.Instance.ReturnObject(_enemy.EnemyData.Key, _enemy.gameObject);
     }
 }

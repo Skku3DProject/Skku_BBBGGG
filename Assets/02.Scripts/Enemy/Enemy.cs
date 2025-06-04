@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 
     public Transform ProjectileTransfrom;
     public GameObject Projectile;
+    public GameObject Summon;
 
     private GameObject _target;
     public GameObject Target => _target;
@@ -103,7 +104,7 @@ public class Enemy : MonoBehaviour
     }
     public void TargetOnPlayer()
     {
-        if(_target == _player || !TryDiePlayer())
+        if(_target == _player)
         {
             return;
         }

@@ -27,6 +27,7 @@ public class So_Enemy : ScriptableObject
     public string ProjectileKey;
     public string BreathKey;
     public string AreaObjectKey;
+    public string AttackVFXKey;
 
     [Header("ป๓ลย")]
     public EEnemyState[] AvailableStates;

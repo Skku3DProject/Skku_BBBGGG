@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: So_EnemyProjectile_Stone
   m_EditorClassIdentifier: 
   Key: Stone
+  HitVfxKey: Stone
   FlightTime: 1.5
   Damage: 10
   KnockbackPower: 100
   LostTime: 5
   AreaRange: 2
   Type: 1
-  HitVfxPrefab: {fileID: 0}
   GroundMask:
     serializedVersion: 2
     m_Bits: 8
