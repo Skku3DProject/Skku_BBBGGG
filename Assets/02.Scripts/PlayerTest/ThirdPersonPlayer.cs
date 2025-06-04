@@ -74,6 +74,7 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
 
         PlayerAnimator.SetTrigger("Idle");
         UIManager.instance.RespawnPanel.SetActive(false);
+        UIManager.instance.UI_HpSlider(_currentHealth);
     }
     private void Update()
     {

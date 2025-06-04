@@ -55,6 +55,9 @@ public class WorldManager : MonoBehaviour
     [Header("지형 노이즈")]
     public float NoiseScale = 0.1f;
 
+
+    public GameObject DeadZonePrefab;
+
     private int _worldSeed = 0;
     private float _randomOffsetX;
     private float _randomOffsetZ;
@@ -79,6 +82,7 @@ public class WorldManager : MonoBehaviour
         GenerateGrid();
         PositionPlayerAtCenter();
         PositionSpawner();
+        CreateDeadZone();
     }
 
     //--------------------------------------- 맵로딩용
@@ -87,6 +91,7 @@ public class WorldManager : MonoBehaviour
         SetWorldSeed(Random.Range(0, int.MaxValue));
         BackupCentralChunks();
         GenerateGrid();
+
     }
     public void RegisterStageEvents()
     {
@@ -106,6 +111,8 @@ public class WorldManager : MonoBehaviour
             //StartCoroutine(DelayedPositioning());
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            CreateDeadZone();
         }
     }
     //-----------------------------------맵 로딩 용
@@ -512,5 +519,27 @@ public class WorldManager : MonoBehaviour
             }
         }
     }
+    void CreateDeadZone()
+    {
+        if (DeadZonePrefab == null)
+        {
+            Debug.LogWarning("DeadZonePrefab이 설정되지 않았습니다.");
+            return;
+        }
 
+        float worldWidth = GridWidth * Chunk.CHUNK_WIDTH;
+        float worldDepth = GridHeight * Chunk.CHUNK_WIDTH;
+
+        float boxY = -50f;         // 맵 아래 위치
+        float boxHeight = 10f;     // 두께 (충돌용)
+
+        Vector3 position = new Vector3(worldWidth / 2f, boxY, worldDepth / 2f);
+        Vector3 scale = new Vector3(worldWidth, boxHeight, worldDepth);
+
+        GameObject deadZone = Instantiate(DeadZonePrefab, position, Quaternion.identity, this.transform);
+        deadZone.name = "DeadZone";
+
+        // 크기 조절 (프리팹 기본 스케일 1일 때 기준)
+        deadZone.transform.localScale = scale;
+    }
 }

@@ -18,8 +18,13 @@ public class SceneLoad : MonoBehaviour
     public float cameraYOffset = 5f;
     public float cameraMoveDuration = 1f;
 
+    [Header("로딩 BGM")]
+    public AudioSource bgmSource; // AudioSource 컴포넌트 참조
     void Start()
     {
+        if (bgmSource != null)
+            bgmSource.Play();
+
         StartCoroutine(FullLoadRoutine());
     }
 
@@ -94,6 +99,8 @@ public class SceneLoad : MonoBehaviour
         if (statusText != null) statusText.gameObject.SetActive(false);
 
 
+        if (bgmSource != null)
+            bgmSource.Stop();
 
         // 5) 게임 씬 활성화
         Scene newScene = SceneManager.GetSceneByName(sceneName);

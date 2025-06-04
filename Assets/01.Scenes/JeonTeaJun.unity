@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RealBase
       objectReference: {fileID: 0}
+    - target: {fileID: 5942975015145350070, guid: 3dd7a34a9e5059a4da5f86803c1035e5, type: 3}
+      propertyPath: m_TagString
+      value: BaseTower
+      objectReference: {fileID: 0}
     - target: {fileID: 7704691592357153115, guid: 3dd7a34a9e5059a4da5f86803c1035e5, type: 3}
       propertyPath: m_Radius
       value: 3
@@ -1503,6 +1507,7 @@ MonoBehaviour:
   TreeDensity: 0.0025
   IronstoneDensity: 0.0005
   NoiseScale: 0.1
+  DeadZonePrefab: {fileID: 5396434526519613450, guid: f98b0ec6c501db448b294b5509b6de85, type: 3}
 --- !u!4 &1191994408
 Transform:
   m_ObjectHideFlags: 0
