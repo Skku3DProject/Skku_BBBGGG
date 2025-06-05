@@ -1,17 +1,22 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BaseStat : MonoBehaviour, IDamageAble
 {
-    public float BaseHP = 2000;
+    public float BaseHP = 5000;
     [SerializeField] private float _rotationSpeed = 100f;
     private Vector3 _currentPos;
     private float _timer = 0;
 
+    public Slider slider;
+
     private void Start()
     {
         PingPong();
+        slider.maxValue = BaseHP;
+        slider.value = BaseHP;
     }
 
     private void Update()
@@ -19,6 +24,8 @@ public class BaseStat : MonoBehaviour, IDamageAble
         _timer += Time.deltaTime;
         _currentPos.y = _timer * _rotationSpeed;
         transform.rotation = Quaternion.Euler(0f, _currentPos.y, 0f);
+
+
     }
 
     private void PingPong()
@@ -32,12 +39,15 @@ public class BaseStat : MonoBehaviour, IDamageAble
     {
         BaseHP -= damage.Value;
 
+        slider.value = BaseHP;
+
         Debug.Log("basecamep" + BaseHP);
         if (BaseHP <= 0)
         {
             GameManager.instance.ChangeState(GameState.GameOver);
         }
     }
+
 
     private void OnTriggerStay(Collider other)
     {

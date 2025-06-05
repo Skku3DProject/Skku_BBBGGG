@@ -46,6 +46,7 @@ public class PopUpManager : MonoBehaviour
                     if (opened)
                         break;
                 }
+                UI_TowerBuildMenu.isBuildMode = false;
                 //while (true)
                 //{
                 //    UI_Popup popup = _openPopups.Pop();

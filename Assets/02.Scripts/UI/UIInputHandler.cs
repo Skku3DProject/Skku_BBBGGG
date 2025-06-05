@@ -13,6 +13,7 @@ public class UIInputHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B) && PlayerModeManager.Instance.CurrentMode != EPlayerMode.Build)
         {
             PopUpManager.Instance.Open(EPopupType.UI_BuildMenu, GameManager.instance.ContinueGame);
+            UI_TowerBuildMenu.isBuildMode = true;
         }
         if(Input.GetKeyDown(KeyCode.K))
         {

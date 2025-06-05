@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerPlacer : MonoBehaviour
@@ -165,20 +166,25 @@ public class TowerPlacer : MonoBehaviour
         {
             if (!CurrencyManager.instance.Spend(_selectedBuilding.cost))
             {
-                PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon); // 건설 후 무기 모드 복귀
+                PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
                 return;
             }
 
-            TowerSoundController.Instance.PlaySoundAt(TowerSoundType.Collapse, _previewInstance.transform.position); // 건설소리
+            TowerSoundController.Instance.PlaySoundAt(TowerSoundType.Collapse, _previewInstance.transform.position);
             ObjectPool.Instance.GetObject(TowerPlaceVfxPrefab, _previewInstance.transform.position, _previewInstance.transform.rotation);
             ObjectPool.Instance.GetObject(_selectedBuilding.Prefab, _previewInstance.transform.position, _previewInstance.transform.rotation);
-            PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon); // 건설 후 무기 모드 복귀
+            PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
             DestroyPreview();
             _selectedBuilding = null;
 
-            UI_TowerBuildMenu.isBuildMode = false;
-
+            StartCoroutine(DelayExitBuildMode()); // 한 프레임 뒤에 BuildMode false
         }
+    }
+
+    private IEnumerator DelayExitBuildMode()
+    {
+        yield return null; // 한 프레임 대기
+        UI_TowerBuildMenu.isBuildMode = false;
     }
 
     private void SetPreviewColor(GameObject obj, Color color, Material template)

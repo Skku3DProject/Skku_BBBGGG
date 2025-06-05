@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -22,14 +23,30 @@ public class SceneLoad : MonoBehaviour
 
     [Header("카메라 참조")]
     public Camera loadingSceneCamera;
+
+    public Image Dog;
     void Start()
     {
         if (bgmSource != null)
             bgmSource.Play();
 
         StartCoroutine(FullLoadRoutine());
+
+        // 띠용띠용 커졌다 작아졌다 반복
+        Dog.rectTransform
+            .DOScale(new Vector3(1.2f, 1.2f, 1f), 0.5f) // 1.2배 커짐
+            .SetLoops(-1, LoopType.Yoyo)               // 반복, 원래 크기로 복귀
+            .SetEase(Ease.InOutSine);                  // 부드러운 애니메이션
+
     }
 
+    private void Update()
+    {
+        //if (Dog != null)
+        //{
+        //    Dog.rectTransform.Rotate(0f, 0f, -100f * Time.deltaTime);
+        //}
+    }
     //private IEnumerator MoveCameraDown()
     //{
     //    if (loadingSceneCamera == null)
@@ -58,7 +75,7 @@ public class SceneLoad : MonoBehaviour
         const float wPool = 0.2f, wMap = 0.7f, wScene = 0.1f;
 
         // 1) 월드 생성
-        statusText.text = "잔디와 버섯을 부시면 스테미너를 회복할수 있습니다.";
+        statusText.text = "잔디나 버섯을 부수면 스태미너를 회복할 수 있습니다.";
         bool changedText = false;
 
         yield return StartCoroutine(worldManager.InitWorldAsync(p =>
@@ -70,14 +87,14 @@ public class SceneLoad : MonoBehaviour
             // 절반 넘었을 때 텍스트 변경 (1회만 실행되도록)
             if (!changedText && p >= 0.5f)
             {
-                statusText.text = "맵 전역에는 보물상자가 숨겨져 있습니다.";
+                statusText.text = "맵 전역에 보물상자가 숨겨져 있습니다.";
                 changedText = true;
             }
         }));
         yield return new WaitForSeconds(0.2f);
 
         // 2) 풀 초기화
-        statusText.text = "게임 시작 준비가 거의 끝나가는중...";
+        statusText.text = "게임 시작 준비가 거의 끝나갑니다...";
         loadingBar.value = 0;
         progressText.text = "0%";
         yield return StartCoroutine(ObjectPool.Instance.InitPoolAllAsync(p =>

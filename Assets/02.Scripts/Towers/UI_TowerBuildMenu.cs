@@ -24,6 +24,5 @@ public class UI_TowerBuildMenu : UI_Popup
         TowerPlacer.Instance.SetSelectedBuilding(buildingTypes[index]);
         PlayerModeManager.Instance.SetMode(EPlayerMode.Build);
         Close();
-        isBuildMode = true;
     }
 }
