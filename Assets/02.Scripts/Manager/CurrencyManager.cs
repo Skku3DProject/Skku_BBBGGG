@@ -23,13 +23,20 @@ public class CurrencyManager : MonoBehaviour
     private void Start()
     {
         Initialize();
+
+        StageManager.instance.OnCombatEnd += ClearStage;    }
+
+    private void ClearStage()
+    {
+        _currentCurrency.Gold += 3000;
+        UIManager.instance.RefreshCurrency();
     }
 
     private void Initialize()
     {
         _currentCurrency = new Currency()
         {
-            Gold = 10000, Wood = 10000, Stone = 10000
+            Gold = 5000, Wood = 3000, Stone = 3000
         };
         
         UIManager.instance.RefreshCurrency();

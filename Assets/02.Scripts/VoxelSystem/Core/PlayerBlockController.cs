@@ -36,6 +36,8 @@ public class PlayerBlockController : MonoBehaviour
 
     private void HandleBlockInput()
     {
+        if (UI_TowerBuildMenu.isBuildMode) return;
+
         if (PlayerModeManager.Instance.CurrentMode == EPlayerMode.Pickaxe) // 현재 플레이어 모드를 체크하고
         {
             if (Input.GetMouseButton(0) && _isDig==false) // 좌클릭 → 블럭 파괴 or 나무나 철광석 캐기

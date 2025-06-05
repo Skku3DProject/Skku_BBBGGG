@@ -488,7 +488,7 @@ MonoBehaviour:
   _currency:
     Gold: 0
     Wood: 0
-    Stone: 10
+    Stone: 500
   _health: 30
   HitPrefab: {fileID: 8227808811761709394, guid: 17da3d37091a6c849a8b938caac91e6b, type: 3}
 --- !u!54 &7001497971193390859

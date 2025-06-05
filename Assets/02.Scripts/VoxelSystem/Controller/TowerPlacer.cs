@@ -69,7 +69,7 @@ public class TowerPlacer : MonoBehaviour
 
     private void TryRotatePreview()
     {
-        if (Input.GetKeyDown(KeyCode.R) && _previewInstance != null)
+        if (Input.GetKeyDown(KeyCode.T) && _previewInstance != null)
         {
             _currentRotation *= Quaternion.Euler(0f, 90f, 0f);
             _previewInstance.transform.rotation = _currentRotation;
@@ -175,6 +175,8 @@ public class TowerPlacer : MonoBehaviour
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon); // 건설 후 무기 모드 복귀
             DestroyPreview();
             _selectedBuilding = null;
+
+            UI_TowerBuildMenu.isBuildMode = false;
 
         }
     }

@@ -14,26 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnEneies:
   - So_Enemy: {fileID: 11400000, guid: 331691b29171450478e98c81d7cf8ec4, type: 2}
-    SpawnCounts: 1
+    SpawnCounts: 2
   - So_Enemy: {fileID: 11400000, guid: 8078c7eb421e9dc4091afaa168664432, type: 2}
-    SpawnCounts: 1
-  - So_Enemy: {fileID: 11400000, guid: b5b9620cba26d0744ad3b5da76974847, type: 2}
-    SpawnCounts: 1
+    SpawnCounts: 2
   - So_Enemy: {fileID: 11400000, guid: aa88667e8d0b39c4a9b237e07928e1e5, type: 2}
-    SpawnCounts: 1
-  - So_Enemy: {fileID: 11400000, guid: 8d64ae0751c7c3b4c9c10266d3550de2, type: 2}
-    SpawnCounts: 1
-  - So_Enemy: {fileID: 11400000, guid: 88630275d5e1c1a4586ced0f6de54a47, type: 2}
-    SpawnCounts: 1
+    SpawnCounts: 2
   - So_Enemy: {fileID: 11400000, guid: 20d9bc0512b2ea54986cdf743e26f81c, type: 2}
-    SpawnCounts: 1
+    SpawnCounts: 2
+  - So_Enemy: {fileID: 11400000, guid: b5b9620cba26d0744ad3b5da76974847, type: 2}
+    SpawnCounts: 7
+  - So_Enemy: {fileID: 11400000, guid: 8d64ae0751c7c3b4c9c10266d3550de2, type: 2}
+    SpawnCounts: 10
+  - So_Enemy: {fileID: 11400000, guid: 88630275d5e1c1a4586ced0f6de54a47, type: 2}
+    SpawnCounts: 10
   - So_Enemy: {fileID: 11400000, guid: cd4ccff4d50f47749b337e7ee826395b, type: 2}
-    SpawnCounts: 1
+    SpawnCounts: 2
   - So_Enemy: {fileID: 11400000, guid: 68cf9cae8a671144880c9580beff3d2c, type: 2}
-    SpawnCounts: 1
+    SpawnCounts: 2
   - So_Enemy: {fileID: 11400000, guid: 91b96d71a04d6cc4990216fbf4e37398, type: 2}
-    SpawnCounts: 0
+    SpawnCounts: 1
   - So_Enemy: {fileID: 11400000, guid: 24cb6054089f8d148a2dbdb719e0a2d8, type: 2}
-    SpawnCounts: 1
+    SpawnCounts: 0
   - So_Enemy: {fileID: 11400000, guid: e81b8da6a1f91724181557a555515093, type: 2}
-    SpawnCounts: 1
+    SpawnCounts: 0

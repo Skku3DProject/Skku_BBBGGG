@@ -32,6 +32,9 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        if (UI_TowerBuildMenu.isBuildMode) return;
+
+
         if (!_player.IsAlive || _player.IsReturning) return;
 
         if (PlayerModeManager.Instance.CurrentMode != EPlayerMode.Weapon) return;

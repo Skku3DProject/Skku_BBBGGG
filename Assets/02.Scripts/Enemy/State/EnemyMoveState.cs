@@ -54,14 +54,14 @@ public class EnemyMoveState : IFSM
             return EEnemyState.Move;
         }
 
-        //if (Physics.Raycast(_enemy.transform.position, Vector3.down, out RaycastHit hit, 0.5f, _enemy.EnemyData.GroundLayerMask))
-        //{
-        //    _enemy.SetStepOffset();
-        //}
-        //else
-        //{
-        //    _enemy.CrearStepOffset();
-        //}
+        if (Physics.Raycast(_enemy.transform.position, Vector3.down, out RaycastHit hit, 0.5f, _enemy.EnemyData.GroundLayerMask))
+        {
+            _enemy.SetStepOffset();
+        }
+        else
+        {
+            _enemy.CrearStepOffset();
+        }
 
         return EEnemyState.Move;
     }

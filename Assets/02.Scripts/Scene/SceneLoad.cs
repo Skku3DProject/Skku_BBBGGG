@@ -1,6 +1,5 @@
 using System.Collections;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -20,6 +19,9 @@ public class SceneLoad : MonoBehaviour
 
     [Header("로딩 BGM")]
     public AudioSource bgmSource; // AudioSource 컴포넌트 참조
+
+    [Header("카메라 참조")]
+    public Camera loadingSceneCamera;
     void Start()
     {
         if (bgmSource != null)
@@ -28,43 +30,54 @@ public class SceneLoad : MonoBehaviour
         StartCoroutine(FullLoadRoutine());
     }
 
-    private IEnumerator MoveCameraDown()
-    {
-        Camera mainCam = Camera.main;
-        if (mainCam == null)
-            yield break;
+    //private IEnumerator MoveCameraDown()
+    //{
+    //    if (loadingSceneCamera == null)
+    //    {
+    //        Debug.LogWarning("loadingSceneCamera 참조 누락");
+    //        yield break;
+    //    }
 
-        Vector3 startPos = mainCam.transform.position;
-        Vector3 endPos = startPos - new Vector3(0, cameraYOffset, 0);
+    //    Vector3 startPos = loadingSceneCamera.transform.position;
+    //    Vector3 endPos = startPos - new Vector3(0, cameraYOffset, 0);
 
-        float elapsed = 0f;
-        while (elapsed < cameraMoveDuration)
-        {
-            float t = elapsed / cameraMoveDuration;
-            mainCam.transform.position = Vector3.Lerp(startPos, endPos, t);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        // 최종 위치 보정
-        mainCam.transform.position = endPos;
-    }
+    //    float elapsed = 0f;
+    //    while (elapsed < cameraMoveDuration)
+    //    {
+    //        float t = elapsed / cameraMoveDuration;
+    //        loadingSceneCamera.transform.position = Vector3.Lerp(startPos, endPos, t);
+    //        elapsed += Time.deltaTime;
+    //        yield return null;
+    //    }
+
+    //    loadingSceneCamera.transform.position = endPos;
+    //}
     IEnumerator FullLoadRoutine()
     {
         // 가중치: 풀 20%, 월드 70%, 씬 10%
         const float wPool = 0.2f, wMap = 0.7f, wScene = 0.1f;
 
         // 1) 월드 생성
-        statusText.text = "월드 생성 중...";
+        statusText.text = "잔디와 버섯을 부시면 스테미너를 회복할수 있습니다.";
+        bool changedText = false;
+
         yield return StartCoroutine(worldManager.InitWorldAsync(p =>
         {
-            float overall =  p * wMap;
+            float overall = p * wMap;
             loadingBar.value = overall;
             progressText.text = $"{Mathf.RoundToInt(overall * 100f)}%";
+
+            // 절반 넘었을 때 텍스트 변경 (1회만 실행되도록)
+            if (!changedText && p >= 0.5f)
+            {
+                statusText.text = "맵 전역에는 보물상자가 숨겨져 있습니다.";
+                changedText = true;
+            }
         }));
         yield return new WaitForSeconds(0.2f);
 
         // 2) 풀 초기화
-        statusText.text = "풀 초기화 중...";
+        statusText.text = "게임 시작 준비가 거의 끝나가는중...";
         loadingBar.value = 0;
         progressText.text = "0%";
         yield return StartCoroutine(ObjectPool.Instance.InitPoolAllAsync(p =>
@@ -76,11 +89,11 @@ public class SceneLoad : MonoBehaviour
         yield return null;
 
 
-        // 4) 카메라 이동
-        yield return MoveCameraDown();
+        //// 4) 카메라 이동
+        //yield return MoveCameraDown();
 
         // 3) 씬 비동기 Additive 로딩
-        statusText.text = "게임 세상속으로 접속중~";
+        statusText.text = "게임 스타또~!";
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         while (!op.isDone)
         {

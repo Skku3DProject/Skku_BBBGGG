@@ -65,24 +65,24 @@ public class WorldManager : MonoBehaviour
 
     private Dictionary<Vector2Int, TempChunkData> _savedChunkData = new();
     private Vector2Int _centerCoord;
-    private int _saveRadius = 2; // 예: 5x5 청크 저장
+    private int _saveRadius = 6; // 예: 5x5 청크 저장
 
     private Dictionary<Vector2Int, Chunk> _chunks = new Dictionary<Vector2Int, Chunk>();
 
     void Start()
     {
-        StageManager.instance.OnCombatStart += BackupCentralChunks;
-        StageManager.instance.OnCombatEnd += RestoreCentralChunks;
-        StageManager.instance.OnCombatEnd += ResetPlayer;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //StageManager.instance.OnCombatStart += BackupCentralChunks;
+        //StageManager.instance.OnCombatEnd += RestoreCentralChunks;
+        //StageManager.instance.OnCombatEnd += ResetPlayer;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
 
-        SetWorldSeed(Random.Range(0, int.MaxValue));
-        BackupCentralChunks();
-        GenerateGrid();
-        PositionPlayerAtCenter();
-        PositionSpawner();
-        CreateDeadZone();
+        //SetWorldSeed(Random.Range(0, int.MaxValue));
+        //BackupCentralChunks();
+        //GenerateGrid();
+        //PositionPlayerAtCenter();
+        //PositionSpawner();
+        //CreateDeadZone();
     }
 
     //--------------------------------------- 맵로딩용

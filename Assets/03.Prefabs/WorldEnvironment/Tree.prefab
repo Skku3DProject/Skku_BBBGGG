@@ -322,9 +322,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca9fd31892917e42b6b9e28599eccfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   _currency:
     Gold: 0
-    Wood: 100
+    Wood: 300
     Stone: 0
   _health: 30
   HitPrefab: {fileID: 8227808811761709394, guid: 6687d8c9c710d7948ab5ddcb5034a1f2, type: 3}

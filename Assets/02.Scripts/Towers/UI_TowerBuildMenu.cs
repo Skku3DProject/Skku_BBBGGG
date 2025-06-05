@@ -6,6 +6,7 @@ public class UI_TowerBuildMenu : UI_Popup
 {
     public List<Button> buttons;
     public List<BuildingType> buildingTypes;
+    public static bool isBuildMode = false;
 
     private void Awake()
     {
@@ -23,5 +24,6 @@ public class UI_TowerBuildMenu : UI_Popup
         TowerPlacer.Instance.SetSelectedBuilding(buildingTypes[index]);
         PlayerModeManager.Instance.SetMode(EPlayerMode.Build);
         Close();
+        isBuildMode = true;
     }
 }

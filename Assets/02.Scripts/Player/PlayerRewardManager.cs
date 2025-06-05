@@ -1,13 +1,11 @@
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
-
 public class PlayerRewardManager : MonoBehaviour
 {
     public static PlayerRewardManager Instance { get; private set; }
     private ThirdPersonPlayer _player; // 캐싱 변수
 
-    public int skillPoints { get; private set; } = 110;
-    public int potionCount { get; private set; } = 0;
+    public int skillPoints { get; private set; } = 2;
+    public int potionCount { get; private set; } = 2;
     public bool hasBlessingBuff { get; private set; } = false;  // 가호 버프
 
     void Awake()
@@ -22,6 +20,7 @@ public class PlayerRewardManager : MonoBehaviour
         StageManager.instance.OnCombatEnd += AddSkillPointAfterCombat;
 
         UIManager.instance.UI_SkillPointRefresh(skillPoints);
+        UIManager.instance.UI_PotionCountRefresh(potionCount);
 
         // 시작 시 플레이어 캐싱
         GameObject playerObj = GameObject.FindWithTag("Player");

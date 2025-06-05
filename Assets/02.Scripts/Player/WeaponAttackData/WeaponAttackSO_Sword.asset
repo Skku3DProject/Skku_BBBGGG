@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: WeaponAttackSO_Sword
   m_EditorClassIdentifier: 
   WeaponName: Sword
-  AttackPower: 320
+  AttackPower: 450

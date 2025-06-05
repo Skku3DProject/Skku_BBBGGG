@@ -1,10 +1,12 @@
 using UnityEngine;
+
 public enum ArrowType
 {
     Normal,
     Explosive,
     Charging
 }
+
 public class PlayerArrow : MonoBehaviour
 {
     private float _damage;
@@ -19,12 +21,12 @@ public class PlayerArrow : MonoBehaviour
 
     [Header("폭발 화살")]
     public GameObject explosionEffect;
-    public float explosionRadius = 3f;
+    public float explosionRadius = 2f;
     public float explosionForce = 50f;
 
     [Header("차징 화살")]
     public GameObject chargeImpactEffect;
-    public float chargeImpactRadius = 1.5f;
+    public float chargeImpactRadius = 2f;
     public float chargeImpactForce = 25f;
 
     [Header("관통 설정")]
@@ -38,6 +40,7 @@ public class PlayerArrow : MonoBehaviour
     [SerializeField] private AudioClip chargingHitSound;
 
     [SerializeField] private AudioSource _audioSource;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -58,7 +61,6 @@ public class PlayerArrow : MonoBehaviour
             transform.Rotate(90f, 0f, 0f, Space.Self);
         }
 
-        // 바닥 충돌 감지
         if (CheckGroundHit())
         {
             HandleGroundImpact();
@@ -111,6 +113,9 @@ public class PlayerArrow : MonoBehaviour
 
     private void ApplyNormalDamage(Collider target)
     {
+        if (target.CompareTag("BaseTower"))
+            return;
+
         if (HitVfx != null)
             Instantiate(HitVfx, transform.position, Quaternion.identity);
 
@@ -118,6 +123,7 @@ public class PlayerArrow : MonoBehaviour
         {
             d.TakeDamage(new Damage(_damage, _owner, 10f));
         }
+
         PlayHitSound();
     }
 
@@ -129,6 +135,9 @@ public class PlayerArrow : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, chargeImpactRadius);
         foreach (var hit in colliders)
         {
+            if (hit.CompareTag("BaseTower"))
+                continue;
+
             if (hit.TryGetComponent<IDamageAble>(out var d))
             {
                 Vector3 hitDir = (hit.transform.position - transform.position).normalized;
@@ -148,6 +157,9 @@ public class PlayerArrow : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (var hit in colliders)
         {
+            if (hit.CompareTag("BaseTower"))
+                continue;
+
             if (hit.TryGetComponent<IDamageAble>(out var d))
             {
                 Vector3 hitDir = (hit.transform.position - transform.position).normalized;
@@ -164,9 +176,7 @@ public class PlayerArrow : MonoBehaviour
         if (_rb == null || _rb.linearVelocity.sqrMagnitude < 0.1f) return false;
 
         Vector3 forwardDir = _rb.linearVelocity.normalized;
-
         Vector3 downForward = (forwardDir + Vector3.down).normalized;
-
         float rayLength = 0.7f;
 
         return Physics.Raycast(transform.position, downForward, rayLength, LayerMask.GetMask("Ground"));
@@ -188,8 +198,8 @@ public class PlayerArrow : MonoBehaviour
                 break;
         }
 
-        //사운드 재생할때 사운드 길이만큼 기다리고 파괴되도록함
-        //Destroy(gameObject);
+        // 사운드 길이만큼 기다리고 삭제
+        // Destroy(gameObject);
     }
 
     public void ArrowInit(float damage, ArrowType type, GameObject owner)
@@ -212,7 +222,6 @@ public class PlayerArrow : MonoBehaviour
         ArrowVfx[(int)type].SetActive(true);
     }
 
-
     private void PlayHitSound()
     {
         if (_audioSource == null) return;
@@ -234,7 +243,6 @@ public class PlayerArrow : MonoBehaviour
 
         if (clipToPlay != null)
         {
-            //_audioSource.transform.position = transform.position; // 위치 지정
             _audioSource.clip = clipToPlay;
             _audioSource.Play();
 
@@ -244,25 +252,21 @@ public class PlayerArrow : MonoBehaviour
 
     private void DestroyWithSound(AudioClip clipToPlay)
     {
-        // 기능 비활성화 (데미지 중복 방지)
         GetComponent<Collider>().enabled = false;
         _rb.linearVelocity = Vector3.zero;
         _rb.isKinematic = true;
         enabled = false;
 
-        
-        // 렌더링도 비활성화
         if (TryGetComponent<Renderer>(out var renderer))
         {
             renderer.enabled = false;
         }
+
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(false);
         }
 
-
-        // 클립 길이만큼 기다림
         Destroy(gameObject, clipToPlay.length);
     }
 }
