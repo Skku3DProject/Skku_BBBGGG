@@ -113,6 +113,7 @@ public class SkillManager : MonoBehaviour
         if (tree.LevelUpSkill(skillName))
         {
             PlayerRewardManager.Instance.UseSkillPoint();
+            UIManager.instance.UI_SkillPointRefresh(_skillPoint);
             SetChildrenInteractable(skillName, true);
         }
         else
