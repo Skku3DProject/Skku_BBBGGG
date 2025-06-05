@@ -166,6 +166,7 @@ public class TowerPlacer : MonoBehaviour
         {
             if (!CurrencyManager.instance.Spend(_selectedBuilding.cost))
             {
+                UI_TowerBuildMenu.isBuildMode = false;
                 PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
                 return;
             }
