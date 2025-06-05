@@ -14,19 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Key: Nomal1
   ProjectileKey: Arrow
+  BreathKey: 
+  AreaObjectKey: 
+  AttackVFXKey: 
   AvailableStates: 0000000001000000020000000300000004000000
   EnemyType: 0
   EnemyMoveType: 0
   EEnemyAttackTypes: 
   DamagedTime: 0.5
+  Self_DestructTime: 1
   MaxAttackPatternCount: 1
   KnockbackPower: 100
   DamageValue: 10
-  Health: 200
+  MaxAreaAttackCount: 20
+  Health: 800
   FindDistance: 15
   AttackDistance: 20
   MovePointDistance: 0.1
-  SeparationDistance: 1
+  SeparationDistance: 2
   AreaRange: 0
   IdleTime: 2
   Speed: 3
@@ -37,8 +42,11 @@ MonoBehaviour:
   AttackLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  SeparationWeight: 1
-  GoalWeight: 1
+  GroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  SeparationWeight: 2
+  GoalWeight: 2
   CohesionWeight: 1
   AlignmentWeight: 1
   FlockNeighborRadius: 3

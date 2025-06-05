@@ -15,10 +15,10 @@ MonoBehaviour:
   Key: Meteor
   HitVfxKey: Meteor
   FlightTime: 2
-  Damage: 25
+  Damage: 150
   KnockbackPower: 100
   LostTime: 5
-  AreaRange: 3
+  AreaRange: 2
   Type: 1
   GroundMask:
     serializedVersion: 2

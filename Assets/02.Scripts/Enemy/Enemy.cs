@@ -94,7 +94,7 @@ public class Enemy : MonoBehaviour
 
         _soundManager.PlaySound("Hit");
         _uI_EnemyHpbar.UpdateHealth(_health / _maxHealth);
-        UI_Enemy.Instance.UpdateDamageText(damage.Value,this);
+        UI_Enemy.Instance.UpdateDamageText(damage,this);
     }
 
     public bool TryAttack()
@@ -125,6 +125,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void SetStepOffset()
+    {
+        _characterController.stepOffset += 0.01f;
+    }
+
+    public void CrearStepOffset()
+    {
+        _characterController.stepOffset = 1;
+    }
     private void GoOnPlayer()
     {
         EnemyManager.Instance.SetTargetGrouping(this);

@@ -27,7 +27,7 @@ MonoBehaviour:
   KnockbackPower: 100
   DamageValue: 10
   MaxAreaAttackCount: 20
-  Health: 200
+  Health: 500
   FindDistance: 15
   AttackDistance: 2
   MovePointDistance: 0.1

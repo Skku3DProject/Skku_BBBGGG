@@ -15,7 +15,7 @@ MonoBehaviour:
   Key: Arrow
   HitVfxKey: Noaml
   FlightTime: 1.5
-  Damage: 10
+  Damage: 20
   KnockbackPower: 0
   LostTime: 5
   AreaRange: 5

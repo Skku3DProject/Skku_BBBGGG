@@ -48,17 +48,27 @@ public class EnemyMoveState : IFSM
         // 1, 발판 같은거 설치
         // 2. 점프 해서 날아가기
         // 3. 머리 위 블럭 부시기
-		/*RaycastHit hit;
 
-		if (Physics.Raycast(_enemy.UI_offset.position,Vector3.forward))
+        if (_enemy.EnemyData.EnemyMoveType == EEnemyMoveType.Fly)
         {
+            return EEnemyState.Move;
+        }
 
-        }*/
-			return EEnemyState.Move;
+        //if (Physics.Raycast(_enemy.transform.position, Vector3.down, out RaycastHit hit, 0.5f, _enemy.EnemyData.GroundLayerMask))
+        //{
+        //    _enemy.SetStepOffset();
+        //}
+        //else
+        //{
+        //    _enemy.CrearStepOffset();
+        //}
+
+        return EEnemyState.Move;
     }
 
     public void End()
     {
+        _enemy.CrearStepOffset();
         EnemyManager.Instance.ClearGrouping(_enemy);
         _enemy.Animator.SetBool("IsRun", false);
     }

@@ -25,13 +25,13 @@ MonoBehaviour:
   Self_DestructTime: 1
   MaxAttackPatternCount: 1
   KnockbackPower: 100
-  DamageValue: 10
+  DamageValue: 200
   MaxAreaAttackCount: 20
-  Health: 200
+  Health: 600
   FindDistance: 2
   AttackDistance: 2
   MovePointDistance: 0.1
-  SeparationDistance: 1
+  SeparationDistance: 2
   AreaRange: 3
   IdleTime: 2
   Speed: 3
@@ -42,8 +42,11 @@ MonoBehaviour:
   AttackLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  SeparationWeight: 1
-  GoalWeight: 1
+  GroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  SeparationWeight: 2
+  GoalWeight: 2
   CohesionWeight: 1
   AlignmentWeight: 1
-  FlockNeighborRadius: 3
+  FlockNeighborRadius: 4

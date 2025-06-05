@@ -350,7 +350,7 @@ MonoBehaviour:
   - Key: Ranged
     AudioClip: {fileID: 8300000, guid: 5afcdf83bc564f64f91f2cabc88774bd, type: 3}
   - Key: Hit
-    AudioClip: {fileID: 8300000, guid: 01163d8cb57452e4682a53c58e22e17c, type: 3}
+    AudioClip: {fileID: 8300000, guid: 5f0d8e82919a322458ade192a5cc1fa4, type: 3}
   - Key: Die
     AudioClip: {fileID: 8300000, guid: b7f8695cf65a4f24eb37544298821146, type: 3}
 --- !u!82 &7990734744280639980

@@ -15,7 +15,7 @@ MonoBehaviour:
   Key: Lightning
   HitVfxKey: Lightning
   FlightTime: 1.5
-  Damage: 10
+  Damage: 20
   KnockbackPower: 100
   LostTime: 5
   AreaRange: 1

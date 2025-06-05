@@ -176,7 +176,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
 
     private void AreaAttack(Collider other)
     {
-        BlockSystem.DamageBlocksInRadius(other.transform.position, ProjectileData.AreaRange, (int)_damage.Value);
+        BlockSystem.DamageBlocksInRadius(transform.position, ProjectileData.AreaRange, (int)_damage.Value);
 
         int cnt = Physics.OverlapSphereNonAlloc(
             transform.position,

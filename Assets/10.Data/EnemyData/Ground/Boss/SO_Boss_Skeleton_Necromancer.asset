@@ -27,7 +27,7 @@ MonoBehaviour:
   KnockbackPower: 100
   DamageValue: 10
   MaxAreaAttackCount: 20
-  Health: 200
+  Health: 5000
   FindDistance: 15
   AttackDistance: 10
   MovePointDistance: 0.1
@@ -42,6 +42,9 @@ MonoBehaviour:
   AttackLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  GroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
   SeparationWeight: 1
   GoalWeight: 1
   CohesionWeight: 1

@@ -65,6 +65,7 @@ public class So_Enemy : ScriptableObject
     [Header("레이어")]
     public LayerMask SearchLayerMask;
     public LayerMask AttackLayerMask;
+    public LayerMask GroundLayerMask;
 
     [Header("플로킹 알고리즘")]
     public float SeparationWeight = 1f;

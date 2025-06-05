@@ -46,7 +46,7 @@ public class EnemyAreaAttackObject : MonoBehaviour, IEnemyPoolable
             {
                 damage.TakeDamage(_damage);
             }
-            Vector3Int blockPos = Vector3Int.FloorToInt(hit.point + hit.normal * -0.5f);
+            Vector3Int blockPos = Vector3Int.FloorToInt(hit.point + hit.normal * -0.1f);
             BlockSystem.DamageBlocksInRadius(blockPos, ProjectileData.AreaRange, (int)_damage.Value);
             EnemyParticlePoolManger.Instance.GetObject(ProjectileData.HitVfxKey, blockPos);
             EnemyObjectPoolManger.Instance.ReturnObject(ProjectileData.Key, gameObject);
