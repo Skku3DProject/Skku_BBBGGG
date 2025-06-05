@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -65,6 +66,9 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         UIManager.instance.UI_GameOver();
+
+        StartCoroutine(GameOver_Coroutine());
+
     }
     // 게임 pause 
     private void PauseGame()
@@ -83,6 +87,13 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public IEnumerator GameOver_Coroutine()
+    {
+        yield return new WaitForSeconds(5f);
+        
+        SceneManager.LoadScene("TitleScene");
     }
     
 }
