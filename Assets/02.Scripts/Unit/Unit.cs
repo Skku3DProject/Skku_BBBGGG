@@ -27,6 +27,9 @@ public class Unit : MonoBehaviour
     private MeleeUnitStateType _currentState;
     private bool _isAttacking = false; // 공격 애니메이션 중인지 여부
 
+    private Vector3 _savedPosition;
+    private Quaternion _savedRotation;
+
     // 중력 처리용
     private float _verticalVelocity = 0f;
     // 수평 이동 방향 (XZ 면)
@@ -36,7 +39,7 @@ public class Unit : MonoBehaviour
     private float _targetRefreshTimer = 0f;
     private const float TargetRefreshInterval = 0.5f;
 
-    private void Awake()
+    private void Awake()    
     {
         _animator = GetComponent<Animator>();
         _controller = GetComponent<CharacterController>();
@@ -50,7 +53,33 @@ public class Unit : MonoBehaviour
             _animator.SetBool("Move", false);
         }
     }
+    private void OnEnable()
+    {
+        // 체력 초기화
+        _currentHP = MaxHP;
 
+        // 상태 초기화
+        _currentState = MeleeUnitStateType.Idle;
+        _cooldownTimer = AttackCooldown;
+        _verticalVelocity = -1f;
+        _moveDirection = Vector3.zero;
+        _target = null;
+        _isAttacking = false;
+
+        // 애니메이터 초기화
+        if (_animator != null && _animator.runtimeAnimatorController != null)
+        {
+            _animator.Rebind(); // 모든 트리거, 상태 초기화
+            _animator.Update(0f); // 즉시 반영
+            _animator.SetBool("Idle", true);
+            _animator.SetBool("Move", false);
+        }
+    }
+    private void Start()
+    {
+        StageManager.instance.OnCombatStart += HandleCombatStart;
+        StageManager.instance.OnCombatEnd += HandleCombatEnd;
+    }
     private void Update()
     {
         // 1) 쿨다운 타이머 갱신
@@ -368,5 +397,27 @@ public class Unit : MonoBehaviour
 
         if (nearest != null)
             _target = nearest;
+    }
+
+    private void HandleCombatStart()
+    {
+        _savedPosition = transform.position;
+        _savedRotation = transform.rotation;
+    }
+
+    private void HandleCombatEnd()
+    {
+        if (TryGetComponent(out CharacterController controller))
+        {
+            controller.enabled = false;
+            transform.position = _savedPosition;
+            transform.rotation = _savedRotation;
+            controller.enabled = true;
+        }
+        else
+        {
+            transform.position = _savedPosition;
+            transform.rotation = _savedRotation;
+        }
     }
 }

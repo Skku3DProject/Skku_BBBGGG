@@ -251,7 +251,8 @@ public class UIManager : MonoBehaviour
         if (!_buffTextMap.TryGetValue(type, out var text) || text == null)
             return;
 
-        text.text = $"{amount:F1}"; // 무조건 마지막 증가 수치만 표시
+        Debug.Log(amount);
+        text.text = $"{amount:F1}"; 
     }
 
     public void UI_StageStartMention(int index)

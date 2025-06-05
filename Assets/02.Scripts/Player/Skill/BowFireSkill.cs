@@ -12,7 +12,7 @@ public class BowFireSkill : WeaponSkillBase
     private PlayerAttack _playerAttack;
     [Header("Skill Settings")]
     [SerializeField] private GameObject _arrowPrefab;
-    [SerializeField] private float _skillDamageMultiplier = 2f;
+    [SerializeField] private float _skillDamageMultiplier = 0.55f;
     [SerializeField] private float _arrowForce = 100f;
     [SerializeField] private float _arrowLifetime = 5f;
     [SerializeField] private float _skillDuration = 5f;
@@ -92,7 +92,7 @@ public class BowFireSkill : WeaponSkillBase
 
         Vector3 shootDirection = (targetPoint - _bowArrowSpawnPoint.position).normalized;
 
-        float power = _equipmentController.GetCurrentWeaponAttackPower() * _skillDamageMultiplier;
+        float power = _playerAttack.CurrentDamage * _skillDamageMultiplier;
 
         PlayerSoundController.Instance.PlaySound(PlayerSoundType.BowSkill1);
 

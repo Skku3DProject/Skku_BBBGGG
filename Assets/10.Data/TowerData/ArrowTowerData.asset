@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0229f7d27d5d0478d7254bb1dc32e9, type: 3}
   m_Name: ArrowTowerData
   m_EditorClassIdentifier: 
-  Health: 100
-  MaxRange: 10
-  MinRange: 3
-  Damage: 50
-  AttackRate: 3
+  Health: 300
+  MaxRange: 15
+  MinRange: 5
+  Damage: 270
+  AttackRate: 2
   SplashRadius: 0

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0229f7d27d5d0478d7254bb1dc32e9, type: 3}
   m_Name: FireTowerData
   m_EditorClassIdentifier: 
-  Health: 100
+  Health: 350
   MaxRange: 15
   MinRange: 5
-  Damage: 50
+  Damage: 130
   AttackRate: 5
-  SplashRadius: 5
+  SplashRadius: 4

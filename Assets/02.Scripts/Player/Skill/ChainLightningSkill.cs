@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class ChainLightningSkill : WeaponSkillBase
 {
     [Header("Chain Lightning Settings")]
-    public float damagePerHit = 40f;
+    public float DamageMultiplier = 2f;
     public int maxChains = 10;
     public float chainRange = 6f;
     public float delayBetweenChains = 0.1f;
@@ -122,8 +122,8 @@ public class ChainLightningSkill : WeaponSkillBase
     {
         if (enemy.TryGetComponent<IDamageAble>(out var target))
         {
-            float power = PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
-            Damage dmg = new Damage(damagePerHit, _player, 0f, hitDirection.normalized);
+            float power = _playerAttack.CurrentDamage * DamageMultiplier;
+            Damage dmg = new Damage(power, _player, 0f, hitDirection.normalized);
             target.TakeDamage(dmg);
         }
     }

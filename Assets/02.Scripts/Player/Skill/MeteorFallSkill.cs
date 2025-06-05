@@ -9,7 +9,7 @@ public class MeteorFallSkill : WeaponSkillBase
 
     [Header("Meteor Settings")]
     public GameObject meteorPrefab;
-    public float meteorDamage = 100f;
+    public float DamageMultiplier = 3f;
     [SerializeField] private int meteorCount = 3;
     [SerializeField] private float spawnSpreadRadius = 2f;
 
@@ -64,7 +64,8 @@ public class MeteorFallSkill : WeaponSkillBase
                 var proj = meteor.GetComponent<Meteor>();
                 if (proj != null)
                 {
-                    proj.Init(meteorDamage, MyPlayer, target);
+                    float finalDamage = _playerAttack.CurrentDamage * DamageMultiplier;
+                    proj.Init(finalDamage, MyPlayer, target);
                 }
             }
         }
@@ -106,8 +107,8 @@ public class MeteorFallSkill : WeaponSkillBase
 
         if (enemy.TryGetComponent<IDamageAble>(out var target))
         {
-            float power = meteorDamage; 
-            Damage dmg = new Damage(power, gameObject, 0f, hitDirection.normalized);
+            float finalDamage = _playerAttack.CurrentDamage * DamageMultiplier;
+            Damage dmg = new Damage(finalDamage, gameObject, 0f, hitDirection.normalized);
             target.TakeDamage(dmg);
         }
     }

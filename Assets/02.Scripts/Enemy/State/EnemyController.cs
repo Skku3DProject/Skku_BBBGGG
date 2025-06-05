@@ -198,7 +198,10 @@ public class EnemyController : MonoBehaviour, IDamageAble, IEnemyPoolable //, IT
 
         while (elapsed <= 0.1)
         {
-            if (_enemy.CharacterController == null)
+            // CharacterController 또는 게임 오브젝트가 비활성화 상태면 종료
+            if (_enemy.CharacterController == null ||
+                !_enemy.CharacterController.enabled ||
+                !_enemy.CharacterController.gameObject.activeInHierarchy)
             {
                 yield break;
             }

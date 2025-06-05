@@ -12,7 +12,7 @@ public class BowChargingSkill : WeaponSkillBase
     public float minShootForce = 20f;
     public float maxShootForce = 60f;
     public float damageMultiplier = 1f;
-    public float fullChargeMultiplier = 2f;
+    public float fullChargeMultiplier = 2.5f;
 
     [Header("이펙트")]
     public GameObject chargeEffect;
@@ -125,7 +125,7 @@ public class BowChargingSkill : WeaponSkillBase
         if (rb != null)
             rb.linearVelocity = dir * force;
 
-        float basePower = PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
+        float basePower = _playerAttack.CurrentDamage * damageMult;
         arrowScript?.ArrowInit(basePower, ArrowType.Charging, gameObject);
     }
 

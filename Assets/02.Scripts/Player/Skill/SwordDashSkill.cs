@@ -9,11 +9,11 @@ public class SwordDashSkill : WeaponSkillBase
     private Animator _playerAnimation;
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
-
+    private PlayerAttack _playerAttack;
 
     public GameObject DashVfx;
 
-    [SerializeField] private float _skillDamageMultiplier = 0.7f;
+    [SerializeField] private float _skillDamageMultiplier = 1.5f;
     [SerializeField] private float dashDistance = 10f;//거리
     [SerializeField] private float dashSpeed = 50f;//속도
 
@@ -27,7 +27,7 @@ public class SwordDashSkill : WeaponSkillBase
         _playerAnimation = MyPlayer.GetComponent<Animator>();
         _equipmentController = MyPlayer.GetComponent<PlayerEquipmentController>();
         _player = MyPlayer.GetComponent<ThirdPersonPlayer>();
-
+        _playerAttack = GetComponent<PlayerAttack>();
 
     }
 
@@ -128,7 +128,9 @@ public class SwordDashSkill : WeaponSkillBase
     {
         if (!IsUsingSkill) return;
 
-        float power = _equipmentController.GetCurrentWeaponAttackPower() * _skillDamageMultiplier;
+        float power = _playerAttack.CurrentDamage * _skillDamageMultiplier;
+
+
         IDamageAble damageAble = enemy.GetComponent<IDamageAble>();
 
         if (damageAble != null)

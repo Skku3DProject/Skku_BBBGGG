@@ -9,7 +9,7 @@ public class SwordSpinSkill : WeaponSkillBase
     private PlayerEquipmentController _equipmentController;
     private ThirdPersonPlayer _player;
     private PlayerAttack _playerAttack;
-    [SerializeField] private float _skillDamageMultiplier = 0.4f;
+    [SerializeField] private float _skillDamageMultiplier = 0.8f;
 
     private SwordDashSkill _swordDashSkill;
     public bool CurrentSwordSpinSkill;
@@ -119,7 +119,7 @@ public class SwordSpinSkill : WeaponSkillBase
         if (!IsUsingSkill)
             return;
 
-        float power = _equipmentController.GetCurrentWeaponAttackPower() * _skillDamageMultiplier;
+        float power = _playerAttack.CurrentDamage * _skillDamageMultiplier;
         IDamageAble damageAble = enemy.GetComponent<IDamageAble>();
         if (damageAble != null)
         {

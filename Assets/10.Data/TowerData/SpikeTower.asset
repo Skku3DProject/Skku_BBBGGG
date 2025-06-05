@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0229f7d27d5d0478d7254bb1dc32e9, type: 3}
   m_Name: SpikeTower
   m_EditorClassIdentifier: 
-  Health: 100
+  Health: 160
   MaxRange: 0
   MinRange: 0
-  Damage: 30
+  Damage: 200
   AttackRate: 1
   SplashRadius: 0
