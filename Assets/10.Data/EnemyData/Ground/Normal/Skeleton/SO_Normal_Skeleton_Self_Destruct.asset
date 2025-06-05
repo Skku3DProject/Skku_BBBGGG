@@ -32,7 +32,7 @@ MonoBehaviour:
   AttackDistance: 2
   MovePointDistance: 0.1
   SeparationDistance: 2
-  AreaRange: 3
+  AreaRange: 2
   IdleTime: 2
   Speed: 3
   Gravity: -9.8
