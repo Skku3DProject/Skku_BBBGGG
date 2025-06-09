@@ -7,7 +7,7 @@ public class Arrow : ProjectileBase
         base.OnGroundHit(hit);
 
         Vector3Int blockPos = Vector3Int.FloorToInt(hit.point+hit.normal*-0.5f);
-        BlockSystem.DamageBlock(blockPos, 10);
+        BlockManager.DamageBlock(blockPos, 10);
     }
     protected override void OnTriggerEnter(Collider other)
     {

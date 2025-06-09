@@ -21,7 +21,7 @@ public class UI_TowerBuildMenu : UI_Popup
 
     private void OnBuildingSelected(int index)
     {
-        TowerPlacer.Instance.SetSelectedBuilding(buildingTypes[index]);
+        PlayerTowerPlacer.Instance.SetSelectedBuilding(buildingTypes[index]);
         PlayerModeManager.Instance.SetMode(EPlayerMode.Build);
         Close();
     }

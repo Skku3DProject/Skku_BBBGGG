@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockSystem : MonoBehaviour
+public static class BlockManager
 {
     private static Dictionary<Vector2Int, Chunk> _chunks = new Dictionary<Vector2Int, Chunk>();
+    private static BlockHealthMap _blockHealth = new();
+
 
     private static readonly Dictionary<VoxelType, int> _initialHealthMap = new Dictionary<VoxelType, int>
     {
@@ -24,7 +26,7 @@ public class BlockSystem : MonoBehaviour
         {
             chunk.Blocks[local.x, local.y, local.z] = type;
             chunk.BuildMesh();
-            BlockHealthController.SetHealth(worldPos, GetInitialHealth(type));
+            _blockHealth.SetHealth(worldPos, GetInitialHealth(type));
         }
     }
 
@@ -35,15 +37,17 @@ public class BlockSystem : MonoBehaviour
         if (!GetBlockType(worldPos, out var type) || type == VoxelType.Air)
             return;
 
-        if (!BlockHealthController.HasHealth(worldPos))
-            BlockHealthController.SetHealth(worldPos, GetInitialHealth(type));
+        if (!_blockHealth.HasHealth(worldPos))
+            _blockHealth.SetHealth(worldPos, GetInitialHealth(type));
 
-        int preHp = BlockHealthController.GetHealth(worldPos);
+        int preHp = _blockHealth.GetHealth(worldPos);
 
+        //捞棋飘 积己
         BlockEffectManager.Instance?.PlayDamageEffect(worldPos);
 
-        if (BlockHealthController.Damage(worldPos, dmg))
+        if (_blockHealth.Damage(worldPos, dmg))
         {
+            //捞棋飘 积己
             BlockEffectManager.Instance?.PlayBreakEffect(worldPos);
 
             if (TryGetChunk(worldPos, out var chunk, out var local))

@@ -42,33 +42,8 @@ public class SceneLoad : MonoBehaviour
 
     private void Update()
     {
-        //if (Dog != null)
-        //{
-        //    Dog.rectTransform.Rotate(0f, 0f, -100f * Time.deltaTime);
-        //}
     }
-    //private IEnumerator MoveCameraDown()
-    //{
-    //    if (loadingSceneCamera == null)
-    //    {
-    //        Debug.LogWarning("loadingSceneCamera 참조 누락");
-    //        yield break;
-    //    }
 
-    //    Vector3 startPos = loadingSceneCamera.transform.position;
-    //    Vector3 endPos = startPos - new Vector3(0, cameraYOffset, 0);
-
-    //    float elapsed = 0f;
-    //    while (elapsed < cameraMoveDuration)
-    //    {
-    //        float t = elapsed / cameraMoveDuration;
-    //        loadingSceneCamera.transform.position = Vector3.Lerp(startPos, endPos, t);
-    //        elapsed += Time.deltaTime;
-    //        yield return null;
-    //    }
-
-    //    loadingSceneCamera.transform.position = endPos;
-    //}
     IEnumerator FullLoadRoutine()
     {
         // 가중치: 풀 20%, 월드 70%, 씬 10%
@@ -104,10 +79,6 @@ public class SceneLoad : MonoBehaviour
             progressText.text = $"{Mathf.RoundToInt(overall * 100f)}%";
         }));
         yield return null;
-
-
-        //// 4) 카메라 이동
-        //yield return MoveCameraDown();
 
         // 3) 씬 비동기 Additive 로딩
         statusText.text = "게임 스타또~!";

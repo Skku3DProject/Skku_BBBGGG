@@ -51,8 +51,6 @@ public class PlayerBlockController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0)) // 우클릭 → 블럭 설치
             {
-                //_player.PlayerAnimator.SetTrigger("BlockPlace"); //-- 나중에 블럭설치모션
-
                 TryPlaceBlock();
             }
         }
@@ -79,12 +77,8 @@ public class PlayerBlockController : MonoBehaviour
             }
         }
 
-        BlockSystem.PlaceBlock(pos, PlaceType);
+        BlockManager.PlaceBlock(pos, PlaceType);
         PlayerSoundController.Instance.PlaySound(PlayerSoundType.Block);
-        //Vector3Int pos = GetTargetBlockPosition(true);
-        //if (!IsWithinReach(pos))
-        //    return;
-        //BlockSystem.PlaceBlock(pos, PlaceType);
     }
     //애님 이벤트용
     public void TryDestroyBlockOrMineObject()
@@ -97,7 +91,7 @@ public class PlayerBlockController : MonoBehaviour
         if (!IsWithinReach(pos))
             return;
 
-        BlockSystem.DamageBlock(pos, 10);
+        BlockManager.DamageBlock(pos, 10);
     }
 
     private Vector3Int GetTargetBlockPosition(bool placing)
@@ -135,15 +129,12 @@ public class PlayerBlockController : MonoBehaviour
             ? PlayerCamera.ScreenPointToRay(screenCenter)
             : new Ray(transform.position, transform.forward);
 
-        Debug.DrawRay(ray.origin, ray.direction * MaxDistance, Color.red, 30f);
-
         if (Physics.Raycast(ray, out RaycastHit hit, 30f, EnvirLayer))
         {
             // 플레이어 위치와 히트 위치 간 거리 계산
             float distToHit = Vector3.Distance(_player.transform.position, hit.point);
             if (distToHit > MaxDistance)
             {
-                Debug.Log("Hit point is beyond MaxDistance from player.");
                 return false;
             }
 

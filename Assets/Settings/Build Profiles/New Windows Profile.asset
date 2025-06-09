@@ -20,9 +20,9 @@ MonoBehaviour:
     rid: 7756654428103901298
   m_OverrideGlobalSceneList: 1
   m_Scenes:
-  - m_enabled: 1
+  - m_enabled: 0
     m_path: Assets/01.Scenes/TitleScene.unity
-  - m_enabled: 1
+  - m_enabled: 0
     m_path: Assets/01.Scenes/LoadingScene.unity
   - m_enabled: 1
     m_path: Assets/01.Scenes/JeonTeaJun.unity

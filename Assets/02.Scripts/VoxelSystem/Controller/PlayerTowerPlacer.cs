@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerPlacer : MonoBehaviour
+public class PlayerTowerPlacer : MonoBehaviour
 {
-    public static TowerPlacer Instance { get; private set; }
+    public static PlayerTowerPlacer Instance { get; private set; }
 
     //[Header("건물 목록")]
     //public List<BuildingType> BuildingTypes;

@@ -24,7 +24,10 @@ public class CurrencyManager : MonoBehaviour
     {
         Initialize();
 
-        StageManager.instance.OnCombatEnd += ClearStage;    }
+        StageManager.instance.OnCombatEnd += ClearStage;    
+    }
+
+
 
     private void ClearStage()
     {
@@ -36,7 +39,7 @@ public class CurrencyManager : MonoBehaviour
     {
         _currentCurrency = new Currency()
         {
-            Gold = 5000, Wood = 3000, Stone = 3000
+            Gold = 99999, Wood = 99999, Stone = 99999
         };
         
         UIManager.instance.RefreshCurrency();

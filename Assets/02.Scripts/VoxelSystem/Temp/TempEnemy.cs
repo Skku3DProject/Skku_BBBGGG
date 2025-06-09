@@ -46,6 +46,6 @@ public class TempEnemy : MonoBehaviour
     private IEnumerator BreakAndContinue(Vector3Int blockPos)
     {
         yield return new WaitForSeconds(breakDelay);
-        BlockSystem.DamageBlock(blockPos, breakDamage);
+        BlockManager.DamageBlock(blockPos, breakDamage);
     }
 }

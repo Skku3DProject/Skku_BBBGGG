@@ -4,7 +4,7 @@ public class PlayerRewardManager : MonoBehaviour
     public static PlayerRewardManager Instance { get; private set; }
     private ThirdPersonPlayer _player; // 캐싱 변수
 
-    public int skillPoints { get; private set; } = 2;
+    public int skillPoints { get; private set; } = 100;
     public int potionCount { get; private set; } = 2;
     public bool hasBlessingBuff { get; private set; } = false;  // 가호 버프
 

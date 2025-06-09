@@ -1,19 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockHealthController : MonoBehaviour
+public class BlockHealthMap
 {
-    private static Dictionary<Vector3Int, int> _healthMap = new Dictionary<Vector3Int, int>();
+    private readonly Dictionary<Vector3Int, int> _healthMap = new();
 
-    public static void SetHealth(Vector3Int pos, int hp)
+    public void SetHealth(Vector3Int pos, int hp)
     {
         _healthMap[pos] = hp;
     }
-    public static bool HasHealth(Vector3Int pos)
+
+    public bool HasHealth(Vector3Int pos)
     {
         return _healthMap.ContainsKey(pos);
     }
-    public static bool Damage(Vector3Int pos, int dmg)
+
+    public bool Damage(Vector3Int pos, int dmg)
     {
         if (!_healthMap.TryGetValue(pos, out var hp))
             return false;
@@ -29,8 +31,13 @@ public class BlockHealthController : MonoBehaviour
         return false;
     }
 
-    public static int GetHealth(Vector3Int pos)
+    public int GetHealth(Vector3Int pos)
     {
         return _healthMap.TryGetValue(pos, out var hp) ? hp : 0;
+    }
+
+    public void Clear()
+    {
+        _healthMap.Clear();
     }
 }
