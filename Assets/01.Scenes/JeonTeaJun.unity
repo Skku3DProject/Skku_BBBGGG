@@ -184,6 +184,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7791705503194112799, guid: 3dd7a34a9e5059a4da5f86803c1035e5, type: 3}
+      propertyPath: Root
+      value: 
+      objectReference: {fileID: 170485448}
+    - target: {fileID: 7791705503194112799, guid: 3dd7a34a9e5059a4da5f86803c1035e5, type: 3}
       propertyPath: slider
       value: 
       objectReference: {fileID: 745832153}
@@ -312,11 +316,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a4afe858c873054a8898ba193418a17, type: 3}
---- !u!4 &192076119 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5712614319224670814, guid: 5a4afe858c873054a8898ba193418a17, type: 3}
-  m_PrefabInstance: {fileID: 192076118}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &445431792
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,6 +391,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445431792}
   m_CullTransparentMesh: 1
+--- !u!1 &625890198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 625890200}
+  - component: {fileID: 625890199}
+  m_Layer: 0
+  m_Name: WorldBackUp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &625890199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625890198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e87decf8000ae614f965a82d8e326439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackupRadius: 6
+--- !u!4 &625890200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625890198}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 402.27042, y: 14.881536, z: 432.71744}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &745832151
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,88 +1156,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1 &1191994405
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1191994408}
-  - component: {fileID: 1191994407}
-  - component: {fileID: 1191994406}
-  m_Layer: 0
-  m_Name: WorldGenerate
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1191994406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191994405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 071725fafb32a7646b179d22a9142a08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DamageEffectPrefab: {fileID: 1929763394318644316, guid: 5c2c1ef5592678042852d6fca65aac7a, type: 3}
-  BreakEffectPrefab: {fileID: 1929763394318644316, guid: 6d2afd032cac2e14c90a4597ba10d12c, type: 3}
---- !u!114 &1191994407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191994405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9eedb3d526f79f44a083770f10156cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ChunkPrefab: {fileID: 2690487909747216947, guid: c102dc976872fa94694d915da439e587, type: 3}
-  Player: {fileID: 1656957283}
-  StartPos: {x: 0, y: 0, z: 0}
-  BaseCampTransform: {fileID: 170485448}
-  SpawenrTransform: {fileID: 192076119}
-  DeadZonePrefab: {fileID: 5396434526519613450, guid: f98b0ec6c501db448b294b5509b6de85, type: 3}
-  ChunkLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  ChestPrefab: {fileID: 2868492944586623384, guid: b5c6bf2ec9d029a44840e4e060298544, type: 3}
-  MaxChestCount: 20
-  GridWidth: 50
-  GridHeight: 50
-  Distance: 80
-  GrassPrefab: {fileID: 4375382654496483180, guid: 4d8cde95c08e1794f94ca247a291c1ce, type: 3}
-  MushroomPrefab: {fileID: 4569295655211456005, guid: 189f9f09eb7dcdd48ad8ec5c8e2be81e, type: 3}
-  TreePrefab: {fileID: 3086538645063425187, guid: 17a7eacbeefbb2443868f4ebe1bfb9f6, type: 3}
-  IronstonePrefab: {fileID: 3277944643622535537, guid: 8580aac6a440f3d4d8f5eb5b24dcf094, type: 3}
-  GrassDensity: 0.05
-  MusroomDensity: 0.0025
-  TreeDensity: 0.0025
-  IronstoneDensity: 0.0005
-  NoiseScale: 0.1
---- !u!4 &1191994408
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191994405}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1425241589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1930,11 +1892,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
---- !u!1 &1656957283 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2042415629762981396, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
-  m_PrefabInstance: {fileID: 1656957282}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1656957289 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1072637427109573353, guid: 4e9d65479f50b20439b44075187e72da, type: 3}
@@ -2015,114 +1972,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827005621}
   m_CullTransparentMesh: 1
---- !u!1 &1859621791
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1859621793}
-  - component: {fileID: 1859621792}
-  - component: {fileID: 1859621794}
-  m_Layer: 0
-  m_Name: TowerObjectPool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1859621792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1859621791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7285fffecec555c4baba7336c45e5259, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poolEntries:
-  - key: Arrow
-    prefab: {fileID: 201242786739422658, guid: 3e04495c1e2e00c40bbed2572f137ae5, type: 3}
-    size: 50
-  - key: Fireball
-    prefab: {fileID: 3607720602487732084, guid: c5a96a3518351d04b8312ae163491fc0, type: 3}
-    size: 50
-  - key: Iceball
-    prefab: {fileID: 8762545296013883577, guid: 48abb01ae3edc5f4eb1fe4a84e7646b2, type: 3}
-    size: 50
-  - key: ArrowTower
-    prefab: {fileID: 634377025880031044, guid: 764b9e4879abdb143872fe11a3900d14, type: 3}
-    size: 1
-  - key: FireballTower
-    prefab: {fileID: 9166186074018161065, guid: 78dc8f41cee61a141a2f556bff02ef4b, type: 3}
-    size: 1
-  - key: FireballHitVfx
-    prefab: {fileID: 753054468046317402, guid: 8694715191a75d54a99a8ce36938677b, type: 3}
-    size: 50
-  - key: ArrowHitVfx
-    prefab: {fileID: 413363037028580369, guid: 0b16f2a754c93a3489d2710cb137fdab, type: 3}
-    size: 50
-  - key: FireballHitVfx
-    prefab: {fileID: 753054468046317402, guid: 8694715191a75d54a99a8ce36938677b, type: 3}
-    size: 50
-  - key: IceballHitVfx
-    prefab: {fileID: 3892346015597751503, guid: 45ba2a0f5fe3ce34d8465de6dc8c2fd2, type: 3}
-    size: 50
-  - key: BlockDamageVfx
-    prefab: {fileID: 1929763394318644316, guid: 5c2c1ef5592678042852d6fca65aac7a, type: 3}
-    size: 50
-  - key: IronStoneFragment
-    prefab: {fileID: 6412780478584562660, guid: 7444d5b7335e6da4eb3c362a1ea6a7cd, type: 3}
-    size: 5
-  - key: TreeFragment
-    prefab: {fileID: 204599766683211350, guid: a3d906452839ffa40b6801fe2697a81d, type: 3}
-    size: 5
-  - key: TowerFragment
-    prefab: {fileID: 4989874286084197583, guid: b727db30ff4914c4cb319ffdd80bc864, type: 3}
-    size: 30
-  - key: BlockDamagedVfx
-    prefab: {fileID: 1929763394318644316, guid: 5c2c1ef5592678042852d6fca65aac7a, type: 3}
-    size: 50
-  - key: BlockBreakVfx
-    prefab: {fileID: 1929763394318644316, guid: 6d2afd032cac2e14c90a4597ba10d12c, type: 3}
-    size: 200
---- !u!4 &1859621793
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1859621791}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1859621794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1859621791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fded0e237494c3e4b86ffb4b38121df5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundClips:
-  - {fileID: 8300000, guid: edaeaad747fe69b4d84d0e9aaf96e547, type: 3}
-  - {fileID: 8300000, guid: 11f37d53d5020b94eac34a3ce66ad9c3, type: 3}
-  - {fileID: 8300000, guid: 1041691e5da0c414f9af1a16fef92184, type: 3}
-  - {fileID: 8300000, guid: 5e6aac75536d6b144b0e96247cfa7a2a, type: 3}
 --- !u!1 &1953611993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2384,10 +2233,9 @@ SceneRoots:
   - {fileID: 854161547}
   - {fileID: 1953611995}
   - {fileID: 1656957282}
-  - {fileID: 1191994408}
   - {fileID: 1021268026}
   - {fileID: 2079329042}
   - {fileID: 192076118}
-  - {fileID: 1859621793}
   - {fileID: 170485447}
   - {fileID: 1425241589}
+  - {fileID: 625890200}

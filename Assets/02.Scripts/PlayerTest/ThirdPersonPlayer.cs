@@ -62,6 +62,7 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
     private void Start()
     {
         UIManager.instance.UI_PlayerSetMaxStat(PlayerStats.MaxHealth, PlayerStats.Stamina);
+        WorldManager.instance.OnWorldCenterReady += InitStartPosition;
     }
     private void Respawn()
     {
@@ -231,5 +232,15 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
     {
         CurrentStamina = Mathf.Clamp(CurrentStamina + value, 0f, PlayerStats.Stamina);
         UIManager.instance.UI_MpSlider(CurrentStamina);
+    }
+
+    private void InitStartPosition(Vector3 startPos)
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        _characterController.enabled = false;
+        transform.position = startPos;
+        _characterController.enabled = true;
     }
 }

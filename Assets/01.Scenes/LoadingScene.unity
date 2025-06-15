@@ -288,6 +288,8 @@ GameObject:
   - component: {fileID: 608818178}
   - component: {fileID: 608818177}
   - component: {fileID: 608818180}
+  - component: {fileID: 608818182}
+  - component: {fileID: 608818181}
   m_Layer: 0
   m_Name: WorldGenerate (1)
   m_TagString: Untagged
@@ -330,12 +332,9 @@ MonoBehaviour:
   ChunkLayer:
     serializedVersion: 2
     m_Bits: 8
-  ChestPrefab: {fileID: 2868492944586623384, guid: b5c6bf2ec9d029a44840e4e060298544, type: 3}
-  MaxChestCount: 20
   GridWidth: 50
   GridHeight: 50
   Distance: 80
-  NoiseScale: 0.1
 --- !u!4 &608818179
 Transform:
   m_ObjectHideFlags: 0
@@ -372,6 +371,39 @@ MonoBehaviour:
   TreeDensity: 0.004
   IronstoneDensity: 0.001
   CampBlockRadius: 15
+--- !u!114 &608818181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608818176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c1de89844cedaa4981296cd3fa8c9ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Settings:
+    NoiseScale: 0.1
+    FlatRadius: 48
+    FadeRadius: 32
+    HeightThreshold: 18
+    GridWidth: 5
+    GridHeight: 5
+--- !u!114 &608818182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608818176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19a8f08ab222c64195036c3f8c769f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChestPrefab: {fileID: 2868492944586623384, guid: b5c6bf2ec9d029a44840e4e060298544, type: 3}
+  MaxChestCount: 10
 --- !u!1 &694484781
 GameObject:
   m_ObjectHideFlags: 0

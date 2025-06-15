@@ -5,12 +5,24 @@ using UnityEngine.UI;
 
 public class BaseStat : MonoBehaviour, IDamageAble
 {
+    public Transform Root;
+
     public float BaseHP = 5000;
     [SerializeField] private float _rotationSpeed = 100f;
     private Vector3 _currentPos;
     private float _timer = 0;
 
     public Slider slider;
+
+    private void Awake()
+    {
+        WorldManager.instance.OnWorldCenterReady += InitStartPosition;
+    }
+    private void InitStartPosition(Vector3 position)
+    {
+        position.y += 2f;
+        Root.position = position;
+    }
 
     private void Start()
     {

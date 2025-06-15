@@ -20,16 +20,25 @@ public class EnemySpawner : MonoBehaviour
 
     private List<GameObject> spawnEnemyPrefabs = new List<GameObject>();
 
-
+    private void Awake()
+    {
+        WorldManager.instance.OnCreateEnemySpawenr += InitStartPosition;
+    }
     private void Start()
     {
         MaxSpawnCount = EnemyPoolManager.Instance.MaxEnemyCount;
+
 
         EnemyManager.Instance.SetEnemiesList(MaxSpawnCount);
         UI_Enemy.Instance.SetHPBarMaxSize(MaxSpawnCount);
         StageManager.instance.OnCombatStart += Spawn;
 
         _positionList = new List<Vector3>(MaxSpawnCount);
+    }
+    private void InitStartPosition(Vector3 position)
+    {
+        Debug.Log("init spawner pos");
+        gameObject.transform.position = position;
     }
 
     public void Spawn()
