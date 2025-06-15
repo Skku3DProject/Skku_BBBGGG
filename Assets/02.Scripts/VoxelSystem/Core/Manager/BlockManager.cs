@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,9 @@ public static class BlockManager
     private static Dictionary<Vector2Int, Chunk> _chunks = new Dictionary<Vector2Int, Chunk>();
     private static BlockHealthMap _blockHealth = new();
 
+    // 이벤트를 통한 느슨한 결합
+    public static event Action<Vector3Int> OnBlockDamaged;
+    public static event Action<Vector3Int> OnBlockBroken;
 
     private static readonly Dictionary<VoxelType, int> _initialHealthMap = new Dictionary<VoxelType, int>
     {
@@ -19,40 +23,38 @@ public static class BlockManager
         _chunks[coord] = chunk;
     }
 
-    // 블럭 설치
+    public static void UnregisterChunk(Vector2Int coord)
+    {
+        _chunks.Remove(coord);
+    }
+
     public static void PlaceBlock(Vector3Int worldPos, VoxelType type)
     {
         if (TryGetChunk(worldPos, out var chunk, out var local))
         {
-            chunk.Blocks[local.x, local.y, local.z] = type;
-            chunk.BuildMesh();
+            chunk.SetBlock(local, type);
             _blockHealth.SetHealth(worldPos, GetInitialHealth(type));
         }
     }
 
-    // 블럭 데미지
     public static void DamageBlock(Vector3Int worldPos, int dmg, bool rebuildMesh = true)
     {
-
         if (!GetBlockType(worldPos, out var type) || type == VoxelType.Air)
             return;
 
         if (!_blockHealth.HasHealth(worldPos))
             _blockHealth.SetHealth(worldPos, GetInitialHealth(type));
 
-        int preHp = _blockHealth.GetHealth(worldPos);
-
-        //이펙트 생성
-        BlockEffectManager.Instance?.PlayDamageEffect(worldPos);
+        // 이벤트 발생으로 이펙트 시스템과 분리
+        OnBlockDamaged?.Invoke(worldPos);
 
         if (_blockHealth.Damage(worldPos, dmg))
         {
-            //이펙트 생성
-            BlockEffectManager.Instance?.PlayBreakEffect(worldPos);
+            OnBlockBroken?.Invoke(worldPos);
 
             if (TryGetChunk(worldPos, out var chunk, out var local))
             {
-                chunk.Blocks[local.x, local.y, local.z] = VoxelType.Air;
+                chunk.SetBlock(local, VoxelType.Air);
                 if (rebuildMesh)
                     chunk.BuildMesh();
             }
@@ -100,7 +102,6 @@ public static class BlockManager
         }
     }
 
-    // 좌표 변환
     private static bool TryGetChunk(Vector3Int worldPos, out Chunk chunk, out Vector3Int localPos)
     {
         int chunkX = Mathf.FloorToInt(worldPos.x / (float)Chunk.CHUNK_WIDTH);
@@ -120,7 +121,7 @@ public static class BlockManager
         bool valid = localX >= 0 && localX < Chunk.CHUNK_WIDTH + 2
                    && localY >= 0 && localY < Chunk.CHUNK_HEIGHT
                    && localZ >= 0 && localZ < Chunk.CHUNK_WIDTH + 2;
-        
+
         if (!valid)
         {
             localPos = default;
@@ -139,10 +140,11 @@ public static class BlockManager
     {
         if (TryGetChunk(worldPos, out var chunk, out var localPos))
         {
-            type = chunk.Blocks[localPos.x, localPos.y, localPos.z];
+            type = chunk.GetBlock(localPos);
             return true;
         }
         type = VoxelType.Air;
         return false;
     }
+
 }

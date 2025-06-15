@@ -3,32 +3,25 @@ using UnityEngine;
 
 public class TilePos
 {
+    private const float ATLAS_SIZE = 16f;
+    private const float UV_OFFSET = 0.001f;
 
-    private int _xPos;
-    private int _yPos;
-
-    private Vector2[] _uvs;
+    private readonly Vector2[] _uvs;
 
     public TilePos(int xPos, int yPos)
     {
-        _xPos = xPos;
-        _yPos = yPos;
         _uvs = new Vector2[]
         {
-            new Vector2(xPos/16f + .001f, yPos/16f + .001f),
-            new Vector2(xPos/16f+ .001f, (yPos+1)/16f - .001f),
-            new Vector2((xPos+1)/16f - .001f, (yPos+1)/16f - .001f),
-            new Vector2((xPos+1)/16f - .001f, yPos/16f+ .001f),
+            new Vector2(xPos/ATLAS_SIZE + UV_OFFSET, yPos/ATLAS_SIZE + UV_OFFSET),
+            new Vector2(xPos/ATLAS_SIZE + UV_OFFSET, (yPos+1)/ATLAS_SIZE - UV_OFFSET),
+            new Vector2((xPos+1)/ATLAS_SIZE - UV_OFFSET, (yPos+1)/ATLAS_SIZE - UV_OFFSET),
+            new Vector2((xPos+1)/ATLAS_SIZE - UV_OFFSET, yPos/ATLAS_SIZE + UV_OFFSET),
         };
     }
 
-    public Vector2[] GetUVs()
-    {
-        return _uvs;
-    }
+    public Vector2[] GetUVs() => _uvs;
 
-
-    public static Dictionary<Tile, TilePos> tiles = new Dictionary<Tile, TilePos>()
+    public static readonly Dictionary<Tile, TilePos> tiles = new Dictionary<Tile, TilePos>()
     {
         {Tile.Dirt, new TilePos(5,0)},
         {Tile.Grass, new TilePos(6,0)},
@@ -36,6 +29,5 @@ public class TilePos
         {Tile.Stone, new TilePos(4,0)},
         {Tile.Snow, new TilePos(2,1)},
         {Tile.SnowSide, new TilePos(1,1)},
-
     };
 }

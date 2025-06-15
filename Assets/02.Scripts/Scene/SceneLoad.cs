@@ -136,7 +136,7 @@ public class SceneLoad : MonoBehaviour
     {
         if (scene.name == "JeonTeaJun")
         {
-            worldManager.RegisterStageEvents(); // 이벤트 등록
+            worldManager.RegisterStageEventsForSceneLoad(); // 이벤트 등록
             SceneManager.sceneLoaded -= OnSceneLoaded; // 한 번만 실행되게 제거
         }
     }

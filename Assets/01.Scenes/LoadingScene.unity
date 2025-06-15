@@ -240,88 +240,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &347868787
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 347868790}
-  - component: {fileID: 347868789}
-  - component: {fileID: 347868788}
-  m_Layer: 0
-  m_Name: WorldGenerate
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &347868788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347868787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 071725fafb32a7646b179d22a9142a08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DamageEffectPrefab: {fileID: 1929763394318644316, guid: 5c2c1ef5592678042852d6fca65aac7a, type: 3}
-  BreakEffectPrefab: {fileID: 1929763394318644316, guid: 6d2afd032cac2e14c90a4597ba10d12c, type: 3}
---- !u!114 &347868789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347868787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9eedb3d526f79f44a083770f10156cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ChunkPrefab: {fileID: 2690487909747216947, guid: c102dc976872fa94694d915da439e587, type: 3}
-  Player: {fileID: 0}
-  StartPos: {x: 0, y: 0, z: 0}
-  BaseCampTransform: {fileID: 0}
-  SpawenrTransform: {fileID: 0}
-  ChestPrefab: {fileID: 2868492944586623384, guid: b5c6bf2ec9d029a44840e4e060298544, type: 3}
-  MaxChestCount: 10
-  GridWidth: 50
-  GridHeight: 50
-  ChunkLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  Distance: 30
-  GrassPrefab: {fileID: 4375382654496483180, guid: 4d8cde95c08e1794f94ca247a291c1ce, type: 3}
-  MushroomPrefab: {fileID: 4569295655211456005, guid: 189f9f09eb7dcdd48ad8ec5c8e2be81e, type: 3}
-  TreePrefab: {fileID: 3086538645063425187, guid: 17a7eacbeefbb2443868f4ebe1bfb9f6, type: 3}
-  IronstonePrefab: {fileID: 3277944643622535537, guid: 8580aac6a440f3d4d8f5eb5b24dcf094, type: 3}
-  GrassDensity: 0.05
-  MusroomDensity: 0.0025
-  TreeDensity: 0.0025
-  IronstoneDensity: 0.0001
-  NoiseScale: 0.1
-  DeadZonePrefab: {fileID: 5396434526519613450, guid: f98b0ec6c501db448b294b5509b6de85, type: 3}
---- !u!4 &347868790
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347868787}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &586214100
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,6 +287,7 @@ GameObject:
   - component: {fileID: 608818179}
   - component: {fileID: 608818178}
   - component: {fileID: 608818177}
+  - component: {fileID: 608818180}
   m_Layer: 0
   m_Name: WorldGenerate (1)
   m_TagString: Untagged
@@ -407,24 +326,16 @@ MonoBehaviour:
   StartPos: {x: 0, y: 0, z: 0}
   BaseCampTransform: {fileID: 0}
   SpawenrTransform: {fileID: 0}
+  DeadZonePrefab: {fileID: 5396434526519613450, guid: f98b0ec6c501db448b294b5509b6de85, type: 3}
+  ChunkLayer:
+    serializedVersion: 2
+    m_Bits: 8
   ChestPrefab: {fileID: 2868492944586623384, guid: b5c6bf2ec9d029a44840e4e060298544, type: 3}
   MaxChestCount: 20
   GridWidth: 50
   GridHeight: 50
-  ChunkLayer:
-    serializedVersion: 2
-    m_Bits: 8
   Distance: 80
-  GrassPrefab: {fileID: 4375382654496483180, guid: 4d8cde95c08e1794f94ca247a291c1ce, type: 3}
-  MushroomPrefab: {fileID: 4569295655211456005, guid: 189f9f09eb7dcdd48ad8ec5c8e2be81e, type: 3}
-  TreePrefab: {fileID: 3086538645063425187, guid: 17a7eacbeefbb2443868f4ebe1bfb9f6, type: 3}
-  IronstonePrefab: {fileID: 3277944643622535537, guid: 8580aac6a440f3d4d8f5eb5b24dcf094, type: 3}
-  GrassDensity: 0.05
-  MusroomDensity: 0.0025
-  TreeDensity: 0.0025
-  IronstoneDensity: 0.0005
   NoiseScale: 0.1
-  DeadZonePrefab: {fileID: 5396434526519613450, guid: f98b0ec6c501db448b294b5509b6de85, type: 3}
 --- !u!4 &608818179
 Transform:
   m_ObjectHideFlags: 0
@@ -440,6 +351,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &608818180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608818176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa48c9a3589f0e4087e4e6567f7252d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GrassPrefab: {fileID: 4375382654496483180, guid: 4d8cde95c08e1794f94ca247a291c1ce, type: 3}
+  MushroomPrefab: {fileID: 4569295655211456005, guid: 189f9f09eb7dcdd48ad8ec5c8e2be81e, type: 3}
+  TreePrefab: {fileID: 3086538645063425187, guid: 17a7eacbeefbb2443868f4ebe1bfb9f6, type: 3}
+  IronstonePrefab: {fileID: 3277944643622535537, guid: 8580aac6a440f3d4d8f5eb5b24dcf094, type: 3}
+  GrassDensity: 0.08
+  MushroomDensity: 0.01
+  TreeDensity: 0.004
+  IronstoneDensity: 0.001
+  CampBlockRadius: 15
 --- !u!1 &694484781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1712,7 +1644,6 @@ SceneRoots:
   - {fileID: 1615112281}
   - {fileID: 179783528}
   - {fileID: 1855437423}
-  - {fileID: 347868790}
   - {fileID: 731903317}
   - {fileID: 2141977289}
   - {fileID: 608818179}

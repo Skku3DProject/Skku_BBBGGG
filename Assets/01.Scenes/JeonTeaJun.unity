@@ -1129,7 +1129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1191994406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1161,13 +1161,14 @@ MonoBehaviour:
   StartPos: {x: 0, y: 0, z: 0}
   BaseCampTransform: {fileID: 170485448}
   SpawenrTransform: {fileID: 192076119}
+  DeadZonePrefab: {fileID: 5396434526519613450, guid: f98b0ec6c501db448b294b5509b6de85, type: 3}
+  ChunkLayer:
+    serializedVersion: 2
+    m_Bits: 8
   ChestPrefab: {fileID: 2868492944586623384, guid: b5c6bf2ec9d029a44840e4e060298544, type: 3}
   MaxChestCount: 20
   GridWidth: 50
   GridHeight: 50
-  ChunkLayer:
-    serializedVersion: 2
-    m_Bits: 8
   Distance: 80
   GrassPrefab: {fileID: 4375382654496483180, guid: 4d8cde95c08e1794f94ca247a291c1ce, type: 3}
   MushroomPrefab: {fileID: 4569295655211456005, guid: 189f9f09eb7dcdd48ad8ec5c8e2be81e, type: 3}
@@ -1178,7 +1179,6 @@ MonoBehaviour:
   TreeDensity: 0.0025
   IronstoneDensity: 0.0005
   NoiseScale: 0.1
-  DeadZonePrefab: {fileID: 5396434526519613450, guid: f98b0ec6c501db448b294b5509b6de85, type: 3}
 --- !u!4 &1191994408
 Transform:
   m_ObjectHideFlags: 0
@@ -2032,7 +2032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1859621792
 MonoBehaviour:
   m_ObjectHideFlags: 0

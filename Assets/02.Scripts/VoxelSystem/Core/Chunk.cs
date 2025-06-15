@@ -7,11 +7,31 @@ public class Chunk : MonoBehaviour
     public const int CHUNK_WIDTH = 16;
     public const int CHUNK_HEIGHT = 64;
 
-    // X/Z 방향으로 +1씩 패딩이 필요하므로 총 +2
     public VoxelType[,,] Blocks = new VoxelType[CHUNK_WIDTH + 2, CHUNK_HEIGHT, CHUNK_WIDTH + 2];
 
     private MeshFilter _meshFilter;
     private MeshCollider _meshCollider;
+    private Vector2Int _coordinate;
+
+    private List<Vector3> _vertices = new List<Vector3>(2048);
+    private List<int> _triangles = new List<int>(6144);
+    private List<Vector2> _uvs = new List<Vector2>(2048);
+
+    private static readonly Vector3[][] FaceVertices = new Vector3[][]
+    {
+        // Top
+        new Vector3[] { new Vector3(0,1,0), new Vector3(0,1,1), new Vector3(1,1,1), new Vector3(1,1,0) },
+        // Bottom  
+        new Vector3[] { new Vector3(0,0,0), new Vector3(1,0,0), new Vector3(1,0,1), new Vector3(0,0,1) },
+        // Front
+        new Vector3[] { new Vector3(0,0,0), new Vector3(0,1,0), new Vector3(1,1,0), new Vector3(1,0,0) },
+        // Back 
+        new Vector3[] { new Vector3(1,0,1), new Vector3(1,1,1), new Vector3(0,1,1), new Vector3(0,0,1) },
+        // Left 
+        new Vector3[] { new Vector3(0,0,1), new Vector3(0,1,1), new Vector3(0,1,0), new Vector3(0,0,0) },
+        // Right 
+        new Vector3[] { new Vector3(1,0,0), new Vector3(1,1,0), new Vector3(1,1,1), new Vector3(1,0,1) }
+    };
 
     private void Awake()
     {
@@ -20,18 +40,34 @@ public class Chunk : MonoBehaviour
 
         int gridX = Mathf.FloorToInt(transform.position.x / CHUNK_WIDTH);
         int gridZ = Mathf.FloorToInt(transform.position.z / CHUNK_WIDTH);
-        var coord = new Vector2Int(gridX, gridZ);
-        BlockManager.RegisterChunk(coord, this);
+        _coordinate = new Vector2Int(gridX, gridZ);
+
+        BlockManager.RegisterChunk(_coordinate, this);
+    }
+
+    private void OnDestroy()
+    {
+        BlockManager.UnregisterChunk(_coordinate);
+    }
+
+    // 외부에서 블록 설정할 수 있는 메서드 추가
+    public void SetBlock(Vector3Int localPos, VoxelType type)
+    {
+        Blocks[localPos.x, localPos.y, localPos.z] = type;
+        BuildMesh();
+    }
+
+    public VoxelType GetBlock(Vector3Int localPos)
+    {
+        return Blocks[localPos.x, localPos.y, localPos.z];
     }
 
     public void BuildMesh()
     {
-        var mesh = new Mesh();
-        var verts = new List<Vector3>();
-        var tris = new List<int>();
-        var uvs = new List<Vector2>();
+        _vertices.Clear();
+        _triangles.Clear();
+        _uvs.Clear();
 
-        // 실제 블록은 [1..CHUNK_WIDTH] 범위
         for (int x = 1; x <= CHUNK_WIDTH; x++)
         {
             for (int z = 1; z <= CHUNK_WIDTH; z++)
@@ -42,216 +78,60 @@ public class Chunk : MonoBehaviour
                     if (type == VoxelType.Air) continue;
 
                     Vector3 blockPos = new Vector3(x - 1, y, z - 1);
-                    int faceCount = 0;
+                    var voxel = Voxel.blocks[type];
 
-                    // Top
-                    if (y == CHUNK_HEIGHT - 1 || Blocks[x, y + 1, z] == VoxelType.Air)
-                    {
-                        verts.AddRange(new[] {
-                            blockPos + new Vector3(0,1,0),
-                            blockPos + new Vector3(0,1,1),
-                            blockPos + new Vector3(1,1,1),
-                            blockPos + new Vector3(1,1,0)
-                        });
-                        uvs.AddRange(Voxel.blocks[type].TopPos.GetUVs());
-                        faceCount++;
-                    }
-                    // Bottom
-                    if (y == 0 || Blocks[x, y - 1, z] == VoxelType.Air)
-                    {
-                        verts.AddRange(new[] {
-                            blockPos + new Vector3(0,0,0),
-                            blockPos + new Vector3(1,0,0),
-                            blockPos + new Vector3(1,0,1),
-                            blockPos + new Vector3(0,0,1)
-                        });
-                        uvs.AddRange(Voxel.blocks[type].BottomPos.GetUVs());
-                        faceCount++;
-                    }
-                    // Front (-Z)
-                    if (Blocks[x, y, z - 1] == VoxelType.Air)
-                    {
-                        verts.AddRange(new[] {
-                            blockPos + new Vector3(0,0,0),
-                            blockPos + new Vector3(0,1,0),
-                            blockPos + new Vector3(1,1,0),
-                            blockPos + new Vector3(1,0,0)
-                        });
-                        uvs.AddRange(Voxel.blocks[type].SidePos.GetUVs());
-                        faceCount++;
-                    }
-                    // Back (+Z)
-                    if (Blocks[x, y, z + 1] == VoxelType.Air)
-                    {
-                        verts.AddRange(new[] {
-                            blockPos + new Vector3(1,0,1),
-                            blockPos + new Vector3(1,1,1),
-                            blockPos + new Vector3(0,1,1),
-                            blockPos + new Vector3(0,0,1)
-                        });
-                        uvs.AddRange(Voxel.blocks[type].SidePos.GetUVs());
-                        faceCount++;
-                    }
-                    // Left (-X)
-                    if (Blocks[x - 1, y, z] == VoxelType.Air)
-                    {
-                        verts.AddRange(new[] {
-                            blockPos + new Vector3(0,0,1),
-                            blockPos + new Vector3(0,1,1),
-                            blockPos + new Vector3(0,1,0),
-                            blockPos + new Vector3(0,0,0)
-                        });
-                        uvs.AddRange(Voxel.blocks[type].SidePos.GetUVs());
-                        faceCount++;
-                    }
-                    // Right (+X)
-                    if (Blocks[x + 1, y, z] == VoxelType.Air)
-                    {
-                        verts.AddRange(new[] {
-                            blockPos + new Vector3(1,0,0),
-                            blockPos + new Vector3(1,1,0),
-                            blockPos + new Vector3(1,1,1),
-                            blockPos + new Vector3(1,0,1)
-                        });
-                        uvs.AddRange(Voxel.blocks[type].SidePos.GetUVs());
-                        faceCount++;
-                    }
-
-                    // Triangles
-                    int startIndex = verts.Count - faceCount * 4;
-                    for (int i = 0; i < faceCount; i++)
-                    {
-                        tris.AddRange(new[] {
-                            startIndex + i * 4,
-                            startIndex + i * 4 + 1,
-                            startIndex + i * 4 + 2,
-                            startIndex + i * 4,
-                            startIndex + i * 4 + 2,
-                            startIndex + i * 4 + 3
-                        });
-                    }
+                    AddFaceIfVisible(0, blockPos, x, y + 1, z, voxel.TopPos);
+                    AddFaceIfVisible(1, blockPos, x, y - 1, z, voxel.BottomPos);
+                    AddFaceIfVisible(2, blockPos, x, y, z - 1, voxel.SidePos);
+                    AddFaceIfVisible(3, blockPos, x, y, z + 1, voxel.SidePos);
+                    AddFaceIfVisible(4, blockPos, x - 1, y, z, voxel.SidePos);
+                    AddFaceIfVisible(5, blockPos, x + 1, y, z, voxel.SidePos);
                 }
             }
         }
 
-        mesh.vertices = verts.ToArray();
-        mesh.triangles = tris.ToArray();
-        mesh.uv = uvs.ToArray();
-        mesh.RecalculateNormals();
+        if (_vertices.Count > 0)
+        {
+            var mesh = new Mesh();
+            mesh.vertices = _vertices.ToArray();
+            mesh.triangles = _triangles.ToArray();
+            mesh.uv = _uvs.ToArray();
+            mesh.RecalculateNormals();
 
-        _meshFilter.mesh = mesh;
-        _meshCollider.sharedMesh = mesh;
+            _meshFilter.mesh = mesh;
+            _meshCollider.sharedMesh = mesh;
+        }
+        else
+        {
+            _meshFilter.mesh = null;
+            _meshCollider.sharedMesh = null;
+        }
     }
 
-    //public void BuildMesh()
-    //{
-    //    var mesh = new Mesh();
-    //    var verts = new List<Vector3>();
-    //    var tris = new List<int>();
-    //    var uvs = new List<Vector2>();
+    private void AddFaceIfVisible(int faceIndex, Vector3 blockPos, int checkX, int checkY, int checkZ, TilePos tilePos)
+    {
+        bool shouldRender = (checkY < 0 || checkY >= CHUNK_HEIGHT) ||
+                           (checkX < 0 || checkX >= CHUNK_WIDTH + 2) ||
+                           (checkZ < 0 || checkZ >= CHUNK_WIDTH + 2) ||
+                           Blocks[checkX, checkY, checkZ] == VoxelType.Air;
 
-    //    for (int x = 1; x <= CHUNK_WIDTH; x++)
-    //    {
-    //        for (int z = 1; z <= CHUNK_WIDTH; z++)
-    //        {
-    //            for (int y = 0; y < CHUNK_HEIGHT; y++)
-    //            {
-    //                var type = Blocks[x, y, z];
-    //                if (type == VoxelType.Air)
-    //                    continue;
+        if (shouldRender)
+        {
+            var faceVerts = FaceVertices[faceIndex];
+            int startIndex = _vertices.Count;
 
-    //                Vector3 blockPos = new Vector3(x - 1, y, z - 1);
-    //                int faceCount = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                _vertices.Add(blockPos + faceVerts[i]);
+            }
 
-    //                // Top
-    //                if (y == CHUNK_HEIGHT - 1 || Blocks[x, y + 1, z] == VoxelType.Air)
-    //                {
-    //                    verts.AddRange(new[] {
-    //                    blockPos + new Vector3(0,1,0),
-    //                    blockPos + new Vector3(0,1,1),
-    //                    blockPos + new Vector3(1,1,1),
-    //                    blockPos + new Vector3(1,1,0)
-    //                });
-    //                    uvs.AddRange(Voxel.blocks[type].TopPos.GetUVs());
-    //                    faceCount++;
-    //                }
+            _uvs.AddRange(tilePos.GetUVs());
 
-    //                // Side 면 (경계 제외 & 옆이 Air일 때만)
-    //                // Front (-Z)
-    //                if (z > 1 && Blocks[x, y, z - 1] == VoxelType.Air)
-    //                {
-    //                    verts.AddRange(new[] {
-    //                    blockPos + new Vector3(0,0,0),
-    //                    blockPos + new Vector3(0,1,0),
-    //                    blockPos + new Vector3(1,1,0),
-    //                    blockPos + new Vector3(1,0,0)
-    //                });
-    //                    uvs.AddRange(Voxel.blocks[type].SidePos.GetUVs());
-    //                    faceCount++;
-    //                }
-
-    //                // Back (+Z)
-    //                if (z < CHUNK_WIDTH && Blocks[x, y, z + 1] == VoxelType.Air)
-    //                {
-    //                    verts.AddRange(new[] {
-    //                    blockPos + new Vector3(1,0,1),
-    //                    blockPos + new Vector3(1,1,1),
-    //                    blockPos + new Vector3(0,1,1),
-    //                    blockPos + new Vector3(0,0,1)
-    //                });
-    //                    uvs.AddRange(Voxel.blocks[type].SidePos.GetUVs());
-    //                    faceCount++;
-    //                }
-
-    //                // Left (-X)
-    //                if (x > 1 && Blocks[x - 1, y, z] == VoxelType.Air)
-    //                {
-    //                    verts.AddRange(new[] {
-    //                    blockPos + new Vector3(0,0,1),
-    //                    blockPos + new Vector3(0,1,1),
-    //                    blockPos + new Vector3(0,1,0),
-    //                    blockPos + new Vector3(0,0,0)
-    //                });
-    //                    uvs.AddRange(Voxel.blocks[type].SidePos.GetUVs());
-    //                    faceCount++;
-    //                }
-
-    //                // Right (+X)
-    //                if (x < CHUNK_WIDTH && Blocks[x + 1, y, z] == VoxelType.Air)
-    //                {
-    //                    verts.AddRange(new[] {
-    //                    blockPos + new Vector3(1,0,0),
-    //                    blockPos + new Vector3(1,1,0),
-    //                    blockPos + new Vector3(1,1,1),
-    //                    blockPos + new Vector3(1,0,1)
-    //                });
-    //                    uvs.AddRange(Voxel.blocks[type].SidePos.GetUVs());
-    //                    faceCount++;
-    //                }
-
-    //                // Triangles
-    //                int startIndex = verts.Count - faceCount * 4;
-    //                for (int i = 0; i < faceCount; i++)
-    //                {
-    //                    tris.AddRange(new[] {
-    //                    startIndex + i * 4,
-    //                    startIndex + i * 4 + 1,
-    //                    startIndex + i * 4 + 2,
-    //                    startIndex + i * 4,
-    //                    startIndex + i * 4 + 2,
-    //                    startIndex + i * 4 + 3
-    //                });
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    mesh.vertices = verts.ToArray();
-    //    mesh.triangles = tris.ToArray();
-    //    mesh.uv = uvs.ToArray();
-    //    mesh.RecalculateNormals();
-
-    //    _meshFilter.mesh = mesh;
-    //    _meshCollider.sharedMesh = mesh;
-    //}
+            _triangles.AddRange(new int[]
+            {
+                startIndex, startIndex + 1, startIndex + 2,
+                startIndex, startIndex + 2, startIndex + 3
+            });
+        }
+    }
 }

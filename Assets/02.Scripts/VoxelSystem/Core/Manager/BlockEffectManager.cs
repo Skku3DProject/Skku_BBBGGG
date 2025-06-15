@@ -19,21 +19,54 @@ public class BlockEffectManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // 이벤트 구독으로 의존성 역전
+        BlockManager.OnBlockDamaged += PlayDamageEffect;
+        BlockManager.OnBlockBroken += PlayBreakEffect;
     }
 
-    public void PlayDamageEffect(Vector3Int worldPos)
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            BlockManager.OnBlockDamaged -= PlayDamageEffect;
+            BlockManager.OnBlockBroken -= PlayBreakEffect;
+        }
+    }
+
+    private void PlayDamageEffect(Vector3Int worldPos)
     {
         if (DamageEffectPrefab == null)
             return;
         Vector3 spawnPos = worldPos + new Vector3(0.5f, 0.5f, 0.5f);
-        ObjectPool.Instance.GetObject(DamageEffectPrefab, spawnPos, Quaternion.identity);
+
+        // ObjectPool 의존성도 제거 가능한 방법
+        if (ObjectPool.Instance != null)
+        {
+            ObjectPool.Instance.GetObject(DamageEffectPrefab, spawnPos, Quaternion.identity);
+        }
+        else
+        {
+            // fallback: 일반 Instantiate
+            var effect = Instantiate(DamageEffectPrefab, spawnPos, Quaternion.identity);
+            Destroy(effect, 2f); // 2초 후 삭제
+        }
     }
 
-    public void PlayBreakEffect(Vector3Int worldPos)
+    private void PlayBreakEffect(Vector3Int worldPos)
     {
         if (BreakEffectPrefab == null)
             return;
         Vector3 spawnPos = worldPos + new Vector3(0.5f, 0.5f, 0.5f);
-        ObjectPool.Instance.GetObject(BreakEffectPrefab, spawnPos, Quaternion.identity);
+
+        if (ObjectPool.Instance != null)
+        {
+            ObjectPool.Instance.GetObject(BreakEffectPrefab, spawnPos, Quaternion.identity);
+        }
+        else
+        {
+            var effect = Instantiate(BreakEffectPrefab, spawnPos, Quaternion.identity);
+            Destroy(effect, 2f);
+        }
     }
 }
