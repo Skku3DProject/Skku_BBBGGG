@@ -45,7 +45,6 @@ public class ChunkBackupSystem : MonoBehaviour
         {
             StageManager.instance.OnCombatStart += BackupCentralChunks;
             StageManager.instance.OnCombatEnd += RestoreCentralChunks;
-            Debug.Log("ChunkBackupSystem이 StageManager 이벤트에 구독");
         }
     }
 
@@ -69,8 +68,6 @@ public class ChunkBackupSystem : MonoBehaviour
         int centerZ = WorldManager.instance.GridHeight / 2;
         _backupCenter = new Vector2Int(centerX, centerZ);
 
-        Debug.Log($"청크 백업 시작 - 중심: {_backupCenter}, 반경: {BackupRadius}");
-
         int backedUpCount = 0;
         for (int dx = -BackupRadius; dx <= BackupRadius; dx++)
         {
@@ -85,13 +82,10 @@ public class ChunkBackupSystem : MonoBehaviour
             }
         }
 
-        Debug.Log($"총 {backedUpCount}개 청크 백업 완료");
     }
 
     public void RestoreCentralChunks()
     {
-        Debug.Log("청크 복원 시작");
-
         int restoredCount = 0;
         foreach (var kvp in _backupData)
         {
@@ -104,13 +98,11 @@ public class ChunkBackupSystem : MonoBehaviour
             }
         }
 
-        Debug.Log($"총 {restoredCount}개 청크 복원 완료");
     }
 
     public void ClearBackupData()
     {
         _backupData.Clear();
-        Debug.Log("백업 데이터 클리어");
     }
 
     public bool HasBackupData()

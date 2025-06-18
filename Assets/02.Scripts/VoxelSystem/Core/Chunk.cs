@@ -50,11 +50,13 @@ public class Chunk : MonoBehaviour
         BlockManager.UnregisterChunk(_coordinate);
     }
 
-    // 외부에서 블록 설정할 수 있는 메서드 추가
-    public void SetBlock(Vector3Int localPos, VoxelType type)
+    // 외부에서 블록 설정
+    public void SetBlock(Vector3Int localPos, VoxelType type, bool rebuildMesh = true)
     {
         Blocks[localPos.x, localPos.y, localPos.z] = type;
-        BuildMesh();
+
+        if(rebuildMesh)
+            BuildMesh();
     }
 
     public VoxelType GetBlock(Vector3Int localPos)

@@ -15,7 +15,8 @@ public class BlockHealthMap
         return _healthMap.ContainsKey(pos);
     }
 
-    public bool Damage(Vector3Int pos, int dmg)
+    //데미지를 가하고 파괴여부를 반환
+    public bool TryDestroyAfterDamage(Vector3Int pos, int dmg)
     {
         if (!_healthMap.TryGetValue(pos, out var hp))
             return false;

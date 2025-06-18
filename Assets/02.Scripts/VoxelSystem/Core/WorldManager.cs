@@ -3,25 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-//[System.Serializable]
-//public class SavedChunkData
-//{
-//    public VoxelType[,,] Blocks;
-
-//    public SavedChunkData(VoxelType[,,] original)
-//    {
-//        int sizeX = original.GetLength(0);
-//        int sizeY = original.GetLength(1);
-//        int sizeZ = original.GetLength(2);
-//        Blocks = new VoxelType[sizeX, sizeY, sizeZ];
-
-//        for (int x = 0; x < sizeX; x++)
-//            for (int y = 0; y < sizeY; y++)
-//                for (int z = 0; z < sizeZ; z++)
-//                    Blocks[x, y, z] = original[x, y, z];
-//    }
-//}
-
 public class WorldManager : MonoBehaviour
 {
     public static WorldManager instance;
@@ -147,17 +128,14 @@ public class WorldManager : MonoBehaviour
 
         _chunks.Add(coord, chunk);
     }
-
     public bool TryGetChunk(Vector2Int coord, out Chunk chunk)
     {
         return _chunks.TryGetValue(coord, out chunk);
     }
-
     public Dictionary<Vector2Int, Chunk> GetAllChunks()
     {
         return new Dictionary<Vector2Int, Chunk>(_chunks);
     }
-
     private Vector2 GetWorldCenter()
     {
         return new Vector2(
@@ -165,7 +143,6 @@ public class WorldManager : MonoBehaviour
             GridHeight * Chunk.CHUNK_WIDTH / 2f
         );
     }
-
     private Vector3 GetWorldCenter3D()
     {
         float centerX = GridWidth * Chunk.CHUNK_WIDTH / 2f;
@@ -190,7 +167,6 @@ public class WorldManager : MonoBehaviour
         float surfaceY = TerrainGenerator.Instance?.FindSurfaceY(chunk, localX, localZ) ?? 10f;
         return new Vector3(centerX, surfaceY, centerZ);
     }
-
     private void SetupWorldPositions()
     {
         if (_chunks.Count == 0) return;
@@ -204,7 +180,6 @@ public class WorldManager : MonoBehaviour
         OnWorldCenterReady?.Invoke(centerPos);
         OnCreateEnemySpawenr?.Invoke(spawnerPos);
     }
-
     private Vector3 CalculateSpawnerPosition(Vector3 centerPos)
     {
         Vector3 targetPos = centerPos + Vector3.forward * Distance;
@@ -223,7 +198,6 @@ public class WorldManager : MonoBehaviour
 
         return new Vector3(spawnerX + 0.5f, surfaceY + 2f, spawnerZ + 0.5f);
     }
-
     private void CreateDeadZone()
     {
         if (DeadZonePrefab == null)

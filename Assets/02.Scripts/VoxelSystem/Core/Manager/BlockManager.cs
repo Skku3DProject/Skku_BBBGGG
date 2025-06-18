@@ -48,15 +48,13 @@ public static class BlockManager
         // 이벤트 발생으로 이펙트 시스템과 분리
         OnBlockDamaged?.Invoke(worldPos);
 
-        if (_blockHealth.Damage(worldPos, dmg))
+        if (_blockHealth.TryDestroyAfterDamage(worldPos, dmg))
         {
             OnBlockBroken?.Invoke(worldPos);
 
             if (TryGetChunk(worldPos, out var chunk, out var local))
             {
-                chunk.SetBlock(local, VoxelType.Air);
-                if (rebuildMesh)
-                    chunk.BuildMesh();
+                chunk.SetBlock(local, VoxelType.Air, rebuildMesh);
             }
         }
         else if (rebuildMesh)
