@@ -33,7 +33,7 @@ public class Voxel
     }
 
 
-    public static Dictionary<VoxelType, Voxel> blocks = new Dictionary<VoxelType, Voxel>()
+    public static readonly Dictionary<VoxelType, Voxel> blocks = new Dictionary<VoxelType, Voxel>()
     {
         {VoxelType.Grass, new Voxel(Tile.Grass, Tile.GrassSide, Tile.Dirt)},
         {VoxelType.Dirt, new Voxel(Tile.Dirt)},

@@ -32,7 +32,8 @@ public class EnvironmentSpawner : MonoBehaviour
         // WorldManager의 이벤트 구독
         if (WorldManager.instance != null)
         {
-            WorldManager.instance.OnChunkCreated += HandleChunkCreated;
+            //WorldManager.instance.OnChunkCreated += HandleChunkCreated;
+            VoxelEvents.OnChunkCreated += HandleChunkCreated;
         }
     }
 
@@ -41,8 +42,10 @@ public class EnvironmentSpawner : MonoBehaviour
         // Start에서도 한번 더 확인 (WorldManager가 늦게 초기화될 경우 대비)
         if (WorldManager.instance != null)
         {
-            WorldManager.instance.OnChunkCreated -= HandleChunkCreated; // 중복 구독 방지
-            WorldManager.instance.OnChunkCreated += HandleChunkCreated;
+            //WorldManager.instance.OnChunkCreated -= HandleChunkCreated; // 중복 구독 방지
+            //WorldManager.instance.OnChunkCreated += HandleChunkCreated;
+            VoxelEvents.OnChunkCreated -= HandleChunkCreated;
+            VoxelEvents.OnChunkCreated += HandleChunkCreated;
         }
     }
 
@@ -50,7 +53,8 @@ public class EnvironmentSpawner : MonoBehaviour
     {
         if (WorldManager.instance != null)
         {
-            WorldManager.instance.OnChunkCreated -= HandleChunkCreated;
+            //WorldManager.instance.OnChunkCreated -= HandleChunkCreated;
+            VoxelEvents.OnChunkCreated -= HandleChunkCreated;
         }
     }
 

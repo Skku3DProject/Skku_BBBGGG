@@ -22,12 +22,6 @@ public class WorldManager : MonoBehaviour
     private readonly Dictionary<Vector2Int, Chunk> _chunks = new();
     private const int YIELD_INTERVAL = 10;
 
-    // 이벤트
-    public event Action OnCreatedWorld;
-    public event Action OnResetWorld;
-    public event Action<Chunk, Vector2> OnChunkCreated;
-    public event Action<Vector3> OnWorldCenterReady;
-    public event Action<Vector3> OnCreateEnemySpawenr;
 
     private void Awake()
     {
@@ -124,7 +118,8 @@ public class WorldManager : MonoBehaviour
 
         // 환경 오브젝트 스폰은 이벤트로 처리
         Vector2 worldCenter = GetWorldCenter();
-        OnChunkCreated?.Invoke(chunk, worldCenter);
+        VoxelEvents.InvokeChunkCreated(chunk, worldCenter);
+        //OnChunkCreated?.Invoke(chunk, worldCenter);
 
         _chunks.Add(coord, chunk);
     }
@@ -177,8 +172,9 @@ public class WorldManager : MonoBehaviour
         Debug.Log($"월드 중심 위치: {centerPos}, 스포너 위치: {spawnerPos}");
 
         // 이벤트 발생
-        OnWorldCenterReady?.Invoke(centerPos);
-        OnCreateEnemySpawenr?.Invoke(spawnerPos);
+        //OnWorldCenterReady?.Invoke(centerPos);
+        VoxelEvents.InvokeWorldCenterReady(centerPos);
+        VoxelEvents.InvokeCreateEnemySpawner(spawnerPos);
     }
     private Vector3 CalculateSpawnerPosition(Vector3 centerPos)
     {

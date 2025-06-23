@@ -77,7 +77,7 @@ public class PlayerBlockController : MonoBehaviour
             }
         }
 
-        BlockManager.PlaceBlock(pos, PlaceType);
+        BlockManager.Instance.PlaceBlock(pos, PlaceType);
         PlayerSoundController.Instance.PlaySound(PlayerSoundType.Block);
     }
     //애님 이벤트용
@@ -91,7 +91,7 @@ public class PlayerBlockController : MonoBehaviour
         if (!IsWithinReach(pos))
             return;
 
-        BlockManager.DamageBlock(pos, 10);
+        BlockManager.Instance.DamageBlock(pos, 10);
     }
 
     private Vector3Int GetTargetBlockPosition(bool placing)

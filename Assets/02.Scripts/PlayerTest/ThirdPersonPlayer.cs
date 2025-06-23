@@ -62,7 +62,8 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
     private void Start()
     {
         UIManager.instance.UI_PlayerSetMaxStat(PlayerStats.MaxHealth, PlayerStats.Stamina);
-        WorldManager.instance.OnWorldCenterReady += InitStartPosition;
+        //WorldManager.instance.OnWorldCenterReady += InitStartPosition;
+        VoxelEvents.OnWorldCenterReady += InitStartPosition;
     }
     private void Respawn()
     {

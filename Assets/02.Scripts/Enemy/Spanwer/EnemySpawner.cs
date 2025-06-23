@@ -22,7 +22,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
-        WorldManager.instance.OnCreateEnemySpawenr += InitStartPosition;
+        //WorldManager.instance.OnCreateEnemySpawenr += InitStartPosition;
+        VoxelEvents.OnCreateEnemySpawenr += InitStartPosition;
     }
     private void Start()
     {

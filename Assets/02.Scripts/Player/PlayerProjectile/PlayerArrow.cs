@@ -145,7 +145,7 @@ public class PlayerArrow : MonoBehaviour
             }
         }
 
-        BlockManager.DamageBlocksInRadius(transform.position, chargeImpactRadius, 10);
+        BlockManager.Instance.DamageBlocksInRadius(transform.position, chargeImpactRadius, 10);
         PlayHitSound();
     }
 
@@ -167,7 +167,7 @@ public class PlayerArrow : MonoBehaviour
             }
         }
 
-        BlockManager.DamageBlocksInRadius(transform.position, explosionRadius, 10);
+        BlockManager.Instance.DamageBlocksInRadius(transform.position, explosionRadius, 10);
         PlayHitSound();
     }
 

@@ -42,12 +42,12 @@ public class Chunk : MonoBehaviour
         int gridZ = Mathf.FloorToInt(transform.position.z / CHUNK_WIDTH);
         _coordinate = new Vector2Int(gridX, gridZ);
 
-        BlockManager.RegisterChunk(_coordinate, this);
+        BlockManager.Instance.RegisterChunk(_coordinate, this);
     }
 
     private void OnDestroy()
     {
-        BlockManager.UnregisterChunk(_coordinate);
+        BlockManager.Instance.UnregisterChunk(_coordinate);
     }
 
     // 외부에서 블록 설정

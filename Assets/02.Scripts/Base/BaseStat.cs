@@ -16,7 +16,8 @@ public class BaseStat : MonoBehaviour, IDamageAble
 
     private void Awake()
     {
-        WorldManager.instance.OnWorldCenterReady += InitStartPosition;
+        //WorldManager.instance.OnWorldCenterReady += InitStartPosition;
+        VoxelEvents.OnWorldCenterReady += InitStartPosition;
     }
     private void InitStartPosition(Vector3 position)
     {

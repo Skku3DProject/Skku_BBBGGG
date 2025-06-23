@@ -176,7 +176,7 @@ public class EnemyAttackCheckEvent : MonoBehaviour
             yield return new WaitForSeconds(_enemy.EnemyData.Self_DestructTime);
         }
         EnemyParticlePoolManger.Instance.GetObject(_enemy.EnemyData.AttackVFXKey,_enemy.transform.position);
-        BlockManager.DamageBlocksInRadius(_enemy.transform.position + Vector3.up, _enemy.EnemyData.AreaRange, (int)_damage.Value);
+        BlockManager.Instance.DamageBlocksInRadius(_enemy.transform.position + Vector3.up, _enemy.EnemyData.AreaRange, (int)_damage.Value);
         _enemyController.EndDieAnimEvent();
 
         _soundManager?.PlaySound("Self_Destruct");

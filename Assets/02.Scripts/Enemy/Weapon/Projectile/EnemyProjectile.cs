@@ -155,7 +155,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
         if (_isPooled) return;
 
         Vector3Int blockPos = Vector3Int.FloorToInt(hit.point + hit.normal * -0.5f);
-        BlockManager.DamageBlocksInRadius(blockPos, ProjectileData.AreaRange, (int)_damage.Value);
+        BlockManager.Instance.DamageBlocksInRadius(blockPos, ProjectileData.AreaRange, (int)_damage.Value);
         EnemyParticlePoolManger.Instance.GetObject(ProjectileData.HitVfxKey, blockPos);
     }
     private void OnTriggerEnter(Collider other)
@@ -176,7 +176,7 @@ public class EnemyProjectile : MonoBehaviour, IEnemyPoolable
 
     private void AreaAttack(Collider other)
     {
-        BlockManager.DamageBlocksInRadius(transform.position, ProjectileData.AreaRange, (int)_damage.Value);
+        BlockManager.Instance.DamageBlocksInRadius(transform.position, ProjectileData.AreaRange, (int)_damage.Value);
 
         int cnt = Physics.OverlapSphereNonAlloc(
             transform.position,

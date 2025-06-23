@@ -290,6 +290,7 @@ GameObject:
   - component: {fileID: 608818180}
   - component: {fileID: 608818182}
   - component: {fileID: 608818181}
+  - component: {fileID: 608818183}
   m_Layer: 0
   m_Name: WorldGenerate (1)
   m_TagString: Untagged
@@ -324,10 +325,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ChunkPrefab: {fileID: 2690487909747216947, guid: c102dc976872fa94694d915da439e587, type: 3}
-  Player: {fileID: 0}
-  StartPos: {x: 0, y: 0, z: 0}
-  BaseCampTransform: {fileID: 0}
-  SpawenrTransform: {fileID: 0}
   DeadZonePrefab: {fileID: 5396434526519613450, guid: f98b0ec6c501db448b294b5509b6de85, type: 3}
   ChunkLayer:
     serializedVersion: 2
@@ -388,8 +385,6 @@ MonoBehaviour:
     FlatRadius: 48
     FadeRadius: 32
     HeightThreshold: 18
-    GridWidth: 5
-    GridHeight: 5
 --- !u!114 &608818182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,6 +399,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChestPrefab: {fileID: 2868492944586623384, guid: b5c6bf2ec9d029a44840e4e060298544, type: 3}
   MaxChestCount: 10
+--- !u!114 &608818183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608818176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfb9c4c8bdb9279499b074fa2cfc3945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &694484781
 GameObject:
   m_ObjectHideFlags: 0

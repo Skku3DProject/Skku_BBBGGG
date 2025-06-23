@@ -40,11 +40,15 @@ public class ChunkBackupSystem : MonoBehaviour
 
     private void Start()
     {
-        // StageManager 이벤트 구독
         if (StageManager.instance != null)
         {
             StageManager.instance.OnCombatStart += BackupCentralChunks;
             StageManager.instance.OnCombatEnd += RestoreCentralChunks;
+        }
+        else
+        {
+            Debug.LogWarning("StageManager 인스턴스가 존재하지 않습니다.");
+
         }
     }
 

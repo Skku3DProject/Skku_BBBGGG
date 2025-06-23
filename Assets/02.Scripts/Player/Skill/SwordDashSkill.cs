@@ -82,7 +82,7 @@ public class SwordDashSkill : WeaponSkillBase
 
             Vector3 center = MyPlayer.transform.position + dir * 1f + Vector3.up * 0.7f;// 캐릭터 중점이 발이라 y오프셋값 추가
             Collider[] hits = Physics.OverlapSphere(center, hitRadius, enemyMask);
-            BlockManager.DamageBlocksInRadius(center, hitRadius, 10);
+            BlockManager.Instance.DamageBlocksInRadius(center, hitRadius, 10);
             foreach (var col in hits)
             {
                 GameObject enemy = col.gameObject;

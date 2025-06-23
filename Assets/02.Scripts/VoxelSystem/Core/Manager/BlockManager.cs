@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class BlockManager
+public class BlockManager : MonoBehaviour
 {
-    private static Dictionary<Vector2Int, Chunk> _chunks = new Dictionary<Vector2Int, Chunk>();
-    private static BlockHealthMap _blockHealth = new();
+    public static BlockManager Instance { get; private set; }
 
-    // 이벤트를 통한 느슨한 결합
-    public static event Action<Vector3Int> OnBlockDamaged;
-    public static event Action<Vector3Int> OnBlockBroken;
+    private Dictionary<Vector2Int, Chunk> _chunks = new Dictionary<Vector2Int, Chunk>();
+    private BlockHealthMap _blockHealth = new();
+
+    //public static event Action<Vector3Int> OnBlockDamaged;
+    //public static event Action<Vector3Int> OnBlockBroken;
 
     private static readonly Dictionary<VoxelType, int> _initialHealthMap = new Dictionary<VoxelType, int>
     {
@@ -18,17 +19,28 @@ public static class BlockManager
         { VoxelType.Stone, 6 }
     };
 
-    public static void RegisterChunk(Vector2Int coord, Chunk chunk)
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void RegisterChunk(Vector2Int coord, Chunk chunk)
     {
         _chunks[coord] = chunk;
     }
 
-    public static void UnregisterChunk(Vector2Int coord)
+    public void UnregisterChunk(Vector2Int coord)
     {
         _chunks.Remove(coord);
     }
 
-    public static void PlaceBlock(Vector3Int worldPos, VoxelType type)
+    public void PlaceBlock(Vector3Int worldPos, VoxelType type)
     {
         if (TryGetChunk(worldPos, out var chunk, out var local))
         {
@@ -37,7 +49,7 @@ public static class BlockManager
         }
     }
 
-    public static void DamageBlock(Vector3Int worldPos, int dmg, bool rebuildMesh = true)
+    public void DamageBlock(Vector3Int worldPos, int dmg, bool rebuildMesh = true)
     {
         if (!GetBlockType(worldPos, out var type) || type == VoxelType.Air)
             return;
@@ -46,11 +58,13 @@ public static class BlockManager
             _blockHealth.SetHealth(worldPos, GetInitialHealth(type));
 
         // 이벤트 발생으로 이펙트 시스템과 분리
-        OnBlockDamaged?.Invoke(worldPos);
+        VoxelEvents.InvokeBlockDamaged(worldPos);
+        //OnBlockDamaged?.Invoke(worldPos);
 
         if (_blockHealth.TryDestroyAfterDamage(worldPos, dmg))
         {
-            OnBlockBroken?.Invoke(worldPos);
+            VoxelEvents.InvokeBlockBroken(worldPos);
+            //OnBlockBroken?.Invoke(worldPos);
 
             if (TryGetChunk(worldPos, out var chunk, out var local))
             {
@@ -64,7 +78,7 @@ public static class BlockManager
         }
     }
 
-    public static void DamageBlocksInRadius(Vector3 center, float radius, int damage)
+    public void DamageBlocksInRadius(Vector3 center, float radius, int damage)
     {
         HashSet<Chunk> affectedChunks = new HashSet<Chunk>();
 
@@ -100,7 +114,7 @@ public static class BlockManager
         }
     }
 
-    private static bool TryGetChunk(Vector3Int worldPos, out Chunk chunk, out Vector3Int localPos)
+    private bool TryGetChunk(Vector3Int worldPos, out Chunk chunk, out Vector3Int localPos)
     {
         int chunkX = Mathf.FloorToInt(worldPos.x / (float)Chunk.CHUNK_WIDTH);
         int chunkZ = Mathf.FloorToInt(worldPos.z / (float)Chunk.CHUNK_WIDTH);
@@ -134,7 +148,7 @@ public static class BlockManager
         return _initialHealthMap.TryGetValue(type, out var hp) ? hp : 1;
     }
 
-    public static bool GetBlockType(Vector3Int worldPos, out VoxelType type)
+    public bool GetBlockType(Vector3Int worldPos, out VoxelType type)
     {
         if (TryGetChunk(worldPos, out var chunk, out var localPos))
         {

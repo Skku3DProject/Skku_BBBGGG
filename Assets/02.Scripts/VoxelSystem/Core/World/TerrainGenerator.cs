@@ -11,6 +11,7 @@ public class TerrainSettings
     public float FlatRadius = 48f;
     public float FadeRadius = 32f;
     public float HeightThreshold = 18f;
+
 }
 
 public class TerrainGenerator : MonoBehaviour
@@ -24,8 +25,6 @@ public class TerrainGenerator : MonoBehaviour
     private float _randomOffsetX;
     private float _randomOffsetZ;
     private readonly List<Vector3> _hillPositions = new();
-
-    public System.Action<Vector3> OnHillGenerated; // 언덕 생성 시 이벤트
 
     private void Awake()
     {
@@ -83,7 +82,6 @@ public class TerrainGenerator : MonoBehaviour
         {
             Vector3 hillPos = chunk.transform.position + new Vector3(x - 1 + 0.5f, maxHeight + 1f, z - 1 + 0.5f);
             _hillPositions.Add(hillPos);
-            OnHillGenerated?.Invoke(hillPos);
         }
     }
 
