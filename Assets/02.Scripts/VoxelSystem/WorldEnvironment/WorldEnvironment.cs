@@ -20,7 +20,6 @@ public class WorldEnvironment : MonoBehaviour
 
 
     private FractureExplosion fracture;
-    private List<GameObject> fragments = new List<GameObject>();
 
     private void Awake()
     {

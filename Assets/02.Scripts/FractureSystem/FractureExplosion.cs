@@ -20,19 +20,6 @@ public class FractureExplosion : MonoBehaviour
 
     public void Explode()
     {
-        //_frag = ObjectPool.Instance.GetObject(fragmentPrefabs, transform.position, transform.rotation);
-
-        //Rigidbody[] spawnRb = _frag.GetComponentsInChildren<Rigidbody>();
-
-        //foreach (var rb in spawnRb)
-        //{
-        //    rb.linearVelocity = Vector3.zero;
-        //    rb.angularVelocity = Vector3.zero;
-        //    rb.mass = 1f;
-        //    rb.useGravity = true;
-        //    rb.constraints = RigidbodyConstraints.None;
-        //    rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsModifier, ForceMode.Impulse);
-        //}
         _frag = ObjectPool.Instance.GetObject(fragmentPrefabs, transform.position, transform.rotation);
 
         Rigidbody[] spawnRb = _frag.GetComponentsInChildren<Rigidbody>();
@@ -46,8 +33,6 @@ public class FractureExplosion : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None;
             rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardsModifier, ForceMode.Impulse);
         }
-
-
         _frag.GetComponent<FragmentShrinkAndReturn>().StartShrink();
     }
  

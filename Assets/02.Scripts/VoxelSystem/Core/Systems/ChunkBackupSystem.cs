@@ -72,7 +72,6 @@ public class ChunkBackupSystem : MonoBehaviour
         int centerZ = WorldManager.instance.GridHeight / 2;
         _backupCenter = new Vector2Int(centerX, centerZ);
 
-        int backedUpCount = 0;
         for (int dx = -BackupRadius; dx <= BackupRadius; dx++)
         {
             for (int dz = -BackupRadius; dz <= BackupRadius; dz++)
@@ -81,7 +80,6 @@ public class ChunkBackupSystem : MonoBehaviour
                 if (WorldManager.instance.TryGetChunk(coord, out var chunk))
                 {
                     _backupData[coord] = new SavedChunkData(chunk.Blocks);
-                    backedUpCount++;
                 }
             }
         }
@@ -90,7 +88,6 @@ public class ChunkBackupSystem : MonoBehaviour
 
     public void RestoreCentralChunks()
     {
-        int restoredCount = 0;
         foreach (var kvp in _backupData)
         {
             Vector2Int coord = kvp.Key;
@@ -98,7 +95,6 @@ public class ChunkBackupSystem : MonoBehaviour
             {
                 RestoreChunkBlocks(chunk, kvp.Value);
                 chunk.BuildMesh();
-                restoredCount++;
             }
         }
 
