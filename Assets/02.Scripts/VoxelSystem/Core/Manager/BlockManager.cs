@@ -71,11 +71,6 @@ public class BlockManager : MonoBehaviour
                 chunk.SetBlock(local, VoxelType.Air, rebuildMesh);
             }
         }
-        else if (rebuildMesh)
-        {
-            if (TryGetChunk(worldPos, out var chunk, out _))
-                chunk.BuildMesh();
-        }
     }
 
     public void DamageBlocksInRadius(Vector3 center, float radius, int damage)

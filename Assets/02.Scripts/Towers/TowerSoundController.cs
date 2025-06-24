@@ -33,7 +33,6 @@ public class TowerSoundController : MonoBehaviour
         Instance = this;
 
         InitAudioSourcePool();
-        //AudioListener Ã£±â
         _listener = Camera.main?.transform;
     }
     private void InitAudioSourcePool()
