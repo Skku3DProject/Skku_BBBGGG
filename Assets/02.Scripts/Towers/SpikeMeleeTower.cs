@@ -6,12 +6,14 @@ public class SpikeMeleeTower : MeleeTowerBase
 
     protected override void AttackTargets()
     {
-        foreach (var target in _targets.ToArray())
+        // ToArray()로 복사본을 만들어 안전하게 순회
+        var targetArray = _targets.ToArray();
+
+        foreach (var target in targetArray)
         {
             if (target == null) continue;
 
-            target.TakeDamage(new Damage(_data.Damage, gameObject, knockbackForce, Vector3.zero));
-
+            target.TakeDamage(new Damage(_data.Damage, gameObject, knockbackForce));
 
         }
         _currentHealth -= 20;

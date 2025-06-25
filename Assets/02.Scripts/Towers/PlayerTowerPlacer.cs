@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerTowerPlacer : MonoBehaviour
 {
+    private Camera _mainCamera;
+
     public static PlayerTowerPlacer Instance { get; private set; }
 
-    //[Header("건물 목록")]
-    //public List<BuildingType> BuildingTypes;
     public GameObject TowerPlaceVfxPrefab;
 
     [Header("레이어 설정")]
@@ -25,6 +25,7 @@ public class PlayerTowerPlacer : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _mainCamera = Camera.main;
     }
 
     private void OnEnable()
@@ -94,7 +95,7 @@ public class PlayerTowerPlacer : MonoBehaviour
 
     private void UpdatePreviewPosition()
     {
-        if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 100f, GroundMask))
+        if (!Physics.Raycast(_mainCamera.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 100f, GroundMask))
             return;
 
         int size = _selectedBuilding.Size;
@@ -156,7 +157,6 @@ public class PlayerTowerPlacer : MonoBehaviour
                 else return false;
             }
         }
-
         return true;
     }
 
@@ -178,7 +178,7 @@ public class PlayerTowerPlacer : MonoBehaviour
             DestroyPreview();
             _selectedBuilding = null;
 
-            StartCoroutine(DelayExitBuildMode()); // 한 프레임 뒤에 BuildMode false
+            //StartCoroutine(DelayExitBuildMode()); // 한 프레임 뒤에 BuildMode false
         }
     }
 

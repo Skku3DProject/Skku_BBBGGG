@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FireTower : TowerBase
+public class FireTower : FireTowerBase
 {
     protected override void Attack()
     {

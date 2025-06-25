@@ -8,9 +8,8 @@ public enum ETowerType
     IceTower
 }
 
-public abstract class TowerBase : MonoBehaviour, IDamageAble
+public abstract class FireTowerBase : MonoBehaviour, IDamageAble
 {
-
     [Header("데이타")]
     [SerializeField] protected SO_TowerData _data;
     public SO_TowerData Data => _data;
@@ -31,6 +30,10 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
 
     private Vector3 StartPos;
     private Quaternion StartRot;
+
+
+    private float _traceTimer = 0f;
+    private const float TRACE_INTERVAL = 0.1f; // 0.1초마다 추적
 
     protected virtual void Awake()
     {
@@ -54,10 +57,14 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
     }
     protected virtual void Update()
     {
-        TraceNearEnemy();
+        _traceTimer -= Time.deltaTime;
+        if (_traceTimer <= 0f)
+        {
+            _traceTimer = TRACE_INTERVAL;
+            TraceNearEnemy();
+        }
 
         _attackTimer -= Time.deltaTime;
-
         if (_attackTimer < 0)
         {
             if (_attackRange.CanAttakc == false) return;
@@ -104,7 +111,7 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
             Instantiate(_destroyVfxPrefab).transform.position = _destroyVfxPos.position;
             // 폭발 실행
             fracture.Explode();
-            Invoke(nameof(DisableFragments), 6f);
+            //Invoke(nameof(DisableFragments), 6f);
             gameObject.SetActive(false);
 
 
@@ -134,8 +141,8 @@ public abstract class TowerBase : MonoBehaviour, IDamageAble
         transform.rotation = StartRot;
     }
 
-    private void DisableFragments()
-    {
-        //fracture.ReturnFragmentsToPool();
-    }
+    //private void DisableFragments()
+    //{
+    //    //fracture.ReturnFragmentsToPool();
+    //}
 }

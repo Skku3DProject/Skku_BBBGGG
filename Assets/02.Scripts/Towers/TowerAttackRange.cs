@@ -6,7 +6,7 @@ public class TowerAttackRange : MonoBehaviour
     public GameObject NearEnemy { private set; get; }
     public readonly List<GameObject> _targets = new();
     private float _updateTimer;
-    private TowerBase _owner;
+    private FireTowerBase _owner;
 
     public bool CanAttakc = false;
     private void OnTriggerEnter(Collider other)
@@ -20,7 +20,7 @@ public class TowerAttackRange : MonoBehaviour
 
     private void Start()
     {
-        _owner = GetComponentInParent<TowerBase>();
+        _owner = GetComponentInParent<FireTowerBase>();
     }
 
     private void OnTriggerExit(Collider other)
