@@ -7,9 +7,9 @@ public class BowFireSkill : WeaponSkillBase
 
     public GameObject MyPlayer;
     private Animator _playerAnimator;
-    private PlayerEquipmentController _equipmentController;
+    private PlayerEquipmentManager _equipmentController;
     private ThirdPersonPlayer _player;
-    private PlayerAttack _playerAttack;
+    private PlayerAttackController _playerAttack;
     [Header("Skill Settings")]
     [SerializeField] private GameObject _arrowPrefab;
     [SerializeField] private float _skillDamageMultiplier = 0.55f;
@@ -29,9 +29,9 @@ public class BowFireSkill : WeaponSkillBase
     {
         MyPlayer = GameObject.FindGameObjectWithTag("Player");
         _playerAnimator = GetComponent<Animator>();
-        _equipmentController = GetComponent<PlayerEquipmentController>();
+        _equipmentController = GetComponent<PlayerEquipmentManager>();
         _player = MyPlayer.GetComponent<ThirdPersonPlayer>();
-        _playerAttack = GetComponent<PlayerAttack>();
+        _playerAttack = GetComponent<PlayerAttackController>();
     }
 
     public override void UseSkill()
@@ -41,7 +41,7 @@ public class BowFireSkill : WeaponSkillBase
 
         FireEffect.SetActive(true);
 
-        if (_equipmentController.GetCurrentEquipType() != EquipmentType.Bow)
+        if (_equipmentController.GetCurrentEquipType() != EEquipmentType.Bow)
         {
             return;
         }

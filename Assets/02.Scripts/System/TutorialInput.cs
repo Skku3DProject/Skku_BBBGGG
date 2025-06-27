@@ -3,7 +3,7 @@ using UnityEngine;
 public class TutorialInput : MonoBehaviour
 {
     private float _moveTime = 0.01f;
-    private EquipmentType _currentEquipmentType => PlayerEquipmentController.Instance.GetCurrentEquipType();
+    private EEquipmentType _currentEquipmentType => PlayerEquipmentManager.Instance.GetCurrentEquipType();
     private void Update()
     {
         if (StageManager.instance.GetCurrentStage() != EStageType.Tutorial)
@@ -32,7 +32,7 @@ public class TutorialInput : MonoBehaviour
                 }
                 break;
             case TutorialType.SwordEquipment :
-                if (Input.GetKeyDown(KeyCode.Alpha1) && _currentEquipmentType == EquipmentType.Sword)
+                if (Input.GetKeyDown(KeyCode.Alpha1) && _currentEquipmentType == EEquipmentType.Sword)
                 {
                     TutorialEvent.OnProgress?.Invoke(TutorialType.SwordEquipment, 1);
                 }
@@ -50,7 +50,7 @@ public class TutorialInput : MonoBehaviour
                 }
                 break;
             case TutorialType.BowAttack:
-                if (Input.GetMouseButtonDown(1) && _currentEquipmentType == EquipmentType.Bow)
+                if (Input.GetMouseButtonDown(1) && _currentEquipmentType == EEquipmentType.Bow)
                 {
                     TutorialEvent.OnProgress?.Invoke(TutorialType.BowAttack, 1);
                 }
@@ -62,7 +62,7 @@ public class TutorialInput : MonoBehaviour
                 }
                 break;
             case TutorialType.MagicAttack :
-                if (Input.GetMouseButtonDown(0) && _currentEquipmentType == EquipmentType.Magic)
+                if (Input.GetMouseButtonDown(0) && _currentEquipmentType == EEquipmentType.Magic)
                 {
                     TutorialEvent.OnProgress?.Invoke(TutorialType.MagicAttack, 1);
                 }

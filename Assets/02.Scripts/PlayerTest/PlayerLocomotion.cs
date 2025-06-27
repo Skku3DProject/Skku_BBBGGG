@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerLocomotion : MonoBehaviour
 {
     private ThirdPersonPlayer _player;
-    private PlayerAttack _playerAttack;
+    private PlayerAttackController _playerAttack;
 
     private const float Gravity = -9.8f;
     private float _yVelocity;
@@ -26,7 +26,7 @@ public class PlayerLocomotion : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<ThirdPersonPlayer>();
-        _playerAttack = GetComponent<PlayerAttack>();
+        _playerAttack = GetComponent<PlayerAttackController>();
         _currentSpeed = _player.PlayerStats.MoveSpeed;
         //_currentSpeed = _player.WalkSpeed;
     }

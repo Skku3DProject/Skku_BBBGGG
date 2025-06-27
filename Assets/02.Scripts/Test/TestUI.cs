@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TestUI : MonoBehaviour
 {
-    private EquipmentType _equipmentType;
+    private EEquipmentType _equipmentType;
     public SkillCooltimeHandler cooltimeHandler;
     public float Timer;
     

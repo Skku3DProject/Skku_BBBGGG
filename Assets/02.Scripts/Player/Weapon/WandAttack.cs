@@ -9,14 +9,14 @@ public class WandAttack : WeaponAttackBase
     public float attackCooldown = 0.5f;
 
 
-    private PlayerAttack _playerAttack;
+    private PlayerAttackController _playerAttack;
     private bool _canAttack = true;
     private Animator _animator;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _playerAttack = GetComponent<PlayerAttack>();
+        _playerAttack = GetComponent<PlayerAttackController>();
 
     }
 
@@ -60,7 +60,7 @@ public class WandAttack : WeaponAttackBase
             rb.linearVelocity = shootDirection * projectileForce;
         }
 
-        float power = PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
+        float power = PlayerEquipmentManager.Instance.GetCurrentWeaponAttackPower();
         MagicProjectile proj = projectile.GetComponent<MagicProjectile>();
         proj?.Init(_playerAttack.CurrentDamage, gameObject);
 
@@ -81,7 +81,7 @@ public class WandAttack : WeaponAttackBase
 
     }
 
-    public override void OnAttackAnimationEnd()
+    public override void OnAttackAnimationEnd(EEquipmentType currentType)
     {
     }
 

@@ -5,7 +5,7 @@ public class MeteorFallSkill : WeaponSkillBase
 {
     public GameObject MyPlayer;
     private Animator _animator;
-    private PlayerAttack _playerAttack;
+    private PlayerAttackController _playerAttack;
 
     [Header("Meteor Settings")]
     public GameObject meteorPrefab;
@@ -25,12 +25,12 @@ public class MeteorFallSkill : WeaponSkillBase
     {
         MyPlayer = GameObject.FindGameObjectWithTag("Player");
         _animator = MyPlayer.GetComponent<Animator>();
-        _playerAttack = MyPlayer.GetComponent<PlayerAttack>();
+        _playerAttack = MyPlayer.GetComponent<PlayerAttackController>();
     }
 
     public override void UseSkill()
     {
-        if (IsUsingSkill || IsCooldown || PlayerEquipmentController.Instance.GetCurrentEquipType() != EquipmentType.Magic)
+        if (IsUsingSkill || IsCooldown || PlayerEquipmentManager.Instance.GetCurrentEquipType() != EEquipmentType.Magic)
             return;
         cooldownTimer = cooldownTime;
 

@@ -18,17 +18,6 @@ public class PlayerModeManager : MonoBehaviour
     {
         Instance = this;
     }
-
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3))
-        //    SetMode(EPlayerMode.Weapon);
-        //else if (Input.GetKeyDown(KeyCode.Alpha4))
-        //    SetMode(EPlayerMode.Pickaxe);
-        //else if(Input.GetKeyDown(KeyCode.Alpha5))
-        //    SetMode(EPlayerMode.Block);
-    }
-
     public void SetMode(EPlayerMode mode)
     {
         if (CurrentMode == mode) return;

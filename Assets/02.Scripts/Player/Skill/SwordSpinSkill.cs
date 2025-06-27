@@ -6,9 +6,9 @@ public class SwordSpinSkill : WeaponSkillBase
 {
     public GameObject MyPlayer;
     private Animator _playerAnimation;
-    private PlayerEquipmentController _equipmentController;
+    private PlayerEquipmentManager _equipmentController;
     private ThirdPersonPlayer _player;
-    private PlayerAttack _playerAttack;
+    private PlayerAttackController _playerAttack;
     [SerializeField] private float _skillDamageMultiplier = 0.8f;
 
     private SwordDashSkill _swordDashSkill;
@@ -28,10 +28,10 @@ public class SwordSpinSkill : WeaponSkillBase
     {
         MyPlayer = GameObject.FindGameObjectWithTag("Player");
         _playerAnimation = MyPlayer.GetComponent<Animator>();
-        _equipmentController = MyPlayer.GetComponent<PlayerEquipmentController>();
+        _equipmentController = MyPlayer.GetComponent<PlayerEquipmentManager>();
         _player = MyPlayer.GetComponent<ThirdPersonPlayer>();
         _swordDashSkill = MyPlayer.GetComponent<SwordDashSkill>();
-        _playerAttack = MyPlayer.GetComponent<PlayerAttack>();
+        _playerAttack = MyPlayer.GetComponent<PlayerAttackController>();
 
         // 애니메이션 속도 설정
         _playerAnimation.SetFloat("SpinAttackSpeed", _animationSpeed);
@@ -98,7 +98,6 @@ public class SwordSpinSkill : WeaponSkillBase
     public override void Tick()
     {
         base.Tick();
-        Debug.Log(CooldownRemaining);
         UIManager.instance.UI_CooltimeRefresh(ESkillButton.SwordQ, CooldownRemaining);
     }
 

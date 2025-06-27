@@ -3,7 +3,7 @@ using UnityEngine;
 public class SO_TempSkillSlot : ScriptableObject
 {
     public string Name;
-    public EquipmentType EEquipmentType;
+    public EEquipmentType EEquipmentType;
     public float CoolDown;
     public Sprite Icon;
 }

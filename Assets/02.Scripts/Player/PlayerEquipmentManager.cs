@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-public enum EquipmentType
+public enum EEquipmentType
 {
     Sword,
     Bow,
@@ -11,9 +11,9 @@ public enum EquipmentType
     Pickaxe,
     Block
 }
-public class PlayerEquipmentController : MonoBehaviour
+public class PlayerEquipmentManager : MonoBehaviour
 {
-    public static PlayerEquipmentController Instance;
+    public static PlayerEquipmentManager Instance;
 
     [Header("무기별 오버라이드 컨트롤러")]
     public RuntimeAnimatorController SwordOverrideController;
@@ -34,12 +34,12 @@ public class PlayerEquipmentController : MonoBehaviour
     private Animator _playerAnimation;
 
     // 현재 장비 타입
-    private EquipmentType _currentEquipType = EquipmentType.Sword;
+    private EEquipmentType _currentEquipType = EEquipmentType.Sword;
 
     //무기 이름과 공격력
     public List<WeaponAttackSO> WeaponAttackSO;
 
-    public Action OnChangeEquipment;
+    public event Action<EEquipmentType> OnChangedEquipment;
     private void Awake()
     {
         Instance = this;
@@ -58,39 +58,43 @@ public class PlayerEquipmentController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha1)) // 검
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
-            SetEquipment(EquipmentType.Sword);
-            OnChangeEquipment?.Invoke();
+            SetEquipment(EEquipmentType.Sword);
+            OnChangedEquipment?.Invoke(_currentEquipType);
+
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))//활
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
-            SetEquipment(EquipmentType.Bow);
-            OnChangeEquipment?.Invoke();
+            SetEquipment(EEquipmentType.Bow);
+            OnChangedEquipment?.Invoke(_currentEquipType);
+
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))//지팡이
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Weapon);
-            SetEquipment(EquipmentType.Magic);
-            OnChangeEquipment?.Invoke();
+            SetEquipment(EEquipmentType.Magic);
+            OnChangedEquipment?.Invoke(_currentEquipType);
+
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))//곡괭이
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Pickaxe);
-            SetEquipment(EquipmentType.Pickaxe);
-            OnChangeEquipment?.Invoke();
+            SetEquipment(EEquipmentType.Pickaxe);
+            OnChangedEquipment?.Invoke(_currentEquipType);
+
         }
         if (Input.GetKeyDown(KeyCode.Alpha5))//블럭
         {
             PlayerModeManager.Instance.SetMode(EPlayerMode.Block);
-            SetEquipment(EquipmentType.Block); //블럭
-            OnChangeEquipment?.Invoke();
-        }
+            SetEquipment(EEquipmentType.Block); //블럭
+            OnChangedEquipment?.Invoke(_currentEquipType);
 
+        }
 
     }
 
 
-    private void SetEquipment(EquipmentType equipType)
+    private void SetEquipment(EEquipmentType equipType)
     {
         _currentEquipType = equipType;
 
@@ -106,32 +110,32 @@ public class PlayerEquipmentController : MonoBehaviour
         // 해당 장비 활성화
         switch (equipType)
         {
-            case EquipmentType.Sword:
+            case EEquipmentType.Sword:
                 Sword.SetActive(true);
                 Shield.SetActive(true);
                 _playerAnimation.runtimeAnimatorController = SwordOverrideController;
                 break;
-            case EquipmentType.Pickaxe:
+            case EEquipmentType.Pickaxe:
                 Pickaxe.SetActive(true);
                 _playerAnimation.runtimeAnimatorController = PickaxeOverrideController;
                 break;
-            case EquipmentType.Bow:
+            case EEquipmentType.Bow:
                 Bow.SetActive(true);
                 Arrow.SetActive(true);
                 _playerAnimation.runtimeAnimatorController = BowOverrideController;
                 break;
-            case EquipmentType.Magic:
+            case EEquipmentType.Magic:
                 Magic.SetActive(true);
                 _playerAnimation.runtimeAnimatorController = MagicOverrideController;
                 break;
-            case EquipmentType.Block:
+            case EEquipmentType.Block:
                 Block.SetActive(true);
                 _playerAnimation.runtimeAnimatorController = BlockOverrideController;
                 break;
         }
     }
 
-    public EquipmentType GetCurrentEquipType()
+    public EEquipmentType GetCurrentEquipType()
     {
         return _currentEquipType; 
     }

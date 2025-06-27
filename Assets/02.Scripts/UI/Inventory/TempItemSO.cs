@@ -12,7 +12,7 @@ public class TempItemSO : ScriptableObject
     }
     public string ItemName;
     public ETempItemType ItemType;// 아이템 종류
-    public EquipmentType EquipmentType;
+    public EEquipmentType EquipmentType;
     public Sprite ItemImage;      // 인벤토르에 올라갈 이미지
     public GameObject ItemPrefab; // 아이템 프리펩
 }

@@ -31,10 +31,10 @@ public class PlayerBlockController : MonoBehaviour
         if (PlayerModeManager.Instance.CurrentMode == EPlayerMode.Build || PlayerModeManager.Instance.CurrentMode == EPlayerMode.Weapon)
             return;
 
-        HandleBlockInput();
+        HandleInput();
     }
 
-    private void HandleBlockInput()
+    private void HandleInput()
     {
         if (UI_TowerBuildMenu.isBuildMode) return;
 
@@ -56,10 +56,9 @@ public class PlayerBlockController : MonoBehaviour
         }
     }
 
-    //애님 이벤트용
     private void TryPlaceBlock()
     {
-        Vector3Int pos = GetTargetBlockPosition(true);
+        Vector3Int pos = GetTargetBlockPosition(placing: false);
         if (!IsWithinReach(pos))
             return;
 
@@ -80,6 +79,7 @@ public class PlayerBlockController : MonoBehaviour
         BlockManager.Instance.PlaceBlock(pos, PlaceType);
         PlayerSoundController.Instance.PlaySound(PlayerSoundType.Block);
     }
+
     //애님 이벤트용
     public void TryDestroyBlockOrMineObject()
     {

@@ -11,10 +11,6 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
 
     [Header("참조")]
     public GameObject ReturnVfx;
-
-
-    private float _gravity = -9.81f;
-    private Vector3 _velocity;
     private CharacterController _characterController;
     public CharacterController CharacterController => _characterController;
     private Animator _playerAnimator;
@@ -35,8 +31,8 @@ public class ThirdPersonPlayer : MonoBehaviour, IDamageAble
     private bool _isReturnCooldown = false;    // 쿨타임 중 여부
 
 
-    private float _hitCooldown = 0.2f;     // 피격 쿨타임
-    private float _lastHitTime = -999f;   // 마지막 피격 시간
+    private float _hitCooldown = 0.2f;      // 피격 쿨타임
+    private float _lastHitTime = -999f;     // 마지막 피격 시간
 
 
     // 플레이어 버프

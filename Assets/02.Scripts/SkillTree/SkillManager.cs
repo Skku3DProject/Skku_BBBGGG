@@ -144,7 +144,7 @@ public class SkillManager : MonoBehaviour
         return tree;
     }
 
-    public void SwitchSkilltory(EquipmentType type)
+    public void SwitchSkilltory(EEquipmentType type)
     {
         if (SelectskillTory != null)
         {
@@ -153,13 +153,13 @@ public class SkillManager : MonoBehaviour
         
         switch(type)
         {
-            case EquipmentType.Sword:
+            case EEquipmentType.Sword:
                 SelectskillTory = SkillTories[0];
                 break;
-            case EquipmentType.Bow:
+            case EEquipmentType.Bow:
                 SelectskillTory = SkillTories[1];
                 break;
-            case EquipmentType.Magic:
+            case EEquipmentType.Magic:
                 SelectskillTory = SkillTories[2];
                 break;
             default:

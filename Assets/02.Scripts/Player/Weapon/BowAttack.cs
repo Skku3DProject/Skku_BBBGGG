@@ -13,7 +13,7 @@ public class BowAttack : WeaponAttackBase
     private Animator _playerAnimation;
     private ThirdPersonPlayer _player;
     private BowFireSkill _fireSkill;
-    private PlayerAttack _playerAttack;
+    private PlayerAttackController _playerAttack;
 
     [SerializeField] private LayerMask targetLayerMask;
 
@@ -33,7 +33,7 @@ public class BowAttack : WeaponAttackBase
         _playerAnimation = GetComponent<Animator>();
         _player = GetComponent<ThirdPersonPlayer>();
         _fireSkill = GetComponent<BowFireSkill>();
-        _playerAttack = GetComponent<PlayerAttack>();
+        _playerAttack = GetComponent<PlayerAttackController>();
     }
 
     public override void Tick()
@@ -160,7 +160,7 @@ public class BowAttack : WeaponAttackBase
         arrow.transform.Rotate(90f, 0f, 0f, Space.Self);
     }
 
-    public override void OnAttackAnimationEnd()
+    public override void OnAttackAnimationEnd(EEquipmentType currentType)
     {
         ResetAttack();
     }

@@ -7,9 +7,9 @@ public class SwordDashSkill : WeaponSkillBase
 {
     public GameObject MyPlayer;
     private Animator _playerAnimation;
-    private PlayerEquipmentController _equipmentController;
+    private PlayerEquipmentManager _equipmentController;
     private ThirdPersonPlayer _player;
-    private PlayerAttack _playerAttack;
+    private PlayerAttackController _playerAttack;
 
     public GameObject DashVfx;
 
@@ -25,9 +25,9 @@ public class SwordDashSkill : WeaponSkillBase
     {
         MyPlayer = GameObject.FindGameObjectWithTag("Player");
         _playerAnimation = MyPlayer.GetComponent<Animator>();
-        _equipmentController = MyPlayer.GetComponent<PlayerEquipmentController>();
+        _equipmentController = MyPlayer.GetComponent<PlayerEquipmentManager>();
         _player = MyPlayer.GetComponent<ThirdPersonPlayer>();
-        _playerAttack = GetComponent<PlayerAttack>();
+        _playerAttack = GetComponent<PlayerAttackController>();
 
     }
 
@@ -39,7 +39,7 @@ public class SwordDashSkill : WeaponSkillBase
         if (IsAttacking == false)
         {
 
-            if (_equipmentController.GetCurrentEquipType() != EquipmentType.Sword)
+            if (_equipmentController.GetCurrentEquipType() != EEquipmentType.Sword)
                 return;
 
             IsUsingSkill = true;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SwordHit : MonoBehaviour
 {
-    public PlayerAttack PlayerAttack;
+    public PlayerAttackController PlayerAttack;
     public GameObject HitVfx;
 
     private void Start()

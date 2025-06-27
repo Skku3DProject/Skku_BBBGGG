@@ -6,8 +6,8 @@ public class SwordAttack : WeaponAttackBase
 
     private ThirdPersonPlayer _player;
     private Animator _playerAnimation;
-    private PlayerEquipmentController _equipmentController;
-    private PlayerAttack _playerAttack;
+    private PlayerEquipmentManager _equipmentController;
+    private PlayerAttackController _playerAttack;
 
     private int _comboStep = 0;
     private bool _canNextCombo = true;
@@ -24,9 +24,9 @@ public class SwordAttack : WeaponAttackBase
     {
         _player = GetComponent<ThirdPersonPlayer>();
         _playerAnimation = GetComponent<Animator>();
-        _equipmentController = GetComponent<PlayerEquipmentController>();
-        _equipmentController.OnChangeEquipment += OnAttackAnimationEnd;
-        _playerAttack = GetComponent<PlayerAttack>();
+        _equipmentController = GetComponent<PlayerEquipmentManager>();
+        _equipmentController.OnChangedEquipment += OnAttackAnimationEnd;
+        _playerAttack = GetComponent<PlayerAttackController>();
     }
 
     private void Start()
@@ -97,7 +97,7 @@ public class SwordAttack : WeaponAttackBase
         SwordSlashEffect?.Play();
     }
 
-    public override void OnAttackAnimationEnd()
+    public override void OnAttackAnimationEnd(EEquipmentType currentType)
     {
         _player.CharacterController.stepOffset = 1f;
 

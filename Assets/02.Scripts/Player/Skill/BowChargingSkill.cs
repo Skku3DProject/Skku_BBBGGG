@@ -22,7 +22,7 @@ public class BowChargingSkill : WeaponSkillBase
     private bool isCharging = false;
     private bool isFullyCharged = false;
     private Animator _playerAnimator;
-    private PlayerAttack _playerAttack;
+    private PlayerAttackController _playerAttack;
 
     public override bool IsUsingSkill { get; protected set; }
 
@@ -30,7 +30,7 @@ public class BowChargingSkill : WeaponSkillBase
     {
         _playerAnimator = GetComponent<Animator>();
         chargeEffect.SetActive(false);
-        _playerAttack = GetComponent<PlayerAttack>();
+        _playerAttack = GetComponent<PlayerAttackController>();
     }
     public override void Tick()
     {

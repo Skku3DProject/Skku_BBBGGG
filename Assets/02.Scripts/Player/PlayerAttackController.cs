@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttackController : MonoBehaviour
 {
     private ThirdPersonPlayer _player;
 
@@ -15,8 +15,7 @@ public class PlayerAttack : MonoBehaviour
     public bool IsUsingJumpAnim = true;
     public bool IsMoveSlow = false;
 
-    private EquipmentType _equipmentType;
-
+    private EEquipmentType _equipmentType;
 
     public float CurrentDamage;
     private void Awake()
@@ -25,9 +24,9 @@ public class PlayerAttack : MonoBehaviour
     }
     void Start()
     {
-
-        SwitchWeaponAttack();
-        PlayerEquipmentController.Instance.OnChangeEquipment += SwitchWeaponAttack;
+        // 처음 기본무기는 검
+        SwitchWeaponAttack(EEquipmentType.Sword);
+        PlayerEquipmentManager.Instance.OnChangedEquipment += SwitchWeaponAttack;
     }
 
     void Update()
@@ -58,38 +57,37 @@ public class PlayerAttack : MonoBehaviour
 
     }
 
-    public void SwitchWeaponAttack()
+    public void SwitchWeaponAttack(EEquipmentType currentType)
     {
-
         _skill1?.ResetState();
         _skill2?.ResetState();
 
-        _equipmentType = PlayerEquipmentController.Instance.GetCurrentEquipType();
+        _equipmentType = currentType;
 
         switch (_equipmentType)
         {
-            case EquipmentType.Sword:
+            case EEquipmentType.Sword:
                 _currentWeaponAttack = GetComponent<SwordAttack>();
                 _currentWeaponAttack.IsAttacking = false;
                 _skill1 = GetComponent<SwordSpinSkill>();
                 _skill2 = GetComponent<SwordDashSkill>();
-                CurrentDamage = _player.BuffDamage + PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
+                CurrentDamage = _player.BuffDamage + PlayerEquipmentManager.Instance.GetCurrentWeaponAttackPower();
                 break;
 
-            case EquipmentType.Bow:
+            case EEquipmentType.Bow:
                 _currentWeaponAttack = GetComponent<BowAttack>();
                 _currentWeaponAttack.IsAttacking = false;
                 _skill1 = GetComponent<BowFireSkill>();
                 _skill2 = GetComponent<BowChargingSkill>();
-                CurrentDamage = _player.BuffDamage + PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
+                CurrentDamage = _player.BuffDamage + PlayerEquipmentManager.Instance.GetCurrentWeaponAttackPower();
                 break;
 
-            case EquipmentType.Magic:
+            case EEquipmentType.Magic:
                 _currentWeaponAttack = GetComponent<WandAttack>();
                 _currentWeaponAttack.IsAttacking = false;
                 _skill1 = GetComponent<ChainLightningSkill>();
                 _skill2 = GetComponent<MeteorFallSkill>();
-                CurrentDamage = _player.BuffDamage + PlayerEquipmentController.Instance.GetCurrentWeaponAttackPower();
+                CurrentDamage = _player.BuffDamage + PlayerEquipmentManager.Instance.GetCurrentWeaponAttackPower();
                 break;
         }
 

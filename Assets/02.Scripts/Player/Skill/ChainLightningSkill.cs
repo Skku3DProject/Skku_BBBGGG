@@ -16,7 +16,7 @@ public class ChainLightningSkill : WeaponSkillBase
 
     private GameObject _player;
     private Animator _playerAnimator;
-    private PlayerAttack _playerAttack;
+    private PlayerAttackController _playerAttack;
     private bool _isUsingSkill;
     public override bool IsUsingSkill { get => _isUsingSkill; protected set => _isUsingSkill = value; }
 
@@ -24,7 +24,7 @@ public class ChainLightningSkill : WeaponSkillBase
     {
         _player = GameObject.FindGameObjectWithTag("Player");
         _playerAnimator = GetComponent<Animator>();
-        _playerAttack = GetComponent<PlayerAttack>();
+        _playerAttack = GetComponent<PlayerAttackController>();
     }
 
     public override void UseSkill()
